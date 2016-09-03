@@ -46,10 +46,10 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             };
 
             var paging = await manager.GetOrdersAsync(start, take, filter);
-            var orders = await Task.WhenAll(paging.List.Select(async u => new OrderListItemViewModel(u)
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u)
             {
-                Attachments = await GetAttachments(u)
-            }));
+                Attachments = GetAttachments(u)
+            });
 
             return Json(true, string.Empty, new
             {
@@ -88,21 +88,17 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             return View(logs);
         }
 
-        private async Task<IList<AttachmentItem>> GetAttachments(Order order)
+        private IList<AttachmentItem> GetAttachments(Order order)
         {
             var attachments = order.Attachments.OrderByDescending(a => a.Created).Take(2);
-            return await Task.WhenAll(attachments.Select(async a =>
+            return  attachments.Select( a =>
             {
-                var fileManager = new FileManager();
-                var file = await fileManager.FindByIdAsync(a.FileInfoId);
                 return new AttachmentItem
                 {
                     Id = a.FileInfoId,
-                    Name = file.FileName,
-                    Length = file.ContentLength,
-                    Url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data)
+                    Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
                 };
-            }).ToList());
+            }).ToList();
         }
 
         private async Task<InvokedResult> ChangeOrderStatus(string orderId, OrderStatus status)

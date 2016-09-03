@@ -1,5 +1,7 @@
 ﻿$(function () {
-    var status = getQueryString("status");
+    var status = getQueryString("status"),
+       $listPage = $("#orderlist");
+
     if (status == null) {
         status = "0";
     }
@@ -38,7 +40,7 @@
             $(window).modalDialog({
                 title: "提示",
                 smallTitle: "",
-                content:item.id + "确认收货!",
+                content: item.id + "确认收货!",
                 type: "confirm",
                 okCallBack: function (e, $el) {
                     $.ajax({
@@ -69,27 +71,15 @@
 
     var ordersView = new Orders([]);
     ko.applyBindings(ordersView);
+    $listPage.loading();
     //分页
     $('#orderListPage').pager({
         url: '/Customer/Order/List',
         pageSize: 10,
         param: { status: status },
         callback: function (data, ui) {
+            $listPage.data("loading").hide();
             ordersView.orders(data.list);
         }
     });
-
-    //$("#orderli li").click(function () {
-    //    var $this = $(this);
-    //    var status = $this.attr("status");
-    //    $this.siblings("li").removeClass("active");
-    //    $this.addClass("active");
-    //    $('#orderListPage').pager({
-    //        url: '/Customer/Order/List' + "?status=" + status,
-    //        pageSize: 10,
-    //        callback: function (data, ui) {
-    //            ordersView.orders(data.list);
-    //        }
-    //    });
-    //})
 });

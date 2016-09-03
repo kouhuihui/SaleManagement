@@ -9,6 +9,8 @@ using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Web;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -118,7 +120,7 @@ namespace SaleManagement.Protal.Controllers
                     new
                     {
                         orderId = order.Id,
-                        notice = notice.Content
+                        notice = notice?.Content
                     });
             }
 
@@ -193,12 +195,13 @@ namespace SaleManagement.Protal.Controllers
             if (!ModelState.IsValid)
                 return Json(false, data: ErrorToDictionary(), contentType: SaleManagentConstants.Misc.JsonResponseContentType);
 
-            var file = new FileInfo
+            var file = new Core.Models.FileInfo
             {
                 ContentType = request.File.ContentType,
                 FileName = request.File.FileName,
                 Purpose = FilePurpose.OrderAttachment.GetDisplayName(),
                 Data = await request.File.InputStream.ReadAllBytesAsync(),
+                ThumbnailData = MakeThumbnail(request.File.InputStream, 200, 200, "Cut").ReadAllBytes(),
                 ContentLength = request.File.ContentLength
             };
 
@@ -216,7 +219,7 @@ namespace SaleManagement.Protal.Controllers
                 });
                 await orderManager.UpdateOrderAsync(order);
             }
-            return Json(true, data: new { id = file.Id, url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data), name = file.FileName, length = file.ContentLength },
+            return Json(true, data: new { id = file.Id, url = "data:image/jpg;base64," + Convert.ToBase64String(file.ThumbnailData), name = file.FileName, length = file.ThumbnailData.Length },
                    contentType: SaleManagentConstants.Misc.JsonResponseContentType);
         }
 
@@ -340,8 +343,8 @@ namespace SaleManagement.Protal.Controllers
                     {
                         Id = a.FileInfoId,
                         Name = file.FileName,
-                        Length = file.ContentLength,
-                        Url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data)
+                        Length = file.ThumbnailData.Length,
+                        Url = "data:image/jpg;base64," + Convert.ToBase64String(file.ThumbnailData)
                     };
                 }).ToList())
             });
@@ -419,6 +422,95 @@ namespace SaleManagement.Protal.Controllers
             var orderSetStoneInfoManager = new OrderSetStoneInfoManager();
             var result = await orderSetStoneInfoManager.CreateOrderSetStoneInfoAsync(orderSetStoneInfo);
             return Json(result);
+        }
+
+        /// <summary> 
+        /// 生成缩略图 
+        /// </summary> 
+        /// <param name="originalImagePath">源图路径（物理路径）</param> 
+        /// <param name="thumbnailPath">缩略图路径（物理路径）</param> 
+        /// <param name="width">缩略图宽度</param> 
+        /// <param name="height">缩略图高度</param> 
+        /// <param name="mode">生成缩略图的方式</param>     
+        public static MemoryStream MakeThumbnail(Stream originalImageStream, int width, int height, string mode)
+        {
+            Image originalImage = Image.FromStream(originalImageStream);
+
+            int towidth = width;
+            int toheight = height;
+
+            int x = 0;
+            int y = 0;
+            int ow = originalImage.Width;
+            int oh = originalImage.Height;
+
+            switch (mode)
+            {
+                case "HW"://指定高宽缩放（可能变形）                 
+                    break;
+                case "W"://指定宽，高按比例                     
+                    toheight = originalImage.Height * width / originalImage.Width;
+                    break;
+                case "H"://指定高，宽按比例 
+                    towidth = originalImage.Width * height / originalImage.Height;
+                    break;
+                case "Cut"://指定高宽裁减（不变形）                 
+                    if ((double)originalImage.Width / (double)originalImage.Height > (double)towidth / (double)toheight)
+                    {
+                        oh = originalImage.Height;
+                        ow = originalImage.Height * towidth / toheight;
+                        y = 0;
+                        x = (originalImage.Width - ow) / 2;
+                    }
+                    else
+                    {
+                        ow = originalImage.Width;
+                        oh = originalImage.Width * height / towidth;
+                        x = 0;
+                        y = (originalImage.Height - oh) / 2;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            //新建一个bmp图片 
+            Image bitmap = new System.Drawing.Bitmap(towidth, toheight);
+
+            //新建一个画板 
+            Graphics g = System.Drawing.Graphics.FromImage(bitmap);
+
+            //设置高质量插值法 
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.High;
+
+            //设置高质量,低速度呈现平滑程度 
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+            //清空画布并以透明背景色填充 
+            g.Clear(Color.Transparent);
+
+            //在指定位置并且按指定大小绘制原图片的指定部分 
+            g.DrawImage(originalImage, new Rectangle(0, 0, towidth, toheight),
+                new Rectangle(x, y, ow, oh),
+                GraphicsUnit.Pixel);
+
+            try
+            {
+                MemoryStream thumbnailStream = new MemoryStream();
+                //以jpg格式保存缩略图 
+                bitmap.Save(thumbnailStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return thumbnailStream;
+            }
+            catch (System.Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                originalImage.Dispose();
+                bitmap.Dispose();
+                g.Dispose();
+            }
         }
     }
 }

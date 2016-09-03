@@ -3,29 +3,6 @@
     Layout = "~/Views/Shared/_customerLayout.cshtml";
 }
 
-
-<style type="text/css">
-    .upload-btn {
-        display: inline-block;
-        overflow: hidden;
-        position: relative;
-    }
-
-        .upload-btn input {
-            cursor: pointer;
-            font-size: 100%;
-            height: 100%;
-            opacity: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            z-index: 2;
-        }
-
-    .fa-spinner:before {
-        content: "\f110";
-    }
-</style>
 <div>
     <ul class="breadcrumb">
         <li>
@@ -36,12 +13,24 @@
         </li>
     </ul>
 </div>
-<form method="post" action="~/order/booking" id="OrderBooking">
-    <div class="form-horizontal">
-        @Html.Hidden("customerId", User.Id)
-        @Html.Partial("_Orderbooking")
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>下单</h2>
+            </div>
+            <div class="box-content">
+                <form method="post" action="~/order/booking" id="OrderBooking">
+                    <div class="form-horizontal">
+                        @Html.Hidden("customerId", User.Id)
+                        @Html.Partial("_Orderbooking")
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-</form>
+    <!--/span-->
+</div><!--/row-->
 @section scripts{
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/jqueryval")

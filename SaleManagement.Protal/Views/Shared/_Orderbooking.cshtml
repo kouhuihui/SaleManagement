@@ -4,6 +4,33 @@
 @{
     Layout = null;
 }
+<style type="text/css">
+    .upload-btn {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .upload-btn input {
+            cursor: pointer;
+            font-size: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2;
+        }
+
+    .fa-spinner:before {
+        content: "\f110";
+    }
+
+    .form-group span{
+        margin-top:5px;
+    }
+</style>
+
 <input type="hidden" name="attachmentIds" id="attachmentIds" />
 <input type="hidden" value="@User.IdentityType" name="identityType" id="identityType" />
 @Html.HiddenFor(model => model.Id)

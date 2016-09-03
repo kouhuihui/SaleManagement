@@ -54,6 +54,8 @@ namespace SaleManagement.Core.Models
         [Required]
         public byte[] Data { get; set; }
 
+        public byte[] ThumbnailData { get; set; }
+
         public DateTime Created { get; set; }
 
         [Required, StringLength(64)]

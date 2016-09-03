@@ -29,5 +29,21 @@ namespace SaleManagement.Protal.Controllers
             stream.WriteTo(HttpContext.Response.OutputStream);
             return View();
         }
+
+        [Route("~/Attachment/{fileId}/Thumbnail")]
+        public async Task<ActionResult> Thumbnail(string fileId)
+        {
+            Requires.NotNullOrEmpty(fileId, "fileId");
+
+            var fileManager = new FileManager();
+            var file = await fileManager.FindByIdAsync(fileId);
+            if (file == null && file.Data != null)
+                return Error("文件不存在");
+
+            MemoryStream stream = new MemoryStream(file.ThumbnailData);
+            HttpContext.Response.ContentType = file.ContentType;
+            stream.WriteTo(HttpContext.Response.OutputStream);
+            return View();
+        }
     }
 }

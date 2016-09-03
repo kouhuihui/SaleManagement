@@ -108,3 +108,370 @@ Url:/Account/Login
 Controller:Account
 Action:Login
 提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Information, 2016年9月3日 21:16:52] 程序启动
+[Information, 2016年9月3日 21:40:57] 程序启动
+[Information, 2016年9月3日 21:44:19] 程序启动
+[Error, 2016年9月3日 21:52:29] 请求发生异常
+Url:/attachment/fc4d7072-aa50-4f1f-821d-5fbb34d4b90c/preview
+Controller:Attachment
+Action:Preview
+未找到视图“Preview”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Preview.aspx
+~/Views/Attachment/Preview.ascx
+~/Views/Shared/Preview.aspx
+~/Views/Shared/Preview.ascx
+~/Views/Attachment/Preview.cshtml
+~/Views/Attachment/Preview.vbhtml
+~/Views/Shared/Preview.cshtml
+~/Views/Shared/Preview.vbhtml
+[Error, 2016年9月3日 21:52:40] 请求发生异常
+Url:/attachment/fc4d7072-aa50-4f1f-821d-5fbb34d4b90c/preview
+Controller:Attachment
+Action:Preview
+未找到视图“Preview”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Preview.aspx
+~/Views/Attachment/Preview.ascx
+~/Views/Shared/Preview.aspx
+~/Views/Shared/Preview.ascx
+~/Views/Attachment/Preview.cshtml
+~/Views/Attachment/Preview.vbhtml
+~/Views/Shared/Preview.cshtml
+~/Views/Shared/Preview.vbhtml
+[Error, 2016年9月3日 21:52:42] 请求发生异常
+Url:/attachment/fc4d7072-aa50-4f1f-821d-5fbb34d4b90c/preview
+Controller:Attachment
+Action:Preview
+未找到视图“Preview”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Preview.aspx
+~/Views/Attachment/Preview.ascx
+~/Views/Shared/Preview.aspx
+~/Views/Shared/Preview.ascx
+~/Views/Attachment/Preview.cshtml
+~/Views/Attachment/Preview.vbhtml
+~/Views/Shared/Preview.cshtml
+~/Views/Shared/Preview.vbhtml
+[Information, 2016年9月3日 22:19:40] 程序启动
+[Error, 2016年9月3日 22:19:47] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Information, 2016年9月3日 22:21:32] 程序启动
+[Error, 2016年9月3日 22:21:37] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Information, 2016年9月3日 22:24:37] 程序启动
+[Information, 2016年9月3日 22:25:44] 程序启动
+[Error, 2016年9月3日 22:27:23] 请求发生异常
+Url:/attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/preview
+Controller:Attachment
+Action:Preview
+未找到视图“Preview”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Preview.aspx
+~/Views/Attachment/Preview.ascx
+~/Views/Shared/Preview.aspx
+~/Views/Shared/Preview.ascx
+~/Views/Attachment/Preview.cshtml
+~/Views/Attachment/Preview.vbhtml
+~/Views/Shared/Preview.cshtml
+~/Views/Shared/Preview.vbhtml
+[Information, 2016年9月3日 22:28:21] 程序启动
+[Information, 2016年9月3日 22:36:15] 程序启动
+[Information, 2016年9月3日 22:55:31] 程序启动
+[Error, 2016年9月3日 22:55:47] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:55:48] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:56:10] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:56:10] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:56:43] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:56:44] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Information, 2016年9月3日 22:57:22] 程序启动
+[Error, 2016年9月3日 22:57:37] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 22:57:37] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Information, 2016年9月3日 23:02:14] 程序启动
+[Error, 2016年9月3日 23:02:24] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:02:25] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:02:38] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:02:38] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:03:23] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:03:24] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:03:38] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:03:39] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Information, 2016年9月3日 23:47:35] 程序启动
+[Error, 2016年9月3日 23:48:19] 请求发生异常
+Url:/Attachment/b50e6edc-5405-4eb8-adcc-bbe062f0e748/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:48:19] 请求发生异常
+Url:/Attachment/5c6b347a-e34c-462e-99ba-da1fae433106/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:48:23] 请求发生异常
+Url:/Attachment/aae413b0-7f71-49dc-86f8-327b3499b4a6/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:48:23] 请求发生异常
+Url:/Attachment/2acfc34c-78d6-41e1-bf50-94d07d74b4c4/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Error, 2016年9月3日 23:48:25] 请求发生异常
+Url:/attachment/5c6b347a-e34c-462e-99ba-da1fae433106/preview
+Controller:Attachment
+Action:Preview
+未找到视图“Preview”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Preview.aspx
+~/Views/Attachment/Preview.ascx
+~/Views/Shared/Preview.aspx
+~/Views/Shared/Preview.ascx
+~/Views/Attachment/Preview.cshtml
+~/Views/Attachment/Preview.vbhtml
+~/Views/Shared/Preview.cshtml
+~/Views/Shared/Preview.vbhtml
+[Error, 2016年9月3日 23:48:39] 请求发生异常
+Url:/Attachment/5c6b347a-e34c-462e-99ba-da1fae433106/Thumbnail
+Controller:Attachment
+Action:Th
+未找到视图“Th”或其母版视图，或没有视图引擎支持搜索的位置。搜索了以下位置: 
+~/Views/Attachment/Th.aspx
+~/Views/Attachment/Th.ascx
+~/Views/Shared/Th.aspx
+~/Views/Shared/Th.ascx
+~/Views/Attachment/Th.cshtml
+~/Views/Attachment/Th.vbhtml
+~/Views/Shared/Th.cshtml
+~/Views/Shared/Th.vbhtml
+[Information, 2016年9月4日 0:19:35] 程序启动
+[Error, 2016年9月4日 0:26:10] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。

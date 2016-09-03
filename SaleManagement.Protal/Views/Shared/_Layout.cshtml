@@ -94,7 +94,7 @@
                                         }
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 1004))
                                         {
-                                            <li><a href="/department/list">客户管理</a></li>
+                                            <li><a href="/crm/list">客户管理</a></li>
                                         }
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 1002))
                                         {
@@ -155,6 +155,10 @@
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 3005))
                                         {
                                             <li><a href="/DailyGoldPrice/List">金价管理</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3006))
+                                        {
+                                            <li><a href="/Notice/List">公告管理</a></li>
                                         }
                                     </ul>
                                 </li>
