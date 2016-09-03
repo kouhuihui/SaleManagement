@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Bundles/Static/Css/Bootstrap")
+    @Styles.Render("~/Bundles/Static/Css/Layout")
+    @Styles.Render("~/Bundles/Static/Css/iphonetoggle")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+     <script src="@Url.Content("~/Static/bootstrap/js/html5shiv.min.js")"></script>
+    <![endif]-->
+    <!--[if IE 8]>
+     <script src="@Url.Content("~/Static/Bootstrap/js/respond.min.js")"></script>
+    <![endif]-->
+    <!--[if IE 7]>
+     <link href="@Url.Content("~/Static/Bootstrap/css/font-awesome-ie7.min.css")" rel="stylesheet">
+    <![endif]-->
+    @RenderSection("Css", required: false)
+
+    <link rel="shortcut icon" href="img/favicon.ico">
+</head>
+<body>
+    <!-- topbar starts -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-inner">
+            <button type="button" class="navbar-toggle pull-left animated flip">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+                <img alt="Charisma Logo" src="~/static/images/logo20.png" class="hidden-xs" />
+                <span>18K珠宝管理系统</span>
+            </a>
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs">@(User != null ? User.Name : "")</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">我的资料</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/Account/Logout">退出</a></li>
+                </ul>
+            </div>
+            <!-- user dropdown ends -->
+            <!-- theme selector starts -->
+            @*<div class="btn-group pull-right theme-container animated tada">
+                    <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-tint"></i><span class="hidden-sm hidden-xs">主题</span>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" id="themes">
+                        <li><a data-value="classic" href="#"><i class="whitespace"></i> Classic</a></li>
+                        <li><a data-value="cerulean" href="#"><i class="whitespace"></i> Cerulean</a></li>
+                        <li><a data-value="cyborg" href="#"><i class="whitespace"></i> Cyborg</a></li>
+                        <li><a data-value="simplex" href="#"><i class="whitespace"></i> Simplex</a></li>
+                        <li><a data-value="darkly" href="#"><i class="whitespace"></i> Darkly</a></li>
+                        <li><a data-value="lumen" href="#"><i class="whitespace"></i> Lumen</a></li>
+                        <li><a data-value="slate" href="#"><i class="whitespace"></i> Slate</a></li>
+                        <li><a data-value="spacelab" href="#"><i class="whitespace"></i> Spacelab</a></li>
+                        <li><a data-value="united" href="#"><i class="whitespace"></i> United</a></li>
+                    </ul>
+                </div>*@
+        </div>
+    </div>
+    <!-- topbar ends -->
+    <div class="ch-container">
+        <div class="row">
+            <!-- left menu starts -->
+            <div class="col-sm-2 col-lg-2">
+                <div class="sidebar-nav">
+                    <div class="nav-canvas">
+                        <div class="nav-sm nav nav-stacked">
+                        </div>
+                        <ul class="nav nav-pills nav-stacked main-menu">
+                            <li>
+                                <a class="ajax-link" href="~/home/index"><i class="glyphicon glyphicon-eye-open"></i><span>首页</span></a>
+                            </li>
+                            @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 1000))
+                            {
+                                <li class="accordion">
+                                    <a href="#"><i class="glyphicon glyphicon-plus"></i><span>系统管理</span></a>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 1001))
+                                        {
+                                            <li><a href="/user/list">员工管理</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 1002))
+                                        {
+                                            <li><a href="/department/list">部门管理</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 1003))
+                                        {
+                                            <li><a href="/role/list">角色管理</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 2000))
+                            {
+                                <li class="accordion">
+                                    <a href="#"><i class="glyphicon  glyphicon-edit"></i><span>生产管理</span></a>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2001))
+                                        {
+                                            <li><a href="/order/list">生产单</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2002))
+                                        {
+                                            <li><a href="/order/myorders">待设计的订单</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2003))
+                                        {
+                                            <li><a href="/order/booking">下单</a></li>
+                                        }  
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2004))
+                                        {
+                                            <li><a href="/shipment/list">出货单</a></li>
+                                        }  
+                                    </ul>
+                                </li>
+                            }
+                            @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 3000))
+                            {
+                                <li class="accordion">
+                                    <a href="#"><i class="glyphicon glyphicon-plus"></i><span>基础信息</span></a>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3001))
+                                        {
+                                            <li><a href="/BasicData/GemCategories">宝石信息</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3002))
+                                        {
+                                            <li><a href="/BasicData/ColorForms">成色信息</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3003))
+                                        {
+                                            <li><a href="/BasicData/MatchStones">配石信息</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3004))
+                                        {
+                                            <li><a href="/BasicData/ProductCategories">品类信息</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3005))
+                                        {
+                                            <li><a href="/DailyGoldPrice/List">金价管理</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                            <li class="accordion">
+                                <a href="#"><i class="glyphicon glyphicon-plus"></i><span>客户管理</span></a>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="/Crm/List">客户列表</a></li>
+                                </ul>
+                            </li>
+                            <li class="accordion">
+                                <a href="#"><i class="glyphicon glyphicon-plus"></i><span>财务</span></a>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li><a href="/Reconciliation/List">对账</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/span-->
+            <!-- left menu ends -->
+            <div id="content" class="col-lg-10 col-sm-10">
+                @RenderBody()
+            </div>
+        </div>
+    </div><!--/.fluid-container-->
+    @Scripts.Render("~/Bundles/Static/Js/Bootstrap")
+    @Scripts.Render("~/bundles/js/layoutJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

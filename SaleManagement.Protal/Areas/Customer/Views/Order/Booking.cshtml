@@ -1,0 +1,52 @@
+﻿@{
+    Title("下单");
+    Layout = "~/Views/Shared/_customerLayout.cshtml";
+}
+
+
+<style type="text/css">
+    .upload-btn {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .upload-btn input {
+            cursor: pointer;
+            font-size: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2;
+        }
+
+    .fa-spinner:before {
+        content: "\f110";
+    }
+</style>
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/customer/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/customer/order/booking">下单</a>
+        </li>
+    </ul>
+</div>
+<form method="post" action="~/order/booking" id="OrderBooking">
+    <div class="form-horizontal">
+        @Html.Hidden("customerId", User.Id)
+        @Html.Partial("_Orderbooking")
+    </div>
+</form>
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/fileupload")
+    @Scripts.Render("~/bundles/js/order/booking")
+}
+

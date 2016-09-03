@@ -1,0 +1,92 @@
+﻿@using SaleManagement.Core.Models;
+@using SaleManagement.Core;
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("GoNextStep", "Order", FormMethod.Post, new { id = "nextStepForm" }))
+{
+    <input type="hidden" id="orderId" name="orderId" value="@ViewBag.OrderId" />
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">下一工序</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Name">
+                    <span class="text-danger">*</span>工序
+                </label>
+                <div class="col-md-10">
+                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.OutputWax" data-value="@((int)OrderStatus.OutputWax)">出蜡</span>
+                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Module" data-value="@((int)OrderStatus.Module)">执模</span>
+                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.SetStone)">镶石</span>
+                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Pack" data-value="@((int)OrderStatus.Pack)">打包</span>
+                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Finance" data-value="@((int)OrderStatus.ToBeShip)">待出货</span>
+                     <input type="hidden" id="nextStatus" name="nextStatus" />
+                </div>
+            </div>
+            <div class="form-group" style="display:none" id="divDesignRoleUsers">
+                <label class="control-label col-md-2" for="Name">
+                    <span class="text-danger">*</span>处理人
+                </label>
+                <div class="col-md-6">
+                    <select id="userId" name="userId" class="form-control"></select>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" value="保存" />
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+<script type="text/javascript">
+    var $from = $("#nextStepForm"),
+        $divDesignRoleUsers = $("#divDesignRoleUsers");
+    $(function () {
+        $("span[name=btnSpan]").click(function () {
+            var $spanBtn = $(this),
+                roleCode = $spanBtn.data("role");
+            $spanBtn.siblings().removeClass("btn-primary");
+            $spanBtn.addClass("btn-primary");
+            var dataValue = $spanBtn.attr("data-value");
+            $spanBtn.siblings("input").val(dataValue);
+            
+            $.ajax({
+                type: "GET",
+                url: "/user/GetUsersByRole?t=" + new Date().getTime(),
+                data: { roleCode: roleCode },
+                dataType: "json",
+                success: function (data) {
+                    var $userId = $("#userId");
+                    $userId.empty();   //清空resText里面的所有内容
+                    var html = '<option>请选择</option>';
+                    $.each(data.data, function (commentIndex, user) {
+                        html += '<option value="' + user['id']
+                                  + '">' + user['name']
+                                  + '</option>';
+                    });
+                    $userId.html(html);
+                    $divDesignRoleUsers.show();
+                }
+            });
+        });
+
+        $from.ajaxForm({
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    parent.location.reload();
+
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+
+</script>

@@ -1,0 +1,132 @@
+﻿@model SaleManagement.Protal.Models.Order.OrderSetStoneViewModel
+@{
+    Title("配石");
+}
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/order/list">生产单管理</a>
+        </li>
+        <li>
+            <a href="#">配石</a>
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>订单信息</h2>
+            </div>
+            <div class="box-content">
+                @using (Html.BeginForm("SetStone", "Order", FormMethod.Post, new { id = "setStoneForm" }))
+                {
+                    <div class="form-inline">
+                        <div class="form-group col-md-4">
+                            <label class="control-label">订单号：</label>
+                            <span >@Model.Id</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">客户：</label>
+                            <span>@Model.CustomerName</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">下单日期：</label>
+                            <span>@Model.Created</span>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">主石数</label>
+                            @Html.TextBoxFor(model => model.MainStoneNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.MainStoneNumber, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">
+                                主石大小(ct)：
+                            </label>
+                            @Html.TextBoxFor(model => model.MainStoneSize, new {@class = "form-control"})
+                            @Html.ValidationMessageFor(model => model.MainStoneSize, "", new {@class = "text-danger"})
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" id="saveOrderMainStone" class="btn btn-primary">保存主石信息</button>
+                        </div>
+                        @Html.HiddenFor(model=>model.Id)
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>副石详情</h2>
+                <div class="box-icon">
+                    <a data-toggle="modal" data-id="@Model.Id" href="/order/AddSetStone?orderId=@Model.Id" data-target="#modal" class="btn">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        新增
+                    </a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable">
+                    <thead>
+                        <tr>
+                            <th>配石名称</th>
+                            <th>数量</th>
+                            <th>重量(ct)</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.OrderSetStoneInfos.Any())
+                        {
+
+                            foreach (var item in Model.OrderSetStoneInfos)
+                            {
+                                <tr>
+                                    <td>@item.MatchStoneName</td>
+                                    <td>@item.Number</td>
+                                    <td>@item.Weight</td>
+                                    <td class="col-md-3">
+                                        <a class="btn btn-sm btn-danger btn-deleted" data-id="@item.Id" href="#">
+                                            <i class="glyphicon glyphicon-trash icon-white"></i>
+                                            删除
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">暂无数据</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/order/setStone")
+}

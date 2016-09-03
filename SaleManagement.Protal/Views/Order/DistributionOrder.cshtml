@@ -1,0 +1,108 @@
+﻿@model SaleManagement.Protal.Models.Order.DistributionOrderViewModel
+@using SaleManagement.Core.Models
+@using Dickson.Core.Common.Extensions
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("DistributionOrder", "Order", FormMethod.Post, new { id = "distributionOrderForm" }))
+{
+    @Html.HiddenFor(model => model.OrderId)
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">分单</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Name">
+                    <span class="text-danger">*</span>版类
+                </label>
+                <div class="col-md-6">
+                    @{
+                        var moduleTypeList = EnumExtensions.EnumToList(typeof(ModuleType));
+                    }
+                    @foreach (var item in moduleTypeList)
+                    {
+                        <span class="btn btn-default" name="btnSpan" data-value="@item.Key">@item.Value</span>
+                    }
+                    <input type="hidden" id="moduleType" name="moduleType" />
+                </div>
+            </div>
+            <div class="form-group" style="display:none" id="divDesignRoleUsers">
+                <label class="control-label col-md-2" for="Name">
+                    <span class="text-danger">*</span>处理人
+                </label>
+                <div class="col-md-6">
+                    <select id="userId" name="userId" class="form-control">
+                    </select>
+                 </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" value="保存" />
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+<script type="text/javascript">
+    var $from = $("#distributionOrderForm"),
+        $divDesignRoleUsers = $("#divDesignRoleUsers");
+    $(function () {
+        $("span[name=btnSpan]").click(function () {
+            var $spanBtn = $(this),
+                roleCode = "";
+            $spanBtn.siblings().removeClass("btn-primary");
+            $spanBtn.addClass("btn-primary");
+            var dataValue = $spanBtn.attr("data-value");
+            $spanBtn.siblings("input").val(dataValue);           
+            if (dataValue === "0" || dataValue === "5")
+            {
+                roleCode = "outputWax";
+            } else {
+                roleCode = "design";
+            }
+            $.ajax({
+                type: "GET",
+                url: "/user/GetUsersByRole?t=" + new Date().getTime(),
+                data: { roleCode: roleCode },
+                dataType: "json",
+                success: function (data) {
+                    var $userId = $("#userId");
+                    $userId.empty();   //清空resText里面的所有内容
+                    var html = '<option value="">请选择</option>';
+                    $.each(data.data, function (commentIndex, user) {
+                        html += '<option value="' + user['id']
+                                  + '">'+user['name']
+                                  + '</option>';
+                    });
+                    $userId.html(html);
+                    $divDesignRoleUsers.show();
+                }
+            });
+        });
+       
+        $from.ajaxForm({
+            beforeSubmit: function () {
+                if ($("#userId").val()=="") {
+                    shortTips("请选择当前处理人");
+                    return false;
+                }
+            },
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    parent.location.reload();
+
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+
+</script>
+

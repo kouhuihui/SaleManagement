@@ -1,0 +1,120 @@
+﻿@using SaleManagement.Core
+@model SaleManagement.Protal.Models.Customer.CustomerUserEditViewModel
+
+@{
+    Title("编辑客户");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/Crm/List">客户管理</a>
+        </li>
+        <li>
+            编辑客户
+        </li>
+    </ul>
+</div>
+
+@using (Html.BeginForm("Edit", "Crm", FormMethod.Post, new { id = "userCreate" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.RoleId)
+    @Html.HiddenFor(model => model.UserName)
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label  class="control-label col-md-2"><span class="text-danger">*</span>账号</label>
+            <div class="col-md-4">
+                @Model.UserName
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Name">
+                <span class="text-danger">*</span>客户名称
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control text-box single-line", placeholder = "请输入客户名称" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Email">
+                <span class="text-danger"></span>邮箱
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control text-box single-line", placeholder = "请输入邮箱" })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Mobile">
+                <span class="text-danger"></span>手机
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Mobile, new {@class = "form-control", placeholder = "请输入手机号"})
+                @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="StoneSetterDiscountRate">
+                <span class="text-danger"></span>镶石折扣率(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.StoneSetterDiscountRate, new {@class = "form-control", placeholder = "请输入镶石折扣率"})
+                @Html.ValidationMessageFor(model => model.StoneSetterDiscountRate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>副石折扣率(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SideStoneDiscountRate, new {@class = "form-control", placeholder = "请输入副石折扣率"})
+                @Html.ValidationMessageFor(model => model.SideStoneDiscountRate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>基本工费折扣率(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.PriceOfWorkDiscountRate, new { @class = "form-control", placeholder = "请输入工费折扣率" })
+                @Html.ValidationMessageFor(model => model.PriceOfWorkDiscountRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>18K耗损比(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Loss18KRate, new { @class = "form-control", placeholder = "请输入18K耗损比" })
+                @Html.ValidationMessageFor(model => model.Loss18KRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>pt耗损比(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.LossPtRate, new {@class = "form-control", placeholder = "请输入pt耗损比"})
+                @Html.ValidationMessageFor(model => model.LossPtRate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-6 text-center">
+                <input class="btn btn-primary" type="submit" value="保存" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/customer/editUser")
+}
+

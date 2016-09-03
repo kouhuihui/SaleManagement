@@ -1,0 +1,78 @@
+﻿@{
+    Title("待处理订单");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/order/list">我的待处理订单</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>我的待处理订单</h2>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable  responsive">
+                    <thead>
+                        <tr>
+                            <th>生产状态</th>
+                            <th>订单编号</th>
+                            <th>成色</th>
+                            <th>指圈</th>
+                            <th>客来石重</th>
+                            <th>件数</th>
+                            <th>客户</th>
+                            <th>下单日期</th>
+                            <th>交货日期</th>
+                            <th>生产调配</th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="foreach:orders">
+                        <tr>
+                            <td data-bind="text:statusName">></td>
+                            <td data-bind="text:id"></td>
+                            <td data-bind="text:colorFormName"></td>
+                            <td data-bind="text:rangSize"></td>
+                            <td data-bind="text:mainStoneSize"></td>
+                            <td data-bind="text:number"></td>
+                            <td data-bind="text:customerName"></td>
+                            <td data-bind="text:created"></td>
+                            <td></td>
+                            <td>
+                                <!-- ko if:status==2 -->
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmClick">客户确认</a>
+                                <!-- /ko -->
+                                <a class="btn btn-danger btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center"><ul id="orderListPage"></ul></div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/fileupload")
+    @Scripts.Render("~/bundles/js/order/myOrders")
+}

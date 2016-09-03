@@ -1,0 +1,27 @@
+﻿@{
+    Title("新增用户");
+}
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/User/List">员工管理</a>
+        </li>
+        <li>
+            <a href="/User/Create">新增用户</a>
+        </li>
+    </ul>
+</div>
+
+@using (Html.BeginForm("Create", "User", FormMethod.Post, new { id = "userCreate" }))
+{
+    @Html.Partial("_EditForm")
+}
+
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/editUser")
+}

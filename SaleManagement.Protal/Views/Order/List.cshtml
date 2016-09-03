@@ -1,0 +1,122 @@
+﻿@using SaleManagement.Core;
+@{
+    Title("订单管理");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/order/list">生产单管理</a>
+        </li>
+    </ul>
+</div>
+<div>
+    @Html.Partial("_Customer")
+    <div class="textfield pull-left"><div class="field-body" style="width: 150px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
+    <div class="date-conditions pull-left">
+        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">预计交货时间：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryStartDate" type="text" placeholder="开始日期"></div></div>
+        <span class="pull-left">-</span>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryEndDate" type="text" placeholder="结束日期"></div></div>
+    </div>
+    <div class="combobox pull-left">
+        @{
+            var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
+        }
+        <div class="combobox-body" style="width: 150px;">
+            @Html.DropDownList("orderStatus", orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
+        </div>
+    </div>
+
+    <button id="btnSearch" class="btn btn-primary">查询</button>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>生产单列表</h2>
+                <div class="box-icon">
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                    {
+                        <a id="setStone" class="btn">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            配石
+                        </a>
+                    }
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.Finance))
+                    {
+                        <a id="shipment" class="btn">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            生成出货单
+                        </a>
+                    }
+                </div>
+            </div>
+
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable  responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>生产状态</th>
+                            <th>订单编号</th>
+                            <th>品类</th>
+                            <th>成色</th>
+                            <th>手寸/链长</th>
+                            <th>客来石重</th>
+                            <th>件数</th>
+                            <th>客户</th>
+                            <th>下单日期</th>
+                            <th>交货日期</th>
+                            <th>生产调配</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" data-bind="foreach:orders">
+                        <tr>
+                            <td><input type="checkbox" data-bind="value:id,attr:{status:status}" /></td>
+                            <td data-bind="text:statusName">></td>
+                            <td data-bind="text:id"></td>
+                            <td data-bind="text:productCategoryName"></td>
+                            <td data-bind="text:colorFormName"></td>
+                            <td data-bind="text:rangSize"></td>
+                            <td data-bind="text:mainStoneSize"></td>
+                            <td data-bind="text:number"></td>
+                            <td data-bind="text:customerName"></td>
+                            <td data-bind="text:created"></td>
+                            <td data-bind="text:deliveryDate"></td>
+                            <td>
+                                <!-- ko if:status==0 -->
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.distributionClick">调配</a>
+                                <a class="btn btn-warning btn-sm" data-bind="attr:{href:'/order/edit?orderId='+id}">编辑</a>
+                                <!-- /ko -->
+                                <!-- ko if:status==4 | status==5 | status==6 | status==7 | status==8 -->
+                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.nextStepClick">下一工序</button>
+                                <!-- /ko -->
+                                <a class="btn btn-danger btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center"><ul id="orderListPage"></ul></div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/order/list")
+}

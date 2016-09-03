@@ -1,0 +1,37 @@
+﻿@model SaleManagement.Protal.Models.Order.UploadDesginImageViewModel
+@{
+    Layout = null;
+}
+<div class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">新增/编辑成色</h4>
+    </div>
+    <div class="modal-body">
+        @Html.HiddenFor(model=>model.OrderId)
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="attachment">
+                    <ul class="thumbnails gallery">
+                        @foreach (var attachment in Model.Attachments)
+                        {
+                            <li class="thumbnail" data-id="@attachment.Id">
+                                <a class="cboxElement" href="javascript:void(0)"><img class="grayscale" src="@attachment.Url" style="display: block;"></a>
+                                <div class="well gallery-controls">
+                                    <a href="javascript:void(0)" onclick="deleteImage('@attachment.Id')" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <a class="upload-btn btn btn-primary" href="javascript:void(0);" role="button" data-toggle="popover" data-container="body" data-placement="bottom" data-original-title="" title="">
+                    提交款式图片
+                    <input type="file" name="file">
+                </a>
+                <span>最多可上传2个，每个不超过4M</span>
+            </div>
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/js/order/uploadDesginImage")
+

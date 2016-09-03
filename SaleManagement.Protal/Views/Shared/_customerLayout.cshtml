@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+
+    @Styles.Render("~/Bundles/Static/Css/Bootstrap")
+    @Styles.Render("~/Bundles/Static/Css/Layout")
+    @Styles.Render("~/Bundles/Static/Css/iphonetoggle")
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+     <script src="@Url.Content("~/Static/bootstrap/js/html5shiv.min.js")"></script>
+    <![endif]-->
+    <!--[if IE 8]>
+     <script src="@Url.Content("~/Static/Bootstrap/js/respond.min.js")"></script>
+    <![endif]-->
+    <!--[if IE 7]>
+     <link href="@Url.Content("~/Static/Bootstrap/css/font-awesome-ie7.min.css")" rel="stylesheet">
+    <![endif]-->
+    @RenderSection("Css", required: false)
+
+    <link rel="shortcut icon" href="~/static/images/favicon.ico">
+</head>
+<body>
+    <!-- topbar starts -->
+    <div class="navbar navbar-default" role="navigation">
+        <div class="navbar-inner">
+            <button type="button" class="navbar-toggle pull-left animated flip">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">
+                <img alt="Charisma Logo" src="~/static/images/logo20.png" class="hidden-xs" />
+                <span>18K珠宝管理系统</span>
+            </a>
+            <!-- user dropdown starts -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <i class="glyphicon glyphicon-user"></i><span class="hidden-sm hidden-xs">@(User != null ? User.Name : "")</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">我的资料</a></li>
+                    <li class="divider"></li>
+                    <li><a href="/Account/Logout">退出</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- topbar ends -->
+    <div>
+        <div class="row">
+            <!-- left menu starts -->
+            <div class="col-sm-2 col-lg-2">
+                <div class="sidebar-nav">
+                    <div class="nav-canvas">
+                        <div class="nav-sm nav nav-stacked">
+                        </div>
+                        <ul class="nav nav-pills nav-stacked main-menu">
+                            <li>
+                                <a class="ajax-link" href="~/customer/home/index">
+                                    <i class="glyphicon glyphicon-eye-open"></i><span>首页</span>
+
+                                </a>
+                            </li>
+                            <li>
+                                <a class="ajax-link" href="~/customer/order/booking">
+                                    <i class="glyphicon glyphicon-edit"></i><span> 下单</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="ajax-link" href="~/customer/order/list">
+                                    <i class="glyphicon glyphicon-eye-open"></i><span>跟单</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="ajax-link" href="~/customer/reconciliation/list">
+                                    <i class="glyphicon glyphicon-list-alt"></i><span>对账</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--/span-->
+            <!-- left menu ends -->
+            <div id="content" class="col-lg-10 col-sm-10">
+                @RenderBody()
+            </div>
+        </div>
+    </div><!--/.fluid-container-->
+    @Scripts.Render("~/Bundles/Static/Js/Bootstrap")
+    @Scripts.Render("~/bundles/js/layoutJs")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

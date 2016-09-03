@@ -1,0 +1,175 @@
+﻿<style type="text/css">
+    .combobox {
+        height: 36px;
+        margin-bottom: 20px;
+        margin-right:20px;
+    }
+
+        .combobox > div {
+            float: left;
+        }
+
+        .combobox .combobox-label {
+            padding-top: 10px;
+        }
+
+        .combobox .combobox-body {
+            height: 100%;
+            position: relative;
+        }
+
+            .combobox .combobox-body ul {
+                position: absolute;
+                width: 100%;
+                max-height: 210px;
+                overflow-y: scroll;
+                margin: 0;
+                padding: 5px 0;
+                list-style: none;
+                border: 1px solid #1992fd;
+                z-index: 99999;
+                cursor: pointer;
+                background-color: #fff;
+            }
+
+                .combobox .combobox-body ul li {
+                    padding-left: 10px;
+                }
+
+                    .combobox .combobox-body ul li.selected, .combobox .combobox-body ul li:hover {
+                        color: #fff;
+                        background-color: #1992fd;
+                    }
+
+            .combobox .combobox-body .combobox-field {
+                height: 100%;
+                position: relative;
+                padding-left: 0;
+            }
+
+                .combobox .combobox-body .combobox-field.active {
+                    border-color: #1992fd;
+                }
+
+                .combobox .combobox-body .combobox-field input {
+                    display: inline-block;
+                    width: 100%;
+                    height: 100%;
+                    padding-right: 20px;
+                    border: none;
+                }
+
+                .combobox .combobox-body .combobox-field i {
+                    position: absolute;
+                    top: 30%;
+                    right: 8px;
+                }
+
+            .combobox .combobox-body span {
+                color: #f96868;
+            }
+
+            .combobox .combobox-body.autocomplete .combobox-field input {
+                padding-right: 0;
+                padding-left: 25px;
+            }
+
+            .combobox .combobox-body.autocomplete .combobox-field i {
+                width: 20px;
+                left: 8px;
+                top: 32%;
+            }
+
+        .combobox .required-tip {
+            color: #f96868;
+            margin-right: 3px;
+        }
+</style>
+<div class="combobox pull-left" id="customerCombobox">
+    <div class="combobox-body" style="width: 150px;">
+        <div class="combobox-field form-control">
+            <input class="form-control" id="customerId" placeholder="请选择客户" data-value=""><i class="fa fa-angle-down"></i>
+        </div>
+        <ul style="display: none;">
+            <li value="">所有客户</li>
+        </ul>
+    </div>
+</div>
+
+<script src="~/static/js/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+        $(function () {
+            var $customerCombobox = $("#customerCombobox");
+            var $customerInput = $customerCombobox.find("input");
+            var $customerUl = $customerCombobox.find("ul");
+            var $customerli = $customerCombobox.find("ul>li");
+            var customerstore = [];
+            var originCustomerStore = [];
+            $customerInput.on("click", function () {
+                $customerInput.focus();
+                $customerInput.select();
+                $customerUl.show();
+            });
+            $customerInput.on("keyup", function () {
+                doSearch();
+            });
+            $customerInput.on("blur", function () {
+                //$customerUl.hide();
+            });
+            $customerUl.delegate("li", "click", function () {
+                var $this = $(this);
+                var value = $this.attr("value");
+                if (value === "") {
+                    $customerInput.val("");
+                } else {
+                    $customerInput.val($(this).text());
+                    $customerInput.data("value", value);
+                }
+                $customerUl.hide();
+            });
+
+            getStore();
+
+            function getStore() {
+                $.ajax({
+                    url: "/crm/customers",
+                    success: function (rtn) {
+                        if (rtn.succeeded) {
+                            var data = rtn.data;
+                            customerstore = data;
+                            initSelect();
+                            getOriginStore();
+                        }
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+
+            function getOriginStore() {
+                originCustomerStore = customerstore.concat([]);
+            }
+
+            function initSelect() {
+                var html = '<li value="">所有客户</li>';
+                for (var i = 0, len = customerstore.length; i < len; i++) {
+                    html += '<li value="' + customerstore[i].value
+                                 + '">' + customerstore[i].text
+                                 + '</li>';
+                }
+                $customerUl.html(html);
+            }
+
+            function doSearch() {
+                var arr = [];
+                for (var i = 0, items = originCustomerStore, len = items.length; i < len; i++) {
+                    if (items[i].text.toLowerCase().trim().indexOf($customerInput.val().toLowerCase().trim()) !== -1) {
+                        arr.push(items[i]);
+                    }
+                }
+                customerstore = arr;
+                initSelect();
+            }
+        })
+</script>

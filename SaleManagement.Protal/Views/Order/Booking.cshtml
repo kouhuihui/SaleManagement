@@ -1,0 +1,92 @@
+﻿@model SaleManagement.Protal.Models.Order.OrderViewModel
+@{
+    Title("下单");
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@Styles.Render("~/Bundles/Static/Css/DateTimePicker")
+
+<style type="text/css">
+    .upload-btn {
+        display: inline-block;
+        overflow: hidden;
+        position: relative;
+    }
+
+        .upload-btn input {
+            cursor: pointer;
+            font-size: 100%;
+            height: 100%;
+            opacity: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 2;
+        }
+
+    .fa-spinner:before {
+        content: "\f110";
+    }
+</style>
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/order/list">生产管理</a>
+        </li>
+        <li>
+            <a href="/order/booking">生产单</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>下单</h2>
+            </div>
+            <div class="box-content">
+                @using (Html.BeginForm("Booking", "Order", FormMethod.Post, new { id = "OrderBooking" }))
+                {
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2"><span class="text-danger">*</span>客户：</label>
+                            <div class="col-md-2">
+                                @{
+                                    var customers = Model.Customers.Select(c => new SelectListItem
+                                    {
+                                        Value = c.Id,
+                                        Text = c.Name
+                                    });
+                                }
+
+                                @Html.DropDownListFor(model => model.CustomerId, customers, "请选择", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">预计交货日期：</label>
+                            <div class="col-md-2">
+                                @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @Html.Partial("_Orderbooking")
+                    </div>
+                                    }
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+@section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/fileupload")
+    @Scripts.Render("~/bundles/js/order/booking")
+}

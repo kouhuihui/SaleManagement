@@ -1,0 +1,74 @@
+﻿@model SaleManagement.Protal.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>18K珠宝管理系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Charisma, a fully featured, responsive, HTML5, Bootstrap admin template.">
+    <meta name="author" content="Muhammad Usman">
+    <!-- The styles -->
+    <link id="bs-css" href="~/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="~/static/css/charisma-app.css" rel="stylesheet">
+    <link href="~/static/css/login.css" rel="stylesheet">
+    <!-- The fav icon -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <style type="text/css">
+         ul li {
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="row" style="padding-top:100px;">
+            <div class="row">
+                <div class="col-md-12 center login-header">
+                    <h2>欢迎使用18K珠宝管理系统</h2>
+                </div>
+                <!--/span-->
+            </div><!--/row-->
+            <div class="row">
+                <div class="well col-md-4 center login-box">
+                    <div class="alert alert-info">
+                        请输入用户名和密码
+                    </div>
+                    @Html.ValidationSummary()
+                    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <fieldset>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", placeholder = "请输入用户名" })
+                            </div>
+                           <div class="clearfix"></div><br>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
+                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "请输入密码" })
+                            </div>
+                            <div class="clearfix"></div>
+                            <p class="center col-md-5">
+                                <button type="submit" class="btn btn-primary">登录</button>
+                            </p>
+                        </fieldset>
+                    }
+                </div>
+                <!--/span-->
+            </div><!--/row-->
+        </div>
+    </div>
+    <!-- external javascript -->
+    <!-- jQuery -->
+    <script src="~/static/js/jquery-1.10.2.js"></script>
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+     <script src="@Url.Content("~/Static/bootstrap/js/html5shiv.min.js")"></script>
+    <![endif]-->
+
+    <script src="~/static/bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

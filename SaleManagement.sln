@@ -1,0 +1,67 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleManagement.Protal", "SaleManagement.Protal\SaleManagement.Protal.csproj", "{1BEC2BC0-06D9-4A75-8659-CCD107FAA4A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleManagement.Core", "SaleManagement.Core\SaleManagement.Core.csproj", "{1C14AABE-CB25-4A98-B915-69FE9435BD35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SaleManagement", "SaleManagement\SaleManagement.csproj", "{41D9937E-EA1F-4AFF-B7D5-1F0176F0BB82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dickson.Library", "Dickson.Library\Dickson.Library.csproj", "{FB9EA4A0-D305-4173-989A-7800F6D92895}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dickson.Web", "Dickson.Web\Dickson.Web.csproj", "{1630F8AA-8D63-4D09-A7D2-E13CCFD9D8DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dickson.Core", "Dickson.Core\Dickson.Core.csproj", "{DBDF22CC-549B-44FB-A368-6498FF3E9FC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dickson.Logging", "Dickson.Log\Dickson.Logging.csproj", "{4C31FCA7-EBFB-4323-8A2E-9CC173D42709}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMigration", "DataMigration\DataMigration.csproj", "{742BBC89-B05F-40B3-8CFC-60C744EFCB13}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1BEC2BC0-06D9-4A75-8659-CCD107FAA4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BEC2BC0-06D9-4A75-8659-CCD107FAA4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BEC2BC0-06D9-4A75-8659-CCD107FAA4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BEC2BC0-06D9-4A75-8659-CCD107FAA4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C14AABE-CB25-4A98-B915-69FE9435BD35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C14AABE-CB25-4A98-B915-69FE9435BD35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C14AABE-CB25-4A98-B915-69FE9435BD35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C14AABE-CB25-4A98-B915-69FE9435BD35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41D9937E-EA1F-4AFF-B7D5-1F0176F0BB82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D9937E-EA1F-4AFF-B7D5-1F0176F0BB82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D9937E-EA1F-4AFF-B7D5-1F0176F0BB82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D9937E-EA1F-4AFF-B7D5-1F0176F0BB82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB9EA4A0-D305-4173-989A-7800F6D92895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB9EA4A0-D305-4173-989A-7800F6D92895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB9EA4A0-D305-4173-989A-7800F6D92895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB9EA4A0-D305-4173-989A-7800F6D92895}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1630F8AA-8D63-4D09-A7D2-E13CCFD9D8DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1630F8AA-8D63-4D09-A7D2-E13CCFD9D8DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1630F8AA-8D63-4D09-A7D2-E13CCFD9D8DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1630F8AA-8D63-4D09-A7D2-E13CCFD9D8DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DBDF22CC-549B-44FB-A368-6498FF3E9FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DBDF22CC-549B-44FB-A368-6498FF3E9FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DBDF22CC-549B-44FB-A368-6498FF3E9FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DBDF22CC-549B-44FB-A368-6498FF3E9FC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C31FCA7-EBFB-4323-8A2E-9CC173D42709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C31FCA7-EBFB-4323-8A2E-9CC173D42709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C31FCA7-EBFB-4323-8A2E-9CC173D42709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C31FCA7-EBFB-4323-8A2E-9CC173D42709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{742BBC89-B05F-40B3-8CFC-60C744EFCB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{742BBC89-B05F-40B3-8CFC-60C744EFCB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{742BBC89-B05F-40B3-8CFC-60C744EFCB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{742BBC89-B05F-40B3-8CFC-60C744EFCB13}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,52 @@
+﻿@model SaleManagement.Core.Models.MatchStone
+    @{
+        Layout = null;
+    }
+
+    @using (Html.BeginForm("EditMatchStone", "BasicData", FormMethod.Post, new { id = "editMatchStone" }))
+    {
+        @Html.HiddenFor(model => model.Id)
+        <div class="form-horizontal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">新增/编辑配石</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Name">
+                        <span class="text-danger">*</span>名称
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "请输入配石名称" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Purity">
+                        <span class="text-danger">*</span>单价(元/ct)
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "请输入单价" })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3" for="Purity">
+                        <span class="text-danger">*</span>工费(元/ct)
+                    </label>
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(model => model.WorkingCost, new { @class = "form-control", placeholder = "请输入工费" })
+                        @Html.ValidationMessageFor(model => model.WorkingCost, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                </div>
+            <div class="modal-footer">
+                <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+                <input class="btn btn-primary" type="submit" value="保存" />
+            </div>
+        </div>
+    }
+
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/editmatchStone")

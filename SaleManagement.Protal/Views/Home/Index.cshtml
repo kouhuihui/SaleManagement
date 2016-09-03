@@ -1,0 +1,39 @@
+﻿@model SaleManagement.Protal.Models.Home.HomeViewModel
+@{
+    Title("首页");
+}
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            生产单管理
+        </li>
+    </ul>
+</div>
+
+<div class=" row">
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="">
+            <div>未处理订单</div>
+            <div>@Model.OrderStatistics.UnConfirmedCount</div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="">
+            <div>生产中的订单</div>
+            <div>@Model.OrderStatistics.ProcessingCount</div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="$34 new sales.">
+            <div>待出货的订单</div>
+            <div>@Model.OrderStatistics.ShipmentCount</div>
+        </a>
+    </div>
+</div>
+
+

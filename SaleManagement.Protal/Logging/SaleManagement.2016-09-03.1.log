@@ -1,0 +1,120 @@
+[Information, 2016年9月1日 0:46:55] 程序启动
+[Information, 2016年9月1日 0:57:17] 程序启动
+[Information, 2016年9月1日 1:10:12] 程序启动
+[Information, 2016年9月1日 1:27:12] 程序启动
+[Information, 2016年9月1日 22:27:16] 程序启动
+[Information, 2016年9月1日 22:52:12] 程序启动
+[Error, 2016年9月1日 22:52:23] 请求发生异常
+Url:/Reconciliation/AddPayment?_=1472741539058
+Controller:Reconciliation
+Action:AddPayment
+[Error, 2016年9月1日 22:55:15] 请求发生异常
+Url:/Reconciliation/AddPayment?_=1472741681859
+Controller:Reconciliation
+Action:AddPayment
+[Information, 2016年9月1日 22:56:08] 程序启动
+[Information, 2016年9月1日 23:25:34] 程序启动
+[Error, 2016年9月1日 23:25:58] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPaymentmessage:
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:25:58] CustomerId 字段是必需的。
+[Error, 2016年9月1日 23:25:58] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPaymentmessage:
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:25:58] CustomerId 字段是必需的。
+[Information, 2016年9月1日 23:32:58] 程序启动
+[Error, 2016年9月1日 23:33:11] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:33:11] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:34:30] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:34:30] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:36:50] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:36:50] CustomerId 字段是必需的。
+[Error, 2016年9月1日 23:38:08] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:38:08] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:40:56] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:40:56] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:42:07] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:42:07] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:42:33] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:42:33] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:49:25] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:49:25] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:50:27] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:50:27] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:51:10] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:51:10] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:51:34] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:51:34] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:54:30] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:54:30] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:55:53] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:55:53] CustomerId 字段是必需的。,CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:56:25] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:56:25] CustomerName 字段是必需的。
+[Error, 2016年9月1日 23:58:05] 请求发生异常
+Url:/Reconciliation/AddPayment
+Controller:Reconciliation
+Action:AddPayment
+Validation failed for one or more entities. See 'EntityValidationErrors' property for more details.
+[Error, 2016年9月1日 23:58:05] CustomerName 字段是必需的。
+[Information, 2016年9月1日 23:58:21] 程序启动

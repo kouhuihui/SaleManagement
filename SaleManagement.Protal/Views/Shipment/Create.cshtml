@@ -1,0 +1,318 @@
+﻿@model SaleManagement.Protal.Models.Shipment.ShipmentOrderViewModel
+@{
+    Title("生成出货单");
+}
+<style type="text/css">
+    #tbody input[type=text] {
+        height: 24px;
+    }
+
+    #tbody td {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .w30 {
+        width: 30px;
+    }
+
+    .w50 {
+        width: 50px;
+    }
+
+    .w60 {
+        width: 60px;
+    }
+</style>
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/Shipment/list">出货单管理</a>
+        </li>
+        <li>
+            出货单
+        </li>
+</ul>
+</div>
+
+@using (Html.BeginForm("Create", "Shipment", FormMethod.Post, new { id = "shipmentCreate" }))
+{
+    <div class="row">
+        <div class="box col-md-12">
+            <div class="box-inner">
+                <div class="box-header well" data-original-title="">
+                    <h2>出货单信息</h2>
+                </div>
+                <div class="box-content">
+                    <div class="form-inline" id="basicInfo">
+                        <div class="form-group col-md-4">
+                            <label class="control-label">客户：</label>
+                            <span>@Model.CustomerName</span>
+                            @Html.HiddenFor(model=>model.CustomerId)
+                            @Html.HiddenFor(model => model.CustomerName)
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">出货日期：</label>
+                           <span>@Model.DeliveryDate</span>  
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">件数合计:</label>
+                            @Html.TextBoxFor(model => model.TotalNumber, new { @readonly = true, @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">总重合计(g)：</label>
+                            @Html.TextBoxFor(model => model.TotalWeight, new { @readonly = true, @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">金重合计(g)：</label>
+                            @Html.TextBoxFor(model => model.TotalGoldWeight, new { @readonly = true, @class = "form-control" })
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label">总额合计(元): </label>
+                            @Html.TextBoxFor(model => model.TotalAmount, new { @readonly = true, @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-content center">
+                    <table class="table table-bordered bootstrap-datatable responsive">
+                        <thead>
+                            <tr>
+                                <th>订单号</th>
+                                <th width="30px">指圈</th>
+                                <th>件数</th>
+                                <th>总重(g)</th>
+                                <th>净金重(g)</th>
+                                <th>损耗(%)</th>
+                                <th>含耗重(g)</th>
+                                <th>成色</th>
+                                <th>金价</th>
+                                <th>金料额</th>
+                                <th>主石数</th>
+                                <th>主石重(ct)</th>
+                                <th>风险费</th>
+                                <th>镶石工费</th>
+                                <th>副石额</th>
+                                <th>基本工费</th>
+                                <th>起蜡/出版</th>
+                                <th>其他工艺</th>
+                                <th>总额</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            @{
+                                var index = 0;
+                            }
+                            @foreach (var item in Model.ShipmentOrderInfos)
+                            {
+                                <tr data-index="@index">
+                                    <td>@item.Id 
+                                    <input type="hidden" name="ShipmentOrderInfos[@index].Id" value="@item.Id" />
+                                    <input type="hidden" name="ShipmentOrderInfos[@index].SideStoneNumber" value="@item.SideStoneNumber" />
+                                    <input type="hidden" name="ShipmentOrderInfos[@index].SideStoneWeight" value="@item.SideStoneWeight" />
+                                    <input type="hidden" name="ShipmentOrderInfos[@index].ProductName" value="@item.ProductName" /> 
+                                    </td>
+                                    <td width="50">@item.RangSize</td>
+                                    <td width="20">@item.Number</td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="weight" name="ShipmentOrderInfos[@index].weight" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="goldWeight" name="ShipmentOrderInfos[@index].GoldWeight" class="w50" /></td>
+                                    <td width="30"><input type="text" data-index="@index" data-name="lossRate" name="ShipmentOrderInfos[@index].LossRate" class="w30" value="@item.LossRate" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="hhz" class="w50" /></td>
+                                    <td width="50">@item.ColorFormName</td>
+                                    <td width="50">@item.GoldPrice.ToString("f2")<input type="hidden" data-name="goldPrice" name="ShipmentOrderInfos[@index].goldPrice" class="w30" value="@item.GoldPrice" /></td>
+                                    <td width="50"><input type="text" data-name="goldAmount" name="ShipmentOrderInfos[@index].GoldAmount" class="w50" /></td>
+                                    <td width="20">@item.MainStoneNumber</td>
+                                    <td width="50">@item.MainStoneSize</td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="riskFee" name="ShipmentOrderInfos[@index].RiskFee" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="totalSetStoneWorkingCost" name="ShipmentOrderInfos[@index].TotalSetStoneWorkingCost" value="@item.TotalSetStoneWorkingCost" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="sideStoneTotalAmount" name="ShipmentOrderInfos[@index].SideStoneTotalAmount" value="@item.SideStoneTotalAmount.ToString("f2")" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="basicCost" class="w50" name="ShipmentOrderInfos[@index].BasicCost" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="outputWaxCost" name="ShipmentOrderInfos[@index].OutputWaxCost" value="@item.OutputWaxCost" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="otherCost" name="ShipmentOrderInfos[@index].OtherCost" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="totalAmount" name="ShipmentOrderInfos[@index].TotalAmount" class="w50" /></td>
+                                </tr>
+                                index++;
+                            }
+                        </tbody>
+                    </table>
+                    <input class="btn btn-primary" type="submit" value="保存" />
+                </div>
+            </div>
+        </div>
+        <!--/span-->
+    </div><!--/row-->
+                                }
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>配石详情</h2>
+            </div>
+            <div class="box-content center">
+                <table class="table table-bordered bootstrap-datatable responsive">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>副石名称</th>
+                            <th>价格(元/ct)</th>
+                            <th>数量(粒)</th>
+                            <th>工费(元)</th>
+                            <th>总重(ct)</th>
+                            <th>副石额(元)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.ShipmentOrderInfos)
+                        {
+                            var count = item.OrderSetStoneInfos.Count();
+                            if (count > 0)
+                            {
+                                <tr>
+                                    <td rowspan="@(count==0?0:count+2)">@item.Id</td>
+                                </tr>
+                                foreach (var setStone in item.OrderSetStoneInfos)
+                                {
+                                    <tr>
+                                        <td>@setStone.MatchStoneName</td>
+                                        <td>@setStone.Price</td>
+                                        <td>@setStone.Number</td>
+                                        <td>@setStone.SetStoneWorkingCost</td>
+                                        <td>@setStone.Weight</td>
+                                        <td>@setStone.TotalAmount.ToString("f2")</td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="2">总计（折后）</td>
+                                    <td>@item.SideStoneNumber</td>
+                                    <td>@item.TotalSetStoneWorkingCost</td>
+                                    <td>@item.SideStoneWeight</td>
+                                    <td>@item.SideStoneTotalAmount.ToString("f2")</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    <script type="text/javascript">
+        $(function () {
+            $("#tbody input[data-name=goldWeight]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+            $("#tbody input[data-name=weight]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=lossRate]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=riskFee]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=sideStoneTotalAmount]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=totalSetStoneWorkingCost]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+            $("#tbody input[data-name=basicCost]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=outputWaxCost]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[data-name=otherCost]").on("blur", function () {
+                $this = $(this);
+                CalculationAmount($this);
+            })
+
+            $("#tbody input[type=text]").on("blur", function () {
+                $this = $(this);
+                if (isNaN($this.val())) {
+                    $this.val("");
+                }
+            });
+
+            function CalculationAmount(v) {
+                var index = v.data("index"),
+                 $tr = $("#tbody tr[data-index=" + index + "]"),
+                 $hhz = $tr.find("input[data-name=hhz]"),
+                 $goldAmount = $tr.find("input[data-name=goldAmount]"),
+                 $totalAmount = $tr.find("input[data-name=totalAmount]"),
+                 lossRate = $tr.find("input[data-name=lossRate]").val(),
+                 goldPrice = $tr.find("input[data-name=goldPrice]").val(),
+                 riskFee = $tr.find("input[data-name=riskFee]").val(),
+                 totalSetStoneWorkingCost = $tr.find("input[data-name=totalSetStoneWorkingCost]").val(),
+                 sideStoneTotalAmount = $tr.find("input[data-name=sideStoneTotalAmount]").val(),
+                 outputWaxCost = $tr.find("input[data-name=outputWaxCost]").val(),
+                 otherCost = $tr.find("input[data-name=otherCost]").val(),
+                 basicCost = $tr.find("input[data-name=basicCost]").val(),
+                 goldWeight = $tr.find("input[data-name=goldWeight]").val(),
+                 hhz = (Number(goldWeight) * (1 + Number(lossRate) / 100)).toFixed(2);
+                $hhz.val(hhz);
+                $goldAmount.val((Number(goldPrice) * Number(hhz)).toFixed(2));
+                $totalAmount.val((Number($goldAmount.val()) + Number(riskFee) + Number(totalSetStoneWorkingCost)
+                    + Number(sideStoneTotalAmount) + Number(outputWaxCost) + Number(otherCost) + Number(basicCost)).toFixed(2))
+                CalculationTotal();
+            }
+
+            function CalculationTotal() {
+                var $shipmentTotalWeight = $("#basicInfo #TotalWeight"),
+                    $shipmentTotalGoldWeight = $("#basicInfo #TotalGoldWeight"),
+                    $shipmentTotalAmount = $("#basicInfo #TotalAmount"),
+                    shipmentTotalGoldWeight = 0,
+                    shipmentTotalWeight = 0,
+                    shipmentTotalAmount = 0;
+                var trList = $("#tbody tr");
+                for (var i = 0, len = trList.length; i < len; i++) {
+                    var $tr = $(trList[i]),
+                    $goldWeight = $tr.find("input[data-name=goldWeight]"),
+                    $weight = $tr.find("input[data-name=weight]"),
+                    $totalAmount = $tr.find("input[data-name=totalAmount]");
+                    shipmentTotalGoldWeight = shipmentTotalGoldWeight + Number($goldWeight.val());
+                    shipmentTotalWeight = shipmentTotalWeight + Number($weight.val());
+                    shipmentTotalAmount = shipmentTotalAmount + Number($totalAmount.val());
+                }
+                $shipmentTotalWeight.val(shipmentTotalWeight.toFixed(2));
+                $shipmentTotalGoldWeight.val(shipmentTotalGoldWeight.toFixed(2));
+                $shipmentTotalAmount.val(shipmentTotalAmount.toFixed(2));
+            }
+
+            var $from = $("#shipmentCreate");
+            $from.ajaxForm({
+                success: function (result) {
+                    if (result.succeeded) {
+                        shortTips("保存成功");
+                        setTimeout(function () {
+                            location.href = "/Shipment/List";
+                        }, 1000);
+                    } else {
+                        shortTips(errorMessage(result));
+                    }
+                }
+            });
+        });
+    </script>
+}

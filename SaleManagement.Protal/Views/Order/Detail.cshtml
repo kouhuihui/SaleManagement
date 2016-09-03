@@ -1,0 +1,156 @@
+﻿@model SaleManagement.Protal.Models.Order.OrderListItemViewModel
+@using Dickson.Core.Common.Extensions
+@{
+    Title("订单详情");
+}
+<style type="text/css">
+    .border {
+        border-top: 2px solid #000;
+    }
+
+    .attachmentli {
+        width: 240px;
+        height: 200px;
+    }
+    .attachmentli img{
+        width:240px;
+        height:200px;
+    }
+</style>
+
+<div class="row text-center"><h4>流程单</h4></div>
+
+<div class="row ptop5 border">
+    <div class="col-md-4 col-xs-4">订单号：@Model.Id</div>
+    <div class="col-md-4 col-xs-4">客户：@Model.CustomerName</div>
+    <div class="col-md-4 col-xs-4">制单人：@Model.CreatorName</div>
+</div>
+<div class="row ptop5">
+    <div class="col-md-4 col-xs-4">制单日期：@Model.Created</div>
+    <div class="col-md-4 col-xs-4">预计交货日期：@Model.DeliveryDate</div>
+    <div class="col-md-4 col-xs-4">订单状态：@Model.StatusName</div>
+</div>
+<div class="row ptop5">
+    <div class="col-md-4 col-xs-4">成色：@Model.ColorFormName</div>
+    <div class="col-md-4 col-xs-4">宝石：@Model.GemCategoryName</div>
+    <div class="col-md-4 col-xs-4">品类：@Model.ProductCategoryName</div>
+</div>
+<div class="row ptop5 pbtm5">
+    <div class="col-md-4 col-xs-4">指圈：@Model.RangSize</div>
+    <div class="col-md-4 col-xs-4">主石重：@Model.MainStoneSize</div>
+    <div class="col-md-4 col-xs-4">件数：@Model.Number</div>
+</div>
+<div class="row ptop5 pbtm5 border">
+    <div class="col-md-12 col-xs-12">备注：@Model.Remark</div>
+</div>
+<div class="row ptop5 border">
+
+    <div class="attachment">
+        <ul class="thumbnails gallery">
+            @foreach (var item in Model.Attachments)
+            {
+                <li class="attachmentli">
+                    <a class="cboxElement" href="javascript:void(0)"><img class="grayscale" src="@item.Url" style="display: block;"></a>
+                </li>
+            }
+        </ul>
+    </div>
+
+</div>
+<div class="box-content">
+    <table class="table table-bordered bootstrap-datatable">
+        <thead>
+            <tr>
+                <th>部门</th>
+                <th>日期</th>
+                <th>发货重</th>
+                <th>员工签名</th>
+                <th>收货重</th>
+                <th>主石</th>
+                <th>副石</th>
+                <th>粒数</th>
+                <th>员工签名</th>
+                <th>件数</th>
+                <th>备注</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>执模</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>出水</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>微镶</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>手镶</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>抛光</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>打包</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
