@@ -111,7 +111,17 @@ namespace SaleManagement.Protal.Controllers
             {
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(OrderStatus.UnConfirmed, order.Id);
+
+                var noticeManager = new NoticeManager(User);
+                var notice = await noticeManager.GetNewNoticeAsync();
+                return Json(result.Succeeded, data:
+                    new
+                    {
+                        orderId = order.Id,
+                        notice = notice.Content
+                    });
             }
+
             return Json(result);
         }
 

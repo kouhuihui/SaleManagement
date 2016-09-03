@@ -5,15 +5,18 @@ $.i10n = function (str) { return str; };
 $.ajaxSetup({ cache: false }); //禁止全局ajax缓存
 var mailReg = /^(\w+([-+.'']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*,?)+$/gi;
 
-function shortTips(text) {
+function shortTips(text,time) {
 	var $wrap = $('<div class="shortTips"></div>');
+	if (time === "") {
+		time = 1500;
+	}
 	$('<span class="bg img-rounded"></span>').append($.trim(text)).appendTo($wrap);
 	$("body").append($wrap);
 	setTimeout(function () {
 		$wrap.fadeOut("slow", function () {
 			$wrap.remove();
 		});
-	}, 1500);
+	}, time);
 }
 
 function loadMore(self, $rowIndexInput, $wrap, url, callback) {
@@ -316,4 +319,16 @@ function getQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
+}
+
+function formatDate(date) {
+	var d = new Date(date || Date.now()),
+    month = '' + (d.getMonth() + 1),
+    day = '' + d.getDate(),
+    year = d.getFullYear();
+
+	if (month.length < 2) month = '0' + month;
+	if (day.length < 2) day = '0' + day;
+
+	return [year, month, day].join('-');
 }

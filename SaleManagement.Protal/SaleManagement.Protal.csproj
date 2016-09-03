@@ -232,6 +232,7 @@
     <Compile Include="Controllers\DailyGoldPriceController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ReconciliationController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -360,7 +361,7 @@
     <Content Include="static\js\common.js" />
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
-    <Content Include="static\js\Customer\User\edit.js" />
+    <Content Include="static\js\Crm\edit.js" />
     <Content Include="static\js\DailyGoldPrice\edit.js" />
     <Content Include="static\js\DailyGoldPrice\list.js" />
     <Content Include="static\js\init-chart.js" />
@@ -394,6 +395,8 @@
     <Content Include="static\js\Mvc\jquery.validate.min.js" />
     <Content Include="static\js\Mvc\jquery.validate.unobtrusive.js" />
     <Content Include="static\js\Mvc\jquery.validate.unobtrusive.min.js" />
+    <Content Include="static\js\notice\edit.js" />
+    <Content Include="static\js\notice\list.js" />
     <Content Include="static\js\Order\booking.js" />
     <Content Include="static\js\Order\list.js" />
     <Content Include="static\js\Order\myOrders.js" />
@@ -475,6 +478,8 @@
     <Content Include="Views\Shared\_Customer.cshtml" />
     <Content Include="Views\Reconciliation\AddPayment.cshtml" />
     <Content Include="Views\Shared\_BundleLayout.cshtml" />
+    <Content Include="Views\Notice\List.cshtml" />
+    <Content Include="Views\Notice\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

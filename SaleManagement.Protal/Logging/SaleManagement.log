@@ -60,3 +60,44 @@ The model backing the 'SaleManagementDbContext' context has changed since the da
 [Information, 2016年9月3日 13:06:37] 程序启动
 [Information, 2016年9月3日 13:07:52] 程序启动
 [Information, 2016年9月3日 13:08:53] 程序启动
+[Information, 2016年9月3日 13:58:43] 程序启动
+[Information, 2016年9月3日 14:35:39] 程序启动
+[Error, 2016年9月3日 14:35:45] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Error, 2016年9月3日 14:35:45] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Information, 2016年9月3日 14:38:05] 程序启动
+[Error, 2016年9月3日 14:38:06] 请求发生异常
+Url:/Account/Login
+Controller:Account
+Action:Login
+提供的 ClaimsIdentity 上不存在类型“http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier”或“http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider”的声明。若要使用基于声明的身份验证启用防伪标记支持，请确认配置的声明提供程序在它生成的 ClaimsIdentity 实例上同时提供这两个声明。如果配置的声明提供程序使用其他声明类型作为唯一标识符，则可以通过设置静态属性 AntiForgeryConfig.UniqueClaimTypeIdentifier 来配置该提供程序。
+[Information, 2016年9月3日 14:38:33] 程序启动
+[Error, 2016年9月3日 14:39:03] 请求发生异常
+Url:/Notice/List?start=0&take=10&_=1472884743552
+Controller:Notice
+Action:List
+非静态方法需要一个目标。
+[Error, 2016年9月3日 14:40:02] 请求发生异常
+Url:/Notice/List?start=0&take=10&_=1472884778079
+Controller:Notice
+Action:List
+非静态方法需要一个目标。
+[Error, 2016年9月3日 14:40:47] 请求发生异常
+Url:/Notice/List?start=0&take=10&_=1472884811559
+Controller:Notice
+Action:List
+非静态方法需要一个目标。
+[Information, 2016年9月3日 14:41:20] 程序启动
+[Information, 2016年9月3日 14:42:30] 程序启动
+[Information, 2016年9月3日 15:06:44] 程序启动
+[Information, 2016年9月3日 15:08:05] 程序启动
+[Information, 2016年9月3日 15:08:59] 程序启动
+[Information, 2016年9月3日 15:10:23] 程序启动
+[Information, 2016年9月3日 15:17:28] 程序启动

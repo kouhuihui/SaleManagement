@@ -107,6 +107,7 @@
     <Compile Include="Models\IdentityType.cs" />
     <Compile Include="Models\MatchStone.cs" />
     <Compile Include="Models\ModuleType.cs" />
+    <Compile Include="Models\Notice.cs" />
     <Compile Include="Models\OrderOperationLog.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderAttachment.cs" />

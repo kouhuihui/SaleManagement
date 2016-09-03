@@ -101,8 +101,26 @@
                 <span class="text-danger"></span>工费折扣率(%)
             </label>
             <div class="col-md-4">
-                @Html.TextBoxFor(model => model.PriceOfWorkDiscountRate, new { @class = "form-control", placeholder = "请输入工费折扣率" })
-                @Html.ValidationMessageFor(model => model.PriceOfWorkDiscountRate, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.PriceOfWorkDiscountRate, new {@class = "form-control", placeholder = "请输入工费折扣率"})
+                @Html.ValidationMessageFor(model => model.PriceOfWorkDiscountRate, "", new {@class = "text-danger"})
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>18K耗损比(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Loss18KRate, new { @class = "form-control", placeholder = "请输入18K耗损比" })
+                @Html.ValidationMessageFor(model => model.Loss18KRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="SideStoneDiscountRate">
+                <span class="text-danger"></span>pt耗损比(%)
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.LossPtRate, new { @class = "form-control", placeholder = "请输入pt耗损比" })
+                @Html.ValidationMessageFor(model => model.LossPtRate, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
@@ -116,6 +134,6 @@
 @section scripts{
     @Scripts.Render("~/bundles/js/jqueryval")
     @Scripts.Render("~/bundles/js/ajaxForm")
-    @Scripts.Render("~/bundles/js/customer/editUser")
+    @Scripts.Render("~/bundles/js/crm/editUser")
 }
 

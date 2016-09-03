@@ -20,7 +20,9 @@ namespace DataMigration
         {
             DepartmentSeed(context);
             RoleSeed(context);
+            CompanySeed(context);
             UserSeed(context);
+            CustomerSeed(context);
             SystemMenuSeed(context);
             GemCategorysSeed(context);
             MatchStoneSeed(context);
@@ -29,10 +31,25 @@ namespace DataMigration
             AdminRoleMenuSeed(context);
         }
 
-        private async void UserSeed(SaleManagementDbContext context)
+        private void CompanySeed(SaleManagementDbContext context)
+        {
+            var company = new Company
+            {
+                Name = "18K珠宝有限公司",
+                ContactPerson = "谭泓浩",
+                Address = "深圳罗湖区xxx",
+                ShortName = "18K",
+                Status = CompanyStatus.Normal
+            };
+            context.Companys.Add(company);
+            context.SaveChanges();
+        }
+
+        private void UserSeed(SaleManagementDbContext context)
         {
             var userManager = new UserManager();
             var roles = context.Roles.ToList();
+            var company = context.Companys.FirstOrDefault();
             var password = "123456";
             foreach (var role in roles)
             {
@@ -42,11 +59,39 @@ namespace DataMigration
                     UserName = role.Code,
                     RoleId = role.Id,
                     EmailConfirmed = true,
-                    Status = UserStatus.Normal
+                    Status = UserStatus.Normal,
+                    CompanyId = company.Id,
+                    IdentityType = IdentityType.Employee
                 };
                 userManager.Create(user, password);
             }
+        }
 
+        private void CustomerSeed(SaleManagementDbContext context)
+        {
+            var userManager = new UserManager();
+            var company = context.Companys.FirstOrDefault();
+            var customerRole = context.Roles.FirstOrDefault(r => r.Code == SaleManagentConstants.SystemRole.CommonUser);
+            var customer1 = new SaleUser
+            {
+                Name = "testCustomer",
+                UserName = "testCustomer",
+                RoleId = customerRole.Id,
+                Status = UserStatus.Normal,
+                EmailConfirmed = true,
+                CompanyId = company.Id,
+                IdentityType = IdentityType.Customer
+            };
+            userManager.Create(customer1, "123456");
+
+            var customerInfo = new CustomerInfo
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserId = customer1.Id,
+                Address = "深圳市南山区白石洲"
+            };
+            context.CustomerInfos.Add(customerInfo);
+            context.SaveChanges();
         }
 
         private void DepartmentSeed(SaleManagementDbContext context)

@@ -1,10 +1,5 @@
 ﻿using SaleManagement.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaleManagement.Core.Store
 {
@@ -62,6 +57,8 @@ namespace SaleManagement.Core.Store
         public IDbSet<ShipmentOrderInfo> ShipmentOrderInfos { get; set; }
 
         public IDbSet<SystemMenu> Menus { get; set; }
+
+        public IDbSet<Notice> Notices { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
