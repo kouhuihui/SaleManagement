@@ -265,6 +265,15 @@ namespace DataMigration
                 Order = 3
             };
 
+            var menu18 = new SystemMenu
+            {
+                Id = 1004,
+                Level = 2,
+                Name = "客户管理",
+                parentId = 1000,
+                Order = 4
+            };
+
             var menu4 = new SystemMenu
             {
                 Id = 2000,
@@ -359,6 +368,32 @@ namespace DataMigration
                 parentId = 3000,
                 Order = 5
             };
+            var menu15 = new SystemMenu
+            {
+                Id = 3006,
+                Level = 2,
+                Name = "公告管理",
+                parentId = 3000,
+                Order = 6
+            };
+
+            var menu16 = new SystemMenu
+            {
+                Id = 4000,
+                Level = 1,
+                Name = "财务管理",
+                parentId = null,
+                Order = 1
+            };
+
+            var menu17 = new SystemMenu
+            {
+                Id = 4001,
+                Level = 2,
+                Name = "对账",
+                parentId = 4000,
+                Order = 1
+            };
 
             context.Menus.Add(menu);
             context.Menus.Add(menu1);
@@ -375,6 +410,10 @@ namespace DataMigration
             context.Menus.Add(menu12);
             context.Menus.Add(menu13);
             context.Menus.Add(menu14);
+            context.Menus.Add(menu15);
+            context.Menus.Add(menu16);
+            context.Menus.Add(menu17);
+            context.Menus.Add(menu18);
             context.SaveChanges();
             #endregion
         }

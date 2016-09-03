@@ -92,6 +92,10 @@
                                         {
                                             <li><a href="/user/list">员工管理</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 1004))
+                                        {
+                                            <li><a href="/department/list">客户管理</a></li>
+                                        }
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 1002))
                                         {
                                             <li><a href="/department/list">部门管理</a></li>
@@ -119,11 +123,11 @@
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 2003))
                                         {
                                             <li><a href="/order/booking">下单</a></li>
-                                        }  
+                                        }
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 2004))
                                         {
                                             <li><a href="/shipment/list">出货单</a></li>
-                                        }  
+                                        }
                                     </ul>
                                 </li>
                             }
@@ -155,18 +159,18 @@
                                     </ul>
                                 </li>
                             }
-                            <li class="accordion">
-                                <a href="#"><i class="glyphicon glyphicon-plus"></i><span>客户管理</span></a>
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="/Crm/List">客户列表</a></li>
-                                </ul>
-                            </li>
-                            <li class="accordion">
-                                <a href="#"><i class="glyphicon glyphicon-plus"></i><span>财务</span></a>
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="/Reconciliation/List">对账</a></li>
-                                </ul>
-                            </li>
+                            @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 4000))
+                            {
+                                <li class="accordion">
+                                    <a href="#"><i class="glyphicon glyphicon-plus"></i><span>财务</span></a>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4001))
+                                        {
+                                            <li><a href="/Reconciliation/List">对账</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
