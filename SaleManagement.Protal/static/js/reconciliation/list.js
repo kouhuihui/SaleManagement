@@ -1,4 +1,13 @@
 ﻿$(function () {
+    var $reconciliationListPage = $('#reconciliationListPage');
+    var rec = {
+        autoclose: true,
+        fontAwesome: true,
+        format: "yyyy-mm-dd",
+        minView: 2
+    }
+    $('.date-conditions input[type="text"]').datetimepicker(rec);
+
     var Reconciliations = function (data) {
         var self = this;
         self.reconciliations = ko.observableArray(data);
@@ -7,13 +16,34 @@
     var reconciliationsView = new Reconciliations([]);
     ko.applyBindings(reconciliationsView);
     //分页
-    $('#reconciliationListPage').pager({
+    $reconciliationListPage.pager({
         url: '/Reconciliation/List',
         pageSize: 10,
+        param: searchArgs(),
+        method: "GET",
         callback: function (data, ui) {
             reconciliationsView.reconciliations(data.list);
         }
     });
+
+    function searchArgs() {
+        return {
+            customerId: $("#customerId").data("value"),
+            createdStartDate: $("#createdStartDate").val(),
+            createdEndDate: $("#createdEndDate").val(),
+            type: $("#type").val()
+        }
+    }
+
+    function search() {
+        var pager = $reconciliationListPage.data("pager");
+        pager.opts.param = searchArgs();
+        pager.jump(1);
+    }
+
+    $("#btnSearch").on("click", function () {
+        search();
+    })
 
     $("#btnAudit").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");

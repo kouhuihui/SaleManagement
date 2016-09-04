@@ -16,14 +16,14 @@ namespace SaleManagement.Protal.Controllers
     public class ReconciliationController : PortalController
     {
         [PagingParameterInspector]
-        public async Task<ActionResult> List(PagingRequest request)
+        public async Task<ActionResult> List(ReconciliationQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View();
 
             var manager = new ReconciliationManager(User);
 
-            var paging = await manager.GetReconciliationsAsync(request.Start, request.Take, null);
+            var paging = await manager.GetReconciliationsAsync(request.Start, request.Take, request.GetReconciliationListQueryFilter());
             var reconciliations = paging.List.Select(u =>
             {
                 return new ReconciliationItemViewModel(u);

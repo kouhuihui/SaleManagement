@@ -59,7 +59,8 @@ namespace SaleManagement.Protal.Models.Order
 
                 if (DeliveryEndDate.HasValue)
                 {
-                    query = query.Where(f => f.DeliveryDate <= DeliveryEndDate.Value);
+                    var endDate = DeliveryEndDate.Value.AddDays(1);
+                    query = query.Where(f => f.DeliveryDate <= endDate);
                 }
 
                 if (Status.HasValue)
