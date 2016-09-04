@@ -90,6 +90,10 @@
   <ItemGroup>
     <Compile Include="CachingHelper.cs" />
     <Compile Include="LoggerHelper.cs" />
+    <Compile Include="Migrations\201609040157462_Init_Create.cs" />
+    <Compile Include="Migrations\201609040157462_Init_Create.Designer.cs">
+      <DependentUpon>201609040157462_Init_Create.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColorForm.cs" />
     <Compile Include="Models\Company.cs" />
@@ -155,6 +159,11 @@
       <Project>{fb9ea4a0-d305-4173-989a-7800f6d92895}</Project>
       <Name>Dickson.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201609040157462_Init_Create.resx">
+      <DependentUpon>201609040157462_Init_Create.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
