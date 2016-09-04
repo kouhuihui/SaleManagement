@@ -35,6 +35,17 @@ namespace SaleManagement.Managers
             return new Paging<ShipmentOrder>(start, take, total, list);
         }
 
+        public async Task<IEnumerable<ShipmentOrder>> GetShipmentOrders(Func<IQueryable<ShipmentOrder>, IQueryable<ShipmentOrder>> filter = null)
+        {
+            var query = DbContext.Set<ShipmentOrder>().Where(o => o.CreatorId != null);
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            return await query.OrderByDescending(u => u.DeliveryDate).ToListAsync();
+        }
+
         public async Task<ShipmentOrder> GetShipmentOrderAsync(string id)
         {
             return await DbContext.Set<ShipmentOrder>().FirstOrDefaultAsync(r => r.Id == id);
