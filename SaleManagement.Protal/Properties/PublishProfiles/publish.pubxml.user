@@ -187,7 +187,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/04/2016 19:47:35</publishTime>
     </File>
     <File Include="bin/SaleManagement.Protal.dll">
-      <publishTime>09/04/2016 20:04:42</publishTime>
+      <publishTime>09/04/2016 23:45:42</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>09/03/2016 20:53:14</publishTime>
@@ -235,7 +235,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2016 20:53:14</publishTime>
     </File>
     <File Include="Bundles.config">
-      <publishTime>09/03/2016 22:57:13</publishTime>
+      <publishTime>09/04/2016 23:45:06</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
       <publishTime>07/16/2016 20:59:51</publishTime>
@@ -570,6 +570,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="static/js/common.js">
       <publishTime>09/03/2016 20:53:10</publishTime>
     </File>
+    <File Include="static/js/Control/customer.js">
+      <publishTime>09/04/2016 23:41:55</publishTime>
+    </File>
     <File Include="static/js/Crm/edit.js">
       <publishTime>09/03/2016 20:53:09</publishTime>
     </File>
@@ -859,7 +862,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2016 20:53:08</publishTime>
     </File>
     <File Include="Views/Shared/_Customer.cshtml">
-      <publishTime>09/04/2016 11:00:11</publishTime>
+      <publishTime>09/04/2016 23:44:01</publishTime>
     </File>
     <File Include="Views/Shared/_customerLayout.cshtml">
       <publishTime>09/03/2016 20:53:08</publishTime>
