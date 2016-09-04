@@ -29,6 +29,7 @@ namespace SaleManagement.Protal.Controllers
                 var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(u);
                 shipmentOrderViewModel.Created = u.Created.ToString(SaleManagentConstants.UI.DateStringFormat);
                 shipmentOrderViewModel.DeliveryDate = u.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat);
+                shipmentOrderViewModel.AuditDate = u.AuditDate.HasValue ? u.AuditDate.Value.ToString(SaleManagentConstants.UI.DateStringFormat) : "";
                 return shipmentOrderViewModel;
             });
 
@@ -130,6 +131,45 @@ namespace SaleManagement.Protal.Controllers
                 await new ReconciliationManager(User).CreateAsync(reconciliation);
             }
             return Json(result);
+        }
+
+        public async Task<FileStreamResult> Export(ShipmentOrdersQueryRequest request)
+        {
+            var manager = new ShipmentManager(User);
+            var shipmentOrders = await manager.GetShipmentOrders(request.GetOrderListQueryFilter());
+            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "起版/出蜡", "石值/风险", "其他工艺", "总额" };
+            var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "出货单明细", ws =>
+            {
+                var row = 2;
+                int index = 1;
+                foreach (var shipmentOrder in shipmentOrders)
+                {
+                    foreach (var shipmentOrderInfo in shipmentOrder.ShipmentOrderInfos)
+                    {
+                        ws.Cells[row, 1].Value = index;
+                        ws.Cells[row, 2].Value = shipmentOrder.CustomerName;
+                        ws.Cells[row, 3].Value = shipmentOrder.Id;
+                        ws.Cells[row, 4].Value = shipmentOrderInfo.Order.ProductCategory.Name;
+                        ws.Cells[row, 5].Value = shipmentOrder.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat);
+                        ws.Cells[row, 6].Value = shipmentOrderInfo.Order.Number;
+                        ws.Cells[row, 7].Value = shipmentOrderInfo.GoldWeight;
+                        ws.Cells[row, 8].Value = shipmentOrderInfo.GoldWeight * (1 + shipmentOrderInfo.LossRate / 100);
+                        ws.Cells[row, 9].Value = shipmentOrderInfo.GoldPrice;
+                        ws.Cells[row, 10].Value = shipmentOrderInfo.SideStoneNumber;
+                        ws.Cells[row, 11].Value = shipmentOrderInfo.SideStoneWeight;
+                        ws.Cells[row, 12].Value = shipmentOrderInfo.TotalSetStoneWorkingCost;
+                        ws.Cells[row, 13].Value = shipmentOrderInfo.SideStoneTotalAmount;
+                        ws.Cells[row, 14].Value = shipmentOrderInfo.BasicCost;
+                        ws.Cells[row, 15].Value = shipmentOrderInfo.OutputWaxCost;
+                        ws.Cells[row, 16].Value = shipmentOrderInfo.RiskFee;
+                        ws.Cells[row, 17].Value = shipmentOrderInfo.OtherCost;
+                        ws.Cells[row, 18].Value = shipmentOrderInfo.TotalAmount;
+                        row++;
+                        index++;
+                    }
+                };
+            });
+            return result;
         }
     }
 }

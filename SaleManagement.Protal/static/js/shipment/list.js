@@ -83,4 +83,12 @@
             }
         });
     })
+
+    $("#btnExport").on("click", function () {
+        var params = searchArgs(), url = "/shipment/export?";
+        for (var i in params) {
+            url += i + '=' + params[i] + '&';
+        }
+        window.open(url, '_parent');
+    })
 });

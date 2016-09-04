@@ -46,6 +46,10 @@
                         <i class="glyphicon glyphicon-ok"></i>
                         审核
                     </a>
+                    <a id="btnExport" class="btn">
+                        <i class="glyphicon glyphicon-export"></i>
+                        导出
+                    </a>
                 </div>
             </div>
             <div class="box-content">
@@ -85,8 +89,8 @@
                             <td data-bind="text:totalAmount"></td>
                             <td data-bind="text:creatorName"></td>
                             <td data-bind="text:created"></td>
-                            <td></td>
-                            <td></td>
+                            <td data-bind="text:auditorName"></td>
+                            <td data-bind="text:auditDate"></td>
                         </tr>
                     </tbody>
                 </table>

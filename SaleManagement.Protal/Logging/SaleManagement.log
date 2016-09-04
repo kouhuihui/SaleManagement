@@ -478,3 +478,47 @@ Action:Login
 [Information, 2016年9月4日 10:07:11] 程序启动
 [Information, 2016年9月4日 10:19:16] 程序启动
 [Information, 2016年9月4日 10:20:27] 程序启动
+[Information, 2016年9月4日 10:54:01] 程序启动
+[Error, 2016年9月4日 11:16:19] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=&createdEndDate=2016-09-04&type=&_=1472958971310
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:16:21] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=&createdEndDate=2016-09-04&type=&_=1472958971311
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:16:24] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=&createdEndDate=2016-09-03&type=&_=1472958971312
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:16:28] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=2016-09-03&createdEndDate=2016-09-03&type=&_=1472958971313
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:16:39] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=2016-09-03&createdEndDate=2016-09-03&type=&_=1472958971314
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:19:35] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=2016-09-03&createdEndDate=2016-09-03&type=&_=1472958971315
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Error, 2016年9月4日 11:19:37] 请求发生异常
+Url:/Reconciliation/List?start=0&take=10&customerId=&createdStartDate=2016-09-03&createdEndDate=2016-09-03&type=&_=1472958971316
+Controller:Reconciliation
+Action:List
+LINQ to Entities does not recognize the method 'System.DateTime AddDays(Double)' method, and this method cannot be translated into a store expression.
+[Information, 2016年9月4日 11:21:42] 程序启动
+[Information, 2016年9月4日 11:37:28] 程序启动
+[Information, 2016年9月4日 18:41:17] 程序启动
+[Information, 2016年9月4日 19:22:49] 程序启动
+[Information, 2016年9月4日 19:31:23] 程序启动
+[Information, 2016年9月4日 19:37:42] 程序启动
+[Information, 2016年9月4日 20:01:12] 程序启动
+[Information, 2016年9月4日 20:03:55] 程序启动
