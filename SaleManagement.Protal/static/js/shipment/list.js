@@ -1,5 +1,13 @@
 ﻿$(function () {
     $orderListPage = $("#orderListPage");
+    var rec = {
+        autoclose: true,
+        fontAwesome: true,
+        format: "yyyy-mm-dd",
+        minView: 2
+    }
+    $('.date-conditions input[type="text"]').datetimepicker(rec);
+
     var Orders = function (data) {
         var self = this;
         self.orders = ko.observableArray(data);

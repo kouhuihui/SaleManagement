@@ -107,17 +107,24 @@ $(function () {
 			}
 		},
 		success: function (result) {
-			if (result.succeeded) {
-				var data = result.data;
-				var mes = '恭喜您下单成功<br>' + '您的订单号为：' + data.orderId;
-				mes = mes + "<br>可在跟单栏中根据订单号查询进度";
-				if (data.notice !== "" && data.notice !== null) {
-				    mes = mes +"<br>" + "提醒说明：" + data.notice;
-				}
-				shortTips(mes,3000);
+		    if (result.succeeded) {
+		        var timeOut = 3000;
+		        if (isAdd) {
+		            var data = result.data;
+		            var mes = '恭喜您下单成功<br>' + '您的订单号为：' + data.orderId;
+		            mes = mes + "<br>可在跟单栏中根据订单号查询进度";
+		            if (data.notice !== "" && data.notice !== null) {
+		                mes = mes + "<br>" + "提醒说明：" + data.notice;
+		            }
+		            shortTips(mes, timeOut);
+		        }
+		        else {
+		            shortTips("操作成功");
+		            timeOut = 1500;
+		        };
 				setTimeout(function() {
 					 location.href = listUrl;
-				}, 3000);
+				}, timeOut);
 			} else {
 				shortTips(errorMessage(result));
 			}

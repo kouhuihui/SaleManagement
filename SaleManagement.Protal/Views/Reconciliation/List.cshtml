@@ -2,6 +2,7 @@
     Title("对账");
 }
 
+@Styles.Render("~/Bundles/Static/Css/DateTimePicker")
 <div>
     <ul class="breadcrumb">
         <li>
@@ -11,6 +12,24 @@
             <a href="/Reconciliation/list">对账单</a>
         </li>
     </ul>
+</div>
+<div class="search">
+    @Html.Partial("_Customer")
+    <div class="date-conditions pull-left">
+        <div class="textfield pull-left"><div class="field-label" style="width: 50px;">日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期"></div></div>
+        <span class="pull-left">-</span>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期"></div></div>
+    </div>
+    <div class="combobox pull-left">
+        @{
+            var reconciliationType = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.ReconciliationType));
+        }
+        <div class="combobox-body" style="width: 150px;">
+            @Html.DropDownList("type", reconciliationType, "请选择欠付款", new { Class = "pull-left form-control" })
+        </div>
+    </div>
+
+    <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 
 <div class="row">
@@ -60,6 +79,7 @@
     </div>
 </div>
 @section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/pager")
     @Scripts.Render("~/bundles/js/reconciliation/list")

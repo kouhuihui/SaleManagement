@@ -2,6 +2,8 @@
 @{
     Title("出货单管理");
 }
+
+@Styles.Render("~/Bundles/Static/Css/DateTimePicker")
 <div>
     <ul class="breadcrumb">
         <li>
@@ -13,7 +15,7 @@
     </ul>
 </div>
 
-<div>
+<div class="search">
     @Html.Partial("_Customer")
     <div class="textfield pull-left"><div class="field-body" style="width: 150px;"><input id="shipmentOrderId" class="form-control" type="text" placeholder="输入出货单号"></div></div>
     <div class="date-conditions pull-left">
@@ -104,6 +106,7 @@
     </div>
 </div>
 @section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/pager")
     @Scripts.Render("~/bundles/js/shipment/list")
