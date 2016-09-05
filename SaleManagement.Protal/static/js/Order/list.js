@@ -39,7 +39,7 @@
     function searchArgs() {
         return {
             orderId: $("#orderId").val(),
-            customerId: $("#customerId").data("value"),
+            customerId: $("#customerId").val(),
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
             status: $("#orderStatus").val()

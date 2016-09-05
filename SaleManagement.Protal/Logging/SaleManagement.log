@@ -1,5 +1,65 @@
-[Information, 2016年9月4日 22:39:43] 程序启动
-[Information, 2016年9月4日 23:37:17] 程序启动
-[Information, 2016年9月4日 23:44:24] 程序启动
-[Information, 2016年9月4日 23:44:55] 程序启动
-[Information, 2016年9月4日 23:45:10] 程序启动
+[Information, 2016年9月5日 22:41:58] 程序启动
+[Information, 2016年9月5日 23:16:12] 程序启动
+[Information, 2016年9月5日 23:26:46] 程序启动
+[Information, 2016年9月6日 0:02:46] 程序启动
+[Error, 2016年9月6日 0:05:48] 请求发生异常
+Url:/dailyGoldPrice/Add?_=1473091538598
+Controller:dailyGoldPrice
+Action:Add
+E:\project\git\SaleManagement\SaleManagement.Protal\Views\dailyGoldPrice\Add.cshtml(38): error CS1525: Invalid expression term ';'
+[Error, 2016年9月6日 0:06:53] 请求发生异常
+Url:/dailyGoldPrice/Add?_=1473091577516
+Controller:dailyGoldPrice
+Action:Add
+E:\project\git\SaleManagement\SaleManagement.Protal\Views\dailyGoldPrice\Add.cshtml(38): error CS1525: Invalid expression term ';'
+[Error, 2016年9月6日 0:06:55] 请求发生异常
+Url:/dailyGoldPrice/Add?_=1473091588496
+Controller:dailyGoldPrice
+Action:Add
+E:\project\git\SaleManagement\SaleManagement.Protal\Views\dailyGoldPrice\Add.cshtml(38): error CS1525: Invalid expression term ';'
+[Information, 2016年9月6日 0:18:11] 程序启动
+[Error, 2016年9月6日 0:18:34] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Error, 2016年9月6日 0:19:49] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Error, 2016年9月6日 0:20:19] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Information, 2016年9月6日 0:20:35] 程序启动
+[Error, 2016年9月6日 0:20:49] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Error, 2016年9月6日 0:21:24] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Error, 2016年9月6日 0:23:32] 请求发生异常
+Url:/DailyGoldPrice/Add
+Controller:DailyGoldPrice
+Action:Add
+An error occurred while updating the entries. See the inner exception for details.
+[Information, 2016年9月6日 0:29:26] 程序启动
+[Information, 2016年9月6日 1:05:25] 程序启动
+[Information, 2016年9月6日 1:11:12] 程序启动
+[Information, 2016年9月6日 1:18:34] 程序启动
+[Error, 2016年9月6日 1:25:45] 请求发生异常
+Url:/Order/Booking
+Controller:Order
+Action:Booking
+An error occurred while updating the entries. See the inner exception for details.
+[Error, 2016年9月6日 1:27:27] 请求发生异常
+Url:/Order/Booking
+Controller:Order
+Action:Booking
+An error occurred while updating the entries. See the inner exception for details.

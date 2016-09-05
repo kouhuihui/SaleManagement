@@ -223,6 +223,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\SaleManagementResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SaleManagementResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ReconciliationController.cs" />
@@ -268,11 +273,6 @@
     <Compile Include="Models\User\SaleUserEditViewModel.cs" />
     <Compile Include="Models\User\SaleUserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SaleManagementResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SaleManagementResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="Web\PortalAuthenticateAttribute.cs" />
     <Compile Include="Web\PortalController.cs" />
@@ -368,6 +368,7 @@
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
     <Content Include="static\js\Crm\edit.js" />
+    <Content Include="static\js\DailyGoldPrice\Add.js" />
     <Content Include="static\js\DailyGoldPrice\edit.js" />
     <Content Include="static\js\DailyGoldPrice\list.js" />
     <Content Include="static\js\init-chart.js" />
@@ -488,6 +489,7 @@
     <Content Include="Views\Notice\Edit.cshtml" />
     <Content Include="Views\Attachment\Preview.cshtml" />
     <Content Include="Views\Attachment\Thumbnail.cshtml" />
+    <Content Include="Views\DailyGoldPrice\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -527,10 +529,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SaleManagementResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+    <Content Include="App_GlobalResources\SaleManagementResource.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
       <LastGenOutput>SaleManagementResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

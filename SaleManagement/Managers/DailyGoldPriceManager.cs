@@ -1,6 +1,7 @@
 ﻿using Dickson.Core.ComponentModel;
 using SaleManagement.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -40,6 +41,22 @@ namespace SaleManagement.Managers
                     $"{existDailyGoldPrice.ColorForm.Name}在{existDailyGoldPrice.Date}的金价已设置,不能重复添加");
 
             dbSet.AddOrUpdate(dailyGoldPrice);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> SaveDailyGoldPrices(IEnumerable<DailyGoldPrice> dailyGoldPrices)
+        {
+            var dbSet = DbContext.Set<DailyGoldPrice>();
+            foreach (var dailyGoldPrice in dailyGoldPrices)
+            {
+                var existDailyGoldPrice = dbSet.FirstOrDefault(d => d.CompanyId == User.CompanyId && d.Date == dailyGoldPrice.Date && d.ColorFormId == dailyGoldPrice.ColorFormId && dailyGoldPrice.Id != d.Id);
+                if (existDailyGoldPrice != null)
+                    return InvokedResult.Fail("DailyGoldPriceIsExist",
+                        $"{existDailyGoldPrice.ColorForm.Name}在{existDailyGoldPrice.Date}的金价已设置,不能重复添加");
+                dbSet.AddOrUpdate(dailyGoldPrice);
+            }
+   
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }

@@ -95,7 +95,7 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<ColorForm>> GetColorFormsAsync()
         {
-            return await DbContext.Set<ColorForm>().Where(r=>!r.Deleted).OrderBy(d => d.Id).ToListAsync();
+            return await DbContext.Set<ColorForm>().Where(r=>!r.Deleted).OrderByDescending(d => d.Id).ToListAsync();
         }
 
         public async Task<ColorForm> GetColorFormAsync(int id)
