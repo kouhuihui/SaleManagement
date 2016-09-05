@@ -201,7 +201,7 @@ namespace SaleManagement.Protal.Controllers
                 FileName = request.File.FileName,
                 Purpose = FilePurpose.OrderAttachment.GetDisplayName(),
                 Data = await request.File.InputStream.ReadAllBytesAsync(),
-                ThumbnailData = MakeThumbnail(request.File.InputStream, 200, 200, "Cut").ReadAllBytes(),
+                ThumbnailData = MakeThumbnail(request.File.InputStream, 600, 600, "Cut").ReadAllBytes(),
                 ContentLength = request.File.ContentLength
             };
 
@@ -356,18 +356,11 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             var orderListItemViewModel = new OrderListItemViewModel(order);
             var attachements = order.Attachments;
-            orderListItemViewModel.Attachments = await Task.WhenAll(attachements.Select(async a =>
-             {
-                 var fileManager = new FileManager();
-                 var file = await fileManager.FindByIdAsync(a.FileInfoId);
-                 return new AttachmentItem
-                 {
-                     Id = a.FileInfoId,
-                     Name = file.FileName,
-                     Length = file.ContentLength,
-                     Url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data)
-                 };
-             }).ToList());
+            orderListItemViewModel.Attachments = attachements.Select(a => new AttachmentItem
+            {
+                Id = a.FileInfoId,
+                Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+            }).ToList();
             return View(orderListItemViewModel);
         }
 
