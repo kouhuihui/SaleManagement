@@ -18,13 +18,18 @@
                     <span class="text-danger">*</span>工序
                 </label>
                 <div class="col-md-10">
-                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.OutputWax" data-value="@((int)OrderStatus.OutputWax)">出蜡</span>
-                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Module" data-value="@((int)OrderStatus.Module)">执模</span>
-                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.SetStone)">镶石</span>
-                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Pack" data-value="@((int)OrderStatus.Pack)">打包</span>
-                    <span class="btn btn-default" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Finance" data-value="@((int)OrderStatus.ToBeShip)">待出货</span>
-                     <input type="hidden" id="nextStatus" name="nextStatus" />
+                    <div>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.OutputWax" data-value="@((int)OrderStatus.OutputWax)">出蜡倒模</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Module" data-value="@((int)OrderStatus.Module)">执模</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.SetStone)">镶石</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.WithTheHand)">手镶</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.MicroInsert)">微镶</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.SetStone" data-value="@((int)OrderStatus.Polishing)">抛光</span>
+                        <span class="btn btn-default col-md-3 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Pack" data-value="@((int)OrderStatus.Pack)">打包</span>
+                        <input type="hidden" id="nextStatus" name="nextStatus" />
+                    </div>
                 </div>
+                 
             </div>
             <div class="form-group" style="display:none" id="divDesignRoleUsers">
                 <label class="control-label col-md-2" for="Name">

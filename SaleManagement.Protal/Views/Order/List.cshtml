@@ -67,7 +67,7 @@
                             <th>品类</th>
                             <th>成色</th>
                             <th>手寸/链长</th>
-                            <th>客来石重</th>
+                            <th class="col-md-1">客来石重</th>
                             <th>件数</th>
                             <th>客户</th>
                             <th>下单日期</th>
@@ -93,7 +93,10 @@
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.distributionClick">调配</a>
                                 <a class="btn btn-warning btn-sm" data-bind="attr:{href:'/order/edit?orderId='+id}">编辑</a>
                                 <!-- /ko -->
-                                <!-- ko if:status==4 | status==5 | status==6 | status==7 | status==8 -->
+                                <!-- ko if:status==8 -->
+                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.packClick">打包</button>
+                                <!-- /ko -->
+                                <!-- ko if:status==4 | status==5 | status==6 | status==7 | status==13 | status==14 | status==15 -->
                                 <button class="btn btn-primary btn-sm" data-bind="click:$parent.nextStepClick">下一工序</button>
                                 <!-- /ko -->
                                 <a class="btn btn-danger btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>

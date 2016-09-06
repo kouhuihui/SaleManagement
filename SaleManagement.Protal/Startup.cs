@@ -26,7 +26,7 @@ namespace SaleManagement.Protal
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
             BundleTable.Bundles.RegisterConfigurationBundles();
-            BundleTable.EnableOptimizations = true;
+            ////BundleTable.EnableOptimizations = true;
             ConfigureAutoMapper();
             var factory = new LoggerFactory();
             factory.AddFile();

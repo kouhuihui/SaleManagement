@@ -38,7 +38,7 @@
             <div class="box-header well" data-original-title="">
                 <h2>对账单列表</h2>
                 <div class="box-icon">
-                    <a data-toggle="modal" href="/Reconciliation/AddPayment" data-target="#modal" class="btn">
+                    <a  href="/Reconciliation/AddPayment"  class="btn">
                         <i class="glyphicon glyphicon-plus"></i>
                         新增
                     </a>
@@ -70,14 +70,6 @@
     <!--/span-->
 </div><!--/row-->
 
-<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-        </div>
-    </div>
-</div>
 @section scripts{
     @Scripts.Render("~/bundles/js/dateTimePicker")
     @Scripts.Render("~/bundles/js/knockout")

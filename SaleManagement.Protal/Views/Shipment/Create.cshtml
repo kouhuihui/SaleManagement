@@ -4,7 +4,7 @@
 }
 <style type="text/css">
     #tbody input[type=text] {
-        height: 24px;
+        height: 26px;
     }
 
     #tbody td {
@@ -82,7 +82,7 @@
                     <table class="table table-bordered bootstrap-datatable responsive">
                         <thead>
                             <tr>
-                                <th>订单号</th>
+                                <th width="80px">订单号</th>
                                 <th width="30px">指圈</th>
                                 <th>件数</th>
                                 <th>总重(g)</th>
@@ -118,8 +118,8 @@
                                     </td>
                                     <td width="50">@item.RangSize</td>
                                     <td width="20">@item.Number</td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="weight" name="ShipmentOrderInfos[@index].weight" class="w50" /></td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="goldWeight" name="ShipmentOrderInfos[@index].GoldWeight" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="weight" name="ShipmentOrderInfos[@index].weight" class="w50" value="@item.Weight" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="goldWeight" name="ShipmentOrderInfos[@index].GoldWeight" class="w50" value="@item.GoldWeight" /></td>
                                     <td width="30"><input type="text" data-index="@index" data-name="lossRate" name="ShipmentOrderInfos[@index].LossRate" class="w30" value="@item.LossRate" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="hhz" class="w50" /></td>
                                     <td width="50">@item.ColorFormName</td>

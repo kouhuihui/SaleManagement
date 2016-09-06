@@ -67,13 +67,22 @@ namespace SaleManagement.Managers
                     content = "客户确认设计";
                     break;
                 case OrderStatus.OutputWax:
-                    content = "进入出蜡部门";
+                    content = "进入出蜡倒模部门";
                     break;
                 case OrderStatus.Module:
                     content = "进入执模部门";
                     break;
                 case OrderStatus.SetStone:
                     content = "进入镶石部门";
+                    break;
+                case OrderStatus.WithTheHand:
+                    content = "进入手镶部门";
+                    break;
+                case OrderStatus.MicroInsert:
+                    content = "进入微镶部门";
+                    break;
+                case OrderStatus.Polishing:
+                    content = "进入抛光部门";
                     break;
                 case OrderStatus.Pack:
                     content = "进入打包部门";

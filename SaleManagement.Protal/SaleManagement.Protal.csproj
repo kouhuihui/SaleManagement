@@ -262,6 +262,7 @@
     <Compile Include="Models\Order\OrdersQueryRequest.cs" />
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModelBase.cs" />
+    <Compile Include="Models\Order\OrderPackViewModel.cs" />
     <Compile Include="Models\Order\UploadDesginImageViewModel.cs" />
     <Compile Include="Models\Order\UploadOrderAttachmentRequest.cs" />
     <Compile Include="Models\Menu\RoleMenuAuthorizedViewModel.cs" />
@@ -490,6 +491,7 @@
     <Content Include="Views\Attachment\Preview.cshtml" />
     <Content Include="Views\Attachment\Thumbnail.cshtml" />
     <Content Include="Views\DailyGoldPrice\Add.cshtml" />
+    <Content Include="Views\Order\Pack.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

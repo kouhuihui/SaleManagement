@@ -121,10 +121,12 @@ namespace SaleManagement.Core.Models
         public virtual ICollection<OrderSetStoneInfo> OrderSetStoneInfos { get; set; }
 
         /// <summary>
-        /// 出蜡费用
+        /// 出蜡倒模费用
         /// </summary>
         public double OutputWaxCost { get; set; }
 
-        public double WaxCost { get; set; }
+        public double Weight { get; set; }
+
+        public double GoldWeight { get; set; }
     }
 }

@@ -7,7 +7,7 @@
 			    remote: "/DailyGoldPrice/Edit?id=" + item.id+"&t="+ new Date().getTime()
 		    }).on("hidden.bs.modal", function () {
 		        $(this).removeData("bs.modal");
-		    });;
+		    });
 		};
 		self.deleteClick = function (item, el) {
 			$(window).modalDialog({

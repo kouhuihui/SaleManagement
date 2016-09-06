@@ -66,7 +66,7 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrderViewModel.ShipmentOrderInfos = await Task.WhenAll(orders.Select(async o =>
             {
                 var dailyGoldPriceManager = new DailyGoldPriceManager();
-                var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId, o.Created.Date);
+                var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId,DateTime.Now.Date);
                 var shipmentOrderInfoViewModel = new ShipmentOrderInfoViewModel(o)
                 {
                     GoldPrice = dailyGoldPrice == null ? 0 : dailyGoldPrice.Price,
@@ -137,7 +137,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
             var shipmentOrders = await manager.GetShipmentOrders(request.GetOrderListQueryFilter());
-            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "起版/出蜡", "石值/风险", "其他工艺", "总额" };
+            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "出货单明细", ws =>
             {
                 var row = 2;

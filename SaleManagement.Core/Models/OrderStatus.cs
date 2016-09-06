@@ -24,7 +24,7 @@ namespace SaleManagement.Core.Models
         [Display(Name = "客户已确认")]
         CustomerConfirm = 4,
 
-        [Display(Name = "出蜡")]
+        [Display(Name = "出蜡倒模")]
         OutputWax = 5,
 
         [Display(Name = "执模")]
@@ -47,5 +47,14 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "已收货")]
         HaveGoods = 12,
+
+        [Display(Name = "手镶")]
+        WithTheHand = 13,
+
+        [Display(Name = "微镶")]
+        MicroInsert = 14,
+
+        [Display(Name = "抛光")]
+        Polishing = 15,
     }
 }

@@ -15,6 +15,8 @@ namespace SaleManagement.Protal.Models.Shipment
         {
             OutputWaxCost = order.OutputWaxCost;
             ProductName = order.ColorForm.Name + order.GemCategory.Name + order.ProductCategory.Name;
+            Weight = order.Weight;
+            GoldWeight = order.GoldWeight;
             OrderSetStoneInfos = order.OrderSetStoneInfos.Select(o => new OrderSetStoneInfoViewModel
             {
                 MatchStoneId = o.MatchStoneId,

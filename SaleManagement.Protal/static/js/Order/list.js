@@ -14,12 +14,23 @@
         self.distributionClick = function (item, el) {
             $("#modal").modal({
                 remote: "/Order/" + item.id + "/Distribution"
-            })
+            }).on("hidden.bs.modal", function () {
+                $(this).removeData("bs.modal");
+            });
         },
         self.nextStepClick = function (item, el) {
             $("#modal").modal({
                 remote: "/Order/" + item.id + "/NextStep"
-            })
+            }).on("hidden.bs.modal", function () {
+                $(this).removeData("bs.modal");
+            });
+        },
+        self.packClick = function (item, el) {
+            $("#modal").modal({
+                remote: "/Order/" + item.id + "/Pack"
+            }).on("hidden.bs.modal", function () {
+                $(this).removeData("bs.modal");
+            });
         }
     }
 

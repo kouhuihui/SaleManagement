@@ -422,6 +422,31 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        [Route("{orderId}/Pack")]
+        public ActionResult Pack(string orderId)
+        {
+            var model = new OrderPackViewModel();
+            model.OrderId = orderId;
+            return View(model);
+        }
+
+        [HttpPost, Route("{orderId}/Pack")]
+        public async Task<JsonResult> Pack(OrderPackViewModel viewModel)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(viewModel.OrderId);
+            order.Weight = viewModel.Weight;
+            order.GoldWeight = viewModel.GoldWeight;
+            order.OrderStatus = OrderStatus.ToBeShip;
+            var result = await manager.UpdateOrderAsync(order);
+            if (result.Succeeded)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+            }
+            return Json(result);
+        }
+
         /// <summary> 
         /// 生成缩略图 
         /// </summary> 

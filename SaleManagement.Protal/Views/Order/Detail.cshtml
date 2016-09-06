@@ -8,15 +8,16 @@
         border-top: 2px solid #000;
     }
 
- .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
-   height:31px;
-   padding:0;
-}
+    .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+        height: 31px;
+        padding: 0;
+    }
 </style>
 
 <div class="pull-right"><button id="btnPrint" class="btn btn-primary">打印</button></div>
 <div id="divPrint">
-    <div class="row text-center"><h4>流程单</h4>
+    <div class="row text-center">
+        <h4>流程单</h4>
     </div>
 
     <div class="row ptop5 border">
@@ -48,9 +49,9 @@
             <ul class="thumbnails gallery">
                 @foreach (var item in Model.Attachments)
                 {
-                    var previewUrl = "/Attachment/"+@item.Id+"/preview";
+                    var previewUrl = "/Attachment/" + @item.Id + "/preview";
                     <li class="attachmentli">
-                        <a class="cboxElement" target="_blank" href="@previewUrl"><img width="320" height="270"  src="@item.Url" style="display: block;"></a>
+                        <a class="cboxElement" target="_blank" onclick="window.open('@previewUrl')" href="javascript:void(0);"><img width="280" height="270" src="@item.Url" style="display: block;"></a>
                     </li>
                 }
             </ul>
@@ -60,107 +61,107 @@
     <div class="box-content">
         <table class="table table-bordered bootstrap-datatable">
             <thead>
-            <tr>
-                <th>部门</th>
-                <th>日期</th>
-                <th>发货重</th>
-                <th>员工签名</th>
-                <th>收货重</th>
-                <th>主石</th>
-                <th>副石</th>
-                <th>粒数</th>
-                <th>员工签名</th>
-                <th>件数</th>
-                <th>备注</th>
-            </tr>
+                <tr>
+                    <th>部门</th>
+                    <th>日期</th>
+                    <th>发货重</th>
+                    <th>员工签名</th>
+                    <th>收货重</th>
+                    <th>主石</th>
+                    <th>副石</th>
+                    <th>粒数</th>
+                    <th>员工签名</th>
+                    <th>件数</th>
+                    <th>备注</th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>执模</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>出水</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>微镶</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>手镶</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>抛光</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>打包</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+                <tr>
+                    <td>执模</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>出水</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>微镶</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>手镶</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>抛光</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>打包</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
             </tbody>
         </table>
     </div>
 </div>
 @section scripts{
     <script type="text/javascript">
-        $(function() {
-            $("#btnPrint").click(function() {
+        $(function () {
+            $("#btnPrint").click(function () {
                 var headstr = "<html><head><title></title></head><body>";
                 var footstr = "</body>";
                 var newstr = document.all.item("divPrint").innerHTML;

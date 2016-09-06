@@ -33,6 +33,8 @@ namespace SaleManagement.Protal.Models.Reconciliation
         [Range(1, 999999, ErrorMessage = "请输入金额范围1-999999")]
         public double Amount { get; set; }
 
+        [Display(Name = "客户")]
+        [Required(ErrorMessage = "请选择{0}")]
         public string CustomerId { get; set; }
 
         public string CustomerName { get; set; }

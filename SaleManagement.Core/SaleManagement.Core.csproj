@@ -94,6 +94,10 @@
     <Compile Include="Migrations\201609040157462_Init_Create.Designer.cs">
       <DependentUpon>201609040157462_Init_Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609061458426_addWeight.cs" />
+    <Compile Include="Migrations\201609061458426_addWeight.Designer.cs">
+      <DependentUpon>201609061458426_addWeight.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColorForm.cs" />
     <Compile Include="Models\Company.cs" />
@@ -163,6 +167,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201609040157462_Init_Create.resx">
       <DependentUpon>201609040157462_Init_Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609061458426_addWeight.resx">
+      <DependentUpon>201609061458426_addWeight.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

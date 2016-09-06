@@ -141,7 +141,7 @@ namespace DataMigration
 
             var outputWaxRole = new Role
             {
-                Name = "出蜡",
+                Name = "出蜡倒模",
                 Description = "负责订单的蜡具模型设计",
                 Type = RoleType.Production,
                 Deleted = false,
