@@ -10,6 +10,7 @@ namespace SaleManagement.Protal.Models.Order
         All = 0,
         Process = 1,
         ForGoods = 2,
-        HaveGoods = 3
+        HaveGoods = 3,
+        CustomerTobeConfirm = 4
     }
 }

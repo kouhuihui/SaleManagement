@@ -28,7 +28,7 @@
 
     function searchArgs() {
         return {
-            customerId: $("#customerId").data("value"),
+            customerId: $("#customerId").val(),
             createdStartDate: $("#createdStartDate").val(),
             createdEndDate: $("#createdEndDate").val(),
             type: $("#type").val()

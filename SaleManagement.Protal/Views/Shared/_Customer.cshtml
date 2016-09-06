@@ -89,10 +89,11 @@
 <div class="combobox pull-left" id="customerCombobox">
     <div class="combobox-body" style="width: 150px;">
         <div class="combobox-field form-control">
-            <input class="form-control" id="customerId" placeholder="请选择客户" data-value=""><i class="fa fa-angle-down"></i>
+            <input class="form-control" id="vCustomerId" autocomplete="off" placeholder="请选择客户" data-value=""><i class="fa fa-angle-down"></i>
+            <input type="hidden" id="customerId" name="customerId"/>
         </div>
         <ul style="display: none;">
-            <li value="">所有客户</li>
+            <li value="">请选择客户</li>
         </ul>
     </div>
 </div>
