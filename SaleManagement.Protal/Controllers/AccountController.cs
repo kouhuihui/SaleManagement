@@ -1,5 +1,4 @@
 ﻿using Microsoft.Owin;
-using SaleManagement.Core.Models;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models;
 using SaleManagement.Protal.Web;
@@ -12,11 +11,14 @@ namespace SaleManagement.Protal.Controllers
 {
     public class AccountController : AnonymousController
     {
-        //
-        // GET: /Account/Login
-        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            var isAuthenticateduser = OwinContext.Authentication.User.Identity.IsAuthenticated;
+            if (isAuthenticateduser)
+            {
+                return RedirectToLocal(returnUrl);
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -55,16 +57,6 @@ namespace SaleManagement.Protal.Controllers
         {
             OwinContext.Authentication.SignOut();
             return RedirectToLocal("~/");
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl)
-        {
-            if (Url.IsLocalUrl(returnUrl))
-            {
-                return Redirect(returnUrl);
-            }
-
-            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -1,17 +1,14 @@
 ﻿using Dickson.Library.Security.Principal;
+using Dickson.Web.Extensions;
 using Dickson.Web.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Mvc.Filters;
-using System.Security.Principal;
-using System.Security.Claims;
 using SaleManagement.Core.Models;
 using SaleManagement.Managers;
-using Dickson.Web.Extensions;
 using SaleManagement.Protal.Models;
+using System;
+using System.Security.Claims;
+using System.Security.Principal;
+using System.Web;
+using System.Web.Mvc.Filters;
 
 namespace SaleManagement.Protal.Web
 {
@@ -45,7 +42,7 @@ namespace SaleManagement.Protal.Web
             var userModel = (SaleUser)user;
             filterContext.HttpContext.GetOwinContext().SetAppUser(userModel);
             var userViewModel = new SaleUserViewModel(userModel);
-            userViewModel.RoleMenus =  new RoleMenuManager().GetRoleMenus(userModel.RoleId);
+            userViewModel.RoleMenus = new RoleMenuManager().GetRoleMenus(userModel.RoleId);
             filterContext.HttpContext.GetOwinContext().SetAppUser(userViewModel);
         }
 

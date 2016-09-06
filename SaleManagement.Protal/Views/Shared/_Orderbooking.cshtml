@@ -39,7 +39,7 @@
         <div class="attachment">
             <ul data-bind="foreach:files" class="thumbnails gallery">
                 <li class="thumbnail">
-                    <a class="cboxElement" href="javascript:void(0)"><img class="grayscale" data-bind="text:name,attr:{src:url}" style="display: block;"></a>
+                    <a class="cboxElement" href="javascript:void(0)"><img data-bind="text:name,attr:{src:url}" style="display: block;"></a>
                     <div class="well gallery-controls">
                         <a data-bind="click:$parent.deleteFile" href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
                     </div>

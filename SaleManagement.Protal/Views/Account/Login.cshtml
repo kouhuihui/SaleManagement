@@ -36,7 +36,7 @@
                     </div>
                     @Html.ValidationSummary()
                     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-                    {
+                    {   
                         @Html.AntiForgeryToken()
                         <fieldset>
                             <div class="input-group input-group-lg">

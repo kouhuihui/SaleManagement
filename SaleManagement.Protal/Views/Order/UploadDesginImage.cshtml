@@ -16,7 +16,7 @@
                         @foreach (var attachment in Model.Attachments)
                         {
                             <li class="thumbnail" data-id="@attachment.Id">
-                                <a class="cboxElement" href="javascript:void(0)"><img class="grayscale" src="@attachment.Url" style="display: block;"></a>
+                                <a class="cboxElement" href="javascript:void(0)"><img src="@attachment.Url" style="display: block;"></a>
                                 <div class="well gallery-controls">
                                     <a href="javascript:void(0)" onclick="deleteImage('@attachment.Id')" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
                                 </div>

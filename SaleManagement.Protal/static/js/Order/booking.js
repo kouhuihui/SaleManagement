@@ -132,8 +132,8 @@ $(function () {
 	});
 
 	$("#saveOrder").click(function () {
-		if (filesData.length < 2) {
-			shortTips("请上传两张款式图片");
+		if (filesData.length < 1) {
+			shortTips("请上传款式图片");
 			return false;
 		}
 		var attachmentIds = "";
