@@ -1,10 +1,12 @@
 ﻿using Dickson.Web.Mvc.ModelBinding;
+using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models.DailyGoldPrice;
 using SaleManagement.Protal.Web;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -65,7 +67,7 @@ namespace SaleManagement.Protal.Controllers
                 CompanyId = User.CompanyId,
                 CreatorId = User.Id,
                 Price = viewModel.Price,
-                Date =Convert.ToDateTime(viewModel.Date)
+                Date = Convert.ToDateTime(viewModel.Date)
             };
             var manager = new DailyGoldPriceManager(User);
             var result = await manager.SaveDailyGoldPrice(dailyGoldPrice);
@@ -83,6 +85,44 @@ namespace SaleManagement.Protal.Controllers
             var result = await manager.DeleteDailyGoldPriceAsync(id);
 
             return Json(result);
+        }
+
+        public async Task<ActionResult> Add()
+        {
+            var colorFormManager = new BasicDataManager(User);
+            var colorForms = await colorFormManager.GetColorFormsAsync();
+            var dailyGoldPriceViewModels = colorForms.Select(c =>
+            {
+                return new DailyGoldPriceViewModel
+                {
+                    ColorFormId = c.Id,
+                    ColorFormName = c.Name
+                };
+            });
+            return View(dailyGoldPriceViewModels);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Add(IEnumerable<DailyGoldPriceViewModel> dailyGoldPriceViewModels)
+        {
+            if (!ModelState.IsValid)
+                return Json(false, data: ErrorToDictionary());
+
+            var dailyGoldPrices = dailyGoldPriceViewModels.Select(r =>
+            {
+                return new DailyGoldPrice
+                {
+                    ColorFormId = r.ColorFormId,
+                    CompanyId = User.CompanyId,
+                    Date = Convert.ToDateTime(r.Date),
+                    Price = r.Price,
+                    CreatorId = User.Id
+                };
+            });
+            var manager = new DailyGoldPriceManager(User);
+            var result = await manager.SaveDailyGoldPrices(dailyGoldPrices);
+
+            return Json(true);
         }
     }
 }

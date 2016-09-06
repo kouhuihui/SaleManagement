@@ -42,6 +42,11 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
                 {
                     query = query.Where(j => j.OrderStatus == OrderStatus.HaveGoods);
                 }
+
+                if (status == CustomerQueryOrderStatus.CustomerTobeConfirm)
+                {
+                    query = query.Where(j => j.OrderStatus == OrderStatus.CustomerTobeConfirm);
+                }
                 return query;
             };
 

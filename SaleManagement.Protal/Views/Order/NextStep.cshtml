@@ -64,7 +64,7 @@
                 success: function (data) {
                     var $userId = $("#userId");
                     $userId.empty();   //清空resText里面的所有内容
-                    var html = '<option>请选择</option>';
+                    var html = '';
                     $.each(data.data, function (commentIndex, user) {
                         html += '<option value="' + user['id']
                                   + '">' + user['name']

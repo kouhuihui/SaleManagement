@@ -1,29 +1,30 @@
 ﻿$(function () {
     var $customerCombobox = $("#customerCombobox");
-    var $customerInput = $customerCombobox.find("input");
+    var $vCustomerInput = $customerCombobox.find("#vCustomerId");
+    var $customerId = $customerCombobox.find("#customerId");
     var $customerUl = $customerCombobox.find("ul");
     var $customerli = $customerCombobox.find("ul>li");
     var customerstore = [];
     var originCustomerStore = [];
-    $customerInput.on("click", function () {
-        $customerInput.focus();
-        $customerInput.select();
+    $vCustomerInput.on("click", function () {
+        $vCustomerInput.focus();
+        $vCustomerInput.select();
         $customerUl.show();
     });
-    $customerInput.on("keyup", function () {
+    $vCustomerInput.on("keyup", function () {
         doSearch();
     });
-    $customerInput.on("blur", function () {
+    $vCustomerInput.on("blur", function () {
         //$customerUl.hide();
     });
     $customerUl.delegate("li", "click", function () {
         var $this = $(this);
         var value = $this.attr("value");
         if (value === "") {
-            $customerInput.val("");
+            $vCustomerInput.val("");
         } else {
-            $customerInput.val($(this).text());
-            $customerInput.data("value", value);
+            $vCustomerInput.val($(this).text());
+            $customerId.val(value);
         }
         $customerUl.hide();
     });
@@ -64,7 +65,7 @@
     function doSearch() {
         var arr = [];
         for (var i = 0, items = originCustomerStore, len = items.length; i < len; i++) {
-            if (items[i].text.toLowerCase().trim().indexOf($customerInput.val().toLowerCase().trim()) !== -1) {
+            if (items[i].text.toLowerCase().trim().indexOf($vCustomerInput.val().toLowerCase().trim()) !== -1) {
                 arr.push(items[i]);
             }
         }

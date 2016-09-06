@@ -32,17 +32,8 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"><span class="text-danger">*</span>客户：</label>
                             <div class="col-md-2">
-                                @{
-                                    var customers = Model.Customers.Select(c => new SelectListItem
-                                    {
-                                        Value = c.Id,
-                                        Text = c.Name
-                                    });
-                                }
-
-                                @Html.DropDownListFor(model => model.CustomerId, customers, "请选择", new { @class = "form-control" })
+                                @Html.Partial("_Customer")
                                 @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
-
                             </div>
                         </div>
                         <div class="form-group">
@@ -53,7 +44,7 @@
                         </div>
                         @Html.Partial("_Orderbooking")
                     </div>
-                                    }
+                }
             </div>
         </div>
     </div>

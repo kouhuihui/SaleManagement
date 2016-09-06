@@ -30,7 +30,7 @@
         return {
             orderId: $("#orderId").val(),
             shipmentOrderId: $("#shipmentOrderId").val(),
-            customerId: $("#customerId").data("value"),
+            customerId: $("#customerId").val(),
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
             status: $("#shipmentOrderAduitStatus").val()

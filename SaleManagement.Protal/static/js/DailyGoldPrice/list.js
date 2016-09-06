@@ -3,9 +3,11 @@
 		var self = this;
 		self.prices = ko.observableArray(data);
 		self.editClick = function (item, el) {
-			$("#modal").modal({
-				remote: "/DailyGoldPrice/Edit?id=" + item.id
-			});
+		    $("#modal").modal({
+			    remote: "/DailyGoldPrice/Edit?id=" + item.id+"&t="+ new Date().getTime()
+		    }).on("hidden.bs.modal", function () {
+		        $(this).removeData("bs.modal");
+		    });;
 		};
 		self.deleteClick = function (item, el) {
 			$(window).modalDialog({
