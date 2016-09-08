@@ -52,12 +52,14 @@
             public static readonly string CustomerService = "customerService";
             public static readonly string OutputWax = "outputWax";
             public static readonly string Module = "module";
-            public static readonly string SetStone = "setStone";
             public static readonly string Design = "design";
             public static readonly string Pack = "pack";
             public static readonly string Finance = "finance";
             public static readonly string SendAndReceive = "sendAndReceive";
             public static readonly string AssistantStone = "assistantStone";
+            public static readonly string WithTheHand = "withTheHand";
+            public static readonly string MicroInsert = "microInsert";
+            public static readonly string Polishing = "polishing";
         }
     }
 }

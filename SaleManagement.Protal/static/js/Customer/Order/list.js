@@ -17,7 +17,7 @@
                 type: "confirm",
                 okCallBack: function (e, $el) {
                     $.ajax({
-                        url: "/Customer/Order/GoToCustomerConfirmStep",
+                        url: "/Customer/Order/GoToOutputWaxStep",
                         type: "POST",
                         data: {
                             orderId: item.id
@@ -26,7 +26,7 @@
                         success: function (result) {
                             if (result.succeeded) {
                                 $el.data("bs.modal").hide();
-                                self.orders.remove(item);
+                                location.reload();
                             } else {
                                 shortTips(errorMessage(result));
                             }

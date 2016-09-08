@@ -32,8 +32,8 @@ $(function () {
             if (result['succeeded']) {
                 var data = result.data;
                 var str = "";
-                str = str + '<li class="thumbnail"><a class="cboxElement" href="javascript:void(0)"><img  src="' + data.url + '" style="display: block;"></a>';
-                str = str + '<div class="well gallery-controls"><a href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a> </div> </li>';
+                str = str + '<li class="thumbnail" data-id="' + data.id + '"><a class="cboxElement" href="javascript:void(0)"><img  src="' + data.url + '" style="display: block;"></a>';
+                str = str + '<div class="well gallery-controls"><a onclick="deleteImage(\'' + data.id + '\')" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a> </div> </li>';
                 $wrap.find('ul').append(str);
             } else {
                 shortTips(errorMessage(result));

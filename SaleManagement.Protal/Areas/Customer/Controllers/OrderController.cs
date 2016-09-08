@@ -73,9 +73,11 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             return View(model);
         }
 
-        public async Task<JsonResult> GoToCustomerConfirmStep(string orderId)
+        public async Task<JsonResult> GoToOutputWaxStep(string orderId)
         {
-            var result = await ChangeOrderStatus(orderId, OrderStatus.CustomerConfirm);
+            var userManager = new UserManager();
+            var outputWaxUser = (await  userManager.GetUserByRoleAsync(SaleManagentConstants.SystemRole.OutputWax)).FirstOrDefault();
+            var result = await ChangeOrderStatus(orderId, OrderStatus.OutputWax, outputWaxUser==null?"":outputWaxUser.Id);
             return Json(result);
         }
 
@@ -106,14 +108,14 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             }).ToList();
         }
 
-        private async Task<InvokedResult> ChangeOrderStatus(string orderId, OrderStatus status)
+        private async Task<InvokedResult> ChangeOrderStatus(string orderId, OrderStatus status,string currentUserId ="")
         {
             var manager = new OrderManager(User);
             var order = await manager.GetOrderAsync(orderId);
             if (order == null)
                 return InvokedResult.Fail("404", SaleManagentConstants.Errors.OrderNotFound);
 
-            order.CurrentUserId = "";
+            order.CurrentUserId = currentUserId;
             order.OrderStatus = status;
             var result = await manager.UpdateOrderAsync(order);
             if (result.Succeeded)

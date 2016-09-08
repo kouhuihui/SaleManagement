@@ -21,17 +21,11 @@ namespace SaleManagement.Core.Models
         [Display(Name = "客户待确认")]
         CustomerTobeConfirm = 3,
 
-        [Display(Name = "客户已确认")]
-        CustomerConfirm = 4,
-
         [Display(Name = "出蜡倒模")]
         OutputWax = 5,
 
         [Display(Name = "执模")]
         Module = 6,
-
-        [Display(Name = "镶石")]
-        SetStone = 7,
 
         [Display(Name = "打包")]
         Pack = 8,

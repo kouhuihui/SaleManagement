@@ -68,6 +68,9 @@
                                     <!-- /ko -->
                                     <span data-bind="text:number"></span>件
                                 </div>
+                                <!-- ko if:outputWaxCost > 0 -->
+                                <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
+                                <!-- /ko -->
                                 <div data-bind="text:statusName" class="status"></div>
                                 <!-- ko if:status == 3 -->
                                 <button class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>

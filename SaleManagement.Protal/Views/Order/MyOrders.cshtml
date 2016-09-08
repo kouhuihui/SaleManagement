@@ -27,7 +27,7 @@
                             <th>订单编号</th>
                             <th>成色</th>
                             <th>指圈</th>
-                            <th>客来石重</th>
+                            <th>设计费用(元)</th>
                             <th>件数</th>
                             <th>客户</th>
                             <th>下单日期</th>
@@ -41,13 +41,13 @@
                             <td data-bind="text:id"></td>
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:rangSize"></td>
-                            <td data-bind="text:mainStoneSize"></td>
+                            <td data-bind="text:outputWaxCost"></td>
                             <td data-bind="text:number"></td>
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:created"></td>
                             <td></td>
                             <td>
-                                <!-- ko if:status==2 -->
+                                <!-- ko if:status==2 | status ==3 -->
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmClick">客户确认</a>
                                 <!-- /ko -->

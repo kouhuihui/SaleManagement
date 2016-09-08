@@ -26,7 +26,7 @@
                         success: function (result) {
                             if (result.succeeded) {
                                 $el.data("bs.modal").hide();
-                                self.orders.remove(item);
+                                location.reload();
                             } else {
                                 shortTips(errorMessage(result));
                             }

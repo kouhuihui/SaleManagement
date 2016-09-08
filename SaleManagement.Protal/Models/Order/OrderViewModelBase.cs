@@ -48,6 +48,7 @@ namespace SaleManagement.Protal.Models.Order
             ColorFormName = order.ColorForm?.Name;
             GemCategoryName = order.GemCategory?.Name;
             ProductCategoryName = order.ProductCategory?.Name;
+            OutputWaxCost = order.OutputWaxCost;
         }
 
         public string Id { get; set; }
@@ -146,6 +147,8 @@ namespace SaleManagement.Protal.Models.Order
         public string GemCategoryName { get; set; }
 
         public string ProductCategoryName { get; set; }
+
+        public double OutputWaxCost { get; set; }
 
         string GetRang(SaleManagement.Core.Models.Order order)
         {

@@ -158,15 +158,7 @@ namespace DataMigration
                 Code = SaleManagentConstants.SystemRole.Module,
                 IsSystemRole = true
             };
-            var setStoneRole = new Role
-            {
-                Name = "镶石",
-                Description = "负责订单的钻石镶嵌",
-                Type = RoleType.Production,
-                Deleted = false,
-                Code = SaleManagentConstants.SystemRole.SetStone,
-                IsSystemRole = true
-            };
+
             var designRole = new Role
             {
                 Name = "设计师",
@@ -212,17 +204,50 @@ namespace DataMigration
                 Code = SaleManagentConstants.SystemRole.Pack,
                 IsSystemRole = true
             };
+
+            var withTheHandRole = new Role
+            {
+                Name = "手镶",
+                Description = "手镶",
+                Type = RoleType.Production,
+                Deleted = false,
+                Code = SaleManagentConstants.SystemRole.WithTheHand,
+                IsSystemRole = true
+            };
+
+            var microInsertRole = new Role
+            {
+                Name = "微镶",
+                Description = "微镶",
+                Type = RoleType.Production,
+                Deleted = false,
+                Code = SaleManagentConstants.SystemRole.MicroInsert,
+                IsSystemRole = true
+            };
+
+            var polishingRole = new Role
+            {
+                Name = "抛光",
+                Description = "抛光",
+                Type = RoleType.Production,
+                Deleted = false,
+                Code = SaleManagentConstants.SystemRole.Polishing,
+                IsSystemRole = true
+            };
+
             context.Roles.Add(commonUserRole);
             context.Roles.Add(adminRole);
             context.Roles.Add(customerServiceRole);
             context.Roles.Add(outputWaxRole);
-            context.Roles.Add(setStoneRole);
             context.Roles.Add(designRole);
             context.Roles.Add(sendAndReceiveRole);
             context.Roles.Add(financeRole);
             context.Roles.Add(assistantStoneRole);
             context.Roles.Add(moduleRole);
             context.Roles.Add(packRole);
+            context.Roles.Add(withTheHandRole);
+            context.Roles.Add(microInsertRole);
+            context.Roles.Add(polishingRole);
             context.SaveChanges();
         }
 

@@ -28,13 +28,14 @@ namespace SaleManagement.Protal.Models.Order
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed ||
-                             f.OrderStatus == OrderStatus.Distribution || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
+                             f.OrderStatus == OrderStatus.Distribution || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm);
                 }
 
                 if (user.Role.Code == SaleManagentConstants.SystemRole.SendAndReceive)
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.OutputWax ||
-                             f.OrderStatus == OrderStatus.SetStone || f.OrderStatus == OrderStatus.Module || f.OrderStatus == OrderStatus.Pack);
+                             f.OrderStatus == OrderStatus.WithTheHand || f.OrderStatus == OrderStatus.MicroInsert
+                             || f.OrderStatus == OrderStatus.Polishing || f.OrderStatus == OrderStatus.Module || f.OrderStatus == OrderStatus.Pack);
                 }
 
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Finance)

@@ -53,7 +53,7 @@ namespace SaleManagement.Protal.Controllers
             var manager = new OrderManager(User);
             Func<IQueryable<Order>, IQueryable<Order>> filter = query =>
             {
-                query = query.Where(j => j.CurrentUserId == User.Id);
+                query = query.Where(j => j.OrderStatus == OrderStatus.Design || j.OrderStatus == OrderStatus.CustomerTobeConfirm);
                 return query;
             };
             var paging = await manager.GetOrdersAsync(request.Start, request.Take, filter);
@@ -314,6 +314,9 @@ namespace SaleManagement.Protal.Controllers
         [HttpPost, Route("{orderId}/GoNextStep")]
         public async Task<JsonResult> GoNextStep(string orderId, OrderStatus nextStatus, string userId)
         {
+            if (string.IsNullOrEmpty(userId))
+                return Json(false, "请选择处理人");
+
             var manager = new OrderManager(User);
             var order = await manager.GetOrderAsync(orderId);
             if (order == null)

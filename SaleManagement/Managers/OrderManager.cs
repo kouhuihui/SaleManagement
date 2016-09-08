@@ -86,9 +86,7 @@ namespace SaleManagement.Managers
         {
             var query = DbContext.Set<Order>().AsQueryable().Where(o=>o.ComplayId == User.CompanyId);
             var unConfirmedCountQuery = query.Where(o => o.OrderStatus == OrderStatus.UnConfirmed).Select(j => new { Key = "unconfirmed", Id = j.Id }); 
-            var processingCountQuery = query.Where(o => o.OrderStatus == OrderStatus.Distribution || o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.CustomerTobeConfirm
-            || o.OrderStatus == OrderStatus.CustomerConfirm || o.OrderStatus == OrderStatus.OutputWax || o.OrderStatus == OrderStatus.Module || o.OrderStatus == OrderStatus.SetStone
-            || o.OrderStatus == OrderStatus.Pack || o.OrderStatus == OrderStatus.ToBeShip).Select(j => new { Key = "processing", Id = j.Id });
+            var processingCountQuery = query.Where(o => o.OrderStatus != OrderStatus.UnConfirmed  && o.OrderStatus != OrderStatus.ToBeShip && o.OrderStatus != OrderStatus.Shipmenting && o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods).Select(j => new { Key = "processing", Id = j.Id });
             var shipmentCountQuery = query.Where(o => o.OrderStatus == OrderStatus.Shipment).Select(j => new { Key = "shipment", Id = j.Id });
             var unionList = await unConfirmedCountQuery.Union(processingCountQuery)
                 .Union(shipmentCountQuery).GroupBy(a => a.Key).Select(g => new { Status = g.Key, Count = g.Count() }).ToListAsync();
