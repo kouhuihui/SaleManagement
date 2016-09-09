@@ -211,7 +211,7 @@
             var $btnSave = $("#btnSave");
             if ($("#AuditStatus").val() == "1") {
                 $("tbody input[type=text]").attr("disabled", true);
-                //$btnSave.hide();
+                $btnSave.hide();
             }
             $("#tbody input[data-name=goldWeight]").on("blur", function () {
                 $this = $(this);

@@ -54,6 +54,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/EntityFramework.dll">
       <publishTime>09/03/2016 20:53:13</publishTime>
     </File>
+    <File Include="bin/EntityFramework.Extended.dll">
+      <publishTime>09/10/2016 00:45:45</publishTime>
+    </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
       <publishTime>09/03/2016 20:53:13</publishTime>
     </File>
@@ -187,10 +190,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/07/2016 23:15:37</publishTime>
     </File>
     <File Include="bin/SaleManagement.dll">
-      <publishTime>09/07/2016 23:15:38</publishTime>
+      <publishTime>09/10/2016 01:29:23</publishTime>
     </File>
     <File Include="bin/SaleManagement.Protal.dll">
-      <publishTime>09/07/2016 23:32:18</publishTime>
+      <publishTime>09/10/2016 01:29:27</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
       <publishTime>09/03/2016 20:53:14</publishTime>
@@ -679,7 +682,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/06/2016 22:13:11</publishTime>
     </File>
     <File Include="static/js/shipment/list.js">
-      <publishTime>09/06/2016 22:13:11</publishTime>
+      <publishTime>09/10/2016 01:28:53</publishTime>
     </File>
     <File Include="static/js/SystemMenu/authorized.js">
       <publishTime>09/03/2016 20:53:10</publishTime>
@@ -853,7 +856,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2016 20:53:08</publishTime>
     </File>
     <File Include="Views/Order/UploadDesginImage.cshtml">
-      <publishTime>09/07/2016 22:44:52</publishTime>
+      <publishTime>09/08/2016 22:42:16</publishTime>
     </File>
     <File Include="Views/Reconciliation/AddPayment.cshtml">
       <publishTime>09/07/2016 00:49:19</publishTime>
@@ -889,10 +892,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/06/2016 22:13:11</publishTime>
     </File>
     <File Include="Views/Shipment/Create.cshtml">
-      <publishTime>09/06/2016 23:57:50</publishTime>
+      <publishTime>09/10/2016 01:18:58</publishTime>
     </File>
     <File Include="Views/Shipment/List.cshtml">
-      <publishTime>09/06/2016 22:13:11</publishTime>
+      <publishTime>09/10/2016 01:13:59</publishTime>
     </File>
     <File Include="Views/SystemMenu/Authorized.cshtml">
       <publishTime>09/03/2016 20:53:08</publishTime>
@@ -913,7 +916,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>09/03/2016 20:53:08</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/07/2016 00:49:38</publishTime>
+      <publishTime>09/10/2016 01:29:29</publishTime>
     </File>
   </ItemGroup>
 </Project>
