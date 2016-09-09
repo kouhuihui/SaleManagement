@@ -1,4 +1,5 @@
 ﻿using Dickson.Core.ComponentModel;
+using EntityFramework.Extensions;
 using SaleManagement.Core.Models;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace SaleManagement.Managers
 
         public async Task<Paging<ShipmentOrder>> GetShipmentOrdersAsync(int start, int take, Func<IQueryable<ShipmentOrder>, IQueryable<ShipmentOrder>> filter = null)
         {
-            var query = DbContext.Set<ShipmentOrder>().Where(o => o.CreatorId != null);
+            var query = DbContext.Set<ShipmentOrder>().AsQueryable();
             if (filter != null)
             {
                 query = filter(query);
@@ -53,6 +54,16 @@ namespace SaleManagement.Managers
 
         public async Task<InvokedResult> UpdateAsync(ShipmentOrder ShipmentOrder)
         {
+            ShipmentOrder.CreatorId = User.Id;
+            ShipmentOrder.CreatorName = User.Name;
+            DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
+            await UpdateShipmentOrderInfosAsync(ShipmentOrder);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> AuditShipmentOrder(ShipmentOrder ShipmentOrder)
+        {
             DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
@@ -66,6 +77,13 @@ namespace SaleManagement.Managers
             DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
+        }
+
+        private async Task UpdateShipmentOrderInfosAsync(ShipmentOrder order)
+        {
+            var shipmentOrderInfos = DbContext.Set<ShipmentOrderInfo>();
+            await shipmentOrderInfos.Where(a => a.ShipmentOrderId == order.Id).DeleteAsync();
+            shipmentOrderInfos.AddRange(order.ShipmentOrderInfos);
         }
     }
 }

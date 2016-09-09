@@ -52,8 +52,11 @@
                         <div class="form-group col-md-4">
                             <label class="control-label">客户：</label>
                             <span>@Model.CustomerName</span>
+                            @Html.HiddenFor(model => model.Id)
                             @Html.HiddenFor(model=>model.CustomerId)
                             @Html.HiddenFor(model => model.CustomerName)
+                            @Html.HiddenFor(model => model.Created)
+                            @Html.HiddenFor(model => model.AuditStatus)
                         </div>
                         <div class="form-group col-md-4">
                             <label class="control-label">出货日期：</label>
@@ -121,25 +124,25 @@
                                     <td width="50"><input type="text" data-index="@index" data-name="weight" name="ShipmentOrderInfos[@index].weight" class="w50" value="@item.Weight" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="goldWeight" name="ShipmentOrderInfos[@index].GoldWeight" class="w50" value="@item.GoldWeight" /></td>
                                     <td width="30"><input type="text" data-index="@index" data-name="lossRate" name="ShipmentOrderInfos[@index].LossRate" class="w30" value="@item.LossRate" /></td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="hhz" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="hhz" class="w50" value="@item.Hhz" /></td>
                                     <td width="50">@item.ColorFormName</td>
                                     <td width="50">@item.GoldPrice.ToString("f2")<input type="hidden" data-name="goldPrice" name="ShipmentOrderInfos[@index].goldPrice" class="w30" value="@item.GoldPrice" /></td>
-                                    <td width="50"><input type="text" data-name="goldAmount" name="ShipmentOrderInfos[@index].GoldAmount" class="w50" /></td>
+                                    <td width="50"><input type="text" data-name="goldAmount" name="ShipmentOrderInfos[@index].GoldAmount" class="w50" value="@item.GoldAmount" /></td>
                                     <td width="20">@item.MainStoneNumber</td>
                                     <td width="50">@item.MainStoneSize</td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="riskFee" name="ShipmentOrderInfos[@index].RiskFee" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="riskFee" name="ShipmentOrderInfos[@index].RiskFee" class="w50" value="@item.RiskFee"/></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="totalSetStoneWorkingCost" name="ShipmentOrderInfos[@index].TotalSetStoneWorkingCost" value="@item.TotalSetStoneWorkingCost" class="w50" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="sideStoneTotalAmount" name="ShipmentOrderInfos[@index].SideStoneTotalAmount" value="@item.SideStoneTotalAmount.ToString("f2")" class="w50" /></td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="basicCost" class="w50" name="ShipmentOrderInfos[@index].BasicCost" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="basicCost" class="w50" name="ShipmentOrderInfos[@index].BasicCost" value="@item.BasicCost" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="outputWaxCost" name="ShipmentOrderInfos[@index].OutputWaxCost" value="@item.OutputWaxCost" class="w50" /></td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="otherCost" name="ShipmentOrderInfos[@index].OtherCost" class="w50" /></td>
-                                    <td width="50"><input type="text" data-index="@index" data-name="totalAmount" name="ShipmentOrderInfos[@index].TotalAmount" class="w50" /></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="otherCost" name="ShipmentOrderInfos[@index].OtherCost" class="w50" value="@item.OtherCost"/></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="totalAmount" name="ShipmentOrderInfos[@index].TotalAmount" class="w50" value="@item.TotalAmount" /></td>
                                 </tr>
                                 index++;
                             }
                         </tbody>
                     </table>
-                    <input class="btn btn-primary" type="submit" value="保存" />
+                    <input class="btn btn-primary" id="btnSave" type="submit" value="保存" />
                 </div>
             </div>
         </div>
@@ -205,6 +208,11 @@
     @Scripts.Render("~/bundles/js/ajaxForm")
     <script type="text/javascript">
         $(function () {
+            var $btnSave = $("#btnSave");
+            if ($("#AuditStatus").val() == "1") {
+                $("tbody input[type=text]").attr("disabled", true);
+                //$btnSave.hide();
+            }
             $("#tbody input[data-name=goldWeight]").on("blur", function () {
                 $this = $(this);
                 CalculationAmount($this);
@@ -300,8 +308,8 @@
                 $shipmentTotalAmount.val(shipmentTotalAmount.toFixed(2));
             }
 
-            var $from = $("#shipmentCreate");
-            $from.ajaxForm({
+            var $form = $("#shipmentCreate");
+            $form.ajaxForm({
                 success: function (result) {
                     if (result.succeeded) {
                         shortTips("保存成功");
@@ -313,6 +321,12 @@
                     }
                 }
             });
+
+            $btnSave.click(function () {
+                if ($("#Id").val() != "") {
+                    $form.attr("target", "_self").attr("action", "/Shipment/Edit");
+                }
+            })
         });
     </script>
 }

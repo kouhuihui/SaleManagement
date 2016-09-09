@@ -66,7 +66,7 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrderViewModel.ShipmentOrderInfos = await Task.WhenAll(orders.Select(async o =>
             {
                 var dailyGoldPriceManager = new DailyGoldPriceManager();
-                var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId,DateTime.Now.Date);
+                var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId, DateTime.Now.Date);
                 var shipmentOrderInfoViewModel = new ShipmentOrderInfoViewModel(o)
                 {
                     GoldPrice = dailyGoldPrice == null ? 0 : dailyGoldPrice.Price,
@@ -82,6 +82,18 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrderViewModel.CustomerId = customer.Id;
             shipmentOrderViewModel.TotalNumber = shipmentOrderViewModel.ShipmentOrderInfos.Sum(r => r.Number);
             return View(shipmentOrderViewModel);
+        }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            var manager = new ShipmentManager(User);
+            var shipmentOrder = await manager.GetShipmentOrderAsync(id);
+            var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
+            shipmentOrderViewModel.ShipmentOrderInfos.Each(r =>
+            {
+                r.Hhz = r.GoldWeight * (1 + r.LossRate / 100);
+            });
+            return View("create", shipmentOrderViewModel);
         }
 
         [HttpPost]
@@ -105,6 +117,20 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> Edit(ShipmentOrderViewModel shipmentOrderViewModel)
+        {
+            var shipmentOrder = new ShipmentOrder();
+
+            var shipmentManager = new ShipmentManager(User);
+            shipmentOrder = await shipmentManager.GetShipmentOrderAsync(shipmentOrderViewModel.Id);
+            shipmentOrder = Mapper.Map<ShipmentOrderViewModel, ShipmentOrder>(shipmentOrderViewModel);
+            shipmentOrder.ShipmentOrderInfos.Each(r => r.ShipmentOrderId = shipmentOrder.Id);
+
+            var result = await shipmentManager.UpdateAsync(shipmentOrder);
+            return Json(result);
+        }
+
+        [HttpPost]
         public async Task<JsonResult> Audit(string id)
         {
             var manager = new ShipmentManager(User);
@@ -112,7 +138,7 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrder.AuditStatus = ShipmentOrderAduitStatus.Pass;
             shipmentOrder.AuditorName = User.Name;
             shipmentOrder.AuditDate = DateTime.Now;
-            var result = await manager.UpdateAsync(shipmentOrder);
+            var result = await manager.AuditShipmentOrder(shipmentOrder);
             if (result.Succeeded)
             {
                 var orderIds = shipmentOrder.ShipmentOrderInfos.Select(r => r.Id);

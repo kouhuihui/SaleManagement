@@ -37,6 +37,8 @@ namespace SaleManagement.Protal.Models.Shipment
 
         public double LossRate { get; set; }
 
+        public double Hhz { get; set; }
+
         public double GoldPrice { get; set; }
 
         public double GoldAmount { get; set; }

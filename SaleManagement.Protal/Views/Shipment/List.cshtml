@@ -69,6 +69,7 @@
                             <th>制单日期</th>
                             <th>审核人</th>
                             <th>审核日期</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" data-bind="foreach:orders">
@@ -91,6 +92,12 @@
                             <td data-bind="text:created"></td>
                             <td data-bind="text:auditorName"></td>
                             <td data-bind="text:auditDate"></td>
+                            <td>
+                                <!-- ko if:auditStatus==0 -->
+                                <a class="btn btn-primary btn-sm" data-bind="attr:{href:'/shipment/edit?id='+id}">编辑</a>
+                                <!-- /ko -->
+                                <a class="btn btn-danger btn-sm" data-bind="attr:{href:'/shipment/edit?id='+id}">预览</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
