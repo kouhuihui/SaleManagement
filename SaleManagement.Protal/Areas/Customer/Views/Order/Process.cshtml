@@ -57,21 +57,32 @@
         </li>
     </ul>
 </div>
-<div class="alert alert-success" role="alert">订单 @ViewBag.orderId 的制作流程</div>
-@foreach (var log in Model)
-{
-    <div style="float:left;display:inline-block;width:100%">
-        <div style="width:100px;float:left">@log.Created.ToString("yyyy-MM-dd")</div>
-        <div class="line">
-            <div class="col-3">
-                <span class="small"></span>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>跟单</h2>
             </div>
-            <div class="col-9">
-                <p>@log.Created.ToShortTimeString()</p>
-                <p style="color:red">@log.Content</p>
+            <div class="box-content">
+                <div class="alert alert-success" role="alert">订单 @ViewBag.orderId 的制作流程</div>
+                @foreach (var log in Model)
+                {
+                    <div style="display:inline-block;width:100%">
+                        <div style="width:100px;float:left">@log.Created.ToString("yyyy-MM-dd")</div>
+                        <div class="line">
+                            <div class="col-3">
+                                <span class="small"></span>
+                            </div>
+                            <div class="col-9">
+                                <p>@log.Created.ToShortTimeString()</p>
+                                <p style="color:red">@log.Content</p>
+                            </div>
+                        </div>
+                    </div>
+
+                }
             </div>
         </div>
     </div>
-
-}
- 
+    <!--/span-->
+</div><!--/row-->

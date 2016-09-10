@@ -397,6 +397,7 @@
     <Content Include="Areas\Customer\Views\Order\Process.cshtml" />
     <Content Include="Areas\Customer\Views\Reconciliation\List.cshtml" />
     <Content Include="Bundles.config" />
+    <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="static\js\Mvc\jquery.validate.js" />

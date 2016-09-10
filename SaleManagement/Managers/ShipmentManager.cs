@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SaleManagement.Managers
@@ -52,29 +51,36 @@ namespace SaleManagement.Managers
             return await DbContext.Set<ShipmentOrder>().FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<InvokedResult> UpdateAsync(ShipmentOrder ShipmentOrder)
+
+        public async Task<ShipmentOrder> GetShipmentOrderByOrderIdAsync(string orderId)
         {
-            ShipmentOrder.CreatorId = User.Id;
-            ShipmentOrder.CreatorName = User.Name;
-            DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
-            await UpdateShipmentOrderInfosAsync(ShipmentOrder);
+            var shipmentInfo = await DbContext.Set<ShipmentOrderInfo>().FirstOrDefaultAsync(r => r.Id == orderId);
+            return shipmentInfo.ShipmentOrder;
+        }
+
+        public async Task<InvokedResult> UpdateAsync(ShipmentOrder shipmentOrder)
+        {
+            shipmentOrder.CreatorId = User.Id;
+            shipmentOrder.CreatorName = User.Name;
+            DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
+            await UpdateShipmentOrderInfosAsync(shipmentOrder);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
 
-        public async Task<InvokedResult> AuditShipmentOrder(ShipmentOrder ShipmentOrder)
+        public async Task<InvokedResult> AuditShipmentOrder(ShipmentOrder shipmentOrder)
         {
-            DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
+            DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
 
-        public async Task<InvokedResult> CreateAsync(ShipmentOrder ShipmentOrder)
+        public async Task<InvokedResult> CreateAsync(ShipmentOrder shipmentOrder)
         {
-            ShipmentOrder.CreatorId = User.Id;
-            ShipmentOrder.CreatorName = User.Name;
-            ShipmentOrder.Created = DateTime.Now;
-            DbContext.Set<ShipmentOrder>().AddOrUpdate(ShipmentOrder);
+            shipmentOrder.CreatorId = User.Id;
+            shipmentOrder.CreatorName = User.Name;
+            shipmentOrder.Created = DateTime.Now;
+            DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }

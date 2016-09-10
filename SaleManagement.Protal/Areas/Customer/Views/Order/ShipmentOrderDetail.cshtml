@@ -1,0 +1,114 @@
+﻿@model SaleManagement.Protal.Models.Shipment.ShipmentOrderViewModel
+@{
+    ViewBag.Title = "ShipmentOrderDetail";
+    Layout = "~/Views/Shared/_customerLayout.cshtml";
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/customer/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/customer/order/list">跟单</a>
+        </li>
+        <li>
+            出货单详情
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>出货单详情</h2>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable">
+                    <tbody>
+                        <tr>
+                            <td>
+                                出货单号：
+                            </td>
+                            <td>
+                                @Model.Id
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                出货日期：
+                            </td>
+                            <td>
+                                @Model.DeliveryDate
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                件数合计：
+                            </td>
+                            <td>
+                                @Model.TotalNumber
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                总重合计(g)：
+                            </td>
+                            <td>
+                                @Model.TotalWeight
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                总金合计(g)：
+                            </td>
+                            <td>
+                                @Model.TotalGoldWeight
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                总额合计(元)：
+                            </td>
+                            <td>
+                                @Model.TotalAmount
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <table class="table table-striped table-bordered bootstrap-datatable">
+                    <thead>
+                    <tr>
+                        <th>订单号</th>
+                        <th>详情</th>
+                    </tr>
+                    </thead>
+                    @foreach (var item in Model.ShipmentOrderInfos)
+                    {
+                        <tr>
+                            <td class="col-md-3 col-xs-6">@item.Id</td>
+                            <td>
+                                <div>总重(g)： @item.Weight</div>
+                                <div>含耗重(g)： @item.Hhz</div>
+                                <div>金价(元)： @item.GoldPrice</div>
+                                <div>金料额(元)： @item.GoldAmount</div>
+                                <div>主石数： @item.Number</div>
+                                <div>主石重(g)： @item.Weight</div>
+                                <div>风险费(元)： @item.RiskFee</div>
+                                <div>镶石工费(元)： @item.TotalSetStoneWorkingCost</div>
+                                <div>副石额(元)： @item.SideStoneTotalAmount</div>
+                                <div>基本工费(元)： @item.BasicCost</div>
+                                <div>起蜡/出版(元)： @item.OutputWaxCost</div>
+                                <div>其他工艺(元)： @item.OtherCost</div>
+                                <div>总额(元)： @item.TotalAmount</div>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
