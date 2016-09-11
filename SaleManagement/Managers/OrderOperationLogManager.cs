@@ -54,9 +54,6 @@ namespace SaleManagement.Managers
                 case OrderStatus.UnConfirmed:
                     content = "创建订单";
                     break;
-                case OrderStatus.Distribution:
-                    content = "客服确认订单";
-                    break;
                 case OrderStatus.Design:
                     content = "进入设计部门";
                     break;
@@ -64,7 +61,7 @@ namespace SaleManagement.Managers
                     content = "设计师完成设计";
                     break;
                 case OrderStatus.OutputWax:
-                    content = "进入出蜡倒模部门";
+                    content = "进入出蜡部门";
                     break;
                 case OrderStatus.Module:
                     content = "进入执模部门";

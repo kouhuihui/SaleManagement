@@ -247,35 +247,37 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
-        [Route("{orderId}/Distribution")]
-        public ActionResult DistributionOrder(string orderId)
+        public ActionResult DistributionOrder(string orderIds)
         {
             var model = new DistributionOrderViewModel();
-            model.OrderId = orderId;
+            model.OrderIds = orderIds;
             return View(model);
         }
 
-        [HttpPost, Route("{orderId}/Distribution")]
-        public async Task<JsonResult> DistributionOrder(string orderId, ModuleType moduleType, string userId)
+        [HttpPost]
+        public async Task<JsonResult> DistributionOrder([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, ModuleType moduleType)
         {
             var manager = new OrderManager(User);
-            var order = await manager.GetOrderAsync(orderId);
-            order.ModuleType = moduleType;
-            order.CurrentUserId = userId;
-
-            if (order.ModuleType == ModuleType.Jina || order.ModuleType == ModuleType.Customer)
+            var orders = await manager.GetOrdersAsync(orderIds);
+            var orderStatus = OrderStatus.UnConfirmed;
+            if (moduleType == ModuleType.Jina || moduleType == ModuleType.Customer)
             {
-                order.OrderStatus = OrderStatus.OutputWax;
+                orderStatus = OrderStatus.OutputWax;
             }
             else
             {
-                order.OrderStatus = OrderStatus.Design;
+                orderStatus = OrderStatus.Design;
             }
-            var result = await manager.UpdateOrderAsync(order);
+            foreach (var order in orders)
+            {
+                order.ModuleType = moduleType;
+                order.OrderStatus = orderStatus;
+            }
+            var result = await manager.UpdateOrdersAsync(orders);
             if (result.Succeeded)
             {
                 var operationLogManager = new OrderOperationLogManager(User);
-                await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+                await operationLogManager.AddLogAsync(orderStatus, orderIds);
             }
             return Json(result);
         }
@@ -304,31 +306,30 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
-        [Route("{orderId}/NextStep")]
-        public ActionResult NextStep(string orderId)
+        public ActionResult NextStep(string orderIds)
         {
-            ViewBag.OrderId = orderId;
+            ViewBag.OrderIds = orderIds;
             return View();
         }
 
-        [HttpPost, Route("{orderId}/GoNextStep")]
-        public async Task<JsonResult> GoNextStep(string orderId, OrderStatus nextStatus, string userId)
+        [HttpPost]
+        public async Task<JsonResult> NextStep([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, OrderStatus nextStatus, string userId)
         {
             if (string.IsNullOrEmpty(userId))
                 return Json(false, "请选择处理人");
 
             var manager = new OrderManager(User);
-            var order = await manager.GetOrderAsync(orderId);
-            if (order == null)
-                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
-
-            order.CurrentUserId = userId;
-            order.OrderStatus = nextStatus;
-            var result = await manager.UpdateOrderAsync(order);
+            var orders = await manager.GetOrdersAsync(orderIds);
+            foreach (var order in orders)
+            {
+                order.CurrentUserId = userId;
+                order.OrderStatus = nextStatus;
+            }
+            var result = await manager.UpdateOrdersAsync(orders);
             if (result.Succeeded)
             {
                 var operationLogManager = new OrderOperationLogManager(User);
-                await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+                await operationLogManager.AddLogAsync(nextStatus, orderIds);
             }
 
             return Json(result);
@@ -425,15 +426,18 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
-        [Route("{orderId}/Pack")]
-        public ActionResult Pack(string orderId)
+        public async Task<ActionResult> Pack(string orderId)
         {
             var model = new OrderPackViewModel();
-            model.OrderId = orderId;
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            model.OrderId = order.Id;
+            model.GoldWeight = order.GoldWeight;
+            model.Weight = order.Weight;
             return View(model);
         }
 
-        [HttpPost, Route("{orderId}/Pack")]
+        [HttpPost]
         public async Task<JsonResult> Pack(OrderPackViewModel viewModel)
         {
             var manager = new OrderManager(User);

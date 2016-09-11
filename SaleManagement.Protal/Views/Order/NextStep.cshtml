@@ -4,9 +4,9 @@
     Layout = null;
 }
 
-@using (Html.BeginForm("GoNextStep", "Order", FormMethod.Post, new { id = "nextStepForm" }))
+@using (Html.BeginForm("NextStep", "Order", FormMethod.Post, new { id = "nextStepForm" }))
 {
-    <input type="hidden" id="orderId" name="orderId" value="@ViewBag.OrderId" />
+    <input type="hidden" id="orderIds" name="orderIds" value="@ViewBag.OrderIds" />
     <div class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
@@ -19,12 +19,12 @@
                 </label>
                 <div class="col-md-10">
                     <div>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.OutputWax" data-value="@((int)OrderStatus.OutputWax)">出蜡倒模</span>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Module" data-value="@((int)OrderStatus.Module)">执模</span>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.WithTheHand" data-value="@((int)OrderStatus.WithTheHand)">手镶</span>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.MicroInsert" data-value="@((int)OrderStatus.MicroInsert)">微镶</span>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Polishing" data-value="@((int)OrderStatus.Polishing)">抛光</span>
-                        <span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Pack" data-value="@((int)OrderStatus.Pack)">打包</span>
+                        @*<span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.OutputWax" data-value="@((int)OrderStatus.OutputWax)">出蜡</span>*@
+                        <span class="btn btn-default mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Module" data-value="@((int)OrderStatus.Module)">执模</span>
+                        <span class="btn btn-default mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.WithTheHand" data-value="@((int)OrderStatus.WithTheHand)">手镶</span>
+                        <span class="btn btn-default mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.MicroInsert" data-value="@((int)OrderStatus.MicroInsert)">微镶</span>
+                        <span class="btn btn-default mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Polishing" data-value="@((int)OrderStatus.Polishing)">抛光</span>
+                        @*<span class="btn btn-default col-md-4 mtop10" name="btnSpan" data-role="@SaleManagentConstants.SystemRole.Pack" data-value="@((int)OrderStatus.Pack)">打包</span>*@
                         <input type="hidden" id="nextStatus" name="nextStatus" />
                     </div>
                 </div>

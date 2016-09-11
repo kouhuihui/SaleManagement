@@ -8,6 +8,6 @@ namespace SaleManagement.Protal.Models.Order
 {
     public class DistributionOrderViewModel
     {
-        public string OrderId { get; set; }
+        public string OrderIds { get; set; }
     }
 }

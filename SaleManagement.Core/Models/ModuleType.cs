@@ -9,22 +9,25 @@ namespace SaleManagement.Core.Models
 {
     public enum ModuleType
     {
+        [Display(Name = "")]
+        Default = 0,
+
         [Display(Name="唧蜡版")]
-        Jina = 0 ,
+        Jina = 1 ,
 
         [Display(Name = "出蜡版")]
-        Exist = 1,
+        Exist = 2,
 
         [Display(Name = "改蜡版")]
-        Change =2,
+        Change =3,
 
         [Display(Name = "新做版")]
-        New =3,
+        New =4,
 
         [Display(Name = "雕蜡版")]
-        Carving =4,
+        Carving =5,
 
         [Display(Name = "自来蜡")]
-        Customer =5
+        Customer =6
     }
 }

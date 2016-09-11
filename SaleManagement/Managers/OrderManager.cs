@@ -35,6 +35,17 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
+        public async Task<InvokedResult> UpdateOrdersAsync(IEnumerable<Order> orders)
+        {
+            Requires.NotNull(orders, "orders");
+            foreach (var order in orders)
+            {
+                DbContext.Set<Order>().AddOrUpdate(order);
+            }
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
         public async Task<InvokedResult> UpdateOrderStatusAsync( OrderStatus status, IEnumerable<string> orderIds)
         {
             if (!orderIds.Any())

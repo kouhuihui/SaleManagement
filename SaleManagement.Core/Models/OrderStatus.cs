@@ -12,20 +12,29 @@ namespace SaleManagement.Core.Models
         [Display(Name = "未确认生产")]
         UnConfirmed = 0,
 
-        [Display(Name = "分单")]
-        Distribution = 1,
-
         [Display(Name = "设计师设计")]
         Design = 2,
 
         [Display(Name = "客户待确认")]
         CustomerTobeConfirm = 3,
 
-        [Display(Name = "出蜡倒模")]
+        [Display(Name = "客户已确认")]
+        CustomerConfirm = 4,
+
+        [Display(Name = "出蜡")]
         OutputWax = 5,
 
         [Display(Name = "执模")]
         Module = 6,
+
+        [Display(Name = "手镶")]
+        WithTheHand = 13,
+
+        [Display(Name = "微镶")]
+        MicroInsert = 14,
+
+        [Display(Name = "抛光")]
+        Polishing = 15,
 
         [Display(Name = "打包")]
         Pack = 8,
@@ -41,14 +50,5 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "已收货")]
         HaveGoods = 12,
-
-        [Display(Name = "手镶")]
-        WithTheHand = 13,
-
-        [Display(Name = "微镶")]
-        MicroInsert = 14,
-
-        [Display(Name = "抛光")]
-        Polishing = 15,
     }
 }

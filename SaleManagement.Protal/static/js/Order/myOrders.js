@@ -11,7 +11,7 @@
             $(window).modalDialog({
                 title: "提示",
                 smallTitle: "",
-                content: "确认进入客户确认阶段</br>出蜡倒模(元)：<input style=\"width:40px\" name=\"outputWaxCost\"/>",
+                content: "确认进入客户确认阶段</br>设计费用(元)：<input style=\"width:40px\" name=\"outputWaxCost\"/>",
                 type: "confirm",
                 okCallBack: function (e, $el) {
                     var outputWaxCost =$("input[name=outputWaxCost]").val();

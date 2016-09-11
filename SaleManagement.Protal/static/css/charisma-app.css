@@ -187,9 +187,10 @@ select {
 .box-icon {
     float: right;
 }
-
+.box-icon a{
+    padding:4px 12px;
+}
 .box-content {
-    padding: 10px;
 }
 
 .btn-round {

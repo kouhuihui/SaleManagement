@@ -10,28 +10,7 @@
 
     var Orders = function (data) {
         var self = this;
-        self.orders = ko.observableArray(data);
-        self.distributionClick = function (item, el) {
-            $("#modal").modal({
-                remote: "/Order/" + item.id + "/Distribution"
-            }).on("hidden.bs.modal", function () {
-                $(this).removeData("bs.modal");
-            });
-        },
-        self.nextStepClick = function (item, el) {
-            $("#modal").modal({
-                remote: "/Order/" + item.id + "/NextStep"
-            }).on("hidden.bs.modal", function () {
-                $(this).removeData("bs.modal");
-            });
-        },
-        self.packClick = function (item, el) {
-            $("#modal").modal({
-                remote: "/Order/" + item.id + "/Pack"
-            }).on("hidden.bs.modal", function () {
-                $(this).removeData("bs.modal");
-            });
-        }
+        self.orders = ko.observableArray(data)
     }
 
     var ordersView = new Orders([]);
@@ -86,6 +65,44 @@
         location.href = "/shipment/create?orderIds=" + ids;
     })
 
+    $("#btnDistribution").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $("#modal").modal({
+            remote: "/Order/DistributionOrder?orderIds=" + ids
+        }).on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+    })
+
+    $("#btnNextStep").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $("#modal").modal({
+            remote: "/Order/NextStep?orderIds=" + ids
+        }).on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+    })
+
     $("#setStone").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");
         var length = inputCheckeds.length;
@@ -98,5 +115,37 @@
             return false;
         }
         location.href = "/order/setStone?orderId=" + inputCheckeds.val();
+    })
+
+    $("#btnEdit").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+        location.href = "/order/edit?orderId=" + inputCheckeds.val();
+    })
+
+    $("#btnPack").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+        $("#modal").modal({
+            remote: "/Order/Pack?orderId=" + inputCheckeds.val()
+        }).on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
     })
 });

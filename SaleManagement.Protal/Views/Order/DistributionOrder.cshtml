@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm("DistributionOrder", "Order", FormMethod.Post, new { id = "distributionOrderForm" }))
 {
-    @Html.HiddenFor(model => model.OrderId)
+    @Html.HiddenFor(model => model.OrderIds)
     <div class="form-horizontal">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
@@ -20,7 +20,7 @@
                 </label>
                 <div class="col-md-6">
                     @{
-                        var moduleTypeList = EnumExtensions.EnumToList(typeof(ModuleType));
+                        var moduleTypeList = EnumExtensions.EnumToList(typeof(ModuleType)).Where(r=>r.Key!=0);
                     }
                     @foreach (var item in moduleTypeList)
                     {
@@ -28,15 +28,6 @@
                     }
                     <input type="hidden" id="moduleType" name="moduleType" />
                 </div>
-            </div>
-            <div class="form-group" style="display:none" id="divDesignRoleUsers">
-                <label class="control-label col-md-2" for="Name">
-                    <span class="text-danger">*</span>处理人
-                </label>
-                <div class="col-md-6">
-                    <select id="userId" name="userId" class="form-control">
-                    </select>
-                 </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -50,7 +41,7 @@
 @Scripts.Render("~/bundles/js/ajaxForm")
 <script type="text/javascript">
     var $from = $("#distributionOrderForm"),
-        $divDesignRoleUsers = $("#divDesignRoleUsers");
+        $moduleType = $("#moduleType");
     $(function () {
         $("span[name=btnSpan]").click(function () {
             var $spanBtn = $(this),
@@ -58,37 +49,13 @@
             $spanBtn.siblings().removeClass("btn-primary");
             $spanBtn.addClass("btn-primary");
             var dataValue = $spanBtn.attr("data-value");
-            $spanBtn.siblings("input").val(dataValue);           
-            if (dataValue === "0" || dataValue === "5")
-            {
-                roleCode = "outputWax";
-            } else {
-                roleCode = "design";
-            }
-            $.ajax({
-                type: "GET",
-                url: "/user/GetUsersByRole?t=" + new Date().getTime(),
-                data: { roleCode: roleCode },
-                dataType: "json",
-                success: function (data) {
-                    var $userId = $("#userId");
-                    $userId.empty();   //清空resText里面的所有内容
-                    var html = '';
-                    $.each(data.data, function (commentIndex, user) {
-                        html += '<option value="' + user['id']
-                                  + '">'+user['name']
-                                  + '</option>';
-                    });
-                    $userId.html(html);
-                    $divDesignRoleUsers.show();
-                }
-            });
+            $moduleType.val(dataValue);
         });
        
         $from.ajaxForm({
             beforeSubmit: function () {
-                if ($("#userId").val()=="") {
-                    shortTips("请选择当前处理人");
+                if ($moduleType.val() == "") {
+                    shortTips("请选择版类");
                     return false;
                 }
             },
@@ -103,6 +70,5 @@
             }
         });
     })
-
 </script>
 

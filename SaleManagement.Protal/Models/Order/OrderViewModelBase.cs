@@ -1,4 +1,5 @@
-﻿using SaleManagement.Core;
+﻿using Dickson.Core.Common.Extensions;
+using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using System.ComponentModel.DataAnnotations;
 
@@ -49,6 +50,7 @@ namespace SaleManagement.Protal.Models.Order
             GemCategoryName = order.GemCategory?.Name;
             ProductCategoryName = order.ProductCategory?.Name;
             OutputWaxCost = order.OutputWaxCost;
+            ModuleTypeName = order.ModuleType.GetDisplayName();
         }
 
         public string Id { get; set; }
@@ -149,6 +151,8 @@ namespace SaleManagement.Protal.Models.Order
         public string ProductCategoryName { get; set; }
 
         public double OutputWaxCost { get; set; }
+
+        public string ModuleTypeName { get; set; }
 
         string GetRang(SaleManagement.Core.Models.Order order)
         {
