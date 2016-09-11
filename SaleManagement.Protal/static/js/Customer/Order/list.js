@@ -64,9 +64,13 @@
             });
             el.stopPropagation();
         };
-        self.ViewProcess = function (item, el) {
-            location.href = '/customer/order/Process?orderId=' + item.id;
-        }
+	    self.ViewProcess = function(item, el) {
+		    location.href = '/customer/order/Process?orderId=' + item.id;
+	    };
+	    self.ViewShipmentOrder = function (item, el) {
+	    	location.href = '/customer/order/ShipmentOrderDetail?orderId=' + item.id;
+	    	el.stopPropagation();
+	    };
     }
 
     var ordersView = new Orders([]);

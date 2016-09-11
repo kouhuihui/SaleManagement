@@ -2,7 +2,6 @@
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Web;
@@ -88,11 +87,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
             var shipmentOrder = await manager.GetShipmentOrderAsync(id);
-            var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
-            shipmentOrderViewModel.ShipmentOrderInfos.Each(r =>
-            {
-                r.Hhz = r.GoldWeight * (1 + r.LossRate / 100);
-            });
+            var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder); 
             return View("create", shipmentOrderViewModel);
         }
 

@@ -78,6 +78,9 @@
                                 <!-- ko if:status == 11 -->
                                 <button class="btn btn-primary btn-sm" data-bind="click:$parent.ConfirmHaveGoods">确认收货</button>
                                 <!-- /ko -->
+                                <!-- ko if:status == 11 | status == 12 -->
+                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.ViewShipmentOrder">查看出货单</button>
+                                <!-- /ko -->
                             </div>
                         </div>
                     </div>

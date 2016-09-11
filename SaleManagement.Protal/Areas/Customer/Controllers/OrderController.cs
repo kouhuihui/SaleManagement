@@ -1,10 +1,12 @@
-﻿using Dickson.Core.ComponentModel;
+﻿using AutoMapper;
+using Dickson.Core.ComponentModel;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models.Order;
+using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Web;
 using System;
 using System.Collections.Generic;
@@ -76,8 +78,8 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
         public async Task<JsonResult> GoToOutputWaxStep(string orderId)
         {
             var userManager = new UserManager();
-            var outputWaxUser = (await  userManager.GetUserByRoleAsync(SaleManagentConstants.SystemRole.OutputWax)).FirstOrDefault();
-            var result = await ChangeOrderStatus(orderId, OrderStatus.OutputWax, outputWaxUser==null?"":outputWaxUser.Id);
+            var outputWaxUser = (await userManager.GetUserByRoleAsync(SaleManagentConstants.SystemRole.OutputWax)).FirstOrDefault();
+            var result = await ChangeOrderStatus(orderId, OrderStatus.OutputWax, outputWaxUser == null ? "" : outputWaxUser.Id);
             return Json(result);
         }
 
@@ -95,20 +97,28 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             return View(logs);
         }
 
+        public async Task<ActionResult> ShipmentOrderDetail(string orderId)
+        {
+            var manager = new ShipmentManager(User);
+            var shipmentOrder = await manager.GetShipmentOrderByOrderIdAsync(orderId);
+            var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
+            return View(shipmentOrderViewModel);
+        }
+
         private IList<AttachmentItem> GetAttachments(Order order)
         {
             var attachments = order.Attachments.OrderByDescending(a => a.Created).Take(2);
-            return  attachments.Select( a =>
-            {
-                return new AttachmentItem
-                {
-                    Id = a.FileInfoId,
-                    Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
-                };
-            }).ToList();
+            return attachments.Select(a =>
+          {
+              return new AttachmentItem
+              {
+                  Id = a.FileInfoId,
+                  Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+              };
+          }).ToList();
         }
 
-        private async Task<InvokedResult> ChangeOrderStatus(string orderId, OrderStatus status,string currentUserId ="")
+        private async Task<InvokedResult> ChangeOrderStatus(string orderId, OrderStatus status, string currentUserId = "")
         {
             var manager = new OrderManager(User);
             var order = await manager.GetOrderAsync(orderId);
