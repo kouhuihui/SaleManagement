@@ -11,11 +11,15 @@ body,html {
 
 .login-header {
     padding-top: 30px;
-    height: 120px;
+    height: 200px;
 }
 
 .login-header {
     color: #ffffff;
+}
+
+.login-header a {
+    color:#971313;
 }
 
 .login-box .input-prepend {
