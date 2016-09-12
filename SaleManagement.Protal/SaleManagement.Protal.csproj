@@ -257,6 +257,7 @@
     <Compile Include="Models\Order\DistributionOrderViewModel.cs" />
     <Compile Include="Models\Order\OrderEditViewModel.cs" />
     <Compile Include="Models\Order\OrderListItemViewModel.cs" />
+    <Compile Include="Models\Order\OrderQueryRequestBase.cs" />
     <Compile Include="Models\Order\OrderSetStoneInfoViewModel.cs" />
     <Compile Include="Models\Order\OrderSetStoneViewModel.cs" />
     <Compile Include="Models\Order\OrdersQueryRequest.cs" />

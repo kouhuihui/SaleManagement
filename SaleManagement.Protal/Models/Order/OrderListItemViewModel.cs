@@ -20,6 +20,8 @@ namespace SaleManagement.Protal.Models.Order
 
         public string CreatorName { get; set; }
 
+        public string CurrentUserName { get; set; }
+
         public IList<AttachmentItem> Attachments { get; set; }
     }
 }

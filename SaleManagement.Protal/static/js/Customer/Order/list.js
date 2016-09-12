@@ -17,7 +17,7 @@
                 type: "confirm",
                 okCallBack: function (e, $el) {
                     $.ajax({
-                        url: "/Customer/Order/GoToOutputWaxStep",
+                        url: "/Customer/Order/GoToConfirmStep",
                         type: "POST",
                         data: {
                             orderId: item.id

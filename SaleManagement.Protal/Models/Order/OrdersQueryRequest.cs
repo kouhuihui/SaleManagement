@@ -9,19 +9,13 @@ using System.Web;
 
 namespace SaleManagement.Protal.Models.Order
 {
-    public class OrdersQueryRequest : PagingRequest
+    public class OrdersQueryRequest : OrderQueryRequestBase
     {
-        public string CustomerId { get; set; }
-
-        public string OrderId { get; set; }
-
         public DateTime? DeliveryStartDate { get; set; }
 
         public DateTime? DeliveryEndDate { get; set; }
 
-        public OrderStatus? Status { get; set; }
-
-        public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
+        public  Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
             {
@@ -29,7 +23,10 @@ namespace SaleManagement.Protal.Models.Order
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm);
                 }
-
+                if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
+                {
+                    query = query.Where(f => f.OrderStatus == OrderStatus.Design ||f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
+                }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.SendAndReceive)
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.OutputWax ||
@@ -61,6 +58,11 @@ namespace SaleManagement.Protal.Models.Order
                 {
                     var endDate = DeliveryEndDate.Value.AddDays(1);
                     query = query.Where(f => f.DeliveryDate <= endDate);
+                }
+
+                if (!string.IsNullOrEmpty(ColorFormId))
+                {
+                    query = query.Where(f => f.CustomerId == ColorFormId);
                 }
 
                 if (Status.HasValue)

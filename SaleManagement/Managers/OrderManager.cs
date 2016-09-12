@@ -65,13 +65,27 @@ namespace SaleManagement.Managers
 
         public async Task<Order> GetOrderAsync(string orderId)
         {
-            return await DbContext.Set<Order>().FirstOrDefaultAsync(o => o.Id == orderId);
+            return await DbContext.Set<Order>().FirstOrDefaultAsync(o => o.ComplayId ==User.CompanyId && o.Id == orderId);
         }
 
         public async Task<IEnumerable<Order>> GetOrdersAsync(string[] orderIds)
         {
             Requires.NotNull(orderIds, "orderIds");
-            return await DbContext.Set<Order>().Where(o => orderIds.Contains( o.Id)).ToListAsync();
+            return await DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId && orderIds.Contains( o.Id)).ToListAsync();
+        }
+
+        public async Task<Paging<Order>> GetDesignOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
+        {
+            var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId
+           &&(o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.CustomerTobeConfirm || o.OrderStatus == OrderStatus.CustomerConfirm));
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+            var total = await query.CountAsync();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
+
+            return new Paging<Order>(start, take, total, list);
         }
 
         public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
@@ -86,6 +100,7 @@ namespace SaleManagement.Managers
 
             return new Paging<Order>(start, take, total, list);
         }
+
 
         public async Task<bool> RemoveAttachment(OrderAttachment attachement)
         {

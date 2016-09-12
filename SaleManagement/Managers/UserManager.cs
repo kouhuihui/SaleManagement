@@ -80,6 +80,14 @@ namespace SaleManagement.Managers
             return new Paging<TUser>(start, take, total, list);
         }
 
+        public async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string>userIds)
+        {
+            if (!userIds.Any())
+                return Enumerable.Empty<TUser>();
+
+            return await Users.Where(u => u.IdentityType == IdentityType.Employee && userIds.Contains(u.Id)).ToListAsync();
+        }
+
         public async Task<IEnumerable<TUser>> GetUserByRoleAsync(string roleCode)
         {
             return await Users.Where(u => u.IdentityType == IdentityType.Employee && u.Status == UserStatus.Normal && u.Role.Code == roleCode).ToListAsync();

@@ -40,6 +40,10 @@ $(function () {
             }
         }
     });
+
+    $("#btnConfirm").on("click", function () {
+        location.reload();
+    })
 })
 
 function deleteImage(id) {

@@ -1544,7 +1544,6 @@ input[type=checkbox] {
 .textfield {
     display: table;
     height: 36px;
-    margin-bottom: 20px;
     margin-right:20px;
 }
 

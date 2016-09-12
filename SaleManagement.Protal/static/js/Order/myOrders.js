@@ -1,4 +1,6 @@
 ﻿$(function () {
+    var $currentUser = $("#currentUser"),
+        $orderListPage = $('#orderListPage');
     var Orders = function (data) {
         var self = this;
         self.orders = ko.observableArray(data);
@@ -40,11 +42,127 @@
     var ordersView = new Orders([]);
     ko.applyBindings(ordersView);
     //分页
-    $('#orderListPage').pager({
+    $orderListPage.pager({
         url: '/Order/MyOrders',
         pageSize: 10,
+        param: searchArgs(),
         callback: function (data, ui) {
             ordersView.orders(data.list);
         }
     });
+
+    function searchArgs() {
+        return {
+            orderId: $("#orderId").val(),
+            status: $("#orderStatus").val(),
+            currentUserId: $currentUser.val(),
+        }
+    }
+
+    function search() {
+        var pager = $orderListPage.data("pager");
+        pager.opts.param = searchArgs();
+        pager.jump(1);
+    }
+
+    $("#btnSearch").on("click", function () {
+        search();
+    })
+
+    $("#btnAssginToMe").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "确认由我来处理所选择订单的设计？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/AssginToMe",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            location.reload();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
+
+    $("#btnOutPutWax").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "确认进入出蜡阶段？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/GotoOutputWax",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            location.reload();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
+
+    InitDesgin();
+
+    function InitDesgin() {
+        $.ajax({
+            url: "/user/GetUsersByRole",
+            data:{"roleCode":"design"},
+            success: function (rtn) {
+                debugger;
+                if (rtn.succeeded) {
+                    var data = rtn.data;
+                    var html = '<option value="">请选择设计师</option>';
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        html += '<option value="' + data[i].id
+                                     + '">' + data[i].name
+                                     + '</option>';
+                    }
+                    $currentUser.html(html);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
 });

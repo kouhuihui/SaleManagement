@@ -45,26 +45,31 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [PagingParameterInspector]
-        public async Task<ActionResult> MyOrders(PagingRequest request)
+        public async Task<ActionResult> MyOrders(OrdersQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View();
 
             var manager = new OrderManager(User);
-            Func<IQueryable<Order>, IQueryable<Order>> filter = query =>
-            {
-                query = query.Where(j => j.OrderStatus == OrderStatus.Design || j.OrderStatus == OrderStatus.CustomerTobeConfirm);
-                return query;
-            };
-            var paging = await manager.GetOrdersAsync(request.Start, request.Take, filter);
+     
+            var paging = await manager.GetDesignOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
             var basicDataManager = new BasicDataManager(User);
             var colorForms = await basicDataManager.GetColorFormsAsync();
+
+            var designs = await new UserManager().GetUserByRoleAsync(SaleManagentConstants.SystemRole.Design);
+
             var orders = paging.List.Select(u =>
             {
                 var colorForm = colorForms.FirstOrDefault(f => f.Id == u.ColorFormId);
                 return new OrderListItemViewModel(u)
                 {
-                    ColorFormName = colorForm == null ? "" : colorForm.Name
+                    ColorFormName = colorForm == null ? "" : colorForm.Name,
+                    CurrentUserName = designs.FirstOrDefault(s=>s.Id ==u.CurrentUserId)?.Name,
+                    Attachments = u.Attachments.Where(r=> r.CreatorId==u.CurrentUserId).Select(a => new AttachmentItem
+                    {
+                        Id = a.FileInfoId,
+                        Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+                    }).ToList()
                 };
             });
 
@@ -73,6 +78,20 @@ namespace SaleManagement.Protal.Controllers
                 paging.Total,
                 List = orders,
             });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AssginToMe([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var manager = new OrderManager(User);
+            var orders = await manager.GetOrdersAsync(orderIds);
+             
+            foreach (var order in orders)
+            {
+                order.CurrentUserId = User.Id;
+            }
+            var result = await manager.UpdateOrdersAsync(orders);
+            return Json(result);
         }
 
         public async Task<ActionResult> Booking()
@@ -294,7 +313,6 @@ namespace SaleManagement.Protal.Controllers
             if (!designImages.Any())
                 return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
 
-            order.CurrentUserId = "";
             order.OrderStatus = OrderStatus.CustomerTobeConfirm;
             order.OutputWaxCost = outputWaxCost;
             var result = await manager.UpdateOrderAsync(order);
@@ -302,6 +320,27 @@ namespace SaleManagement.Protal.Controllers
             {
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+            }
+            return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GotoOutputWax([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var manager = new OrderManager(User);
+            var orders = await manager.GetOrdersAsync(orderIds);
+            var orderStatus = OrderStatus.UnConfirmed;
+
+            foreach (var order in orders)
+            {
+                order.CurrentUserId = "";
+                order.OrderStatus = orderStatus;
+            }
+            var result = await manager.UpdateOrdersAsync(orders);
+            if (result.Succeeded)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(orderStatus, orderIds);
             }
             return Json(result);
         }
