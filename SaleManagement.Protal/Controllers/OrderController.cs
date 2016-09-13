@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dickson.Core.Common.Extensions;
+using Dickson.Core.ComponentModel;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
@@ -276,9 +277,7 @@ namespace SaleManagement.Protal.Controllers
         [HttpPost]
         public async Task<JsonResult> DistributionOrder([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, ModuleType moduleType)
         {
-            var manager = new OrderManager(User);
-            var orders = await manager.GetOrdersAsync(orderIds);
-            var orderStatus = OrderStatus.UnConfirmed;
+            OrderStatus orderStatus;
             if (moduleType == ModuleType.Jina || moduleType == ModuleType.Customer)
             {
                 orderStatus = OrderStatus.OutputWax;
@@ -287,17 +286,7 @@ namespace SaleManagement.Protal.Controllers
             {
                 orderStatus = OrderStatus.Design;
             }
-            foreach (var order in orders)
-            {
-                order.ModuleType = moduleType;
-                order.OrderStatus = orderStatus;
-            }
-            var result = await manager.UpdateOrdersAsync(orders);
-            if (result.Succeeded)
-            {
-                var operationLogManager = new OrderOperationLogManager(User);
-                await operationLogManager.AddLogAsync(orderStatus, orderIds);
-            }
+            var result = await ChangeStep(orderIds, orderStatus);
             return Json(result);
         }
 
@@ -327,13 +316,25 @@ namespace SaleManagement.Protal.Controllers
         [HttpPost]
         public async Task<JsonResult> GotoOutputWax([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
         {
+            var result = await ChangeStep(orderIds, OrderStatus.OutputWax);
+            return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GotoDumpModule([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var result = await ChangeStep(orderIds,OrderStatus.DumpModule);
+            return Json(result);
+        }
+
+        private async Task<InvokedResult> ChangeStep(string[] orderIds, OrderStatus orderStatus, string userId = "")
+        {
             var manager = new OrderManager(User);
             var orders = await manager.GetOrdersAsync(orderIds);
-            var orderStatus = OrderStatus.UnConfirmed;
 
             foreach (var order in orders)
             {
-                order.CurrentUserId = "";
+                order.CurrentUserId = userId;
                 order.OrderStatus = orderStatus;
             }
             var result = await manager.UpdateOrdersAsync(orders);
@@ -342,7 +343,7 @@ namespace SaleManagement.Protal.Controllers
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(orderStatus, orderIds);
             }
-            return Json(result);
+            return result;
         }
 
         public ActionResult NextStep(string orderIds)
@@ -357,20 +358,7 @@ namespace SaleManagement.Protal.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Json(false, "请选择处理人");
 
-            var manager = new OrderManager(User);
-            var orders = await manager.GetOrdersAsync(orderIds);
-            foreach (var order in orders)
-            {
-                order.CurrentUserId = userId;
-                order.OrderStatus = nextStatus;
-            }
-            var result = await manager.UpdateOrdersAsync(orders);
-            if (result.Succeeded)
-            {
-                var operationLogManager = new OrderOperationLogManager(User);
-                await operationLogManager.AddLogAsync(nextStatus, orderIds);
-            }
-
+            var result = await ChangeStep(orderIds, OrderStatus.DumpModule,userId);
             return Json(result);
         }
 

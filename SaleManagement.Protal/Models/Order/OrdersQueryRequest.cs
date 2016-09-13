@@ -31,12 +31,18 @@ namespace SaleManagement.Protal.Models.Order
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.OutputWax ||
                              f.OrderStatus == OrderStatus.WithTheHand || f.OrderStatus == OrderStatus.MicroInsert
-                             || f.OrderStatus == OrderStatus.Polishing || f.OrderStatus == OrderStatus.Module || f.OrderStatus == OrderStatus.Pack);
+                             || f.OrderStatus == OrderStatus.Polishing || f.OrderStatus == OrderStatus.Module 
+                             || f.OrderStatus == OrderStatus.Pack|| f.OrderStatus == OrderStatus.DumpModule);
                 }
 
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Finance)
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.ToBeShip);
+                }
+
+                if (user.Role.Code == SaleManagentConstants.SystemRole.OutputWax)
+                {
+                    query = query.Where(f => f.OrderStatus == OrderStatus.OutputWax);
                 }
 
                 if (!string.IsNullOrEmpty(CustomerId))

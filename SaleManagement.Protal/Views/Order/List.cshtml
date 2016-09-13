@@ -51,6 +51,13 @@
                             编辑
                         </a>
                     }
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.OutputWax))
+                    {
+                        <a id="btnDumpModule" class="btn">
+                            <i class="glyphicon glyphicon-arrow-right"></i>
+                            进入倒模
+                        </a>
+                    }
                     @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.SendAndReceive))
                     {
                         <a id="btnNextStep" class="btn">

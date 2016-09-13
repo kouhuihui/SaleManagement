@@ -24,6 +24,9 @@ namespace SaleManagement.Core.Models
         [Display(Name = "出蜡")]
         OutputWax = 5,
 
+        [Display(Name = "倒模")]
+        DumpModule = 16,
+
         [Display(Name = "执模")]
         Module = 6,
 
