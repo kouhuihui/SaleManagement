@@ -72,6 +72,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             model.ProductCategories = await manager.GetProductCategoriesAsync();
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
+
             return View(model);
         }
 

@@ -98,6 +98,10 @@
     <Compile Include="Migrations\201609061458426_addWeight.Designer.cs">
       <DependentUpon>201609061458426_addWeight.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609141555101_AddShippingScheduleSetting.cs" />
+    <Compile Include="Migrations\201609141555101_AddShippingScheduleSetting.Designer.cs">
+      <DependentUpon>201609141555101_AddShippingScheduleSetting.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColorForm.cs" />
     <Compile Include="Models\Company.cs" />
@@ -134,6 +138,7 @@
     <Compile Include="Models\ShipmentOrder.cs" />
     <Compile Include="Models\ShipmentOrderAduitStatus.cs" />
     <Compile Include="Models\ShipmentOrderInfo.cs" />
+    <Compile Include="Models\ShippingScheduleSetting.cs" />
     <Compile Include="Models\SideStoneRequiredment.cs" />
     <Compile Include="Models\StoneDescribe.cs" />
     <Compile Include="Models\SystemMenu.cs" />
@@ -170,6 +175,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609061458426_addWeight.resx">
       <DependentUpon>201609061458426_addWeight.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609141555101_AddShippingScheduleSetting.resx">
+      <DependentUpon>201609141555101_AddShippingScheduleSetting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

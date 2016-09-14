@@ -1,0 +1,64 @@
+﻿@model SaleManagement.Core.Models.ShippingScheduleSetting
+@{
+    Title("出货工期设置");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/">首页</a>
+        </li>
+        <li>
+            工期设置
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>工期设置</h2>
+            </div>
+            <div class="box-content">
+                <div class="form-horizontal ptop5">
+                    @using (Html.BeginForm("ShippingScheduleSetting", "BasicData", FormMethod.Post, new { id = "shippingScheduleSettingForm" }))
+                    {
+                        <div class="form-group">
+                            <label class="control-label col-md-2">最近出货工期（天）：</label>
+                            <div class="col-md-2">
+                                @Html.TextBoxFor(model => model.Days, new { @class = "form-control col-md-1" })
+                                @Html.ValidationMessageFor(model => model.Days, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-4 text-center">
+                                <button type="submit" class="btn btn-primary btn-sm">保存</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    <script type="text/javascript">
+        $(function () {
+            var $from = $("#shippingScheduleSettingForm");
+            $from.ajaxForm({
+                success: function (result) {
+                    if (result.succeeded) {
+                        shortTips("保存成功");
+                    } else {
+                        shortTips(errorMessage(result));
+                    }
+                }
+            });
+        })
+    </script>
+}
+

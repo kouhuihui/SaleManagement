@@ -180,5 +180,30 @@ namespace SaleManagement.Protal.Controllers
 
             return Json(result);
         }
+
+        public async Task<ActionResult> ShippingScheduleSetting()
+        {
+            var manager = new BasicDataManager(User);
+            var shippingScheduleSetting = await manager.GetShippingScheduleSettingAsync();
+            if (shippingScheduleSetting == null)
+            {
+                shippingScheduleSetting = new ShippingScheduleSetting();
+            }
+            return View(shippingScheduleSetting);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> ShippingScheduleSetting(int days)
+        {
+            var manager = new BasicDataManager(User);
+            var shippingScheduleSetting =await manager.GetShippingScheduleSettingAsync();
+            if (shippingScheduleSetting == null)
+            {
+                shippingScheduleSetting = new ShippingScheduleSetting();
+            }
+            shippingScheduleSetting.Days = days;
+            var result = await manager.SaveShippingScheduleSettingAsync(shippingScheduleSetting);
+            return Json(result);
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace SaleManagement.Managers
 {
     public class RoleMenuManager : BaseManager
     {
-        public async Task<IEnumerable<RoleMenu>> GetRoleMenusAsync(int roleId)
+        public async Task<ICollection<RoleMenu>> GetRoleMenusAsync(int roleId)
         {
             if (roleId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(roleId));
@@ -19,7 +19,7 @@ namespace SaleManagement.Managers
             return await DbContext.Set<RoleMenu>().Where(r => r.RoleId == roleId).ToListAsync();
         }
 
-        public IEnumerable<RoleMenu> GetRoleMenus(int roleId)
+        public ICollection<RoleMenu> GetRoleMenus(int roleId)
         {
             if (roleId <= 0)
                 throw new ArgumentOutOfRangeException(nameof(roleId));

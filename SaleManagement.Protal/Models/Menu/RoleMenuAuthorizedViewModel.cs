@@ -8,9 +8,9 @@ namespace SaleManagement.Protal.Models.Menu
 {
     public class RoleMenuAuthorizedViewModel
     {
-        public IEnumerable<SystemMenu> SystemMenus { get; set; }
+        public ICollection<SystemMenu> SystemMenus { get; set; }
 
-        public IEnumerable<RoleMenu> RoleMenus { get; set; }
+        public ICollection<RoleMenu> RoleMenus { get; set; }
 
         public int RoleId { get; set; }
     }

@@ -402,6 +402,15 @@ namespace DataMigration
                 Order = 6
             };
 
+            var menu19 = new SystemMenu
+            {
+                Id = 3007,
+                Level = 2,
+                Name = "工期设置",
+                parentId = 3000,
+                Order = 7
+            };
+
             var menu16 = new SystemMenu
             {
                 Id = 4000,
@@ -439,6 +448,7 @@ namespace DataMigration
             context.Menus.Add(menu16);
             context.Menus.Add(menu17);
             context.Menus.Add(menu18);
+            context.Menus.Add(menu19);
             context.SaveChanges();
             #endregion
         }

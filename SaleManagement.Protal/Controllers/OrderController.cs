@@ -102,6 +102,9 @@ namespace SaleManagement.Protal.Controllers
             model.ProductCategories = await manager.GetProductCategoriesAsync();
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
+
+            var shippingScheduleDays = await manager.GetShippingScheduleDaysAsync();
+            model.DeliveryDate = DateTime.Now.AddDays(shippingScheduleDays).ToString(SaleManagentConstants.UI.DateStringFormat);
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
             return View(model);
@@ -114,6 +117,12 @@ namespace SaleManagement.Protal.Controllers
                 return Json(false, data: ErrorToDictionary());
 
             var order = Mapper.Map<OrderEditViewModel, Order>(request);
+
+            var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
+            if (!order.DeliveryDate.HasValue)
+            {
+                order.DeliveryDate = DateTime.Now.AddDays(shippingScheduleDays);
+            }
             var serialNumberManager = new SerialNumberManager(User);
 
             order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
@@ -136,13 +145,11 @@ namespace SaleManagement.Protal.Controllers
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(OrderStatus.UnConfirmed, order.Id);
 
-                var noticeManager = new NoticeManager(User);
-                var notice = await noticeManager.GetNewNoticeAsync();
                 return Json(result.Succeeded, data:
                     new
                     {
                         orderId = order.Id,
-                        notice = notice?.Content
+                        notice = $"最近出货期限{shippingScheduleDays}天"
                     });
             }
 

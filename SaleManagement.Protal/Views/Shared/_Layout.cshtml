@@ -160,6 +160,10 @@
                                         {
                                             <li><a href="/Notice/List">公告管理</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3007))
+                                        {
+                                            <li><a href="/BasicData/ShippingScheduleSetting">工期设置</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

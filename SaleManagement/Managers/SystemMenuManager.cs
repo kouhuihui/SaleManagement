@@ -10,7 +10,7 @@ namespace SaleManagement.Managers
 {
     public class SystemMenuManager : BaseManager
     {
-        public async Task<IEnumerable<SystemMenu>> GetSystemMenusAsync()
+        public async Task<ICollection<SystemMenu>> GetSystemMenusAsync()
         {
             return await DbContext.Set<SystemMenu>().ToListAsync();
         }

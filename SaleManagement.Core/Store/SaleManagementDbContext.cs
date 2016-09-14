@@ -60,6 +60,9 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<Notice> Notices { get; set; }
 
+        public IDbSet<ShippingScheduleSetting> ShippingScheduleSettings { get; set; }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
