@@ -2,6 +2,7 @@
 using SaleManagement.Managers;
 using SaleManagement.Protal.Web;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -144,6 +145,18 @@ namespace SaleManagement.Protal.Controllers
             var manager = new BasicDataManager(User);
             var colorForms = await manager.GetColorFormsAsync();
             return View(colorForms);
+        }
+
+        public async Task<JsonResult> GetColorForms()
+        {
+            var manager = new BasicDataManager(User);
+            var colorForms = await manager.GetColorFormsAsync();
+            var items = colorForms.Select(a => new SelectListItem
+            {
+                Text = a.Name,
+                Value = a.Id.ToString()
+            }).OrderByDescending(o => o.Selected);
+            return Json(true, string.Empty, items);
         }
 
         public async Task<ActionResult> EditColorForm(int? id)

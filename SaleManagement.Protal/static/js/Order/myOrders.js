@@ -56,6 +56,7 @@
             orderId: $("#orderId").val(),
             status: $("#orderStatus").val(),
             currentUserId: $currentUser.val(),
+            colorFormId: $("#colorFormId").val(),
         }
     }
 

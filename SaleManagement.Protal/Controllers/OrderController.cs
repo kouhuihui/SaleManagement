@@ -52,7 +52,7 @@ namespace SaleManagement.Protal.Controllers
                 return View();
 
             var manager = new OrderManager(User);
-     
+
             var paging = await manager.GetDesignOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
             var basicDataManager = new BasicDataManager(User);
             var colorForms = await basicDataManager.GetColorFormsAsync();
@@ -65,8 +65,8 @@ namespace SaleManagement.Protal.Controllers
                 return new OrderListItemViewModel(u)
                 {
                     ColorFormName = colorForm == null ? "" : colorForm.Name,
-                    CurrentUserName = designs.FirstOrDefault(s=>s.Id ==u.CurrentUserId)?.Name,
-                    Attachments = u.Attachments.Where(r=> r.CreatorId==u.CurrentUserId).Select(a => new AttachmentItem
+                    CurrentUserName = designs.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name,
+                    Attachments = u.Attachments.Where(r => r.CreatorId == u.CurrentUserId).Select(a => new AttachmentItem
                     {
                         Id = a.FileInfoId,
                         Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
@@ -86,7 +86,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new OrderManager(User);
             var orders = await manager.GetOrdersAsync(orderIds);
-             
+
             foreach (var order in orders)
             {
                 order.CurrentUserId = User.Id;
@@ -293,7 +293,20 @@ namespace SaleManagement.Protal.Controllers
             {
                 orderStatus = OrderStatus.Design;
             }
-            var result = await ChangeStep(orderIds, orderStatus);
+            var manager = new OrderManager(User);
+            var orders = await manager.GetOrdersAsync(orderIds);
+
+            foreach (var order in orders)
+            {
+                order.ModuleType = moduleType;
+                order.OrderStatus = orderStatus;
+            }
+            var result = await manager.UpdateOrdersAsync(orders);
+            if (result.Succeeded)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(orderStatus, orderIds);
+            }
             return Json(result);
         }
 
@@ -330,7 +343,7 @@ namespace SaleManagement.Protal.Controllers
         [HttpPost]
         public async Task<JsonResult> GotoDumpModule([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
         {
-            var result = await ChangeStep(orderIds,OrderStatus.DumpModule);
+            var result = await ChangeStep(orderIds, OrderStatus.DumpModule);
             return Json(result);
         }
 
@@ -365,7 +378,7 @@ namespace SaleManagement.Protal.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Json(false, "请选择处理人");
 
-            var result = await ChangeStep(orderIds, OrderStatus.DumpModule,userId);
+            var result = await ChangeStep(orderIds, OrderStatus.DumpModule, userId);
             return Json(result);
         }
 
@@ -486,6 +499,27 @@ namespace SaleManagement.Protal.Controllers
                 await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
             }
             return Json(result);
+        }
+
+        public async Task<ActionResult> ViewAttachements(string orderId)
+        {
+            List<AttachmentItem> attachments = new List<AttachmentItem>();
+            ViewBag.orderId = orderId;
+            if (string.IsNullOrEmpty(orderId))
+                return View();
+
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order != null)
+            {
+                attachments = order.Attachments.OrderByDescending(a=>a.Created).Select(a => new AttachmentItem
+                {
+                    Id = a.FileInfoId,
+                    Url = "/Attachment/" + a.FileInfoId + "/preview"
+                }).ToList();
+            }
+
+            return View(attachments);
         }
 
         /// <summary> 

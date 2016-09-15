@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SaleManagement.Core.ViewModel.AttachmentItem>
+@{
+    Title("查看订单图片");
+}
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            查看订单图片
+        </li>
+    </ul>
+</div>
+
+<div class="search">
+    <div class="textfield pull-left"><div class="field-body" style="width: 250px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号" value="@ViewBag.orderId"></div></div>
+    <button id="btnSearch" class="btn btn-primary">查询</button>
+</div>
+<div class="row">
+    <div class="box col-md-12">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <img src="@item.Url" style="display: block;">
+            }
+        }
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnSearch").click(function () {
+                location.href = "/order/ViewAttachements?orderId=" + $("#orderId").val();
+            })
+        })
+    </script>
+}

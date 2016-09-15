@@ -366,6 +366,7 @@
     <Content Include="static\js\BasicData\editProductCategory.js" />
     <Content Include="static\js\charisma.js" />
     <Content Include="static\js\common.js" />
+    <Content Include="static\js\Control\colorForm.js" />
     <Content Include="static\js\Control\customer.js" />
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
@@ -495,11 +496,12 @@
     <Content Include="Views\DailyGoldPrice\Add.cshtml" />
     <Content Include="Views\Order\Pack.cshtml" />
     <Content Include="Views\BasicData\ShippingScheduleSetting.cshtml" />
+    <Content Include="Views\Shared\_ColorForm.cshtml" />
+    <Content Include="Views\Order\ViewAttachements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Customer\Models\" />
-    <Folder Include="Views\Shared\Controls\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -15,6 +15,6 @@ namespace SaleManagement.Protal.Models.Order
 
         public OrderStatus? Status { get; set; }
 
-        public string ColorFormId { get; set; }
+        public int? ColorFormId { get; set; }
     }
 }

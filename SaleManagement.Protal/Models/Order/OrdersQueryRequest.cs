@@ -66,9 +66,9 @@ namespace SaleManagement.Protal.Models.Order
                     query = query.Where(f => f.DeliveryDate <= endDate);
                 }
 
-                if (!string.IsNullOrEmpty(ColorFormId))
+                if (ColorFormId.HasValue)
                 {
-                    query = query.Where(f => f.CustomerId == ColorFormId);
+                    query = query.Where(f => f.ColorFormId == ColorFormId.Value);
                 }
 
                 if (Status.HasValue)
