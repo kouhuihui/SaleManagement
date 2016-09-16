@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201609141555101_AddShippingScheduleSetting.Designer.cs">
       <DependentUpon>201609141555101_AddShippingScheduleSetting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609161631468_ShipmentAddCompanyId.cs" />
+    <Compile Include="Migrations\201609161631468_ShipmentAddCompanyId.Designer.cs">
+      <DependentUpon>201609161631468_ShipmentAddCompanyId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ColorForm.cs" />
     <Compile Include="Models\Company.cs" />
@@ -154,6 +158,7 @@
     <Compile Include="ViewModel\OrderStatistics.cs" />
     <Compile Include="ViewModel\PagingRequest.cs" />
     <Compile Include="ViewModel\ReportQueryBaseDto.cs" />
+    <Compile Include="ViewModel\ShipmentReportQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -180,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609141555101_AddShippingScheduleSetting.resx">
       <DependentUpon>201609141555101_AddShippingScheduleSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609161631468_ShipmentAddCompanyId.resx">
+      <DependentUpon>201609161631468_ShipmentAddCompanyId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

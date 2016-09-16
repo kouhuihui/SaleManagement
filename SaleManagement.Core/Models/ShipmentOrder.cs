@@ -24,6 +24,8 @@ namespace SaleManagement.Core.Models
 
         public string CustomerName { get; set; }
 
+        public int CompanyId { get; set; }
+
         public DateTime DeliveryDate { get; set; }
 
         public int TotalNumber { get; set; }

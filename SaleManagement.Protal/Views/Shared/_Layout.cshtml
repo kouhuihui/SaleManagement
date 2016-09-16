@@ -181,6 +181,10 @@
                                         {
                                             <li><a href="/Report/AccountStatistics">账目报表</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4003))
+                                        {
+                                            <li><a href="/Report/shipmentStatistics">出货统计</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

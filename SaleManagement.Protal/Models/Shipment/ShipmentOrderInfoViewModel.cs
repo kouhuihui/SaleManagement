@@ -27,7 +27,6 @@ namespace SaleManagement.Protal.Models.Shipment
                 TotalAmount = o.Price * (double)o.Weight,
                 SetStoneWorkingCost = o.WorkingCost
             });
-            Hhz = GoldWeight * (1 + LossRate / 100);
         }
 
         public string ProductName { get; set; }

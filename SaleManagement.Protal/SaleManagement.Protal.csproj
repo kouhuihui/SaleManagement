@@ -417,6 +417,7 @@
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
+    <Content Include="static\js\Report\shipmentStatistics.js" />
     <Content Include="static\js\shipment\list.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
     <Content Include="static\js\User\edit.js" />
@@ -501,6 +502,7 @@
     <Content Include="Views\Shared\_ColorForm.cshtml" />
     <Content Include="Views\Order\ViewAttachements.cshtml" />
     <Content Include="Views\Report\AccountStatistics.cshtml" />
+    <Content Include="Views\Report\ShipmentStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

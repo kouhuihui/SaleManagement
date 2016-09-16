@@ -378,7 +378,7 @@ namespace SaleManagement.Protal.Controllers
             if (string.IsNullOrEmpty(userId))
                 return Json(false, "请选择处理人");
 
-            var result = await ChangeStep(orderIds, OrderStatus.DumpModule, userId);
+            var result = await ChangeStep(orderIds, nextStatus, userId);
             return Json(result);
         }
 
