@@ -60,7 +60,7 @@ namespace SaleManagement.Protal.Controllers
                 CreatorId = User.Id
             };
             var result = await manager.CreateAsync(reconciliation);
-            return Json(result);
+            return Json(true, string.Empty, result);
         }
     }
 }

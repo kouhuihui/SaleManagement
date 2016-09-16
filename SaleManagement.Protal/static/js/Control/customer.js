@@ -22,6 +22,7 @@
         var value = $this.attr("value");
         if (value === "") {
             $vCustomerInput.val("");
+            $customerId.val("");
         } else {
             $vCustomerInput.val($(this).text());
             $customerId.val(value);

@@ -177,6 +177,10 @@
                                         {
                                             <li><a href="/Reconciliation/List">对账</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4002))
+                                        {
+                                            <li><a href="/Report/AccountStatistics">账目报表</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

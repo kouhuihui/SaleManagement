@@ -428,6 +428,14 @@ namespace DataMigration
                 parentId = 4000,
                 Order = 1
             };
+            var menu20= new SystemMenu
+            {
+                Id = 4002,
+                Level = 2,
+                Name = "对账",
+                parentId = 4000,
+                Order = 2
+            };
 
             context.Menus.Add(menu);
             context.Menus.Add(menu1);
@@ -449,6 +457,7 @@ namespace DataMigration
             context.Menus.Add(menu17);
             context.Menus.Add(menu18);
             context.Menus.Add(menu19);
+            context.Menus.Add(menu20);
             context.SaveChanges();
             #endregion
         }

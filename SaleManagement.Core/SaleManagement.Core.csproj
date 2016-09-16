@@ -149,9 +149,11 @@
     <Compile Include="SaleManagentConstants.cs" />
     <Compile Include="Services\SaleManagementSerivce.cs" />
     <Compile Include="Store\SaleManagementDbContext.cs" />
+    <Compile Include="ViewModel\AccountStatistic.cs" />
     <Compile Include="ViewModel\AttachmentItem.cs" />
     <Compile Include="ViewModel\OrderStatistics.cs" />
     <Compile Include="ViewModel\PagingRequest.cs" />
+    <Compile Include="ViewModel\ReportQueryBaseDto.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

@@ -23,7 +23,7 @@
             </div>
             <div class="box-content">
                 <form id="addPaymentFrom" name="addPaymentFrom">
-                    <div class="form-horizontal">
+                    <div class="form-horizontal ptop5">
                         <div class="form-group">
                             <label class="control-label col-md-2" for="Number">
                                 <span class="text-danger">*</span>选择客户
@@ -38,7 +38,7 @@
                             <label class="control-label col-md-2" for="Number">
                                 <span class="text-danger">*</span>金额
                             </label>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="width:330px">
                                 @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", placeholder = "请输入数量" })
                                 @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
                             </div>

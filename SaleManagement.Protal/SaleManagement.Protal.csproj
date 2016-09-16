@@ -244,6 +244,7 @@
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ReconciliationController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\SystemMenuController.cs" />
@@ -415,6 +416,7 @@
     <Content Include="static\js\Order\uploadDesginImage.js" />
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
+    <Content Include="static\js\Report\accountStatistics.js" />
     <Content Include="static\js\shipment\list.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
     <Content Include="static\js\User\edit.js" />
@@ -498,6 +500,7 @@
     <Content Include="Views\BasicData\ShippingScheduleSetting.cshtml" />
     <Content Include="Views\Shared\_ColorForm.cshtml" />
     <Content Include="Views\Order\ViewAttachements.cshtml" />
+    <Content Include="Views\Report\AccountStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
