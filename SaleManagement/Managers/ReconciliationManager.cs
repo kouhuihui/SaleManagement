@@ -42,6 +42,18 @@ namespace SaleManagement.Managers
             return new Paging<Reconciliation>(start, take, total, list);
         }
 
+        public async Task<IEnumerable<Reconciliation>> GetReconciliationsAsync(Func<IQueryable<Reconciliation>, IQueryable<Reconciliation>> filter = null)
+        {
+            var query = DbContext.Set<Reconciliation>().Where(o => o.CompanyId == User.CompanyId);
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+            var list = await query.OrderByDescending(u => u.Created).ToListAsync();
+
+            return  list;
+        }
+
         public async Task<IEnumerable<Reconciliation>> GetCustomerReconciliationsAsync(Func<IQueryable<Reconciliation>, IQueryable<Reconciliation>> filter = null)
         {
             var query = DbContext.Set<Reconciliation>().Where(o => o.CustomerId == User.Id);

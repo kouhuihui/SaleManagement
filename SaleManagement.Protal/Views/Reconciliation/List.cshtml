@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SaleManagement.Protal.Models.Reconciliation.ReconciliationQueryRequest
+@{
     Title("对账");
 }
 
@@ -16,9 +17,9 @@
 <div class="search">
     @Html.Partial("_Customer")
     <div class="date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-label" style="width: 50px;">日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期"></div></div>
+        <div class="textfield pull-left"><div class="field-label" style="width: 50px;">日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期" value="@Model.CreatedStartDate.ToShortDateString()"></div></div>
         <span class="pull-left">-</span>
-        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@Model.CreatedEndDate.ToShortDateString()"></div></div>
     </div>
     <div class="combobox pull-left">
         @{
@@ -41,6 +42,10 @@
                     <a  href="/Reconciliation/AddPayment"  class="btn">
                         <i class="glyphicon glyphicon-plus"></i>
                         新增
+                    </a>
+                    <a id="btnExport" class="btn">
+                        <i class="glyphicon glyphicon-export"></i>
+                        导出
                     </a>
                 </div>
             </div>

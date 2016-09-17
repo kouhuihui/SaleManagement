@@ -78,4 +78,12 @@
             }
         });
     })
+
+    $("#btnExport").on("click", function () {
+        var params = searchArgs(), url = "/Reconciliation/Export?";
+        for (var i in params) {
+            url += i + '=' + params[i] + '&';
+        }
+        window.open(url, '_parent');
+    })
 });

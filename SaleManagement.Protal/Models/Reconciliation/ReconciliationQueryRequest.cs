@@ -8,13 +8,20 @@ using System.Web;
 
 namespace SaleManagement.Protal.Models.Reconciliation
 {
-    public class ReconciliationQueryRequest: PagingRequest
+    public class ReconciliationQueryRequest : PagingRequest
     {
+        public ReconciliationQueryRequest()
+        {
+            DateTime now = DateTime.Now;
+            CreatedStartDate = new DateTime(now.Year, now.Month, 1);
+            CreatedEndDate = CreatedStartDate.AddMonths(1).AddDays(-1);
+        }
+
         public string CustomerId { get; set; }
 
-        public DateTime? CreatedStartDate { get; set; }
+        public DateTime CreatedStartDate { get; set; }
 
-        public DateTime? CreatedEndDate { get; set; }
+        public DateTime CreatedEndDate { get; set; }
 
         public ReconciliationType? Type { get; set; }
 
@@ -27,16 +34,10 @@ namespace SaleManagement.Protal.Models.Reconciliation
                     query = query.Where(f => f.CustomerId == CustomerId);
                 }
 
-                if (CreatedStartDate.HasValue)
-                {
-                    query = query.Where(f => f.Created >= CreatedStartDate.Value);
-                }
+                query = query.Where(f => f.Created > CreatedStartDate);
 
-                if (CreatedEndDate.HasValue)
-                {
-                    var endate = CreatedEndDate.Value.AddDays(1);
-                    query = query.Where(f => f.Created <= endate);
-                }
+                var endate = CreatedEndDate.AddDays(1);
+                query = query.Where(f => f.Created < endate);
 
                 if (Type.HasValue)
                 {
