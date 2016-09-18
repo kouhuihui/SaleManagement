@@ -17,7 +17,7 @@
     <AssemblyName>SaleManagement.Protal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -375,6 +375,7 @@
     <Content Include="static\js\DailyGoldPrice\Add.js" />
     <Content Include="static\js\DailyGoldPrice\edit.js" />
     <Content Include="static\js\DailyGoldPrice\list.js" />
+    <Content Include="static\js\detectmobilebrowser.js" />
     <Content Include="static\js\init-chart.js" />
     <Content Include="static\js\jquery-1.10.2.js" />
     <Content Include="static\js\jquery.autogrow-textarea.js" />
@@ -399,7 +400,9 @@
     <Content Include="Areas\Customer\Views\Order\Booking.cshtml" />
     <Content Include="Areas\Customer\Views\Order\Process.cshtml" />
     <Content Include="Areas\Customer\Views\Reconciliation\List.cshtml" />
-    <Content Include="Bundles.config" />
+    <Content Include="Bundles.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
@@ -564,7 +567,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1587</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1587/</IISUrl>
+          <IISUrl>http://localhost/SaleManagement.Protal</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>http://www.sale.com</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

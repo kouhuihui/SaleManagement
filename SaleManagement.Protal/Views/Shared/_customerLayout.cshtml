@@ -25,7 +25,7 @@
 </head>
 <body>
     <!-- topbar starts -->
-    <div class="navbar navbar-default" role="navigation">
+    <div class="navbar navbar-default" style="display:none" role="navigation" id="navigation">
         <div class="navbar-inner">
             <button type="button" class="navbar-toggle pull-left animated flip">
                 <span class="sr-only">Toggle navigation</span>
@@ -96,5 +96,12 @@
     @Scripts.Render("~/Bundles/Static/Js/Bootstrap")
     @Scripts.Render("~/bundles/js/layoutJs")
     @RenderSection("scripts", required: false)
+    <script type="text/javascript">
+        $(function () {
+            if (!isMobile()) {
+                $("#navigation").show();
+            }
+        })
+    </script>
 </body>
 </html>
