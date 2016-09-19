@@ -101,6 +101,15 @@
             if (!isMobile()) {
                 $("#navigation").show();
             }
+            else {
+                $(".breadcrumb").hide();
+                $(".box-header .back").show();
+                $(".ftnav").show();
+            }
+
+            $(".box-header .back").click(function () {
+                location.href = "/customer/home/index";
+            })
         })
     </script>
 </body>

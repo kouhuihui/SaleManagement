@@ -3,21 +3,16 @@
     Layout = "~/Views/Shared/_customerLayout.cshtml";
 }
 
-<div>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/customer/home/index">首页</a>
-        </li>
-        <li>
-            <a href="/customer/order/booking">下单</a>
-        </li>
-    </ul>
-</div>
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2>下单</h2>
+                <div class="box-icon pull-left back">
+                    <a  class="btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                </div>
+                <span class="title">下单</span>
             </div>
             <div class="box-content">
                 <form method="post" action="~/order/booking" id="OrderBooking">

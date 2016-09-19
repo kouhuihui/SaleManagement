@@ -4,39 +4,64 @@
 }
 <style type="text/css">
     #orderlist {
-        font-weight: bold;
-        font-size: 14px;
         background-color: #f1e3e3;
         margin-top: 5px;
     }
 
         #orderlist .title {
+            font-size: 14px;
+            font-weight: bold;
             padding: 15px;
         }
 
         #orderlist .status {
             font-weight: normal;
+            color: #f13f0f;
         }
+
+    .orderdetail {
+        width: 100%;
+        display: block;
+        height: 130px;
+    }
+
+        .orderdetail ul {
+            float: left;
+            padding-left: 0px;
+        }
+
+        .orderdetail .right {
+            float: left;
+            margin-left: 5px;
+        }
+
+            .orderdetail .right div {
+                margin-top: 5px;
+            }
+
+    #orderli span {
+        font-size: 12px;
+        font-weight: normal;
+    }
 
     .thumbnails > li {
         margin-left: 0px;
     }
+
+    .nav > li > a {
+        padding: 10px;
+    }
 </style>
-<div>
-    <ul class="breadcrumb">
-        <li>
-            <a href="/customer/home/index">首页</a>
-        </li>
-        <li>
-            <a href="/customer/order/list">跟单</a>
-        </li>
-    </ul>
-</div>
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
-            <div class="box-header well" data-original-title="">
-                <h2>订单列表</h2>
+            <div class="box-header well">
+                <div class="box-icon pull-left back">
+                    <a class="btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                </div>
+                <span class="title">订单列表</span>
             </div>
             <div class="box-content">
                 <ul class="nav nav-pills" id="orderli">
@@ -44,25 +69,28 @@
                     <li role="presentation" status="4"><a href="/customer/order/list?status=4">设计确认</a></li>
                     <li role="presentation" status="1"><a href="/customer/order/list?status=1">制作中</a></li>
                     <li role="presentation" status="2"><a href="/customer/order/list?status=2">待收货</a></li>
-                    <li role="presentation" status="3"><a href="/customer/order/list?status=3">已收货</a></li> 
+                    <li role="presentation" status="3"><a href="/customer/order/list?status=3">已收货</a></li>
                 </ul>
                 <div id="orderlist" data-bind="foreach:orders">
-                    <div data-bind="click:$parent.ViewProcess">
+                    <div data-bind="click:$parent.ViewProcess" style="border-bottom: 1px #2a13a3 solid">
                         <div class="row title">
-                            <div class="col-xs-6">订单号：<span data-bind="text:id"></span></div>
-                            <div class="col-xs-6">下单时间：<span data-bind="text:created"></span></div>
+                            <div class="col-xs-6 col-md-4">订单号：<span data-bind="text:id"></span></div>
+                            <div class="col-xs-6 col-md-4">下单时间：<span data-bind="text:created"></span></div>
                         </div>
-                        <div style="border-bottom:1px #000000 solid;width:100%;display:block;height:135px;">
-                            <ul class="thumbnails" data-bind="foreach:{data:attachments,as:'iattachment'}" style="float:left;padding-left:0px">
+
+                        <div class="orderdetail">
+                            <ul class="thumbnails" data-bind="foreach:{data:attachments,as:'iattachment'}">
                                 <li class="thumbnail">
-                                    <a class="cboxElement" data-bind="click:function(item,el){location.href='/attachment/'+iattachment.id+'/preview'; el.stopPropagation();}" href="javascript:void(0)"><img  style="display: block;" data-bind="attr:{src:iattachment.url}"></a>
+                                    <a class="cboxElement" data-bind="click:function(item,el){location.href='/attachment/'+iattachment.id+'/preview'; el.stopPropagation();}" href="javascript:void(0)"><img height="100" style="display: block;" data-bind="attr:{src:iattachment.url}"></a>
                                 </li>
                             </ul>
-                            <div style="float:left;margin-left:5px">
+                            <div class="right">
                                 <div>
                                     <span data-bind="text:colorFormName"></span>/
                                     <span data-bind="text:gemCategoryName"></span>/
-                                    <span data-bind="text:productCategoryName"></span>/
+                                    <span data-bind="text:productCategoryName"></span>
+                                </div>
+                                <div>
                                     <!-- ko if:rangSize != null -->
                                     <span data-bind="text:rangSize"></span>/
                                     <!-- /ko -->
@@ -72,17 +100,20 @@
                                 <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
                                 <!-- /ko -->
                                 <div data-bind="text:statusName" class="status"></div>
-                                <!-- ko if:status == 3 -->
-                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
-                                <!-- /ko -->
-                                <!-- ko if:status == 11 -->
-                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.ConfirmHaveGoods">确认收货</button>
-                                <!-- /ko -->
-                                <!-- ko if:status == 11 | status == 12 -->
-                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.ViewShipmentOrder">查看出货单</button>
-                                <!-- /ko -->
                             </div>
                         </div>
+                        <div style="display:inline-block">
+                            <!-- ko if:status == 3 -->
+                            <button class="btn btn-primary btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
+                            <!-- /ko -->
+                            <!-- ko if:status == 11 -->
+                            <button class="btn btn-primary btn-sm" data-bind="click:$parent.ConfirmHaveGoods">确认收货</button>
+                            <!-- /ko -->
+                            <!-- ko if:status == 11 | status == 12 -->
+                            <button class="btn btn-primary btn-sm" data-bind="click:$parent.ViewShipmentOrder">查看出货单</button>
+                            <!-- /ko -->
+                        </div>
+
                     </div>
                 </div>
                 <div class="text-center"><ul id="orderListPage"></ul></div>

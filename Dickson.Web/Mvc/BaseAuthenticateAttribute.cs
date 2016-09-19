@@ -47,7 +47,7 @@ namespace Dickson.Web.Mvc
         protected virtual void HandleUnauthorizedRequest(AuthenticationContext filterContext)
         {
             // Returns HTTP 401 - see comment in HttpUnauthorizedResult.cs.
-            filterContext.Result = new RedirectResult("/Account/Login");
+            filterContext.Result = new HttpUnauthorizedResult();//new RedirectResult("/Account/Login?returnUrl="+ filterContext.HttpContext.);
         }
 
         protected virtual void OnAuthenticated(AuthenticationContext filterContext, IUser user)
