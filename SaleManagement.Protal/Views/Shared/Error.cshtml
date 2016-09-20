@@ -3,6 +3,34 @@
     Layout = null;
 }
 
-<h1 class="text-danger">Error.</h1>
-<h2 class="text-danger">An error occurred while processing your request.</h2>
+<style>
+    body, html {
+        background-color: #fff;
+    }
 
+    .error-center {
+        width: 1200px;
+        margin: auto;
+    }
+
+        .error-center > img {
+            width: 300px;
+            height: 250px;
+            display: block;
+            margin: auto;
+            margin-top: 115px;
+        }
+
+        .error-center > .desc {
+            margin-top: 20px;
+            text-align: center;
+        }
+</style>
+
+
+<div class="error-center">
+    <img src="~/static/images/404.png">
+    <div class="desc">
+        @(Model ?? "抱歉！您已漫游到太空了")
+    </div>
+</div>

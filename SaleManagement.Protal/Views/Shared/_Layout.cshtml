@@ -185,6 +185,10 @@
                                         {
                                             <li><a href="/Report/shipmentStatistics">出货统计</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4004))
+                                        {
+                                            <li><a href="/Report/OrderSetStoneStatistics">配石报表</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

@@ -52,6 +52,39 @@ namespace SaleManagement.Protal.Controllers
             return result;
         }
 
+
+        public async Task<ActionResult> OrderSetStoneStatistics(SetStoneReportQuery reportQuery)
+        {
+            if (!Request.IsAjaxRequest())
+                return View();
+
+            var manager = new ShipmentManager(User);
+            var list = await manager.GetOrderSetStoneStatisticsAsync(reportQuery);
+            return Json(true, string.Empty, list);
+        }
+
+        public async Task<FileStreamResult> OrderSetStoneStatisticsExport(SetStoneReportQuery reportQuery)
+        {
+            var manager = new ShipmentManager(User);
+            var orderSetStoneStatistics = await manager.GetOrderSetStoneStatisticsAsync(reportQuery);
+            var titles = new string[] { "序号", "配石名称", "重量（ct）" };
+            var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "配石报表", ws =>
+            {
+                var row = 2;
+                int index = 1;
+                foreach (var orderSetStoneStatistic in orderSetStoneStatistics)
+                {
+
+                    ws.Cells[row, 1].Value = index;
+                    ws.Cells[row, 2].Value = orderSetStoneStatistic.SetStoneName;
+                    ws.Cells[row, 3].Value = orderSetStoneStatistic.Weight; 
+                    row++;
+                    index++;
+                };
+            });
+            return result;
+        }
+
         public async Task<ActionResult> ShipmentStatistics(ShipmentReportQuery reportQuery)
         {
             if (!Request.IsAjaxRequest())
@@ -109,7 +142,7 @@ namespace SaleManagement.Protal.Controllers
                 shipmentOrderInfoViewModel.CustomerName = f.Order.Customer.Name;
                 shipmentOrderInfoViewModel.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
                 return shipmentOrderInfoViewModel;
-            }).ToList();
+            });
             if (shipmentOrderInfoViewModels.Any())
             {
                 var total = new ShipmentOrderInfoViewModel
@@ -127,8 +160,9 @@ namespace SaleManagement.Protal.Controllers
                     RiskFee = shipmentOrderInfoViewModels.Sum(r => r.RiskFee),
                     OtherCost = shipmentOrderInfoViewModels.Sum(r => r.OtherCost),
                     TotalAmount = shipmentOrderInfoViewModels.Sum(r => r.TotalAmount),
+                     Weight = shipmentOrderInfoViewModels.Sum(r => r.Weight),
                 };
-                shipmentOrderInfoViewModels.Add(total);
+                shipmentOrderInfoViewModels.ToList().Add(total);
             }
             return shipmentOrderInfoViewModels;
         }

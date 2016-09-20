@@ -51,7 +51,7 @@ namespace SaleManagement.Protal.Controllers
 
             var customers = orders.Select(r => r.Customer).Distinct().ToList();
             if (customers.Count > 1)
-                return Error("生成订单不能选择了多个公司");
+                return Error("生成出货单不能选择了多个公司");
 
             var customer = customers.FirstOrDefault();
 

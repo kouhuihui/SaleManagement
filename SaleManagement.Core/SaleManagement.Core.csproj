@@ -155,9 +155,11 @@
     <Compile Include="Store\SaleManagementDbContext.cs" />
     <Compile Include="ViewModel\AccountStatistic.cs" />
     <Compile Include="ViewModel\AttachmentItem.cs" />
+    <Compile Include="ViewModel\OrderSetStoneStatistic.cs" />
     <Compile Include="ViewModel\OrderStatistics.cs" />
     <Compile Include="ViewModel\PagingRequest.cs" />
     <Compile Include="ViewModel\ReportQueryBaseDto.cs" />
+    <Compile Include="ViewModel\SetStoneReportQuery.cs" />
     <Compile Include="ViewModel\ShipmentReportQuery.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -142,7 +142,10 @@
                             }
                         </tbody>
                     </table>
-                    <input class="btn btn-primary" id="btnSave" type="submit" value="保存" />
+                    <div class="m-bot15">
+                        <input class="btn btn-danger" id="btnCompute" type="button" value="计算金额" />
+                        <input class="btn btn-primary" id="btnSave" type="submit" value="保存" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -208,52 +211,53 @@
     @Scripts.Render("~/bundles/js/ajaxForm")
     <script type="text/javascript">
         $(function () {
-            var $btnSave = $("#btnSave");
+            var $btnSave = $("#btnSave"),
+                $btnCompute = $("#btnCompute");
             if ($("#AuditStatus").val() == "1") {
                 $("tbody input[type=text]").attr("disabled", true);
                 $btnSave.hide();
             }
             $("#tbody input[data-name=goldWeight]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this).data("index");
             })
             $("#tbody input[data-name=weight]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=lossRate]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=riskFee]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=sideStoneTotalAmount]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=totalSetStoneWorkingCost]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
             $("#tbody input[data-name=basicCost]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=outputWaxCost]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[data-name=otherCost]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this);
+                CalculationAmount($this.data("index"));
             })
 
             $("#tbody input[type=text]").on("blur", function () {
@@ -263,8 +267,7 @@
                 }
             });
 
-            function CalculationAmount(v) {
-                var index = v.data("index"),
+            function CalculationAmount(index) {
                  $tr = $("#tbody tr[data-index=" + index + "]"),
                  $hhz = $tr.find("input[data-name=hhz]"),
                  $goldAmount = $tr.find("input[data-name=goldAmount]"),
@@ -325,6 +328,13 @@
             $btnSave.click(function () {
                 if ($("#Id").val() != "") {
                     $form.attr("target", "_self").attr("action", "/Shipment/Edit");
+                }
+            })
+
+            $btnCompute.click(function () {
+                var $trs = $("#tbody tr");
+                for (var i = 0, len = $trs.length; i < len; i++) {
+                    CalculationAmount(i);
                 }
             })
         });

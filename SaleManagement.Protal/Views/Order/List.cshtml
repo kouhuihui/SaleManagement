@@ -27,7 +27,7 @@
         @{
             var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
         }
-        <div class="combobox-body" style="width: 150px;">
+        <div class="combobox-body" style="width: 120px;">
             @Html.DropDownList("orderStatus", orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
         </div>
     </div>

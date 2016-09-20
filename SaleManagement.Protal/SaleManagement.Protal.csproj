@@ -17,7 +17,7 @@
     <AssemblyName>SaleManagement.Protal</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>false</UseIISExpress>
+    <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -333,6 +333,7 @@
     <Content Include="static\fullcalendar\fullcalendar.css" />
     <Content Include="static\fullcalendar\fullcalendar.js" />
     <Content Include="static\fullcalendar\fullcalendar.min.js" />
+    <Content Include="static\images\404.png" />
     <Content Include="static\images\ajax-loaders\ajax-loader-1.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-2.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-3.gif" />
@@ -420,6 +421,7 @@
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
+    <Content Include="static\js\Report\setStoneStatistics.js" />
     <Content Include="static\js\Report\shipmentStatistics.js" />
     <Content Include="static\js\shipment\list.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
@@ -506,6 +508,7 @@
     <Content Include="Views\Order\ViewAttachements.cshtml" />
     <Content Include="Views\Report\AccountStatistics.cshtml" />
     <Content Include="Views\Report\ShipmentStatistics.cshtml" />
+    <Content Include="Views\Report\OrderSetStoneStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

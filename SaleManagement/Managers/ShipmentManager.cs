@@ -1,6 +1,7 @@
 ﻿using Dickson.Core.ComponentModel;
 using EntityFramework.Extensions;
 using SaleManagement.Core.Models;
+using SaleManagement.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -40,7 +41,7 @@ namespace SaleManagement.Managers
             return await DbContext.Set<ShipmentOrder>().FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<IEnumerable<ShipmentOrderInfo>> GetShipmentOrderInfosAsync(Func<IQueryable<ShipmentOrderInfo>, IQueryable<ShipmentOrderInfo>> filter = null)
+        public async Task<ICollection<ShipmentOrderInfo>> GetShipmentOrderInfosAsync(Func<IQueryable<ShipmentOrderInfo>, IQueryable<ShipmentOrderInfo>> filter = null)
         {
             var query = DbContext.Set<ShipmentOrderInfo>().Where(r => r.Order.ComplayId == User.CompanyId);
             if (filter != null)
@@ -83,7 +84,34 @@ namespace SaleManagement.Managers
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
+        public async Task<IEnumerable<OrderSetStoneStatistic>> GetOrderSetStoneStatisticsAsync(ReportQueryBaseDto reportQuery)
+        {
+            var query = DbContext.Set<ShipmentOrderInfo>().Where(t => t.Order.ComplayId == User.CompanyId);
+            if (reportQuery.StatisticStartDate.HasValue)
+            {
+                query = query.Where(t => t.ShipmentOrder.Created > reportQuery.StatisticStartDate.Value);
+            }
+            if (reportQuery.StatisticEndDate.HasValue)
+            {
+                var endDate = reportQuery.StatisticEndDate.Value.AddDays(1);
+                query = query.Where(t => t.ShipmentOrder.Created < endDate);
+            }
 
+            var orderIds = query.Select(r => r.Order.Id);
+            if (orderIds == null || !orderIds.Any())
+                return Enumerable.Empty<OrderSetStoneStatistic>();
+
+            var orderSetStoneStatistics = await DbContext.Set<OrderSetStoneInfo>().Where(r => orderIds.Contains(r.OrderId))
+                 .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).Select(a => new OrderSetStoneStatistic
+                 {
+                     SetStoneName = a.Key.MathchStoneName,
+                     Weight = a.Sum(g => g.Weight)
+                 }).ToListAsync();
+
+            var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 2);
+            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight });
+            return orderSetStoneStatistics;
+        }
         private async Task UpdateShipmentOrderInfosAsync(ShipmentOrder order)
         {
             var shipmentOrderInfos = DbContext.Set<ShipmentOrderInfo>();

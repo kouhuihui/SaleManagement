@@ -432,9 +432,27 @@ namespace DataMigration
             {
                 Id = 4002,
                 Level = 2,
-                Name = "对账",
+                Name = "账目报表",
                 parentId = 4000,
                 Order = 2
+            };
+
+            var menu21 = new SystemMenu
+            {
+                Id = 4003,
+                Level = 2,
+                Name = "出货统计",
+                parentId = 4000,
+                Order = 3
+            };
+
+            var menu22 = new SystemMenu
+            {
+                Id = 4004,
+                Level = 2,
+                Name = "配石报表",
+                parentId = 4000,
+                Order = 4
             };
 
             context.Menus.Add(menu);

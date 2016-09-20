@@ -165,7 +165,7 @@
         $(window).modalDialog({
             title: "提示",
             smallTitle: "",
-            content: "确认进入出蜡阶段？",
+            content: "确认进入倒模阶段？",
             type: "confirm",
             okCallBack: function (e, $el) {
                 $.ajax({

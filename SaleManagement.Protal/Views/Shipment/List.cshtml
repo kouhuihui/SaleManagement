@@ -70,7 +70,7 @@
                     </thead>
                     <tbody id="tbody" data-bind="foreach:orders">
                         <tr>
-                            <td><input type="checkbox" data-bind="value:id,attr:{status:auditStatus}" /></td>
+                            <td><input type="checkbox" data-bind="value:id,attr:{status:auditStatus},checked:false" /></td>
                             <!-- ko if:auditStatus==0 -->
                             <td>未审核</td>
                             <!-- /ko -->
