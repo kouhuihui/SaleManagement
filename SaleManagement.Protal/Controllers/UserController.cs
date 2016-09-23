@@ -1,8 +1,8 @@
 ﻿using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models;
+using SaleManagement.Protal.Models.User;
 using SaleManagement.Protal.Web;
 using System;
 using System.Linq;
@@ -15,13 +15,13 @@ namespace SaleManagement.Protal.Controllers
     {
         // GET: User
         [PagingParameterInspector]
-        public async Task<ActionResult> List(PagingRequest request)
+        public async Task<ActionResult> List(UserQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View();
 
             var manager = new UserManager();
-            var paging = await manager.GetUsersAsync(request.Start, request.Take);
+            var paging = await manager.GetUsersAsync(request.Start, request.Take, request.GetUseristQueryFilter());
 
             var users = paging.List.Select(u => new SaleUserViewModel(u));
 
@@ -74,6 +74,13 @@ namespace SaleManagement.Protal.Controllers
             var manager = new UserManager();
             var users = await manager.GetUserByRoleAsync(roleCode);
             return Json(true, data: users.Select(u => new SaleUserViewModel(u)));
+        }
+
+        public async Task<JsonResult> UpdateUserStatus([NamedModelBinder(typeof(CommaSeparatedModelBinder), "userIds")] string[] userIds, UserStatus status)
+        {
+            var manager = new UserManager();
+            var result = await manager.UpdateUserStatus(userIds, status);
+            return Json(result);
         }
     }
 }

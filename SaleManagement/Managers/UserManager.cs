@@ -5,7 +5,6 @@ using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Store;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -59,7 +58,7 @@ namespace SaleManagement.Managers
 
         public SaleUser FindByIdByCache(string userId)
         {
-            SaleUser user= m_MemoryCache.Get<SaleUser>(userId);
+            SaleUser user = m_MemoryCache.Get<SaleUser>(userId);
             if (user == null)
             {
                 user = this.FindById(userId);
@@ -67,20 +66,24 @@ namespace SaleManagement.Managers
                 {
                     m_MemoryCache.Set(userId, user, new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(SaleManagentConstants.UI.DefaultUserCacheExpiringMinutes) });
                 }
-            }    
+            }
             return user;
         }
 
-        public async Task<Paging<TUser>> GetUsersAsync(int start, int take)
+        public async Task<Paging<TUser>> GetUsersAsync(int start, int take, Func<IQueryable<TUser>, IQueryable<TUser>> filter = null)
         {
             var query = Users.Where(u => u.IdentityType == IdentityType.Employee);
+            if (filter != null)
+            {
+                query = filter(query);
+            }
             var total = await query.CountAsync();
             var list = await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).Skip(start).Take(take).ToListAsync();
 
             return new Paging<TUser>(start, take, total, list);
         }
 
-        public async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string>userIds)
+        public async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string> userIds)
         {
             if (!userIds.Any())
                 return Enumerable.Empty<TUser>();
@@ -106,6 +109,25 @@ namespace SaleManagement.Managers
         {
             var query = Users.Where(u => u.IdentityType == IdentityType.Customer);
             return await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).ToListAsync();
+        }
+
+        public async Task<InvokedResult> UpdateUserStatus(string[] userIds, UserStatus status)
+        {
+            var users = await GetUsersAsync(userIds);
+            foreach (var user in users)
+            {
+                user.Status = status;
+                await base.UpdateAsync(user);
+                RemoveCachedUserItem(user.Id);
+            }
+
+            return InvokedResult.SucceededResult;
+        }
+
+        private void RemoveCachedUserItem(string userId)
+        {
+            Requires.NotNullOrEmpty(userId, nameof(userId));
+            m_MemoryCache.Remove(userId);
         }
     }
 }

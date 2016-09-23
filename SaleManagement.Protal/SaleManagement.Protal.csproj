@@ -275,6 +275,7 @@
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
     <Compile Include="Models\User\SaleUserEditViewModel.cs" />
     <Compile Include="Models\User\SaleUserViewModel.cs" />
+    <Compile Include="Models\User\UserQueryRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web\PortalAuthenticateAttribute.cs" />
