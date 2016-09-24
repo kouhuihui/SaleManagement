@@ -61,7 +61,7 @@ $(function () {
 		autoUpload: true,//是否自动上传
 		url: addAttachmentUrl,
 		dataType: 'json',
-		formData: {},
+		formData: { orderId: orderId },
 		singleFileUploads: false,
 		limitMultiFileUploads: 1,
 		acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,

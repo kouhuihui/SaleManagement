@@ -39,12 +39,14 @@
                         <tr>
                             <th>配石名称</th>
                             <th>重量（ct）</th>
+                            <th>数量</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" data-bind="foreach:setStoneStatistics">
                         <tr>
                             <td class="col-md-3" data-bind="text:setStoneName"></td>
                             <td data-bind="text:weight"></td>
+                            <td data-bind="text:number"></td>
                         </tr>
                     </tbody>
                 </table>

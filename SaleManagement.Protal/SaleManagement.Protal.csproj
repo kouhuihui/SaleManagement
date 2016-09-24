@@ -396,6 +396,7 @@
     <Content Include="static\js\jquery.history.js" />
     <Content Include="static\js\jquery.iphone.toggle.js" />
     <Content Include="static\js\jquery.noty.js" />
+    <Content Include="static\js\jquery.PrintArea.js" />
     <Content Include="static\js\jquery.raty.min.js" />
     <Content Include="static\js\jquery.ui.widget.js" />
     <Content Include="static\js\jquery.uploadify-3.1.min.js" />

@@ -58,6 +58,7 @@ namespace SaleManagement.Protal.Controllers
                 Name = model.Name,
                 EmailConfirmed = true,
                 Telephone = model.Telephone,
+                Mobile = model.Mobile,
                 Status = UserStatus.Normal,
                 IdentityType = IdentityType.Employee,
                 CompanyId = User.CompanyId,

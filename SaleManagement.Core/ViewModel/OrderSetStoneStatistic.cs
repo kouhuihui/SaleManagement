@@ -11,5 +11,7 @@ namespace SaleManagement.Core.ViewModel
         public string SetStoneName { get; set; }
 
         public double Weight { get; set; }
+
+        public double Number { get; set; }
     }
 }

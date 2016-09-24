@@ -387,7 +387,8 @@ namespace SaleManagement.Protal.Controllers
         {
             var orderManager = new OrderManager(User);
             var order = await orderManager.GetOrderAsync(orderId);
-            var attachements = order.Attachments.Where(a => a.CreatorId == User.Id);
+            var desginers = await new UserManager().GetUserByRoleAsync(SaleManagentConstants.SystemRole.Design);
+            var attachements = order.Attachments.Where(a => desginers.Any(d => d.Id == a.CreatorId));
             return View(new UploadDesginImageViewModel()
             {
                 OrderId = orderId,
@@ -412,7 +413,7 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             var orderListItemViewModel = new OrderListItemViewModel(order);
             var attachements = order.Attachments;
-            orderListItemViewModel.Attachments = attachements.Select(a => new AttachmentItem
+            orderListItemViewModel.Attachments = attachements.OrderByDescending(a=>a.Created).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
                 Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
@@ -512,7 +513,7 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             if (order != null)
             {
-                attachments = order.Attachments.OrderByDescending(a=>a.Created).Select(a => new AttachmentItem
+                attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
                 {
                     Id = a.FileInfoId,
                     Url = "/Attachment/" + a.FileInfoId + "/preview"
@@ -636,7 +637,7 @@ namespace SaleManagement.Protal.Controllers
             }
             Bitmap oB = new Bitmap(dWidth, dHeight);//实例化
             Graphics g = Graphics.FromImage(oB);//从指定的Image中创建Graphics
-            g.Clear(Color.WhiteSmoke);//设置画布背景颜色
+            g.Clear(Color.White);//设置画布背景颜色
             g.CompositingQuality = CompositingQuality.HighQuality;//合成图像的呈现质量
             g.SmoothingMode = SmoothingMode.HighQuality;//呈现质量
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;//插补模式

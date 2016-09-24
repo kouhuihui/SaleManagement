@@ -105,7 +105,8 @@ namespace SaleManagement.Managers
                  .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).Select(a => new OrderSetStoneStatistic
                  {
                      SetStoneName = a.Key.MathchStoneName,
-                     Weight = a.Sum(g => g.Weight)
+                     Weight = a.Sum(g => g.Weight),
+                     Number = a.Sum(g=> g.Number)
                  }).ToListAsync();
 
             var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 2);
