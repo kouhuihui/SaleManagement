@@ -1,4 +1,6 @@
-﻿namespace SaleManagement.Core
+﻿using Dickson.Core.ComponentModel;
+
+namespace SaleManagement.Core
 {
     public class SaleManagentConstants
     {
@@ -23,12 +25,14 @@
         {
             public const string PasswordError = "请输入6位密码";
             public const string OrderNotFound = "订单不存在";
+            public const string InvalidRequest = "无效请求";
         }
 
         public class UI
         {
             public const string TitleSuffix = "-18K珠宝管理系统";
             public const int DefaultUserCacheExpiringMinutes = 20;
+            public const int DefaultExpiringDays = 7;
             public static readonly string DateStringFormat = "yyyy-MM-dd";
         }
 
@@ -60,6 +64,16 @@
             public static readonly string WithTheHand = "withTheHand";
             public static readonly string MicroInsert = "microInsert";
             public static readonly string Polishing = "polishing";
+        }
+
+        public class ConfigKeys
+        {
+            public static readonly string wxAccountCookie = "wxAccount";
+        }
+
+        public class InvokedResults
+        {
+            public static readonly InvokedResult UserNotFoundResult = InvokedResult.Fail("NotFound", "用户不存在");
         }
     }
 }

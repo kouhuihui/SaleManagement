@@ -1,0 +1,53 @@
+﻿﻿@model SaleManagement.Protal.Models.Me.ProfileViewModel
+
+@using (Html.BeginForm("Profile", "Me", FormMethod.Post, new { id = "userInfo", data_bind = "submit:postForm" }))
+{
+        <div class="col-md-9">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    姓名：<span data-bind="text:$data.Name"></span>
+                </div>
+                <div class="form-group">
+                    邮箱：<span data-bind="text:$data.Email"></span>
+                </div>
+                <div class="form-group">
+                    手机：<span data-bind="text:$data.Mobile"></span>
+                </div>
+                <div class="form-group">
+                    <input id="editInfo" type="button" value="修改" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-horizontal hide">
+                <h6>@User.UserName</h6>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "姓名", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "邮箱", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control", placeholder = "手机号码", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <input type="submit" value="保存" class="btn btn-success" />
+                        <input id="cancel" type="button" value="取消" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+}
+

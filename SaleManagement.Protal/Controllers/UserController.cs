@@ -69,6 +69,59 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        public async Task<ActionResult> Edit(string id)
+        {
+            var manager = new UserManager();
+            var user = await manager.FindByIdAsync(id);
+            var roles = await new RoleManager(User).GetRolesAsync();
+            ViewBag.SystemRoles = new SelectList(roles, "Id", "Name", user.RoleId);
+            //    Select(r => new SelectListItem
+            //{
+            //    Text = r.Name,
+            //    Value = r.Id.ToString(),
+            //    Selected = r.Id == user.RoleId
+            //}).ToList();
+            return View(new SaleUserEditViewModel(user));
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> Edit(SaleUserEditViewModel model)
+        {
+            ModelState.Remove("Password");
+            ModelState.Remove("ConfirmPassword");
+            if (!ModelState.IsValid)
+                return Json(false, data: ErrorToDictionary());
+
+            var manager = new UserManager();
+            var user = await manager.FindByIdAsync(model.Id);
+            user.Mobile = model.Mobile;
+            user.Name = model.Name;
+            user.Email = model.Email;
+
+            var result = await manager.UpdateAsync(user);
+            return Json(result);
+        }
+
+        public ActionResult ResetPassword(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+                return Error(SaleManagement.Core.SaleManagentConstants.Errors.InvalidRequest);
+
+            var model = new ResetPasswordRequest();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ResetPassword(ResetPasswordRequest model)
+        {
+            if (!ModelState.IsValid)
+                return Json(false,data:ErrorToDictionary());
+
+            var manager = new UserManager();
+            var result = await manager.ResetPasswordAsync(model.UserId, model.Password);
+            return Json(result);
+        }
+
         public async Task<JsonResult> GetUsersByRole(string roleCode)
         {
             var manager = new UserManager();

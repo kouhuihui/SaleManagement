@@ -229,6 +229,7 @@
       <DependentUpon>SaleManagementResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\MeController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ReconciliationController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Controllers\DailyGoldPriceController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ReconciliationController.cs" />
@@ -250,10 +252,14 @@
     <Compile Include="Controllers\SystemMenuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Customer\CustomerQueryRequest.cs" />
     <Compile Include="Models\Customer\CustomerUserEditViewModel.cs" />
     <Compile Include="Models\Customer\CustomerViewModel.cs" />
     <Compile Include="Models\DailyGoldPrice\DailyGoldPriceViewModel.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\Me\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\Me\IndexViewModel.cs" />
+    <Compile Include="Models\Me\ProfileViewModel.cs" />
     <Compile Include="Models\Order\CustomerQueryOrderStatus.cs" />
     <Compile Include="Models\Order\DistributionOrderViewModel.cs" />
     <Compile Include="Models\Order\OrderEditViewModel.cs" />
@@ -273,6 +279,7 @@
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
+    <Compile Include="Models\User\ResetPasswordRequest.cs" />
     <Compile Include="Models\User\SaleUserEditViewModel.cs" />
     <Compile Include="Models\User\SaleUserViewModel.cs" />
     <Compile Include="Models\User\UserQueryRequest.cs" />
@@ -281,6 +288,7 @@
     <Compile Include="Web\PortalAuthenticateAttribute.cs" />
     <Compile Include="Web\PortalController.cs" />
     <Compile Include="Web\PortalWebViewPage.cs" />
+    <Compile Include="Web\WeChatAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -344,6 +352,7 @@
     <Content Include="static\images\ajax-loaders\ajax-loader-7.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-8.gif" />
     <Content Include="static\images\favicon.ico" />
+    <Content Include="static\images\home.jpg" />
     <Content Include="static\images\iphone-style-checkboxes\off.png" />
     <Content Include="static\images\iphone-style-checkboxes\on.png" />
     <Content Include="static\images\iphone-style-checkboxes\slider.png" />
@@ -406,6 +415,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
+    <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="static\js\Mvc\jquery.validate.js" />
@@ -510,6 +520,12 @@
     <Content Include="Views\Report\AccountStatistics.cshtml" />
     <Content Include="Views\Report\ShipmentStatistics.cshtml" />
     <Content Include="Views\Report\OrderSetStoneStatistics.cshtml" />
+    <Content Include="Views\Me\Index.cshtml" />
+    <Content Include="Views\Me\_Profile.cshtml" />
+    <Content Include="Views\Me\_Password.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\_meIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

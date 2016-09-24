@@ -1,5 +1,8 @@
 ﻿$(function () {
-	var $usersListPage = $('#usersListPage');
+    var $usersListPage = $('#usersListPage'),
+        $userStatus = $("#userStatus");
+
+    $("#userStatus option[value=1]").attr("selected", true);
 	var Users = function (data) {
 		var self = this;
 		self.users = ko.observableArray(data);		
@@ -17,7 +20,6 @@
 		    usersView.users(data.list);
 		}
 	});
-
 
 	function searchArgs() {
 		return {
@@ -74,11 +76,27 @@
 
 	$("#btnDisabled").on("click", function () {
 		updateUserStatus("禁用", 0);
-
 	});
 
 	$("#btnEnabled").on("click", function () {
 		updateUserStatus("启用", 1);
-
 	});
+	$("#btnRestPassword").on("click", function () {
+	    var inputCheckeds = $("#tbody input:checkbox:checked");
+	    var length = inputCheckeds.length;
+	    if (length === 0) {
+	        shortTips("请选择用户");
+	        return false;
+	    }
+	    if (length > 1) {
+	        shortTips("只能选择一个用户");
+	        return false;
+	    }
+	    $("#modal").modal({
+	        remote: "/User/ResetPassword?userId=" + inputCheckeds.val()
+	    }).on("hidden.bs.modal", function () {
+	        $(this).removeData("bs.modal");
+	    });
+	});
+
 });

@@ -1,0 +1,20 @@
+﻿﻿@model SaleManagement.Protal.Models.Me.IndexViewModel
+@{
+    Layout = null;
+}
+<div class="content">
+    <ul id="myProfile" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#profileId" aria-controls="home" role="tab" data-toggle="tab">基本信息</a></li>
+        <li role="presentation"><a href="#password" aria-controls="profile" role="tab" data-toggle="tab">修改密码</a></li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active ko-before" id="profileId">
+            @Html.Partial("_Profile", Model.Profile)
+        </div>
+        <div role="tabpanel" class="tab-pane" id="password">
+            @Html.Partial("_Password", Model.Password)
+        </div>
+    </div>
+</div>
+

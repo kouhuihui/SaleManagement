@@ -46,6 +46,10 @@
                         <i class="glyphicon glyphicon-ok"></i>
                         启用
                     </a>
+                    <a id="btnRestPassword" class="btn">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        重置密码
+                    </a>
                 </div>
             </div>
             <div class="box-content">
@@ -58,6 +62,7 @@
                             <th>角色</th>
                             <th>手机</th>
                             <th>状态</th>
+                            <th>操作</th>
                         </tr>
                     </thead>
                     <tbody data-bind="foreach:{data:users,as:'user'}" id="tbody">
@@ -73,6 +78,7 @@
                             <!-- ko if:status!=0 -->
                             <td>已启用</td>
                             <!-- /ko -->
+                            <td><a class="btn btn-warning btn-sm" data-bind="attr:{href:'/User/edit?id='+id}">编辑</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -82,7 +88,14 @@
     </div>
     <!--/span-->
 </div><!--/row-->
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
+        </div>
+    </div>
+</div>
 @section scripts{
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/pager")

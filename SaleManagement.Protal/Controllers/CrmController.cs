@@ -1,4 +1,5 @@
-﻿using SaleManagement.Core.Models;
+﻿using Dickson.Web.Mvc.ModelBinding;
+using SaleManagement.Core.Models;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models.Customer;
 using SaleManagement.Protal.Web;
@@ -17,13 +18,14 @@ namespace SaleManagement.Protal.Controllers
             return View();
         }
 
-        public async Task<ActionResult> List(int start = 0, int take = 10)
+        [PagingParameterInspector]
+        public async Task<ActionResult> List(CustomerQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View();
 
             var manager = new UserManager();
-            var paging = await manager.GetCustomersAsync(start, take);
+            var paging = await manager.GetCustomersAsync(request.Start, request.Take, request.GetCustomerListQueryFilter());
 
             var dicountRateManager = new DiscountRateManager();
             var dicountRates = await dicountRateManager.GetCustomerDiscountRatesAsync(paging.List.Select(c => c.Id));

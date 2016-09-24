@@ -83,32 +83,9 @@ namespace SaleManagement.Managers
             return new Paging<TUser>(start, take, total, list);
         }
 
-        public async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string> userIds)
-        {
-            if (!userIds.Any())
-                return Enumerable.Empty<TUser>();
-
-            return await Users.Where(u => u.IdentityType == IdentityType.Employee && userIds.Contains(u.Id)).ToListAsync();
-        }
-
         public async Task<IEnumerable<TUser>> GetUserByRoleAsync(string roleCode)
         {
             return await Users.Where(u => u.IdentityType == IdentityType.Employee && u.Status == UserStatus.Normal && u.Role.Code == roleCode).ToListAsync();
-        }
-
-        public async Task<Paging<TUser>> GetCustomersAsync(int start, int take)
-        {
-            var query = Users.Where(u => u.IdentityType == IdentityType.Customer);
-            var total = await query.CountAsync();
-            var list = await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).Skip(start).Take(take).ToListAsync();
-
-            return new Paging<TUser>(start, take, total, list);
-        }
-
-        public async Task<IEnumerable<TUser>> GetAllCustomersAsync()
-        {
-            var query = Users.Where(u => u.IdentityType == IdentityType.Customer);
-            return await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).ToListAsync();
         }
 
         public async Task<InvokedResult> UpdateUserStatus(string[] userIds, UserStatus status)
@@ -124,10 +101,57 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
-        private void RemoveCachedUserItem(string userId)
+        public async Task<Paging<TUser>> GetCustomersAsync(int start, int take, Func<IQueryable<TUser>, IQueryable<TUser>> filter = null)
+        {
+            var query = Users.Where(u => u.IdentityType == IdentityType.Customer);
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+            var total = await query.CountAsync();
+            var list = await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).Skip(start).Take(take).ToListAsync();
+
+            return new Paging<TUser>(start, take, total, list);
+        }
+
+        public async Task<IEnumerable<TUser>> GetAllCustomersAsync()
+        {
+            var query = Users.Where(u => u.IdentityType == IdentityType.Customer && u.Status== UserStatus.Normal);
+            return await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).ToListAsync();
+        }
+
+        public void RemoveCachedUserItem(string userId)
         {
             Requires.NotNullOrEmpty(userId, nameof(userId));
             m_MemoryCache.Remove(userId);
+        }
+
+        public async Task<InvokedResult> ResetPasswordAsync(string userId, string password)
+        {
+            Requires.NotNull(userId, nameof(userId));
+            Requires.NotNull(password, nameof(password));
+
+            var user = await FindByIdAsync(userId);
+            if (user == null)
+                return SaleManagentConstants.InvokedResults.UserNotFoundResult;
+
+            var provider = new Microsoft.Owin.Security.DataProtection.DpapiDataProtectionProvider();
+            UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<TUser>(provider.Create("UserToken"))
+                                                        as IUserTokenProvider<TUser, string>;
+
+            var code = await GeneratePasswordResetTokenAsync(user.Id);
+            await base.ResetPasswordAsync(user.Id, code, password);
+
+            await UpdateAsync(user);
+            return InvokedResult.SucceededResult;
+        }
+
+        private async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string> userIds)
+        {
+            if (!userIds.Any())
+                return Enumerable.Empty<TUser>();
+
+            return await Users.Where(u => userIds.Contains(u.Id)).ToListAsync();
         }
     }
 }

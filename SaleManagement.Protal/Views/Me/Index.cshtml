@@ -1,0 +1,77 @@
+﻿﻿@model SaleManagement.Protal.Models.Me.IndexViewModel
+
+@{
+    Title("我的资料");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            个人资料
+        </li>
+    </ul>
+</div>
+
+@Html.Partial("_meIndex", Model)
+@section scripts
+{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/knockout")
+    <script type="text/javascript">
+        $(function () {
+            var Profile = function () {
+                var self = this,
+                    $Name = $("#Name"),
+                    $Mobile = $("#Mobile"),
+                    $Email = $("#Email");
+
+                self.Name = ko.observable($Name.val());
+                self.Mobile = ko.observable($Mobile.val());
+                self.Email = ko.observable($Email.val());
+                self.postForm = function () {
+                    var $form = $("#userInfo");
+                    $form.ajaxSubmit({
+                        success: function (result) {
+                            if (result.succeeded) {
+                                shortTips("修改成功");
+                                self.Mobile($Mobile.val());
+                                self.Email($Email.val());
+                                self.Name($Name.val());
+                                toggleForm();
+                            } else {
+                                shortTips(errorMessage(result));
+                            }
+                        }
+                    });
+                }
+            };
+            ko.applyBindings(new Profile(), document.getElementById('profileId'));
+
+            $("#editInfo,#cancel").click(function () {
+                toggleForm();
+            });
+
+            function toggleForm() {
+                $("#userInfo .form-horizontal").each(function () {
+                    $(this).toggleClass("hide");
+                });
+            }
+
+            var $pwdForm = $("#updatePwd");
+            $pwdForm.ajaxForm({
+                success: function (result) {
+                    if (result.succeeded) {
+                        shortTips("密码修改成功");
+                        $pwdForm[0].reset();
+                    } else {
+                        shortTips(errorMessage(result));
+                    }
+                }
+            });
+        })
+    </script>
+}

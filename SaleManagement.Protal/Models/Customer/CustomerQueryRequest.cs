@@ -1,17 +1,19 @@
 ﻿using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 
-namespace SaleManagement.Protal.Models.User
+namespace SaleManagement.Protal.Models.Customer
 {
-    public class UserQueryRequest : PagingRequest
+    public class CustomerQueryRequest: PagingRequest
     {
         public string UserName { get; set; }
 
         public UserStatus? Status { get; set; }
 
-        public Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> GetUseristQueryFilter()
+        public Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> GetCustomerListQueryFilter()
         {
             Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> filter = query =>
             {
@@ -28,5 +30,6 @@ namespace SaleManagement.Protal.Models.User
             };
             return filter;
         }
+
     }
 }

@@ -13,7 +13,6 @@ namespace SaleManagement.Protal.Controllers
     {
         public ActionResult Login(string returnUrl)
         {
-
             var isAuthenticateduser = OwinContext.Authentication.User.Identity.IsAuthenticated;
             if (isAuthenticateduser)
             {
