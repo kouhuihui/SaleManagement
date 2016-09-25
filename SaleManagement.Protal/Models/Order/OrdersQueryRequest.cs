@@ -75,6 +75,10 @@ namespace SaleManagement.Protal.Models.Order
                 {
                     query = query.Where(f => f.OrderStatus == Status);
                 }
+                else {
+                    query = query.Where(f => f.OrderStatus != OrderStatus.Delete);
+                }
+
                 return query.AsNoTracking();
             };
             return filter;

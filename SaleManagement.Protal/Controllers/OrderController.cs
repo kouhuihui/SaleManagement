@@ -347,6 +347,13 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> Delete([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var result = await ChangeStep(orderIds, OrderStatus.Delete);
+            return Json(result);
+        }
+
         private async Task<InvokedResult> ChangeStep(string[] orderIds, OrderStatus orderStatus, string userId = "")
         {
             var manager = new OrderManager(User);

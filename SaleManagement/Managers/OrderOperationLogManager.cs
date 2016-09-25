@@ -90,6 +90,9 @@ namespace SaleManagement.Managers
                 case OrderStatus.HaveGoods:
                     content = "已收货";
                     break;
+                case OrderStatus.Delete:
+                    content = "订单已删除";
+                    break;
             }
             return content;
         }

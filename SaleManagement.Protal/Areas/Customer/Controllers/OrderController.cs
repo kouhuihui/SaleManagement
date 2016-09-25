@@ -32,7 +32,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
 
                 if (status == CustomerQueryOrderStatus.Process)
                 {
-                    query = query.Where(j => j.OrderStatus != OrderStatus.UnConfirmed && j.OrderStatus != OrderStatus.Shipment && j.OrderStatus != OrderStatus.HaveGoods);
+                    query = query.Where(j => j.OrderStatus != OrderStatus.Delete && j.OrderStatus != OrderStatus.UnConfirmed && j.OrderStatus != OrderStatus.Shipment && j.OrderStatus != OrderStatus.HaveGoods);
                 }
 
                 if (status == CustomerQueryOrderStatus.ForGoods)

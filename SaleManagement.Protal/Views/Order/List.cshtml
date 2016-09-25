@@ -84,6 +84,13 @@
                             生成出货单
                         </a>
                     }
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                    {
+                        <a id="btnDelete" class="btn">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            删除
+                        </a>
+                    }
                 </div>
             </div>
 

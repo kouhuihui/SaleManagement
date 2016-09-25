@@ -53,5 +53,8 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "已收货")]
         HaveGoods = 12,
+
+        [Display(Name = "已删除")]
+        Delete = -1,
     }
 }

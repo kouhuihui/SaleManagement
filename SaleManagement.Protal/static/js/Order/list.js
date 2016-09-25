@@ -185,4 +185,40 @@
             }
         });
     })
+
+    $("#btnDelete").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "确认删除订单？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/delete",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            location.reload();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
 });

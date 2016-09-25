@@ -45,6 +45,9 @@ namespace SaleManagement.Protal.Controllers
                     return RedirectToLocal(returnUrl);
                 case SignInResult.LockedOut:
                     return View("Lockout");
+                case SignInResult.Disabled:
+                    ModelState.AddModelError("", "账号已被禁用");
+                    return View(model);
                 case SignInResult.Failure:
                 default:
                     ModelState.AddModelError("", "账号或密码不正确");

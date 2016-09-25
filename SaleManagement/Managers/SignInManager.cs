@@ -40,6 +40,9 @@ namespace SaleManagement.Managers
         public virtual async Task<SignInResult> PasswordSignInAsync(IAuthenticationManager manager, string userName, string password, bool isPersistent)
         {
             var user = await m_UserManager.FindByNameAsync(userName);
+            if (user.Status != UserStatus.Normal)
+                return SignInResult.Disabled;
+
             var result = await PasswordSignInAsync(manager, password, isPersistent, user);
 
             return result;
