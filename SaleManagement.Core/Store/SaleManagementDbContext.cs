@@ -62,6 +62,7 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<ShippingScheduleSetting> ShippingScheduleSettings { get; set; }
 
+        public IDbSet<AccountBinding> AccountBindings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

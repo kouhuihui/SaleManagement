@@ -110,6 +110,7 @@
     <Compile Include="Mvc\ModelBinding\NamedModelBinderAttribute.cs" />
     <Compile Include="Mvc\ModelBinding\PagingParameterInspectorAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebBrowser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

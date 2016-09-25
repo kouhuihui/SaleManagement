@@ -28,5 +28,21 @@ namespace Dickson.Web.Extensions
 
             context.Set(_AppUserKeyPrefix + typeof(TUser).FullName, user);
         }
+
+        public static WebBrowser GetBrowser(this IOwinContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
+            var key = typeof(WebBrowser).FullName;
+            var browser = context.Get<WebBrowser>(key);
+            if (browser == null)
+            {
+                var agent = context.Request.Headers["User-Agent"];
+                browser = new WebBrowser(agent);
+                context.Set(key, browser);
+            }
+            return browser;
+        }
     }
 }

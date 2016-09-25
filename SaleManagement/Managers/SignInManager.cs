@@ -40,12 +40,29 @@ namespace SaleManagement.Managers
         public virtual async Task<SignInResult> PasswordSignInAsync(IAuthenticationManager manager, string userName, string password, bool isPersistent)
         {
             var user = await m_UserManager.FindByNameAsync(userName);
-            if (user.Status != UserStatus.Normal)
-                return SignInResult.Disabled;
-
             var result = await PasswordSignInAsync(manager, password, isPersistent, user);
 
             return result;
+        }
+
+        public virtual async Task<SignInResult> UserNameSignInAsync(IAuthenticationManager manager, string userName, bool isPersistent)
+        {
+            var user = await m_UserManager.FindByNameAsync(userName);
+            if (user == null || user.IdentityType == IdentityType.Employee)
+                return SignInResult.Failure;
+
+            switch (user.Status)
+            {
+                case UserStatus.Disabled:
+                    return SignInResult.Disabled;
+                case UserStatus.Normal:
+                    break;
+                default:
+                    throw new NotSupportedException("不受支持的用户状态");
+            }
+
+            SignIn(manager, user, isPersistent);
+            return SignInResult.Success;
         }
 
         async Task<SignInResult> PasswordSignInAsync(IAuthenticationManager manager, string password, bool isPersistent, TUser user)
@@ -53,33 +70,29 @@ namespace SaleManagement.Managers
             if (user == null)
                 return SignInResult.Failure;
 
-            if (await m_UserManager.IsLockedOutAsync(user.Id))
-                return SignInResult.LockedOut;
+            //if (await m_UserManager.IsLockedOutAsync(user.Id))
+            //    return SignInResult.LockedOut;
 
             if (await m_UserManager.CheckPasswordAsync(user, password))
             {
-                await m_UserManager.ResetAccessFailedCountAsync(user.Id);
-                //switch (user.Status)
-                //{
-                //    case HeadhuntingUserStatus.Disabled:
-                //        return SignInResult.Disabled;
-                //    case HeadhuntingUserStatus.Unverified:
-                //        return SignInResult.Unverified;
-                //    case HeadhuntingUserStatus.Rejected:
-                //        return SignInResult.Rejected;
-                //    case HeadhuntingUserStatus.Normal:
-                //        break;
-                //    default:
-                //        throw new NotSupportedException("不受支持的用户状态");
-                //}
+                //await m_UserManager.ResetAccessFailedCountAsync(user.Id);
+                switch (user.Status)
+                {
+                    case UserStatus.Disabled:
+                        return SignInResult.Disabled;
+                    case UserStatus.Normal:
+                        break;
+                    default:
+                        throw new NotSupportedException("不受支持的用户状态");
+                }
 
                 SignIn(manager, user, isPersistent);
                 return SignInResult.Success;
             }
 
-            await m_UserManager.AccessFailedAsync(user.Id);
-            if (await m_UserManager.IsLockedOutAsync(user.Id))
-                return SignInResult.LockedOut;
+            //await m_UserManager.AccessFailedAsync(user.Id);
+            //if (await m_UserManager.IsLockedOutAsync(user.Id))
+            //    return SignInResult.LockedOut;
 
             return SignInResult.Failure;
         }

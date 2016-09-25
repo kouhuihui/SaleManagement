@@ -1,4 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using Dickson.Web.Extensions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Owin;
+using SaleManagement.Core;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models;
 using SaleManagement.Protal.Web;
@@ -11,14 +14,32 @@ namespace SaleManagement.Protal.Controllers
 {
     public class AccountController : AnonymousController
     {
-        public ActionResult Login(string returnUrl)
+        [WeChatAttribute]
+        public async Task<ActionResult> Login(string returnUrl)
         {
             var isAuthenticateduser = OwinContext.Authentication.User.Identity.IsAuthenticated;
             if (isAuthenticateduser)
-            {
                 return RedirectToLocal(returnUrl);
-            }
+
             ViewBag.ReturnUrl = returnUrl;
+
+            var isWeChat = OwinContext.GetBrowser().IsWeChat;
+            if (isWeChat)
+            {
+                //var accountBindingManager = new AccountBindingManager();
+                //var accountBing = await accountBindingManager.GetAccountBindingAsync(wxAccount);
+                //if (accountBing == null)
+                //    return View("weChatLogin");
+
+                //var manager = new SignInManager(new SaleUserStore());
+                //var result = await manager.UserNameSignInAsync(OwinContext.Authentication, accountBing.UserName, false);
+                //if (result == SignInResult.Success)
+                //    return RedirectToLocal(returnUrl);
+
+                //LoggerHelper.Logger.LogInformation($"进入weChatLogin");
+                return View("weChatLogin");
+            }
+
             return View();
         }
 
@@ -26,7 +47,6 @@ namespace SaleManagement.Protal.Controllers
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
@@ -55,9 +75,51 @@ namespace SaleManagement.Protal.Controllers
             }
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> WeChatLogin(LoginViewModel model, string returnUrl)
+        {
+            ModelState.Remove("Password");
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // This doesn't count login failures towards account lockout
+            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            var manager = new SignInManager(new SaleUserStore());
+            IOwinContext owinContext = HttpContext.GetOwinContext();
+            var wxAccount = owinContext.Request.Cookies[SaleManagentConstants.ConfigKeys.wxAccountCookie];
+            if (string.IsNullOrEmpty(wxAccount))
+            {
+                ModelState.AddModelError("", "登陆失败");
+                return View("login");
+            }
+
+            var result = await manager.UserNameSignInAsync(owinContext.Authentication, model.UserName, false);
+            switch (result)
+            {
+                case SignInResult.Success:
+                    await new AccountBindingManager().CreateAccountBinding(new Core.Models.AccountBinding
+                    {
+                        UserName = model.UserName,
+                        WxAccount = wxAccount
+                    });
+                    return RedirectToLocal(returnUrl);
+                case SignInResult.LockedOut:
+                    return View("Lockout");
+                case SignInResult.Disabled:
+                    ModelState.AddModelError("", "账号已被禁用");
+                    return View(model);
+                case SignInResult.Failure:
+                default:
+                    ModelState.AddModelError("", "账号或手机号码不正确");
+                    return View(model);
+            }
+        }
+
         public ActionResult LogOut()
         {
             OwinContext.Authentication.SignOut();
+            OwinContext.Response.Cookies.Delete(SaleManagentConstants.ConfigKeys.wxAccountCookie, new CookieOptions { Path = "/" });
             return RedirectToLocal("~/");
         }
     }

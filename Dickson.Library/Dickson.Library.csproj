@@ -47,6 +47,8 @@
     <Compile Include="Security\Principal\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Security\Principal\IPrincipal.cs" />
     <Compile Include="Security\Principal\IUser.cs" />
+    <Compile Include="Threading\AsyncHelper.cs" />
+    <Compile Include="Threading\ExclusiveSynchronizationContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Caching\" />

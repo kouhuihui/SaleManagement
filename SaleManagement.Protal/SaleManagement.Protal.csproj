@@ -260,6 +260,7 @@
     <Compile Include="Models\Me\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Me\IndexViewModel.cs" />
     <Compile Include="Models\Me\ProfileViewModel.cs" />
+    <Compile Include="Models\OAuthAccessTokenResult.cs" />
     <Compile Include="Models\Order\CustomerQueryOrderStatus.cs" />
     <Compile Include="Models\Order\DistributionOrderViewModel.cs" />
     <Compile Include="Models\Order\OrderEditViewModel.cs" />
@@ -527,6 +528,7 @@
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\Shared\_meIndex.cshtml" />
+    <Content Include="Views\Account\weChatLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

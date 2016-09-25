@@ -106,7 +106,12 @@
     <Compile Include="Migrations\201609161631468_ShipmentAddCompanyId.Designer.cs">
       <DependentUpon>201609161631468_ShipmentAddCompanyId.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609250447382_addWxbinding.cs" />
+    <Compile Include="Migrations\201609250447382_addWxbinding.Designer.cs">
+      <DependentUpon>201609250447382_addWxbinding.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\CompanyStatus.cs" />
@@ -190,6 +195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609161631468_ShipmentAddCompanyId.resx">
       <DependentUpon>201609161631468_ShipmentAddCompanyId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609250447382_addWxbinding.resx">
+      <DependentUpon>201609250447382_addWxbinding.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
