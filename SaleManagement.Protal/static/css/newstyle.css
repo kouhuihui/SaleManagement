@@ -1643,3 +1643,7 @@ input[type=checkbox] {
         display:none;
     }
 }
+
+th {
+    text-align: center;
+}

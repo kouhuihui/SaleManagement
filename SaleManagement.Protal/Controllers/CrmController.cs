@@ -25,10 +25,15 @@ namespace SaleManagement.Protal.Controllers
                 return View();
 
             var manager = new UserManager();
-            var paging = await manager.GetCustomersAsync(request.Start, request.Take, request.GetCustomerListQueryFilter());
+            var paging = await manager.GetCustomersAsync(request.Start, request.Take, request.GetCustomerListQueryFilter(User));
+
+            var customerIds = paging.List.Select(c => c.Id);
 
             var dicountRateManager = new DiscountRateManager();
-            var dicountRates = await dicountRateManager.GetCustomerDiscountRatesAsync(paging.List.Select(c => c.Id));
+            var dicountRates = await dicountRateManager.GetCustomerDiscountRatesAsync(customerIds);
+
+            var customerInfoManager = new CustomerInfoManager(User);
+            var customerInfos = await customerInfoManager.GetCustomerInfosRatesAsync(customerIds);
 
             var customers = paging.List.Select(u =>
             {
@@ -42,6 +47,13 @@ namespace SaleManagement.Protal.Controllers
                     customerViewModel.Loss18KRate = dicountRate.Loss18K;
                     customerViewModel.LossPtRate = dicountRate.LossPt;
                 }
+
+                var customerInfo = customerInfos.FirstOrDefault(r => r.UserId == u.Id);
+                if (customerInfo != null)
+                {
+                    customerViewModel.Address = customerInfo.Address;                     
+                }
+
                 return customerViewModel;
             });
 
@@ -98,6 +110,7 @@ namespace SaleManagement.Protal.Controllers
             {
                 model.Id = user.Id;
                 await SaveCustomerDiscountRate(model);
+                await SaveCustomerInfo(model);
             }
             return Json(result);
         }
@@ -118,6 +131,14 @@ namespace SaleManagement.Protal.Controllers
                 customerUserEditViewModel.Loss18KRate = discountRate.Loss18K;
                 customerUserEditViewModel.LossPtRate = discountRate.LossPt;
             }
+
+            var customerInfoManager = new CustomerInfoManager(User);
+            var customerInfo = await customerInfoManager.GetCustomerInfoAsync(user.Id);
+            if (customerInfo != null)
+            {
+                customerUserEditViewModel.Address = customerInfo.Address;
+            }
+
             return View(customerUserEditViewModel);
         }
 
@@ -139,6 +160,7 @@ namespace SaleManagement.Protal.Controllers
             if (result.Succeeded)
             {
                 await SaveCustomerDiscountRate(model);
+                await SaveCustomerInfo(model);
             }
             return Json(result);
         }
@@ -162,6 +184,21 @@ namespace SaleManagement.Protal.Controllers
             discountRate.Loss18K = model.Loss18KRate;
 
             await manager.SaveDiscountRateAsync(discountRate);
+        }
+
+        private async Task SaveCustomerInfo(CustomerUserEditViewModel model)
+        {
+            var manager = new CustomerInfoManager(User);
+            var customerInfo = await manager.GetCustomerInfoAsync(model.Id);
+            if (customerInfo == null)
+            {
+                customerInfo = new CustomerInfo();
+            }
+
+            customerInfo.UserId = model.Id;
+            customerInfo.Address = model.Address;
+
+            await manager.SaveCustomerInfoAsync(customerInfo);
         }
     }
 }

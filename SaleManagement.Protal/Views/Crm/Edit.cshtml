@@ -59,6 +59,15 @@
                 @Html.ValidationMessageFor(model => model.Mobile, "", new {@class = "text-danger"})
             </div>
         </div>
+                <div class="form-group">
+            <label class="control-label col-md-2" for="address">
+                <span class="text-danger"></span>地址
+            </label>
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.Address, new { @class = "form-control text-box single-line", placeholder = "请输入客户地址" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             <label class="control-label col-md-2" for="StoneSetterDiscountRate">
                 <span class="text-danger"></span>镶石折扣率(%)

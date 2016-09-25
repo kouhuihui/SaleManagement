@@ -21,5 +21,7 @@ namespace SaleManagement.Protal.Models.Customer
         public int Loss18KRate { get; set; }
 
         public int LossPtRate { get; set; }
+
+        public string Address { get; set; }
     }
 }

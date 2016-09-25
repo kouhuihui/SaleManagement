@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Managers\BaseManager.cs" />
     <Compile Include="Managers\BasicDataManager.cs" />
+    <Compile Include="Managers\CustomerInfoManager.cs" />
     <Compile Include="Managers\DailyGoldPriceManager.cs" />
     <Compile Include="Managers\DepartmentManager.cs" />
     <Compile Include="Managers\DiscountRateManager.cs" />

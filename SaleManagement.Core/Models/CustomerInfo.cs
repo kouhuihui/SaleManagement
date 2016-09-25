@@ -12,6 +12,11 @@ namespace SaleManagement.Core.Models
 {
     public class CustomerInfo
     {
+        public CustomerInfo()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
         public string Id { get; set; }
 
         public string UserId { get; set; }

@@ -1,4 +1,5 @@
-﻿using SaleManagement.Core.Models;
+﻿using SaleManagement.Core;
+using SaleManagement.Core.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Protal.Models.Customer
@@ -35,5 +36,9 @@ namespace SaleManagement.Protal.Models.Customer
         [Display(Name = "Pt耗损比")]
         [Range(1, 20, ErrorMessage = "请输入1~20之间数字")]
         public int LossPtRate { get; set; }
+
+        [Display(Name = "地址")]
+        [StringLength(SaleManagentConstants.Validations.DefaultStringLength,ErrorMessage ="{0}最长为{1}个字符")]
+        public string Address { get; set; }
     }
 }

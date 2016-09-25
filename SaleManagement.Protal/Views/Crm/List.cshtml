@@ -55,20 +55,20 @@
                 </div>
             </div>
             <div class="box-content">
-                <table class="table table-striped table-bordered bootstrap-datatable responsive">
+                <table class="table table-striped table-bordered bootstrap-datatable responsive text-center">
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th>姓名</th>
-                            <th>手机</th>
-                            <th>邮箱</th>
-                            <th>镶石折扣率</th>
-                            <th>副石折扣率</th>
-                            <th>基本工费折扣率</th>
-                            <th>18K耗损比(%)</th>
-                            <th>pt耗损比(%)</th>
-                            <th>状态</th>
-                            <th>操作</th>
+                        <tr style="text-align:center">
+                            <th width="20"></th>
+                            <th width="100">姓名</th>
+                            <th width="100">手机</th>
+                            <th>地址</th>
+                            <th width="80">镶石折扣率</th>
+                            <th width="80">副石折扣率</th>
+                            <th width="80">基本工费折扣率</th>
+                            <th width="80">18K耗损比(%)</th>
+                            <th width="80">pt耗损比(%)</th>
+                            <th width="80">状态</th>
+                            <th width="80">操作</th>
                         </tr>
                     </thead>
                     <tbody data-bind="foreach:users" id="tbody">
@@ -76,7 +76,7 @@
                             <td><input type="checkbox" data-bind="value:id,checked:false" /></td>
                             <td data-bind="text:name"></td>
                             <td data-bind="text:mobile"></td>
-                            <td data-bind="text:email"></td> 
+                            <td data-bind="text:address"></td> 
                             <td data-bind="text:stoneSetterDiscountRate"></td>
                             <td data-bind="text:sideStoneDiscountRate"></td>
                             <td data-bind="text:priceOfWorkDiscountRate"></td>

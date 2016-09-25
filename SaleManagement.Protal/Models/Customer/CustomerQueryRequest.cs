@@ -13,10 +13,11 @@ namespace SaleManagement.Protal.Models.Customer
 
         public UserStatus? Status { get; set; }
 
-        public Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> GetCustomerListQueryFilter()
+        public Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> GetCustomerListQueryFilter(SaleUser User)
         {
             Func<IQueryable<Core.Models.SaleUser>, IQueryable<Core.Models.SaleUser>> filter = query =>
             {
+                query = query.Where(f => f.CompanyId == User.CompanyId);
                 if (!string.IsNullOrEmpty(UserName))
                 {
                     query = query.Where(f => f.Name.Contains(UserName));
