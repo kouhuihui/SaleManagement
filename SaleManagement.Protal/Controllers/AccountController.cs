@@ -15,7 +15,7 @@ namespace SaleManagement.Protal.Controllers
     public class AccountController : AnonymousController
     {
         [WeChatAttribute]
-        public async Task<ActionResult> Login(string returnUrl)
+        public ActionResult Login(string returnUrl)
         {
             var isAuthenticateduser = OwinContext.Authentication.User.Identity.IsAuthenticated;
             if (isAuthenticateduser)
@@ -25,20 +25,7 @@ namespace SaleManagement.Protal.Controllers
 
             var isWeChat = OwinContext.GetBrowser().IsWeChat;
             if (isWeChat)
-            {
-                //var accountBindingManager = new AccountBindingManager();
-                //var accountBing = await accountBindingManager.GetAccountBindingAsync(wxAccount);
-                //if (accountBing == null)
-                //    return View("weChatLogin");
-
-                //var manager = new SignInManager(new SaleUserStore());
-                //var result = await manager.UserNameSignInAsync(OwinContext.Authentication, accountBing.UserName, false);
-                //if (result == SignInResult.Success)
-                //    return RedirectToLocal(returnUrl);
-
-                //LoggerHelper.Logger.LogInformation($"进入weChatLogin");
                 return View("weChatLogin");
-            }
 
             return View();
         }
@@ -93,12 +80,19 @@ namespace SaleManagement.Protal.Controllers
                 ModelState.AddModelError("", "登陆失败");
                 return View("login");
             }
+            var accountBindingManager = new AccountBindingManager();
+            var isBinding =await accountBindingManager.IsBindingAsync(model.UserName);
+            if (isBinding)
+            {
+                ModelState.AddModelError("", "账号已被绑定,不能重复绑定");
+                return View(model);
+            }
 
             var result = await manager.UserNameSignInAsync(owinContext.Authentication, model.UserName, false);
             switch (result)
             {
                 case SignInResult.Success:
-                    await new AccountBindingManager().CreateAccountBinding(new Core.Models.AccountBinding
+                    await accountBindingManager.CreateAccountBinding(new Core.Models.AccountBinding
                     {
                         UserName = model.UserName,
                         WxAccount = wxAccount

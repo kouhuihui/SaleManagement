@@ -29,5 +29,12 @@ namespace SaleManagement.Managers
 
             return await DbContext.Set<AccountBinding>().FirstOrDefaultAsync(r => r.WxAccount == wxAccount);
         }
+
+        public async Task<bool> IsBindingAsync(string userName)
+        {
+            Requires.NotNullOrEmpty(userName, "userName");
+
+            return await DbContext.Set<AccountBinding>().AnyAsync(r => r.UserName == userName);
+        }
     }
 }
