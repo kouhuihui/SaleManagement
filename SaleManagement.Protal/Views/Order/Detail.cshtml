@@ -1,159 +1,173 @@
 ﻿@model SaleManagement.Protal.Models.Order.OrderListItemViewModel
 @using Dickson.Core.Common.Extensions
 @{
-    Title("订单详情");
-}
-<style type="text/css">
-    .thumbnails > li {
-        display: inline-block;
-        margin-left: 0px;
-    }
+    ViewBag.Title = "订单详情";
+    Layout = null;
 
-    .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
-        padding: 5px;
-    }
-</style>
-<div class="pull-right"><button id="btnPrint" class="btn btn-primary">打印</button></div>
-<div id="divPrint">
-    <div class="row text-center">
-        <h4>生产订单</h4>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-xs-4"><label>订单号：</label>@Model.Id</div>
-        <div class="col-md-4 col-xs-4"><label>客户：</label>@Model.CustomerName</div>
-        <div class="col-md-4 col-xs-4"><label>制单人：</label>@Model.CreatorName</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-xs-4"><label>制单日期：</label>@Model.Created</div>
-        <div class="col-md-4 col-xs-4"><label>预计交货日期：</label>@Model.DeliveryDate</div>
-        <div class="col-md-4 col-xs-4"><label>订单状态：</label>@Model.StatusName</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-xs-4"><label>成色：</label>@Model.ColorFormName</div>
-        <div class="col-md-4 col-xs-4"><label>宝石：</label>@Model.GemCategoryName</div>
-        <div class="col-md-4 col-xs-4"><label>品类：</label>@Model.ProductCategoryName</div>
-    </div>
-    <div class="row">
-        <div class="col-md-4 col-xs-4"><label>指圈：</label>@Model.RangSize</div>
-        <div class="col-md-4 col-xs-4"><label>主石重：</label>@Model.MainStoneSize</div>
-        <div class="col-md-4 col-xs-4"><label> 件数：</label>@Model.Number</div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 col-xs-12" style="height:50px"><label>备注：</label>@Model.Remark</div>
-    </div>
-    <div class="row ptop5" style="min-height:490px" id="divImage">
-        @{ var i = 1;
-            foreach (var item in Model.Attachments)
-            {
-                var previewUrl = "/Attachment/" + @item.Id + "/preview";
-                var printHideClass = i >= 5 ? "col-md-4 col-sm-4 noshow" : "col-md-4 col-sm-4";
-                <div class="@printHideClass">
-                    <a class="cboxElement" target="_blank" onclick="window.open('@previewUrl')" href="javascript:void(0);"><img height="300" width="100%" src="@item.Url"></a>
-                </div>
-                i++;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单详情</title>
+    @Styles.Render("~/Bundles/Static/Css/Bootstrap")
+    @Styles.Render("~/Bundles/Static/Css/Layout")
+
+    <style type="text/css">
+        .table {
+            margin-bottom: 0px;
+        }
+
+            .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+                padding: 5px;
             }
-           }
+    </style>
+</head>
+<body>
+    <div style="margin:0px auto; width:980px;border:1px solid #e2f1f1">
+        <div class="pull-right"><button id="btnPrint" class="btn btn-primary">打印</button></div>
+        <div id="divPrint">
+            <div class="text-center">
+                <h4>生产订单</h4>
+            </div>
+            <div>
+                <div class="col-md-4 col-xs-4"><label>订单号：</label>@Model.Id</div>
+                <div class="col-md-4 col-xs-4"><label>客户：</label>@Model.CustomerName</div>
+                <div class="col-md-4 col-xs-4"><label>制单人：</label>@Model.CreatorName</div>
+            </div>
+            <div>
+                <div class="col-md-4 col-xs-4"><label>制单日期：</label>@Model.Created</div>
+                <div class="col-md-4 col-xs-4"><label>预计交货日期：</label>@Model.DeliveryDate</div>
+                <div class="col-md-4 col-xs-4"><label>订单状态：</label>@Model.StatusName</div>
+            </div>
+            <div>
+                <div class="col-md-4 col-xs-4"><label>成色：</label>@Model.ColorFormName</div>
+                <div class="col-md-4 col-xs-4"><label>宝石：</label>@Model.GemCategoryName</div>
+                <div class="col-md-4 col-xs-4"><label>品类：</label>@Model.ProductCategoryName</div>
+            </div>
+            <div>
+                <div class="col-md-4 col-xs-4"><label>指圈：</label>@Model.RangSize</div>
+                <div class="col-md-4 col-xs-4"><label>主石重：</label>@Model.MainStoneSize</div>
+                <div class="col-md-4 col-xs-4"><label> 件数：</label>@Model.Number</div>
+            </div>
+            <div>
+                <div class="col-md-12 col-xs-12" style="height:50px"><label>备注：</label>@Model.Remark</div>
+            </div>
+            <div class="ptop5" style="min-height:600px; margin-left:5px;display:inline-block" id="divImage">
+                @{
+                    foreach (var item in Model.Attachments)
+                    {
+                        var previewUrl = "/Attachment/" + @item.Id + "/preview";
+                <div style="float:left;margin-left:5px;">
+                    <a class="cboxElement" target="_blank" onclick="window.open('@previewUrl')" href="javascript:void(0);"><img height="300" width="350" src="@item.Url"></a>
+                </div>
+                    }
+                }
+            </div>
+            <table class="table table-bordered bootstrap-datatable">
+                <thead>
+                    <tr>
+                        <th>部门</th>
+                        <th>日期</th>
+                        <th>发货重</th>
+                        <th>员工签名</th>
+                        <th>收货重</th>
+                        <th>主石</th>
+                        <th>副石</th>
+                        <th>粒数</th>
+                        <th>员工签名</th>
+                        <th>件数</th>
+                        <th>备注</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>执模</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>出水</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>微镶</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>手镶</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>抛光</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>打包</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <table class="table table-bordered bootstrap-datatable">
-        <thead>
-            <tr>
-                <th>部门</th>
-                <th>日期</th>
-                <th>发货重</th>
-                <th>员工签名</th>
-                <th>收货重</th>
-                <th>主石</th>
-                <th>副石</th>
-                <th>粒数</th>
-                <th>员工签名</th>
-                <th>件数</th>
-                <th>备注</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>执模</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>出水</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>微镶</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>手镶</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>抛光</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>打包</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-@section scripts{
-    <script type="text/javascript">
+</body>
+</html>
+@Scripts.Render("~/bundles/Static/js/jquery")
+<script type="text/javascript">
         $(function () {
             $("#btnPrint").click(function () {
                 var headstr = "<html><head><title></title></head><body>";
@@ -166,5 +180,4 @@
                 return false;
             });
         })
-    </script>
-}
+</script>

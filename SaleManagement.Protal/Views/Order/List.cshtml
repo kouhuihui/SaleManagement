@@ -115,7 +115,7 @@
                     <tbody id="tbody" data-bind="foreach:orders">
                         <tr>
                             <td><input type="checkbox" data-bind="value:id,attr:{status:status},checked:false"/></td>
-                            <td><a data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a></td>
+                            <td><a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a></td>
                             <td data-bind="text:statusName"></td>
                             <td data-bind="text:moduleTypeName"></td>
                             <td data-bind="text:productCategoryName"></td>

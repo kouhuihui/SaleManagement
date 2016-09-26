@@ -420,7 +420,7 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             var orderListItemViewModel = new OrderListItemViewModel(order);
             var attachements = order.Attachments;
-            orderListItemViewModel.Attachments = attachements.OrderByDescending(a=>a.Created).Select(a => new AttachmentItem
+            orderListItemViewModel.Attachments = attachements.OrderByDescending(a=>a.Created).Take(4).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
                 Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
