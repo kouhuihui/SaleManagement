@@ -35,8 +35,14 @@
     </style>
 </head>
 <body>
+    @{
+        var isEmployee = User.IdentityType == SaleManagement.Core.Models.IdentityType.Employee;
+    }
     <div style="margin:0px auto; width:980px;border:1px solid #e2f1f1">
-        <div class="pull-right"><button id="btnPrint" class="btn btn-primary">打印</button></div>
+        @if (isEmployee)
+        {
+            <div class="pull-right"><button id="btnPrint" class="btn btn-primary" onclick="printClick()">打印</button></div>
+        }
         <div id="divPrint">
             <div class="text-center">
                 <h4>生产订单</h4>
@@ -69,7 +75,7 @@
             <div>
                 <div class="col-md-4 col-xs-4">副石控制要求：@Model.SideStoneRequiredment.GetDisplayName()</div>
                 <div class="col-md-4 col-xs-4">戒臂内弧要求：@Model.RadianRequirement.GetDisplayName()</div>
-                <div class="col-md-4 col-xs-4">有无旧料：@(Model.HasOldMaterial?"有":"无")</div>
+                <div class="col-md-4 col-xs-4">有无旧料：@(Model.HasOldMaterial ? "有" : "无")</div>
             </div>
             <div>
                 <div class="col-md-4 col-xs-4">证书号：@Model.Certificate</div>
@@ -89,117 +95,118 @@
                     }
                 }
             </div>
-            <table class="table table-bordered bootstrap-datatable">
-                <tbody>
-                    <tr>
-                        <th>部门</th>
-                        <th>日期</th>
-                        <th>发货重</th>
-                        <th>员工签名</th>
-                        <th>收货重</th>
-                        <th>主石</th>
-                        <th>副石</th>
-                        <th>粒数</th>
-                        <th>员工签名</th>
-                        <th>件数</th>
-                        <th>备注</th>
-                    </tr>
-                    <tr>
-                        <td>执模</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>出水</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>微镶</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>手镶</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>抛光</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>打包</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                </tbody>
-            </table>
+            @if (isEmployee)
+            {
+                <table class="table table-bordered bootstrap-datatable">
+                    <tbody>
+                        <tr>
+                            <th>部门</th>
+                            <th>日期</th>
+                            <th>发货重</th>
+                            <th>员工签名</th>
+                            <th>收货重</th>
+                            <th>主石</th>
+                            <th>副石</th>
+                            <th>粒数</th>
+                            <th>员工签名</th>
+                            <th>件数</th>
+                            <th>备注</th>
+                        </tr>
+                        <tr>
+                            <td>执模</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>出水</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>微镶</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>手镶</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>抛光</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>打包</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
 </body>
 </html>
 @Scripts.Render("~/bundles/Static/js/jquery")
 <script type="text/javascript">
-    $(function () {
-        $("#btnPrint").click(function () {
-            var headstr = "<html><head><title></title></head><body>";
-            var footstr = "</body>";
-            var newstr = document.all.item("divPrint").innerHTML;
-            var oldstr = document.body.innerHTML;
-            document.body.innerHTML = headstr + newstr + footstr;
-            window.print();
-            document.body.innerHTML = oldstr;
-            return false;
-        });
-    })
+    function printClick() {
+        var headstr = "<html><head><title></title></head><body>";
+        var footstr = "</body>";
+        var newstr = document.all.item("divPrint").innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr + newstr + footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+    }
 </script>

@@ -21,7 +21,7 @@ namespace SaleManagement.Protal.Models.Order
             {
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm);
+                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {

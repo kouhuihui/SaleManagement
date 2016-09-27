@@ -55,7 +55,7 @@
             提交款式图片
             <input type="file" name="file">
         </a>
-        <span style="color:red">最多可上传4个，每个不超过4M</span>
+        <span style="color:red">最多可上传2个，每个不超过4M</span>
     </div>
 </div>
 <div class="form-group">
@@ -120,7 +120,7 @@
 <div class="form-group">
     <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>件数：</label>
     <div class="col-md-2 col-xs-8">
-        @Html.TextBoxFor(model => model.Number, new { @class = "form-control col-sm-2", placeholder = "请输入件数" })
+        @Html.TextBoxFor(model => model.Number, new { @class = "form-control", placeholder = "请输入件数" })
         @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
     </div>
 </div>

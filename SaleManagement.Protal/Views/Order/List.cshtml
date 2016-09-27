@@ -126,18 +126,6 @@
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:created"></td>
                             <td data-bind="text:deliveryDate"></td>
-                            @*<td>
-                                <!-- ko if:status==0 -->
-                                <a class="btn btn-warning btn-sm" data-bind="attr:{href:'/order/edit?orderId='+id}">编辑</a>
-                                <!-- /ko -->
-                                <!-- ko if:status==8 -->
-                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.packClick">打包</button>
-                                <!-- /ko -->
-                                <!-- ko if:status==4 | status==5 | status==6 | status==7 | status==13 | status==14 | status==15 -->
-                                <button class="btn btn-primary btn-sm" data-bind="click:$parent.nextStepClick">下一工序</button>
-                                <!-- /ko -->
-                                <a class="btn btn-danger btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>
-                            </td>*@
                         </tr>
                     </tbody>
                 </table>

@@ -66,7 +66,7 @@ namespace SaleManagement.Protal.Controllers
                 {
                     ColorFormName = colorForm == null ? "" : colorForm.Name,
                     CurrentUserName = designs.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name,
-                    Attachments = u.Attachments.Where(r => r.CreatorId == u.CurrentUserId).Select(a => new AttachmentItem
+                    Attachments = u.Attachments.Where(r => designs.Any(d => d.Id == r.CreatorId)).Select(a => new AttachmentItem
                     {
                         Id = a.FileInfoId,
                         Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
@@ -170,18 +170,11 @@ namespace SaleManagement.Protal.Controllers
             model.GemCategories = await manager.GetGemCategoriesAsync();
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
-            model.Attachments = await Task.WhenAll(order.Attachments.Select(async a =>
+            model.Attachments =order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
             {
-                var fileManager = new FileManager();
-                var file = await fileManager.FindByIdAsync(a.FileInfoId);
-                return new AttachmentItem
-                {
-                    Id = a.FileInfoId,
-                    Name = file.FileName,
-                    Length = file.ContentLength,
-                    Url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data)
-                };
-            }).ToList());
+                Id = a.FileInfoId,
+                Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+            }).ToList();
 
             return View("Booking", model);
         }
@@ -420,7 +413,7 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             var orderListItemViewModel = new OrderListItemViewModel(order);
             var attachements = order.Attachments;
-            orderListItemViewModel.Attachments = attachements.OrderByDescending(a=>a.Created).Take(4).Select(a => new AttachmentItem
+            orderListItemViewModel.Attachments = attachements.OrderByDescending(a => a.Created).Take(4).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
                 Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"

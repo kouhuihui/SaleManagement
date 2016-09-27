@@ -76,7 +76,12 @@
         }
         for (var i = 0; i < length; i++) {
             var $inputChecked = $(inputCheckeds[i]);
-            ids = ids + $inputChecked.val() + ",";
+            var orderId = $inputChecked.val();
+            if ($inputChecked.attr("status") != 0) {
+                shortTips(orderId+"订单不是未确认状态，不能调配");
+                return false;
+            }
+            ids = ids + orderId + ",";
         }
         $("#modal").modal({
             remote: "/Order/DistributionOrder?orderIds=" + ids

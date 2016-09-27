@@ -104,6 +104,29 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             return View(shipmentOrderViewModel);
         }
 
+        public async Task<ActionResult> Edit(string orderId)
+        {
+            var orderManager = new OrderManager(User);
+            var order = await orderManager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            var model = new OrderViewModel(order);
+            var manager = new BasicDataManager(User);
+            model.ProductCategories = await manager.GetProductCategoriesAsync();
+            model.ColorForms = await manager.GetColorFormsAsync();
+            model.GemCategories = await manager.GetGemCategoriesAsync();
+            var customers = await new UserManager().GetAllCustomersAsync();
+            model.Customers = customers;
+            model.Attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+            {
+                Id = a.FileInfoId,
+                Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+            }).ToList();
+
+            return View("Booking", model);
+        }
+
         private IList<AttachmentItem> GetAttachments(Order order)
         {
             var attachments = order.Attachments.OrderByDescending(a => a.Created).Take(2);

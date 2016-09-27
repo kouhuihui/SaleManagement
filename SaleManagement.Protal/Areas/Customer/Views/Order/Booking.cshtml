@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SaleManagement.Protal.Models.Order.OrderViewModel
+@{
     Title("下单");
     Layout = "~/Views/Shared/_customerLayout.cshtml";
 }
@@ -18,6 +19,7 @@
                 <form method="post" action="~/order/booking" id="OrderBooking">
                     <div class="form-horizontal">
                         @Html.Hidden("customerId", User.Id)
+                        @Html.HiddenFor(model => model.DeliveryDate)
                         @Html.Partial("_Orderbooking")
                     </div>
                 </form>
@@ -27,6 +29,7 @@
     <!--/span-->
 </div><!--/row-->
 @section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/jqueryval")
     @Scripts.Render("~/bundles/js/ajaxForm")
