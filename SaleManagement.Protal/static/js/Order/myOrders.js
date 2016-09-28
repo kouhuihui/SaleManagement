@@ -115,8 +115,13 @@
             return false;
         }
         for (var i = 0; i < length; i++) {
-            var $inputChecked = $(inputCheckeds[i]);
-            ids = ids + $inputChecked.val() + ",";
+        	var $inputChecked = $(inputCheckeds[i]);
+        	var orderId = $inputChecked.val();
+        	if ($inputChecked.attr("status") != 4) {
+        		shortTips(orderId + "订单不是客户确认状态，不能出蜡");
+        		return false;
+        	}
+        	ids = ids + orderId + ",";
         }
         $(window).modalDialog({
             title: "提示",
@@ -149,7 +154,6 @@
             url: "/user/GetUsersByRole",
             data:{"roleCode":"design"},
             success: function (rtn) {
-                debugger;
                 if (rtn.succeeded) {
                     var data = rtn.data;
                     var html = '<option value="">请选择设计师</option>';
