@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 namespace SaleManagement.Protal.Web
 {
-    [WeChatAttribute]
     public abstract class AnonymousController : BaseController<string, SaleUser>
     {
         protected new ActionResult RedirectToLocal(string returnUrl = null)

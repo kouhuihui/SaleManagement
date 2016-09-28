@@ -23,6 +23,8 @@ namespace SaleManagement.Protal.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
+
+
             var isWeChat = OwinContext.GetBrowser().IsWeChat;
             if (isWeChat)
                 return View("weChatLogin");
@@ -113,7 +115,7 @@ namespace SaleManagement.Protal.Controllers
         public ActionResult LogOut()
         {
             OwinContext.Authentication.SignOut();
-            OwinContext.Response.Cookies.Delete(SaleManagentConstants.ConfigKeys.wxAccountCookie, new CookieOptions { Path = "/" });
+           // OwinContext.Response.Cookies.Delete(SaleManagentConstants.ConfigKeys.wxAccountCookie, new CookieOptions { Path = "/" });
             return RedirectToLocal("~/");
         }
     }
