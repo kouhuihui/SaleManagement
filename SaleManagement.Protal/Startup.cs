@@ -10,6 +10,7 @@ using SaleManagement.Core.Models;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.Shipment;
 using System;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -28,6 +29,7 @@ namespace SaleManagement.Protal
             BundleTable.Bundles.RegisterConfigurationBundles();
             ////BundleTable.EnableOptimizations = true;
             ConfigureAutoMapper();
+            AntiForgeryConfig.UniqueClaimTypeIdentifier = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier";
             var factory = new LoggerFactory();
             factory.AddFile();
             LoggerHelper.Logger = factory.CreateLogger("SaleManagement");

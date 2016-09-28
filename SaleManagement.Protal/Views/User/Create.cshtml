@@ -17,6 +17,7 @@
 
 @using (Html.BeginForm("Create", "User", FormMethod.Post, new { id = "userCreate" }))
 {
+    @Html.AntiForgeryToken()
     @Html.Partial("_EditForm")
 }
 

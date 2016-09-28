@@ -45,6 +45,7 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> Create(SaleUserEditViewModel model)
         {
             if (!ModelState.IsValid)
@@ -116,7 +117,7 @@ namespace SaleManagement.Protal.Controllers
         public async Task<ActionResult> ResetPassword(ResetPasswordRequest model)
         {
             if (!ModelState.IsValid)
-                return Json(false,data:ErrorToDictionary());
+                return Json(false, data: ErrorToDictionary());
 
             var manager = new UserManager();
             var result = await manager.ResetPasswordAsync(model.UserId, model.Password);

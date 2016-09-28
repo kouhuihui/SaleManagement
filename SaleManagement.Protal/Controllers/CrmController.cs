@@ -51,7 +51,7 @@ namespace SaleManagement.Protal.Controllers
                 var customerInfo = customerInfos.FirstOrDefault(r => r.UserId == u.Id);
                 if (customerInfo != null)
                 {
-                    customerViewModel.Address = customerInfo.Address;                     
+                    customerViewModel.Address = customerInfo.Address;
                 }
 
                 return customerViewModel;
@@ -86,6 +86,7 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> Create(CustomerUserEditViewModel model)
         {
             if (!ModelState.IsValid)
