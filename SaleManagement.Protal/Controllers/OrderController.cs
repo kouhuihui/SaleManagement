@@ -33,10 +33,7 @@ namespace SaleManagement.Protal.Controllers
             var manager = new OrderManager(User);
 
             var paging = await manager.GetOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
-            var orders = paging.List.Select(u =>
-            {
-                return new OrderListItemViewModel(u);
-            });
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u));
 
             return Json(true, string.Empty, new
             {
@@ -170,7 +167,7 @@ namespace SaleManagement.Protal.Controllers
             model.GemCategories = await manager.GetGemCategoriesAsync();
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
-            model.Attachments =order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+            model.Attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
                 Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
