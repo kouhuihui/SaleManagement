@@ -92,23 +92,23 @@ namespace SaleManagement.Protal.Models.Order
         private IQueryable<Core.Models.Order> GetUrgentOrderQuery(
            IQueryable<Core.Models.Order> query, UrgentStatus ugentStatus)
         {
-            query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods);
+            query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus!= OrderStatus.Shipment);
             var now = DateTime.Now.Date;
             DateTime ugentWarningStartDate;
             DateTime ugentWarningEndDate;
             switch (ugentStatus)
             {
                 case Order.UrgentStatus.Normal:
-                    ugentWarningStartDate = now.AddDays(6);
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderUrgentWaringDay);
                     query = query.Where(f => f.DeliveryDate > ugentWarningStartDate);
                     break;
                 case Order.UrgentStatus.Urgent:
-                    ugentWarningEndDate = now.AddDays(6);
-                    ugentWarningStartDate = now.AddDays(3);
+                    ugentWarningEndDate = now.AddDays(SaleManagentConstants.UI.OrderUrgentWaringDay);
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderVeryUrgentWaringDay);
                     query = query.Where(f => f.DeliveryDate > ugentWarningStartDate && f.DeliveryDate <= ugentWarningEndDate);
                     break;
                 case Order.UrgentStatus.VeryUrgent:
-                    ugentWarningStartDate = now.AddDays(3);
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderVeryUrgentWaringDay);
                     query = query.Where(f => f.DeliveryDate <= ugentWarningStartDate);
                     break;
             }

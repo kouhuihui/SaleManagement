@@ -1,4 +1,5 @@
 ﻿using Dickson.Core.Common.Extensions;
+using SaleManagement.Core;
 using SaleManagement.Core.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace SaleManagement.Protal.Models.Order
             StatusName = order.OrderStatus.GetDisplayName();
             Status = (int)order.OrderStatus;
             CreatorName = order.CreatorName;
-            UrgentStatus = GetUrgentStatus(order.DeliveryDate);
+            Urgent = GetUrgentStatus(order.DeliveryDate);
         }
 
         public string StatusName { get; set; }
@@ -25,25 +26,25 @@ namespace SaleManagement.Protal.Models.Order
 
         public IList<AttachmentItem> Attachments { get; set; }
 
-        public UrgentStatus UrgentStatus { get; set; }
+        public int Urgent { get; set; }
 
-        private UrgentStatus GetUrgentStatus(DateTime? deliveryDate)
+        private int GetUrgentStatus(DateTime? deliveryDate)
         {
             if (!deliveryDate.HasValue)
-                return UrgentStatus.Normal;
+                return (int)UrgentStatus.Normal;
 
             var now = DateTime.Now.Date;
             var intervalDate = (deliveryDate.Value - now).Days;
-            if (intervalDate > 6)
-                return UrgentStatus.Normal;
+            if (intervalDate > SaleManagentConstants.UI.OrderUrgentWaringDay)
+                return (int)UrgentStatus.Normal;
 
-            if (intervalDate <= 6 && intervalDate > 3)
-                return UrgentStatus.Urgent;
+            if (intervalDate <= SaleManagentConstants.UI.OrderUrgentWaringDay && intervalDate > SaleManagentConstants.UI.OrderVeryUrgentWaringDay)
+                return (int)UrgentStatus.Urgent;
 
-            if (intervalDate <= 3)
-                return UrgentStatus.VeryUrgent;
+            if (intervalDate <= SaleManagentConstants.UI.OrderVeryUrgentWaringDay)
+                return (int)UrgentStatus.VeryUrgent;
 
-            return UrgentStatus.Normal;
+            return (int)UrgentStatus.Normal;
         }
     }
 }
