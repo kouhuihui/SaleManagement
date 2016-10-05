@@ -18,12 +18,12 @@
     @Html.Partial("_Customer")
     <div class="textfield pull-left"><div class="field-body" style="width: 150px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
     @Html.Partial("_ColorForm")
-    <div class="date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">预计交货时间：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryStartDate" type="text" placeholder="开始日期"></div></div>
+    <div class="textfield date-conditions pull-left">
+        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">预计交货时间：</div><div class="field-body" style="width: 80px;"><input class="form-control" id="deliveryStartDate" type="text" placeholder="开始日期"></div></div>
         <span class="pull-left">-</span>
-        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryEndDate" type="text" placeholder="结束日期"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 80px;"><input class="form-control" id="deliveryEndDate" type="text" placeholder="结束日期"></div></div>
     </div>
-    <div class="combobox pull-left">
+    <div class="textfield combobox pull-left">
         @{
             var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
         }
@@ -31,7 +31,14 @@
             @Html.DropDownList("orderStatus", orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
         </div>
     </div>
-
+    <div class="textfield  pull-left">
+        @{
+            var urgentStatuItems = EnumHelper.GetSelectList(typeof(SaleManagement.Protal.Models.Order.UrgentStatus));
+        }
+        <div class="combobox-body" style="width: 80px;">
+            @Html.DropDownList("urgentStatus", urgentStatuItems, "加急状态", new { Class = "pull-left form-control" })
+        </div>
+    </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 
@@ -115,7 +122,19 @@
                     <tbody id="tbody" data-bind="foreach:orders">
                         <tr>
                             <td><input type="checkbox" data-bind="value:id,attr:{status:status},checked:false"/></td>
-                            <td><a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a></td>
+                            <td>
+                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
+                                </a>
+                                <!-- ko if:urgent==0 -->
+                                <i class="glyphicon glyphicon-bell blue" title="正常"></i>
+                                <!-- /ko -->
+                                <!-- ko if:urgent==1 -->
+                                <i class="glyphicon glyphicon-bell yellow" title="紧急"></i>
+                                <!-- /ko -->
+                                <!-- ko if:urgent==2 -->
+                                <i class="glyphicon glyphicon-bell red"  title="非常紧急"></i>
+                                <!-- /ko -->
+                            </td>
                             <td data-bind="text:statusName"></td>
                             <td data-bind="text:moduleTypeName"></td>
                             <td data-bind="text:productCategoryName"></td>

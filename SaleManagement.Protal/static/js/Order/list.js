@@ -33,7 +33,8 @@
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
             status: $("#orderStatus").val(),
-            colorFormId: $("#colorFormId").val()
+            colorFormId: $("#colorFormId").val(),
+            urgentStatus: $("#urgentStatus").val()
         }
     }
 
