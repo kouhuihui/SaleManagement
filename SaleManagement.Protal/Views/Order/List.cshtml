@@ -1,4 +1,5 @@
 ﻿@using SaleManagement.Core;
+@model SaleManagement.Protal.Models.Order.OrdersQueryRequest 
 @{
     Title("订单管理");
 }
@@ -28,7 +29,7 @@
             var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
         }
         <div class="combobox-body" style="width: 120px;">
-            @Html.DropDownList("orderStatus", orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
+            @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
         </div>
     </div>
     <div class="textfield  pull-left">
@@ -36,7 +37,7 @@
             var urgentStatuItems = EnumHelper.GetSelectList(typeof(SaleManagement.Protal.Models.Order.UrgentStatus));
         }
         <div class="combobox-body" style="width: 80px;">
-            @Html.DropDownList("urgentStatus", urgentStatuItems, "加急状态", new { Class = "pull-left form-control" })
+            @Html.DropDownListFor(m=>m.UrgentStatus, urgentStatuItems, "加急状态", new { Class = "pull-left form-control" })
         </div>
     </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
@@ -125,9 +126,6 @@
                             <td>
                                 <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
                                 </a>
-                                <!-- ko if:urgent==0 -->
-                                <i class="glyphicon glyphicon-bell blue" title="正常"></i>
-                                <!-- /ko -->
                                 <!-- ko if:urgent==1 -->
                                 <i class="glyphicon glyphicon-bell yellow" title="紧急"></i>
                                 <!-- /ko -->

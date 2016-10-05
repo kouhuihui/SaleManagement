@@ -32,9 +32,9 @@
             customerId: $("#customerId").val(),
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
-            status: $("#orderStatus").val(),
+            status: $("#Status").val(),
             colorFormId: $("#colorFormId").val(),
-            urgentStatus: $("#urgentStatus").val()
+            urgentStatus: $("#UrgentStatus").val()
         }
     }
 

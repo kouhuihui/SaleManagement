@@ -28,7 +28,7 @@ namespace SaleManagement.Protal.Controllers
         public async Task<ActionResult> List(OrdersQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
-                return View();
+                return View(request);
 
             var manager = new OrderManager(User);
 

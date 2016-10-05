@@ -1,5 +1,6 @@
 ﻿using Dickson.Core.Common.Extensions;
 using SaleManagement.Core;
+using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace SaleManagement.Protal.Models.Order
             StatusName = order.OrderStatus.GetDisplayName();
             Status = (int)order.OrderStatus;
             CreatorName = order.CreatorName;
-            Urgent = GetUrgentStatus(order.DeliveryDate);
+            Urgent = GetUrgentStatus(order);
         }
 
         public string StatusName { get; set; }
@@ -28,13 +29,14 @@ namespace SaleManagement.Protal.Models.Order
 
         public int Urgent { get; set; }
 
-        private int GetUrgentStatus(DateTime? deliveryDate)
+        private int GetUrgentStatus(Core.Models.Order  order)
         {
-            if (!deliveryDate.HasValue)
+            var deliveryDate = order.DeliveryDate;
+            if (!deliveryDate.HasValue|| order.OrderStatus == OrderStatus.Delete || order.OrderStatus == OrderStatus.Shipment ||order.OrderStatus== OrderStatus.HaveGoods)
                 return (int)UrgentStatus.Normal;
 
             var now = DateTime.Now.Date;
-            var intervalDate = (deliveryDate.Value - now).Days;
+            var intervalDate = (deliveryDate.Value - now).TotalDays;
             if (intervalDate > SaleManagentConstants.UI.OrderUrgentWaringDay)
                 return (int)UrgentStatus.Normal;
 
