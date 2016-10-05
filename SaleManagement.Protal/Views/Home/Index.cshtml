@@ -15,23 +15,37 @@
 
 <div class=" row">
     <div class="col-md-3 col-sm-3 col-xs-6">
-        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="">
+        <a data-toggle="tooltip" title="" class="well top-block" href="/order/list?Status=0">
             <div>未处理订单</div>
             <div>@Model.OrderStatistics.UnConfirmedCount</div>
         </a>
     </div>
 
     <div class="col-md-3 col-sm-3 col-xs-6">
-        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="">
+        <a data-toggle="tooltip" title="" class="well top-block" href="/order/list">
             <div>生产中的订单</div>
             <div>@Model.OrderStatistics.ProcessingCount</div>
         </a>
     </div>
 
     <div class="col-md-3 col-sm-3 col-xs-6">
-        <a data-toggle="tooltip" title="" class="well top-block" href="#" data-original-title="$34 new sales.">
+        <a data-toggle="tooltip" title="" class="well top-block" href="/order/list?Status=9">
             <div>待出货的订单</div>
             <div>@Model.OrderStatistics.ShipmentCount</div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="/order/list?UrgentStatus=1" >
+            <div>紧急订单</div>
+            <div>@Model.OrderStatistics.UrgentCount</div>
+        </a>
+    </div>
+
+    <div class="col-md-3 col-sm-3 col-xs-6">
+        <a data-toggle="tooltip" title="" class="well top-block" href="/order/list?UrgentStatus=2">
+            <div>非常紧急订单</div>
+            <div>@Model.OrderStatistics.VeryUrgentCount</div>
         </a>
     </div>
 </div>
