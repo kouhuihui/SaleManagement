@@ -113,6 +113,7 @@ $(function () {
                 shortTips("请选择宝石类型");
                 return false;
             }
+            $form.loading();
         },
         success: function (result) {
             if (result.succeeded) {
