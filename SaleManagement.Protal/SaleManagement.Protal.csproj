@@ -275,6 +275,7 @@
     <Compile Include="Models\Order\UploadDesginImageViewModel.cs" />
     <Compile Include="Models\Order\UploadOrderAttachmentRequest.cs" />
     <Compile Include="Models\Menu\RoleMenuAuthorizedViewModel.cs" />
+    <Compile Include="Models\Order\UrgentStatus.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationItemViewModel.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />

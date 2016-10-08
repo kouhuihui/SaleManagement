@@ -33,6 +33,8 @@ namespace SaleManagement.Core
             public const string TitleSuffix = "-18K珠宝管理系统";
             public const int DefaultUserCacheExpiringMinutes = 20;
             public const int DefaultExpiringDays = 7;
+            public const int OrderUrgentWaringDay = 6;
+            public const int OrderVeryUrgentWaringDay = 3;
             public static readonly string DateStringFormat = "yyyy-MM-dd";
         }
 
