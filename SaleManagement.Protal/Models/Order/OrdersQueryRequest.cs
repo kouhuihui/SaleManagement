@@ -20,7 +20,8 @@ namespace SaleManagement.Protal.Models.Order
             {
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
+                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm
+                    || f.OrderStatus == OrderStatus.CustomerConfirm || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {
@@ -92,7 +93,7 @@ namespace SaleManagement.Protal.Models.Order
         private IQueryable<Core.Models.Order> GetUrgentOrderQuery(
            IQueryable<Core.Models.Order> query, UrgentStatus ugentStatus)
         {
-            query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus!= OrderStatus.Shipment);
+            query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment);
             var now = DateTime.Now.Date;
             DateTime ugentWarningStartDate;
             DateTime ugentWarningEndDate;
