@@ -110,7 +110,8 @@ namespace SaleManagement.Managers
                  }).ToListAsync();
 
             var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 2);
-            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight });
+            var totalNumber = orderSetStoneStatistics.Sum(r => r.Number);
+            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight,Number = totalNumber });
             return orderSetStoneStatistics;
         }
         private async Task UpdateShipmentOrderInfosAsync(ShipmentOrder order)
