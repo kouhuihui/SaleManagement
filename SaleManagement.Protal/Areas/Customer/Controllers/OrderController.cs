@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dickson.Core.ComponentModel;
+using Dickson.Web.Extensions;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
@@ -100,6 +101,10 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
         {
             var manager = new ShipmentManager(User);
             var shipmentOrder = await manager.GetShipmentOrderByOrderIdAsync(orderId);
+            var isWeChat = OwinContext.GetBrowser().IsWeChat;
+            if (!isWeChat)
+                return RedirectToAction("Detail", "shipment", new { id = shipmentOrder.Id, Area="" });
+
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
             return View(shipmentOrderViewModel);
         }

@@ -79,9 +79,11 @@ namespace SaleManagement.Protal
         {
             Mapper.CreateMap<OrderEditViewModel, Order>();
             Mapper.CreateMap<OrderSetStoneInfoViewModel, OrderSetStoneInfo>();
-            Mapper.CreateMap<ShipmentOrderViewModel, ShipmentOrder>();
+            Mapper.CreateMap<ShipmentOrderViewModel, ShipmentOrder>();                    
             Mapper.CreateMap<ShipmentOrderInfoViewModel, ShipmentOrderInfo>();
-            Mapper.CreateMap<ShipmentOrder, ShipmentOrderViewModel>();
+            Mapper.CreateMap<ShipmentOrder, ShipmentOrderViewModel>()
+                .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat)))
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat))); 
             Mapper.CreateMap<ShipmentOrderInfo, ShipmentOrderInfoViewModel>();
         }
     }

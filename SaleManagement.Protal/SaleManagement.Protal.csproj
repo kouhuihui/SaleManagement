@@ -530,6 +530,7 @@
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\Shared\_meIndex.cshtml" />
     <Content Include="Views\Account\weChatLogin.cshtml" />
+    <Content Include="Views\Shipment\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
