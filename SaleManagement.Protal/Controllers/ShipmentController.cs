@@ -157,5 +157,15 @@ namespace SaleManagement.Protal.Controllers
             }
             return Json(result);
         }
+
+
+        public async Task<ActionResult> Detail(string id)
+        {
+            var manager = new ShipmentManager(User);
+            var shipmentOrder = await manager.GetShipmentOrderAsync(id);
+            var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
+            shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
+            return View(shipmentOrderViewModel);
+        }
     }
 }

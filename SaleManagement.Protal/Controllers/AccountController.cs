@@ -23,8 +23,6 @@ namespace SaleManagement.Protal.Controllers
 
             ViewBag.ReturnUrl = returnUrl;
 
-
-
             var isWeChat = OwinContext.GetBrowser().IsWeChat;
             if (isWeChat)
                 return View("weChatLogin");
