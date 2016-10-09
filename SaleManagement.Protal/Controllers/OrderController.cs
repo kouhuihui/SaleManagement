@@ -28,15 +28,12 @@ namespace SaleManagement.Protal.Controllers
         public async Task<ActionResult> List(OrdersQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
-                return View();
+                return View(request);
 
             var manager = new OrderManager(User);
 
             var paging = await manager.GetOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
-            var orders = paging.List.Select(u =>
-            {
-                return new OrderListItemViewModel(u);
-            });
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u));
 
             return Json(true, string.Empty, new
             {
@@ -111,6 +108,7 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<JsonResult> Booking(OrderEditViewModel request, [NamedModelBinder(typeof(CommaSeparatedModelBinder), "attachmentIds")] string[] attachmentIds)
         {
             if (!ModelState.IsValid)

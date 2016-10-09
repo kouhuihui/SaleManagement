@@ -113,15 +113,24 @@ namespace SaleManagement.Managers
         {
             var query = DbContext.Set<Order>().AsQueryable().Where(o => o.ComplayId == User.CompanyId);
             var unConfirmedCountQuery = query.Where(o => o.OrderStatus == OrderStatus.UnConfirmed).Select(j => new { Key = "unconfirmed", Id = j.Id });
-            var processingCountQuery = query.Where(o => o.OrderStatus != OrderStatus.UnConfirmed && o.OrderStatus != OrderStatus.ToBeShip && o.OrderStatus != OrderStatus.Shipmenting && o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods).Select(j => new { Key = "processing", Id = j.Id });
-            var shipmentCountQuery = query.Where(o => o.OrderStatus == OrderStatus.Shipment).Select(j => new { Key = "shipment", Id = j.Id });
+            var processingCountQuery = query.Where(o => o.OrderStatus != OrderStatus.UnConfirmed && o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus!= OrderStatus.Delete).Select(j => new { Key = "processing", Id = j.Id });
+            var shipmentCountQuery = query.Where(o => o.OrderStatus == OrderStatus.ToBeShip).Select(j => new { Key = "shipment", Id = j.Id });
+
+            var now = DateTime.Now.Date;;
+            var urgentWarningEndDate = now.AddDays(SaleManagentConstants.UI.OrderUrgentWaringDay);
+            var urgentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderVeryUrgentWaringDay);
+            var urgentCountQuery = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment && f.DeliveryDate > urgentWarningStartDate && f.DeliveryDate <= urgentWarningEndDate).Select(j => new { Key = "urgent", Id = j.Id });
+            var veryUrgentCountQuery = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment && f.DeliveryDate <= urgentWarningStartDate).Select(j => new { Key = "veryUrgent", Id = j.Id });
+
             var unionList = await unConfirmedCountQuery.Union(processingCountQuery)
-                .Union(shipmentCountQuery).GroupBy(a => a.Key).Select(g => new { Status = g.Key, Count = g.Count() }).ToListAsync();
+                .Union(shipmentCountQuery).Union(urgentCountQuery).Union(veryUrgentCountQuery).GroupBy(a => a.Key).Select(g => new { Status = g.Key, Count = g.Count() }).ToListAsync();
             return new OrderStatistics()
             {
                 UnConfirmedCount = unionList.FirstOrDefault(k => k.Status == "unconfirmed")?.Count ?? 0,
                 ProcessingCount = unionList.FirstOrDefault(k => k.Status == "processing")?.Count ?? 0,
                 ShipmentCount = unionList.FirstOrDefault(k => k.Status == "shipment")?.Count ?? 0,
+                 UrgentCount = unionList.FirstOrDefault(k => k.Status == "urgent")?.Count ?? 0,
+                 VeryUrgentCount = unionList.FirstOrDefault(k => k.Status == "veryUrgent")?.Count ?? 0,
             };
         }
     }

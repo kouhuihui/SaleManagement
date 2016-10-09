@@ -35,10 +35,6 @@ namespace SaleManagement.Protal.Web
             if (!isWechat)
                 return;
 
-            var cookie = owinContext.Request.Cookies[SaleManagentConstants.ConfigKeys.wxAccountCookie];
-            if (cookie != null)
-                return;
-
             try
             {
                 //微信授权获得code
@@ -79,8 +75,10 @@ namespace SaleManagement.Protal.Web
                     if (accountBing == null)
                         return;
 
+                    LoggerHelper.Logger.LogInformation($"{accountBing.UserName}已经绑定{accountBing.WxAccount}");
                     var manager = new SignInManager(new SaleUserStore());
                     var signInResult =  AsyncHelper.RunSync(async () => await manager.UserNameSignInAsync(owinContext.Authentication, accountBing.UserName, false));
+                    LoggerHelper.Logger.LogInformation($"通过绑定登陆:{signInResult}");
                     if (signInResult == SignInResult.Success)
                         filterContext.Result = new RedirectResult("/Home/Index");
                 }

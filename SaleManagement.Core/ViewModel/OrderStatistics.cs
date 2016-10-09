@@ -13,5 +13,9 @@ namespace SaleManagement.Core.ViewModel
         public int ProcessingCount { get; set; }
 
         public int ShipmentCount { get; set; }
+
+        public int UrgentCount { get; set; }
+
+        public int VeryUrgentCount { get; set; }
     }
 }

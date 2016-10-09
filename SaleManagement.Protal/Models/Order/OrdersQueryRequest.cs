@@ -1,11 +1,8 @@
 ﻿using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.Order
 {
@@ -15,24 +12,27 @@ namespace SaleManagement.Protal.Models.Order
 
         public DateTime? DeliveryEndDate { get; set; }
 
-        public  Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
+        public UrgentStatus? UrgentStatus { get; set; }
+
+        public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
             {
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
+                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm
+                    || f.OrderStatus == OrderStatus.CustomerConfirm || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.Design ||f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
+                    query = query.Where(f => f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.SendAndReceive)
                 {
                     query = query.Where(f => f.OrderStatus == OrderStatus.OutputWax ||
                              f.OrderStatus == OrderStatus.WithTheHand || f.OrderStatus == OrderStatus.MicroInsert
-                             || f.OrderStatus == OrderStatus.Polishing || f.OrderStatus == OrderStatus.Module 
-                             || f.OrderStatus == OrderStatus.Pack|| f.OrderStatus == OrderStatus.DumpModule);
+                             || f.OrderStatus == OrderStatus.Polishing || f.OrderStatus == OrderStatus.Module
+                             || f.OrderStatus == OrderStatus.Pack || f.OrderStatus == OrderStatus.DumpModule);
                 }
 
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Finance)
@@ -75,13 +75,45 @@ namespace SaleManagement.Protal.Models.Order
                 {
                     query = query.Where(f => f.OrderStatus == Status);
                 }
-                else {
+                else
+                {
                     query = query.Where(f => f.OrderStatus != OrderStatus.Delete);
+                }
+
+                if (UrgentStatus.HasValue)
+                {
+                    query = GetUrgentOrderQuery(query, UrgentStatus.Value);
                 }
 
                 return query.AsNoTracking();
             };
             return filter;
+        }
+
+        private IQueryable<Core.Models.Order> GetUrgentOrderQuery(
+           IQueryable<Core.Models.Order> query, UrgentStatus ugentStatus)
+        {
+            query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment);
+            var now = DateTime.Now.Date;
+            DateTime ugentWarningStartDate;
+            DateTime ugentWarningEndDate;
+            switch (ugentStatus)
+            {
+                case Order.UrgentStatus.Normal:
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderUrgentWaringDay);
+                    query = query.Where(f => f.DeliveryDate > ugentWarningStartDate);
+                    break;
+                case Order.UrgentStatus.Urgent:
+                    ugentWarningEndDate = now.AddDays(SaleManagentConstants.UI.OrderUrgentWaringDay);
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderVeryUrgentWaringDay);
+                    query = query.Where(f => f.DeliveryDate > ugentWarningStartDate && f.DeliveryDate <= ugentWarningEndDate);
+                    break;
+                case Order.UrgentStatus.VeryUrgent:
+                    ugentWarningStartDate = now.AddDays(SaleManagentConstants.UI.OrderVeryUrgentWaringDay);
+                    query = query.Where(f => f.DeliveryDate <= ugentWarningStartDate);
+                    break;
+            }
+            return query;
         }
     }
 }
