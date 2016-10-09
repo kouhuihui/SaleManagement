@@ -170,7 +170,7 @@ namespace SaleManagement.Protal.Controllers
             model.GemCategories = await manager.GetGemCategoriesAsync();
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
-            model.Attachments =order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+            model.Attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
                 Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
@@ -471,6 +471,15 @@ namespace SaleManagement.Protal.Controllers
 
             var orderSetStoneInfoManager = new OrderSetStoneInfoManager();
             var result = await orderSetStoneInfoManager.CreateOrderSetStoneInfoAsync(orderSetStoneInfo);
+            return Json(result);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteSetStone( int id)
+        {
+            var orderSetStoneInfoManager = new OrderSetStoneInfoManager();
+            var result = await orderSetStoneInfoManager.DeleteOrderSetStoneAsync(id);
             return Json(result);
         }
 
