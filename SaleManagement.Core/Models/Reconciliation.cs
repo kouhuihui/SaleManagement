@@ -27,5 +27,8 @@ namespace SaleManagement.Core.Models
         public DateTime Created { get; set; }
 
         public ReconciliationType Type { get; set; }
+
+        [Required, StringLength(SaleManagentConstants.Validations.DefaultStringLength)]
+        public string Remark { get; set; }
     }
 }

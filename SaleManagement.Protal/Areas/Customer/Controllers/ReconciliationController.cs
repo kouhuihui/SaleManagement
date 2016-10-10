@@ -26,7 +26,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
         {
             var manager = new ReconciliationManager(User);
             var reconciliations = await manager.GetCustomerReconciliationsAsync();
-            var titles = new string[] { "序号", "日期", "付/欠款", "金额(元)" };
+            var titles = new string[] { "序号", "日期", "付/欠款", "金额(元)","备注" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "对账记录", ws =>
             {
                 var row = 2;
@@ -38,6 +38,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
                     ws.Cells[row, 2].Value = reconciliation.Created.ToString(SaleManagentConstants.UI.DateStringFormat);
                     ws.Cells[row, 3].Value = reconciliation.Type.GetDisplayName();
                     ws.Cells[row, 4].Value = reconciliation.Amount;
+                    ws.Cells[row, 5].Value = reconciliation.Remark;
                     row++;
                     index++;
                 };

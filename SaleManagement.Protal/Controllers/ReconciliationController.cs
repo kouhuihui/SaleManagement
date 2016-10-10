@@ -57,9 +57,10 @@ namespace SaleManagement.Protal.Controllers
                 CustomerName = request.CustomerName,
                 Amount = request.Amount,
                 CompanyId = User.CompanyId,
-                Type = Core.Models.ReconciliationType.Payment,
+                Type = request.Type,
                 Created = DateTime.Now,
-                CreatorId = User.Id
+                CreatorId = User.Id,
+                Remark = request.Remark
             };
             var result = await manager.CreateAsync(reconciliation);
             return Json(true, string.Empty, result);
@@ -69,7 +70,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ReconciliationManager(User);
             var reconciliations = await manager.GetReconciliationsAsync(request.GetReconciliationListQueryFilter());
-            var titles = new string[] { "序号", "客户","日期", "付/欠款", "金额(元)" };
+            var titles = new string[] { "序号", "客户","日期", "付/欠款", "金额(元)","备注" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "对账记录", ws =>
             {
                 var row = 2;
@@ -82,6 +83,7 @@ namespace SaleManagement.Protal.Controllers
                     ws.Cells[row, 3].Value = reconciliation.Created.ToString(SaleManagentConstants.UI.DateStringFormat);
                     ws.Cells[row, 4].Value = reconciliation.Type.GetDisplayName();
                     ws.Cells[row, 5].Value = reconciliation.Amount;
+                    ws.Cells[row, 6].Value = reconciliation.Remark;
                     row++;
                     index++;
                 };

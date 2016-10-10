@@ -110,6 +110,10 @@
     <Compile Include="Migrations\201609250447382_addWxbinding.Designer.cs">
       <DependentUpon>201609250447382_addWxbinding.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610101450492_ReconciliationRemark.cs" />
+    <Compile Include="Migrations\201610101450492_ReconciliationRemark.Designer.cs">
+      <DependentUpon>201610101450492_ReconciliationRemark.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -198,6 +202,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609250447382_addWxbinding.resx">
       <DependentUpon>201609250447382_addWxbinding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610101450492_ReconciliationRemark.resx">
+      <DependentUpon>201610101450492_ReconciliationRemark.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
