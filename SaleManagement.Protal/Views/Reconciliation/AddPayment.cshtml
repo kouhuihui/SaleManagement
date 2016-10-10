@@ -11,7 +11,7 @@
             <a href="/Reconciliation/List">对账</a>
         </li>
         <li>
-            <a href="/Reconciliation/AddPayment">新增收款</a>
+            <a href="/Reconciliation/AddPayment">新增欠付款</a>
         </li>
     </ul>
 </div>
@@ -19,7 +19,7 @@
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2>添加付款</h2>
+                <h2>添加欠付款</h2>
             </div>
             <div class="box-content">
                 <form id="addPaymentFrom" name="addPaymentFrom">
@@ -35,12 +35,32 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            @{
+                                var reconciliationTypeItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.ReconciliationType));
+                            }
+                            <label class="control-label col-md-2" for="Number">
+                                <span class="text-danger">*</span>对账类型：
+                            </label>
+                            <div class="col-md-4" style="width:330px">
+                                @Html.DropDownListFor(m => m.Type, reconciliationTypeItems,  new { Class = "pull-left form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2" for="Number">
                                 <span class="text-danger">*</span>金额
                             </label>
                             <div class="col-md-4" style="width:330px">
                                 @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", placeholder = "请输入数量" })
                                 @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Number">
+                                备注
+                            </label>
+                            <div class="col-md-4" style="width:330px">
+                                @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", placeholder = "请输入备注", rows=5 })
+                                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
                             </div>
                         </div>
                         <div class="form-group">

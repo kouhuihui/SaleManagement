@@ -26,6 +26,7 @@ namespace SaleManagement.Protal.Models.Reconciliation
             Created = model.Created.ToString(SaleManagentConstants.UI.DateStringFormat);
             Type = model.Type;
             ReconciliationTypeName = model.Type.GetDisplayName();
+            Remark = model.Remark;
         }
 
         [Display(Name = "金额")]
@@ -48,5 +49,9 @@ namespace SaleManagement.Protal.Models.Reconciliation
         public ReconciliationType Type { get; set; }
 
         public string ReconciliationTypeName { get; set; }
+
+        [Display(Name = "备注")]
+        [StringLength(SaleManagentConstants.Validations.DefaultStringLength, ErrorMessage ="{0} 最长为{1}字符")]
+        public string Remark { get; set; }
     }
 }

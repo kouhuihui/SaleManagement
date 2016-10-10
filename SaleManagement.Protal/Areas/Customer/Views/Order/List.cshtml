@@ -11,7 +11,7 @@
         #orderlist .title {
             font-size: 14px;
             font-weight: bold;
-            padding: 15px;
+            padding: 5px 2px 5px 15px;
         }
 
         #orderlist .status {
@@ -74,12 +74,17 @@
                 <div id="orderlist" data-bind="foreach:orders">
                     <div style="border-bottom: 1px #2a13a3 solid">
                         <div class="row title">
-                            <div class="col-xs-6 col-md-4">订单号：
-                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">预览</a>
+                            <div class="col-xs-6 col-md-4">
+                                订单号：
+                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a>
                             </div>
                             <div class="col-xs-6 col-md-4">下单时间：<span data-bind="text:created"></span></div>
                         </div>
-
+                        <div class="row title">
+                            <div class="col-xs-6 col-md-4">
+                            </div>
+                            <div class="col-xs-6 col-md-4">预计出货：<span data-bind="text:deliveryDate"></span></div>
+                        </div>
                         <div class="orderdetail">
                             <ul class="thumbnails" data-bind="foreach:{data:attachments,as:'iattachment'}">
                                 <li class="thumbnail">
@@ -102,23 +107,24 @@
                                 <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
                                 <!-- /ko -->
                                 <div data-bind="text:statusName" class="status"></div>
+                                <div style="display:inline-block">
+                                    <!-- ko if:status == 3 -->
+                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
+                                    <!-- /ko -->
+                                    <!-- ko if:status == 11 -->
+                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
+                                    <!-- /ko -->
+                                    <!-- ko if:status == 11 | status == 12 -->
+                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
+                                    <!-- /ko -->
+                                    <!-- ko if:status ==0 -->
+                                    <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
+                                    <!-- /ko -->
+                                    <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
+                                </div>
                             </div>
                         </div>
-                        <div style="display:inline-block">
-                            <!-- ko if:status == 3 -->
-                            <button class="btn btn-primary btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
-                            <!-- /ko -->
-                            <!-- ko if:status == 11 -->
-                            <button class="btn btn-primary btn-sm" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
-                            <!-- /ko -->
-                            <!-- ko if:status == 11 | status == 12 -->
-                            <button class="btn btn-primary btn-sm" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
-                            <!-- /ko -->
-                            <!-- ko if:status ==0 -->
-                            <a target="_blank" class="btn btn-primary btn-sm" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
-                            <!-- /ko -->
-                            <a target="_blank" class="btn btn-primary btn-sm" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
-                        </div>
+
 
                     </div>
                 </div>
