@@ -78,7 +78,7 @@
         for (var i = 0; i < length; i++) {
             var $inputChecked = $(inputCheckeds[i]);
             var orderId = $inputChecked.val();
-            if ($inputChecked.attr("status") != 0 || $inputChecked.attr("status") != 2) {
+            if ($inputChecked.attr("status") != 0 && $inputChecked.attr("status") != 2) {
                 shortTips(orderId+"订单不是未确认状态或设计师设计，不能调配");
                 return false;
             }
