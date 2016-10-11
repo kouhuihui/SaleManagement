@@ -107,25 +107,24 @@
                                 <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
                                 <!-- /ko -->
                                 <div data-bind="text:statusName" class="status"></div>
-                                <div style="display:inline-block">
-                                    <!-- ko if:status == 3 -->
-                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
-                                    <!-- /ko -->
-                                    <!-- ko if:status == 11 -->
-                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
-                                    <!-- /ko -->
-                                    <!-- ko if:status == 11 | status == 12 -->
-                                    <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
-                                    <!-- /ko -->
-                                    <!-- ko if:status ==0 -->
-                                    <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
-                                    <!-- /ko -->
-                                    <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
-                                </div>
                             </div>
                         </div>
 
-
+                        <div style="display: inline-block">
+                            <!-- ko if:status == 3 -->
+                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
+                            <!-- /ko -->
+                            <!-- ko if:status == 11 -->
+                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
+                            <!-- /ko -->
+                            <!-- ko if:status == 11 | status == 12 -->
+                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
+                            <!-- /ko -->
+                            <!-- ko if:status ==0 -->
+                            <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
+                            <!-- /ko -->
+                            <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
+                        </div>
                     </div>
                 </div>
                 <div class="text-center"><ul id="orderListPage"></ul></div>
