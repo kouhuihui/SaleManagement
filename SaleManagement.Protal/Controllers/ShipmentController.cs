@@ -151,7 +151,8 @@ namespace SaleManagement.Protal.Controllers
                     CreatorId = User.Id,
                     CustomerId = shipmentOrder.CustomerId,
                     CustomerName = shipmentOrder.CustomerName,
-                    Type = ReconciliationType.Arrearage
+                    Type = ReconciliationType.Arrearage,
+                    Remark = $"{id}出货"
                 };
                 await new ReconciliationManager(User).CreateAsync(reconciliation);
             }

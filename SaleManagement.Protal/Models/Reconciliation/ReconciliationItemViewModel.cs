@@ -1,11 +1,7 @@
 ﻿using Dickson.Core.Common.Extensions;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.Reconciliation
 {
@@ -51,7 +47,8 @@ namespace SaleManagement.Protal.Models.Reconciliation
         public string ReconciliationTypeName { get; set; }
 
         [Display(Name = "备注")]
-        [StringLength(SaleManagentConstants.Validations.DefaultStringLength, ErrorMessage ="{0} 最长为{1}字符")]
+        [Required(ErrorMessage = "请输入备注")]
+        [StringLength(SaleManagentConstants.Validations.DefaultStringLength, ErrorMessage = "{0}最长为{1}字符")]
         public string Remark { get; set; }
     }
 }
