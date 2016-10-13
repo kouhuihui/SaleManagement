@@ -509,7 +509,7 @@
     <Content Include="Views\Shipment\List.cshtml" />
     <Content Include="Views\Reconciliation\List.cshtml" />
     <Content Include="Views\Shared\_Customer.cshtml" />
-    <Content Include="Views\Reconciliation\AddPayment.cshtml" />
+    <Content Include="Views\Reconciliation\Add.cshtml" />
     <Content Include="Views\Shared\_BundleLayout.cshtml" />
     <Content Include="Views\Notice\List.cshtml" />
     <Content Include="Views\Notice\Edit.cshtml" />
@@ -531,6 +531,7 @@
     <Content Include="Views\Shared\_meIndex.cshtml" />
     <Content Include="Views\Account\weChatLogin.cshtml" />
     <Content Include="Views\Shipment\Detail.cshtml" />
+    <Content Include="Views\Reconciliation\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

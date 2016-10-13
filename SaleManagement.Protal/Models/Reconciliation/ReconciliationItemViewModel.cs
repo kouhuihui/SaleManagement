@@ -23,7 +23,10 @@ namespace SaleManagement.Protal.Models.Reconciliation
             Type = model.Type;
             ReconciliationTypeName = model.Type.GetDisplayName();
             Remark = model.Remark;
+            Id = model.Id;
         }
+
+        public int Id { get; set; }
 
         [Display(Name = "金额")]
         [Required(ErrorMessage = "请输入{0}")]

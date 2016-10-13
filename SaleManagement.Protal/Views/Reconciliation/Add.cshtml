@@ -1,0 +1,113 @@
+﻿@model SaleManagement.Protal.Models.Reconciliation.ReconciliationItemViewModel
+@{
+    Title("新增收款");
+}
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/Reconciliation/List">对账</a>
+        </li>
+        <li>
+            <a href="/Reconciliation/AddPayment">新增欠付款</a>
+        </li>
+    </ul>
+</div>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>新增欠付款</h2>
+            </div>
+            <div class="box-content">
+                <form id="addPaymentFrom" name="addPaymentFrom">
+                    <div class="form-horizontal ptop5">
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Number">
+                                <span class="text-danger">*</span>选择客户
+                            </label>
+                            <div class="col-md-6">
+                                @Html.Partial("_Customer")
+                                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                @Html.HiddenFor(model => model.CustomerName)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @{
+                                var reconciliationTypeItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.ReconciliationType));
+                            }
+                            <label class="control-label col-md-2" for="Number">
+                                <span class="text-danger">*</span>对账类型：
+                            </label>
+                            <div class="col-md-4" style="width:330px">
+                                @Html.DropDownListFor(m => m.Type, reconciliationTypeItems,  new { Class = "pull-left form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Number">
+                                <span class="text-danger">*</span>金额
+                            </label>
+                            <div class="col-md-4" style="width:330px">
+                                @Html.TextBoxFor(model => model.Amount, new { @class = "form-control", placeholder = "请输入数量" })
+                                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Number">
+                                备注
+                            </label>
+                            <div class="col-md-4" style="width:330px">
+                                @Html.TextAreaFor(model => model.Remark, new { @class = "form-control", placeholder = "请输入备注", rows=5 })
+                                @Html.ValidationMessageFor(model => model.Remark, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2" for="Account">&nbsp;</label>
+                            <div class="col-md-3">
+                                <input class="btn btn-primary" id="savePayment" type="submit" value="保存" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    @Scripts.Render("~/bundles/js/jqueryval")
+    @Scripts.Render("~/bundles/js/ajaxForm")
+    <script type="text/javascript">
+        $(function () {
+            var $from = $("#addPaymentFrom"),
+                $customerCombobox = $("#customerCombobox"),
+                $vCustomerId = $customerCombobox.find("#vCustomerId"),
+                $customerId = $customerCombobox.find("#customerId");
+            $(".combobox-body").css("width", 300);
+            $from.ajaxForm({
+                type: "post",  //提交方式
+                dataType: "json", //数据类型
+                url: "/Reconciliation/Add",
+                success: function (result) {
+                    if (result.succeeded) {
+                        shortTips("保存成功");
+                        setTimeout(function () {
+                            location.href = "/Reconciliation/List";
+                        }, 1000)
+                    } else {
+                        shortTips(errorMessage(result));
+                    }
+                }
+            });
+            $("#savePayment").click(function () {
+                if ($customerId.val() === "") {
+                    shortTips("请选择客户");
+                    return false;
+                }
+                $("input[name=CustomerName]").val($vCustomerId.val());
+            });
+        })
+    </script>
+}

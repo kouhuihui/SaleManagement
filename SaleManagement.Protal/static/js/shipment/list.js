@@ -48,8 +48,8 @@
     })
 
     $("#btnAudit").on("click", function () {
-        var inputCheckeds = $("#tbody input:checkbox:checked");
-        var length = inputCheckeds.length;
+        var $inputChecked = $("#tbody input:checkbox:checked");
+        var length = $inputChecked.length;
         if (length === 0) {
             shortTips("请选择出货单");
             return false;
@@ -58,7 +58,11 @@
             shortTips("只能选择一个出货单");
             return false;
         }
-        var id = inputCheckeds.val();
+        if ($inputChecked.attr("status") != 0) {
+            shortTips("出货单不是待审核状态");
+            return false;
+        }
+        var id = $inputChecked.val();
         $(window).modalDialog({
             title: "提示",
             content: "确定审核通过" + id + "出货单？",

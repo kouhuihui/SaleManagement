@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,9 +23,14 @@ namespace SaleManagement.Managers
 
         }
 
+        public async Task<Reconciliation> GetReconciliationAsync(int id)
+        {
+            return await DbContext.Set<Reconciliation>().FirstOrDefaultAsync(r => r.Id == id && r.CompanyId == User.CompanyId);
+        }
+
         public async Task<InvokedResult> CreateAsync(Reconciliation reconciliation)
         {
-            DbContext.Set<Reconciliation>().Add(reconciliation);
+            DbContext.Set<Reconciliation>().AddOrUpdate(reconciliation);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
@@ -111,6 +117,9 @@ namespace SaleManagement.Managers
                                  PaymentInQuery = ur?.Payment ?? 0,
                                  SurplusArrearage = Math.Round(a.SurplusArrearage,2)
                              }).OrderByDescending(c => c.SurplusArrearage).ToList();
+            var totalPaymentInQuery = Math.Round(statistic.Sum(r => r.PaymentInQuery), 2);
+            var totalSurplusArrearage = Math.Round(statistic.Sum(r => r.SurplusArrearage), 2);
+            statistic.Add(new AccountStatistic { CustomerName = "总计", PaymentInQuery = totalPaymentInQuery, SurplusArrearage = totalSurplusArrearage });
 
             return statistic;
         }
