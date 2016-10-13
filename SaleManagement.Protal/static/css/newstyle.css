@@ -1618,13 +1618,6 @@ input[type=checkbox] {
         padding-left: 0px;
     }
 
-    body {
-        color: #000000;
-        -webkit-text-size-adjust: none;
-        font-size: 9.6px;
-        -webkit-transform-origin-x: 0;
-        -webkit-transform: scale(0.8);
-    }
 }
 
 th {
