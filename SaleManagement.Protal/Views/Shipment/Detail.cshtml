@@ -18,9 +18,13 @@
         body {
             color: #000000;
             -webkit-text-size-adjust: none;
-            font-size: 12px;
+            font-size: 9.6px;
             -webkit-transform-origin-x: 0;
-            -webkit-transform: scale(0.90);
+            -webkit-transform: scale(0.8);
+        }
+
+        h4 {
+            font-size: 12px;
         }
 
         .table {
@@ -37,8 +41,8 @@
             background-color: #ffffff;
             font-weight: normal;
         }
-
-
+    </style>
+    <style type="text/css" media="print">
         @@media print {
             .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
                 padding-right: 0px;
@@ -48,10 +52,16 @@
             body {
                 color: #000000;
                 -webkit-text-size-adjust: none;
-                font-size: 12px;
+                font-size: 9.6px;
                 -webkit-transform-origin-x: 0;
-                -webkit-transform: scale(0.90);
+                -webkit-transform: scale(0.8);
             }
+
+            .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+                padding: 5px;
+                border: 1px solid #000000 !important;
+            }
+ 
         }
     </style>
 </head>
@@ -75,7 +85,7 @@
                 <div class="col-md-4 col-xs-4">出货日期：@Model.DeliveryDate</div>
                 <div class="col-md-4 col-xs-4">客户：@Model.CustomerName</div>
             </div>
-            <table class="table table-bordered bootstrap-datatable">
+            <table class="table table-bordered bootstrap-datatable" border="1">
                 <tbody>
                     <tr>
                         <th>订单号</th>
@@ -122,7 +132,7 @@
                         totalOutputWaxCost = totalOutputWaxCost + item.OutputWaxCost;
                         totalOtherCost = totalOtherCost + item.OtherCost;
                         <tr>
-                            <td width="35">
+                            <td width="60">
                                 @item.Id
                             </td>
                             <td width="35">@item.RangSize</td>
@@ -130,18 +140,18 @@
                             <td width="55">@item.Weight</td>
                             <td width="55">@item.GoldWeight</td>
                             <td width="55">@item.Hhz</td>
-                            <td width="50">@item.ColorFormName</td>
+                            <td width="65">@item.ColorFormName</td>
                             <td width="50">@item.GoldPrice.ToString("f2")</td>
                             <td width="50">@item.GoldAmount</td>
                             <td width="50">@item.MainStoneNumber</td>
                             <td width="50">@item.MainStoneSize</td>
                             <td width="50">@item.RiskFee</td>
-                            <td width="60">@item.TotalSetStoneWorkingCost</td>
-                            <td width="50">@item.SideStoneTotalAmount.ToString("f2")</td>
-                            <td width="60">@item.BasicCost</td>
-                            <td width="65">@item.OutputWaxCost</td>
-                            <td width="60">@item.OtherCost</td>
-                            <td width="50">@item.TotalAmount</td>
+                            <td>@item.TotalSetStoneWorkingCost</td>
+                            <td>@item.SideStoneTotalAmount.ToString("f2")</td>
+                            <td>@item.BasicCost</td>
+                            <td>@item.OutputWaxCost</td>
+                            <td>@item.OtherCost</td>
+                            <td>@item.TotalAmount</td>
                         </tr>
                     }
                     <tr>
@@ -217,8 +227,8 @@
             </div>
 
             <div style="display:inline-block;width:100%">
-                <p>注：1) 收到货品后，请及时检验，如有质量问题，请在一个星期内以书面形式向我司售后服务部反馈，逾期视为该产品均符合客户要求。</p>
-                <p style="padding-left:25px;margin-top:0px">2) 出货7天内没取货，按每月3%收取滞纳金。</p>
+                <div>注：1) 收到货品后，请及时检验，如有质量问题，请在一个星期内以书面形式向我司售后服务部反馈，逾期视为该产品均符合客户要求。</div>
+                <div style="padding-left:25px;margin-top:0px">2) 出货7天内没取货，按每月3%收取滞纳金。</div>
             </div>
 
             <div style="display:inline-block;width:100%">
