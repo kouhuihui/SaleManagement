@@ -189,6 +189,3 @@ tmp/
 
 # 开发环境生成的sourcemaping文件
 *.map
-
-# 排除happypack的缓存
-**/.happypack
