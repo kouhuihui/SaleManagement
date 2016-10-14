@@ -18,9 +18,7 @@
         body {
             color: #000000;
             -webkit-text-size-adjust: none;
-            font-size: 9.6px;
-            -webkit-transform-origin-x: 0;
-            -webkit-transform: scale(0.8);
+            font-size: 12px;
         }
 
         h4 {
@@ -57,16 +55,19 @@
                 -webkit-transform: scale(0.8);
             }
 
+            .table {
+                width: 1200px;
+            }
+
             .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
                 padding: 5px;
                 border: 1px solid #000000 !important;
             }
- 
         }
     </style>
 </head>
 <body>
-    <div style="margin:0px auto; width:1000px;border:1px solid #e2f1f1">
+    <div style="margin:0px auto; width:1250px;border:1px solid #e2f1f1">
         @{
             var isEmployee = User.IdentityType == SaleManagement.Core.Models.IdentityType.Employee;
         }
@@ -135,17 +136,17 @@
                             <td width="60">
                                 @item.Id
                             </td>
-                            <td width="35">@item.RangSize</td>
-                            <td width="35">@item.Number</td>
-                            <td width="55">@item.Weight</td>
-                            <td width="55">@item.GoldWeight</td>
-                            <td width="55">@item.Hhz</td>
-                            <td width="65">@item.ColorFormName</td>
-                            <td width="50">@item.GoldPrice.ToString("f2")</td>
-                            <td width="50">@item.GoldAmount</td>
-                            <td width="50">@item.MainStoneNumber</td>
-                            <td width="50">@item.MainStoneSize</td>
-                            <td width="50">@item.RiskFee</td>
+                            <td>@item.RangSize</td>
+                            <td>@item.Number</td>
+                            <td>@item.Weight</td>
+                            <td>@item.GoldWeight</td>
+                            <td>@item.Hhz</td>
+                            <td>@item.ColorFormName</td>
+                            <td>@item.GoldPrice.ToString("f2")</td>
+                            <td>@item.GoldAmount</td>
+                            <td>@item.MainStoneNumber</td>
+                            <td>@item.MainStoneSize</td>
+                            <td>@item.RiskFee</td>
                             <td>@item.TotalSetStoneWorkingCost</td>
                             <td>@item.SideStoneTotalAmount.ToString("f2")</td>
                             <td>@item.BasicCost</td>
