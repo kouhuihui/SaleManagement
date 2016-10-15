@@ -227,4 +227,31 @@
             }
         });
     })
+
+    $("#btnStop").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+
+        var status = inputCheckeds.attr("status");
+        var id = inputCheckeds.val();
+        if (status == -1 || status == 9 || status == 10 || status ==11 || status == 12) {
+            shortTips(id + "订单已不再生产中，不能消单");
+            return false;
+        }
+
+        $("#modal").modal({
+            remote: "/Order/Stop?orderId=" + id
+        }).on("hidden.bs.modal", function () {
+            $(this).removeData("bs.modal");
+        });
+    })
 });

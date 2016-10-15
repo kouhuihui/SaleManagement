@@ -272,6 +272,7 @@
     <Compile Include="Models\Order\OrderViewModel.cs" />
     <Compile Include="Models\Order\OrderViewModelBase.cs" />
     <Compile Include="Models\Order\OrderPackViewModel.cs" />
+    <Compile Include="Models\Order\StopOrderViewModel.cs" />
     <Compile Include="Models\Order\UploadDesginImageViewModel.cs" />
     <Compile Include="Models\Order\UploadOrderAttachmentRequest.cs" />
     <Compile Include="Models\Menu\RoleMenuAuthorizedViewModel.cs" />
@@ -532,6 +533,7 @@
     <Content Include="Views\Account\weChatLogin.cshtml" />
     <Content Include="Views\Shipment\Detail.cshtml" />
     <Content Include="Views\Reconciliation\Edit.cshtml" />
+    <Content Include="Views\Order\Stop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

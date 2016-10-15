@@ -33,7 +33,7 @@ namespace SaleManagement.Protal.Controllers
             var manager = new OrderManager(User);
             var paging = await manager.GetOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
 
-            var users = await new UserManager().GetUsersAsync(paging.List.Select(o=>o.CurrentUserId));
+            var users = await new UserManager().GetUsersAsync(paging.List.Select(o => o.CurrentUserId));
             var orders = paging.List.Select(u => new OrderListItemViewModel(u)
             {
                 CurrentUserName = users.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name
@@ -349,6 +349,59 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        public async Task<ActionResult> Stop(string orderId)
+        {
+            Requires.NotNullOrEmpty(orderId, "orderId");
+
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return View("Error", SaleManagentConstants.Errors.OrderNotFound);
+
+            StopOrderViewModel stopOrderViewModel = new StopOrderViewModel
+            {
+                OrderId = orderId,
+                DesginAmount = order.OutputWaxCost,
+                CustomerId = order.CustomerId,
+                CustomerName = order.Customer.Name
+            };
+            return View(stopOrderViewModel);
+        }
+
+        /// <summary>
+        /// 消单
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<JsonResult> Stop(StopOrderViewModel stopOrderViewModel)
+        {
+            if (!ModelState.IsValid)
+                return Json(false, data: ErrorToDictionary());
+
+            var result = await ChangeStep(new string[] { stopOrderViewModel.OrderId }, OrderStatus.Delete);
+
+            if (stopOrderViewModel.DesginAmount <= 0 && stopOrderViewModel.OtherAmount <= 0)
+                return Json(result);
+
+            var manager = new ReconciliationManager(User);
+            var reconciliation = new Reconciliation
+            {
+                CustomerId = stopOrderViewModel.CustomerId,
+                CustomerName = stopOrderViewModel.CustomerName,
+                Amount = stopOrderViewModel.DesginAmount + stopOrderViewModel.OtherAmount,
+                CompanyId = User.CompanyId,
+                Type = ReconciliationType.Arrearage,
+                Created = DateTime.Now,
+                CreatorId = User.Id,
+                Remark = $"{stopOrderViewModel.OrderId}消单," + (stopOrderViewModel.DesginAmount > 0 ? $"设计费用{stopOrderViewModel.DesginAmount}," : "")
+                + (stopOrderViewModel.OtherAmount > 0 ? $"其他费用{ stopOrderViewModel.OtherAmount}" : "")
+            };
+            await manager.CreateAsync(reconciliation);
+
+            return Json(result);
+        }
+
         private async Task<InvokedResult> ChangeStep(string[] orderIds, OrderStatus orderStatus, string userId = "")
         {
             var manager = new OrderManager(User);
@@ -478,7 +531,7 @@ namespace SaleManagement.Protal.Controllers
 
 
         [HttpPost]
-        public async Task<JsonResult> DeleteSetStone( int id)
+        public async Task<JsonResult> DeleteSetStone(int id)
         {
             var orderSetStoneInfoManager = new OrderSetStoneInfoManager();
             var result = await orderSetStoneInfoManager.DeleteOrderSetStoneAsync(id);
@@ -652,10 +705,10 @@ namespace SaleManagement.Protal.Controllers
             g.CompositingQuality = CompositingQuality.HighQuality;//合成图像的呈现质量
             g.SmoothingMode = SmoothingMode.HighQuality;//呈现质量
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;//插补模式
-            //开始重新绘制图像
+                                                                       //开始重新绘制图像
             g.DrawImage(iSource, new Rectangle((dWidth - sW) / 2, (dHeight - sH) / 2, sW, sH), 0, 0, iSource.Width, iSource.Height, GraphicsUnit.Pixel);
             g.Dispose();//释放资源
-            //保存图片时，设置压缩质量
+                        //保存图片时，设置压缩质量
             EncoderParameters ep = new EncoderParameters();//用于向图像编码器传递值
             long[] qy = new long[1];
             qy[0] = 100;

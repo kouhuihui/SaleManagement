@@ -99,6 +99,13 @@
                             删除
                         </a>
                     }
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                    {
+                        <a id="btnStop" class="btn">
+                            <i class="glyphicon glyphicon-stop"></i>
+                            消单
+                        </a>
+                    }
                 </div>
             </div>
 
