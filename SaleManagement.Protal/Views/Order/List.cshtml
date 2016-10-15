@@ -118,6 +118,7 @@
                             <th>客户</th>
                             <th>下单日期</th>
                             <th>交货日期</th>
+                            <th>处理人</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" data-bind="foreach:orders">
@@ -143,6 +144,7 @@
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:created"></td>
                             <td data-bind="text:deliveryDate"></td>
+                            <td data-bind="text:currentUserName"></td>
                         </tr>
                     </tbody>
                 </table>

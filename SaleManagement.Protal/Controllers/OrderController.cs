@@ -31,9 +31,13 @@ namespace SaleManagement.Protal.Controllers
                 return View(request);
 
             var manager = new OrderManager(User);
-
             var paging = await manager.GetOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
-            var orders = paging.List.Select(u => new OrderListItemViewModel(u));
+
+            var users = await new UserManager().GetUsersAsync(paging.List.Select(o=>o.CurrentUserId));
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u)
+            {
+                CurrentUserName = users.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name
+            });
 
             return Json(true, string.Empty, new
             {

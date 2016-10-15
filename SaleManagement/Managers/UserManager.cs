@@ -116,7 +116,7 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<TUser>> GetAllCustomersAsync()
         {
-            var query = Users.Where(u => u.IdentityType == IdentityType.Customer && u.Status== UserStatus.Normal);
+            var query = Users.Where(u => u.IdentityType == IdentityType.Customer && u.Status == UserStatus.Normal);
             return await query.OrderByDescending(u => u.Created).ThenByDescending(u => u.Name).ToListAsync();
         }
 
@@ -146,7 +146,7 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
-        private async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string> userIds)
+        public async Task<IEnumerable<TUser>> GetUsersAsync(IEnumerable<string> userIds)
         {
             if (!userIds.Any())
                 return Enumerable.Empty<TUser>();

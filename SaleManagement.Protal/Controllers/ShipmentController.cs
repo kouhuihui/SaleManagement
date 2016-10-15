@@ -103,6 +103,7 @@ namespace SaleManagement.Protal.Controllers
                 f.TotalSetStoneWorkingCost = f.OrderSetStoneInfos.Sum(r => r.SetStoneWorkingCost) * ((double)discountRate.StoneSetter / 100);
                 f.SideStoneNumber = f.OrderSetStoneInfos.Sum(r => r.Number);
                 f.SideStoneTotalAmount = f.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100);
+                f.SideStoneWeight = f.OrderSetStoneInfos.Sum(r => r.Weight);
             }
             );
             return View("create", shipmentOrderViewModel);
