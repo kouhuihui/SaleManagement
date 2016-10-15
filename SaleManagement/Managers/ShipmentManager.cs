@@ -31,7 +31,7 @@ namespace SaleManagement.Managers
                 query = filter(query);
             }
             var total = await query.CountAsync();
-            var list = await query.OrderByDescending(u => u.DeliveryDate).Skip(start).Take(take).ToListAsync();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
 
             return new Paging<ShipmentOrder>(start, take, total, list);
         }

@@ -38,7 +38,7 @@ namespace SaleManagement.Protal.Models.Shipment
 
                 if (!string.IsNullOrEmpty(OrderId))
                 {
-                    query = query.Where(f => f.ShipmentOrderInfos.Any(s => s.Id == OrderId));
+                    query = query.Where(f => f.ShipmentOrderInfos.Any(s => s.Id.Contains(OrderId)));
                 }
 
                 if (DeliveryStartDate.HasValue)

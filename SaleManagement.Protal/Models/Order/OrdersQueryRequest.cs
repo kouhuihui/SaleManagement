@@ -20,8 +20,7 @@ namespace SaleManagement.Protal.Models.Order
             {
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.UnConfirmed || f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm
-                    || f.OrderStatus == OrderStatus.CustomerConfirm || f.OrderStatus == OrderStatus.OutputWax || f.OrderStatus == OrderStatus.DumpModule);
+                    query = query.Where(f => f.OrderStatus!= OrderStatus.Delete && f.OrderStatus != OrderStatus.ToBeShip && f.OrderStatus != OrderStatus.Shipmenting && f.OrderStatus!= OrderStatus.Shipment && f.OrderStatus != OrderStatus.HaveGoods);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {

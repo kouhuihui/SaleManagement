@@ -90,7 +90,21 @@ namespace SaleManagement.Protal.Controllers
             var manager = new ShipmentManager(User);
             var shipmentOrder = await manager.GetShipmentOrderAsync(id);
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
-            shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
+
+            var discountRateManager = new DiscountRateManager();
+            var discountRate = await discountRateManager.GetCustomerDiscountRateAsync(shipmentOrder.CustomerId);
+            if (discountRate == null)
+                discountRate = new CustomerDiscountRate();
+
+            shipmentOrderViewModel.ShipmentOrderInfos.Each(f =>
+            {
+                f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
+                f.GoldAmount = f.GoldPrice * f.Hhz;
+                f.TotalSetStoneWorkingCost = f.OrderSetStoneInfos.Sum(r => r.SetStoneWorkingCost) * ((double)discountRate.StoneSetter / 100);
+                f.SideStoneNumber = f.OrderSetStoneInfos.Sum(r => r.Number);
+                f.SideStoneTotalAmount = f.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100);
+            }
+            );
             return View("create", shipmentOrderViewModel);
         }
 
