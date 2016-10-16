@@ -68,6 +68,7 @@
             content: "确定审核通过" + id + "出货单？",
             type: "confirm",
             okCallBack: function (e, $el) {
+                $orderListPage.loading();
                 $.ajax({
                     url: "/shipment/Audit?id=" + id,
                     type: "POST",
@@ -77,11 +78,14 @@
                             $el.data("bs.modal").hide();
                             setTimeout(function () {
                                 shortTips("操作成功");
-                            },1000)
+                            }, 1000)
                             location.reload();
                         } else {
                             shortTips(errorMessage(result));
                         }
+                    },
+                    error: function (result) {
+                        $orderListPage.data("loading").hide();
                     }
                 });
             }

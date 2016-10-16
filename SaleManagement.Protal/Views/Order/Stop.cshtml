@@ -66,6 +66,9 @@
     $(function () {
         var $from = $("#stopOrderFrom");
         $from.ajaxForm({
+            beforeSubmit: function () {
+                $from.loading();
+            },
             success: function (result) {
                 if (result.succeeded) {
                     shortTips("保存成功");
@@ -75,6 +78,9 @@
                 } else {
                     shortTips(errorMessage(result));
                 }
+            },
+            error: function (result) {
+                $from.data("loading").hide();
             }
         });
     })
