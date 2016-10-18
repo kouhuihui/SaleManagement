@@ -79,29 +79,36 @@
 @section scripts{
     @Scripts.Render("~/bundles/js/jqueryval")
     @Scripts.Render("~/bundles/js/ajaxForm")
+    <script src="~/Static/js/control/customer.js"></script>
     <script type="text/javascript">
-        $(function () {
+        var customer = new Customer({
+            callback: function (data) {
+                alert(data);
+            }
+        });
+        $(function() {
+           
             var $from = $("#addPaymentFrom"),
                 $customerCombobox = $("#customerCombobox"),
                 $vCustomerId = $customerCombobox.find("#vCustomerId"),
                 $customerId = $customerCombobox.find("#customerId");
             $(".combobox-body").css("width", 300);
             $from.ajaxForm({
-                type: "post",  //提交方式
+                type: "post", //提交方式
                 dataType: "json", //数据类型
                 url: "/Reconciliation/Add",
-                success: function (result) {
+                success: function(result) {
                     if (result.succeeded) {
                         shortTips("保存成功");
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.href = "/Reconciliation/List";
-                        }, 1000)
+                        }, 1000);
                     } else {
                         shortTips(errorMessage(result));
                     }
                 }
             });
-            $("#savePayment").click(function () {
+            $("#savePayment").click(function() {
                 if ($customerId.val() === "") {
                     shortTips("请选择客户");
                     return false;
