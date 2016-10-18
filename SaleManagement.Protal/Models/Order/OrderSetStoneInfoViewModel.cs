@@ -21,7 +21,7 @@ namespace SaleManagement.Protal.Models.Order
 
         [Display(Name = "重量")]
         [Required]
-        [Range(0.01, 1000, ErrorMessage = "{0}范围是1-1000")]
+        [Range(0.001, 1000, ErrorMessage = "{0}范围是0.001-1000")]
         public double Weight { get; set; }
 
         public string OrderId { get; set; }
