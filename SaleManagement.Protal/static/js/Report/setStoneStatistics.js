@@ -4,7 +4,8 @@
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
-    }
+    };
+    var customer = new Customer();
     $('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var SetStoneStatistics = function (data) {
@@ -20,7 +21,8 @@
     function searchArgs() {
         return {
             StatisticStartDate: $("#createdStartDate").val(),
-            StatisticEndDate: $("#createdEndDate").val()
+            StatisticEndDate: $("#createdEndDate").val(),
+            customerId:customer.getValue(),
         }
     }
 

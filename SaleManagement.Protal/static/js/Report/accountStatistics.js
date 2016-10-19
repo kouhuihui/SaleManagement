@@ -4,7 +4,8 @@
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
-    }
+    };
+    var customer = new Customer();
     $('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var AccountStatistics = function (data) {
@@ -19,7 +20,7 @@
 
     function searchArgs() {
         return {
-            customerId: $("#customerId").val(),
+            customerId: customer.getValue(),
             StatisticStartDate: $("#createdStartDate").val(),
             StatisticEndDate: $("#createdEndDate").val()
         }

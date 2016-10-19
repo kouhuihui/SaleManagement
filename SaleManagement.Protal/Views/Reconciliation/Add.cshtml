@@ -1,6 +1,6 @@
 ﻿@model SaleManagement.Protal.Models.Reconciliation.ReconciliationItemViewModel
 @{
-    Title("新增收款");
+    Title("新增欠付款");
 }
 <div>
     <ul class="breadcrumb">
@@ -32,6 +32,7 @@
                                 @Html.Partial("_Customer")
                                 @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
                                 @Html.HiddenFor(model => model.CustomerName)
+                                <label class="control-label red">当前欠款（元）：<span id="surplusSpan"></span></label>
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,35 +79,48 @@
 
 @section scripts{
     @Scripts.Render("~/bundles/js/jqueryval")
-    @Scripts.Render("~/bundles/js/ajaxForm")
+    @Scripts.Render("~/bundles/js/ajaxForm")  
+    @Scripts.Render("~/bundles/js/control/customer")
     <script type="text/javascript">
         $(function () {
-            var $from = $("#addPaymentFrom"),
-                $customerCombobox = $("#customerCombobox"),
-                $vCustomerId = $customerCombobox.find("#vCustomerId"),
-                $customerId = $customerCombobox.find("#customerId");
+            var $surplusSpan = $("#surplusSpan");
+            var customer = new Customer({
+                callback: function (data) {
+                    if (data == "") {
+                        return $surplusSpan.html("");
+                    }
+                    $.get("/report/GetTotalSurplusArrearage?customerId="+data, function (rtn) {
+                        if (!rtn.succeeded) {
+                            return;
+                        }
+                        $surplusSpan.html(rtn.data);
+                    });
+                }
+            });
+
+            var $from = $("#addPaymentFrom");
             $(".combobox-body").css("width", 300);
             $from.ajaxForm({
-                type: "post",  //提交方式
+                type: "post", //提交方式
                 dataType: "json", //数据类型
                 url: "/Reconciliation/Add",
-                success: function (result) {
+                success: function(result) {
                     if (result.succeeded) {
                         shortTips("保存成功");
-                        setTimeout(function () {
+                        setTimeout(function() {
                             location.href = "/Reconciliation/List";
-                        }, 1000)
+                        }, 1000);
                     } else {
                         shortTips(errorMessage(result));
                     }
                 }
             });
             $("#savePayment").click(function () {
-                if ($customerId.val() === "") {
+                if (customer.getValue() === "") {
                     shortTips("请选择客户");
                     return false;
                 }
-                $("input[name=CustomerName]").val($vCustomerId.val());
+                $("input[name=CustomerName]").val(customer.getText());
             });
         })
     </script>

@@ -12,6 +12,7 @@
     $handSize = $("#HandSize");
 
 $(function () {
+    var customer = new Customer();
     if ($deliveryDate.length > 0) {
         $deliveryDate.datetimepicker({
             autoclose: true,

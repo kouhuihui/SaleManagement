@@ -7,7 +7,7 @@
         minView: 2
     }
     $('.date-conditions input[type="text"]').datetimepicker(rec);
-
+    var customer = new Customer();
     var Reconciliations = function (data) {
         var self = this;
         self.reconciliations = ko.observableArray(data);
@@ -28,7 +28,7 @@
 
     function searchArgs() {
         return {
-            customerId: $("#customerId").val(),
+            customerId: customer.getValue(),
             createdStartDate: $("#createdStartDate").val(),
             createdEndDate: $("#createdEndDate").val(),
             type: $("#type").val()
