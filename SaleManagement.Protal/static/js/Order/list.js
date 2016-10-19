@@ -1,4 +1,5 @@
 ﻿$(function () {
+    var customer = new Customer();
     var $orderListPage = $('#orderListPage');
     var rec = {
         autoclose: true,
@@ -29,7 +30,7 @@
     function searchArgs() {
         return {
             orderId: $("#orderId").val(),
-            customerId: $("#customerId").val(),
+            customerId: customer.getValue(),
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
             status: $("#Status").val(),
@@ -48,7 +49,7 @@
         search();
     })
 
-    $("#shipment").on("click",function () {
+    $("#shipment").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");
         var length = inputCheckeds.length;
         var ids = "";
@@ -62,7 +63,7 @@
                 shortTips("订单不是待出货状态");
                 return false;
             }
-            ids = ids + $inputChecked.val() +",";
+            ids = ids + $inputChecked.val() + ",";
         }
         location.href = "/shipment/create?orderIds=" + ids;
     })
@@ -79,7 +80,7 @@
             var $inputChecked = $(inputCheckeds[i]);
             var orderId = $inputChecked.val();
             if ($inputChecked.attr("status") != 0 && $inputChecked.attr("status") != 2) {
-                shortTips(orderId+"订单不是未确认状态或设计师设计，不能调配");
+                shortTips(orderId + "订单不是未确认状态或设计师设计，不能调配");
                 return false;
             }
             ids = ids + orderId + ",";
@@ -243,7 +244,7 @@
 
         var status = inputCheckeds.attr("status");
         var id = inputCheckeds.val();
-        if (status == -1 || status == 9 || status == 10 || status ==11 || status == 12) {
+        if (status == -1 || status == 9 || status == 10 || status == 11 || status == 12) {
             shortTips(id + "订单已不再生产中，不能消单");
             return false;
         }

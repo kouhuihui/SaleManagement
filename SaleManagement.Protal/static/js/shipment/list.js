@@ -5,7 +5,8 @@
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
-    }
+    };
+    var customer = new Customer();
     $('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var Orders = function (data) {
@@ -30,7 +31,7 @@
         return {
             orderId: $("#orderId").val(),
             shipmentOrderId: $("#shipmentOrderId").val(),
-            customerId: $("#customerId").val(),
+            customerId: customer.getValue(),
             deliveryStartDate: $("#deliveryStartDate").val(),
             deliveryEndDate: $("#deliveryEndDate").val(),
             status: $("#shipmentOrderAduitStatus").val()

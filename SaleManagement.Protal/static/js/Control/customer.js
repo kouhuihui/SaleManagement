@@ -60,6 +60,12 @@ Customer.prototype = {
 		customerstore = arr;
 		this.initSelect();
 	},
+	getValue:function(){
+	    return $customerId.val();
+	},
+	getText:function(){
+	    return $vCustomerInput.val();
+	},
 	method: function () {
 		var _this = this;
 		$vCustomerInput.bind("click", function () {

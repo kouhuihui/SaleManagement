@@ -57,7 +57,7 @@ namespace SaleManagement.Managers
             }
             var list = await query.OrderByDescending(u => u.Created).ToListAsync();
 
-            return  list;
+            return list;
         }
 
         public async Task<IEnumerable<Reconciliation>> GetCustomerReconciliationsAsync(Func<IQueryable<Reconciliation>, IQueryable<Reconciliation>> filter = null)
@@ -83,7 +83,7 @@ namespace SaleManagement.Managers
             var AccountStatistics = await query.GroupBy(r => r.CustomerId).Select(a => new
             {
                 CustomerId = a.Key,
-                SurplusArrearage = a.Sum(r=> r.Type== ReconciliationType.Payment?-r.Amount:r.Amount),
+                SurplusArrearage = a.Sum(r => r.Type == ReconciliationType.Payment ? -r.Amount : r.Amount),
             }).ToListAsync();
 
             if (reportQuery.StatisticStartDate.HasValue)
@@ -115,13 +115,23 @@ namespace SaleManagement.Managers
                                  CustomerId = a.CustomerId,
                                  CustomerName = c.Name,
                                  PaymentInQuery = ur?.Payment ?? 0,
-                                 SurplusArrearage = Math.Round(a.SurplusArrearage,2)
+                                 SurplusArrearage = Math.Round(a.SurplusArrearage, 2)
                              }).OrderByDescending(c => c.SurplusArrearage).ToList();
             var totalPaymentInQuery = Math.Round(statistic.Sum(r => r.PaymentInQuery), 2);
             var totalSurplusArrearage = Math.Round(statistic.Sum(r => r.SurplusArrearage), 2);
             statistic.Add(new AccountStatistic { CustomerName = "总计", PaymentInQuery = totalPaymentInQuery, SurplusArrearage = totalSurplusArrearage });
 
             return statistic;
+        }
+
+        public async Task<double> GetTotalSurplusArrearageAsync(string customerId)
+        {
+            var Reconciliations = DbContext.Set<Reconciliation>().Where(o => o.CompanyId == User.CompanyId && o.CustomerId == customerId);
+            if (!Reconciliations.Any())
+                return 0;
+
+            var total = await Reconciliations.SumAsync(o => o.Type == ReconciliationType.Payment ? -o.Amount : o.Amount);
+            return Math.Round(total, 2);
         }
     }
 }

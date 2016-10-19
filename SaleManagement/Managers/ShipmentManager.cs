@@ -97,6 +97,11 @@ namespace SaleManagement.Managers
                 query = query.Where(t => t.ShipmentOrder.Created < endDate);
             }
 
+            if (!string.IsNullOrEmpty(reportQuery.CustomerId))
+            {
+                query = query.Where(t => t.ShipmentOrder.CustomerId== reportQuery.CustomerId);
+            }
+
             var orderIds = query.Select(r => r.Order.Id);
             if (orderIds == null || !orderIds.Any())
                 return Enumerable.Empty<OrderSetStoneStatistic>();

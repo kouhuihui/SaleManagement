@@ -29,6 +29,13 @@ namespace SaleManagement.Protal.Controllers
             return Json(true, string.Empty, list);
         }
 
+        public async Task<JsonResult> GetTotalSurplusArrearage(string customerId)
+        {
+            var manager = new ReconciliationManager(User);
+            var result = await manager.GetTotalSurplusArrearageAsync(customerId);
+            return Json(true, string.Empty, result);
+        }
+
         public async Task<FileStreamResult> AccountStatisticsExport(ReportQueryBaseDto reportQuery)
         {
             var manager = new ReconciliationManager(User);
@@ -67,7 +74,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
             var orderSetStoneStatistics = await manager.GetOrderSetStoneStatisticsAsync(reportQuery);
-            var titles = new string[] { "序号", "配石名称", "重量（ct）" ,"数量"};
+            var titles = new string[] { "序号", "配石名称", "重量（ct）", "数量" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "配石报表", ws =>
             {
                 var row = 2;
@@ -149,19 +156,19 @@ namespace SaleManagement.Protal.Controllers
                 var total = new ShipmentOrderInfoViewModel
                 {
                     Number = shipmentOrderInfoViewModels.Sum(r => r.Number),
-                    GoldWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldWeight),2),
-                    Hhz = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Hhz),2),
-                    GoldAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldAmount),2),
+                    GoldWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldWeight), 2),
+                    Hhz = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Hhz), 2),
+                    GoldAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldAmount), 2),
                     SideStoneNumber = shipmentOrderInfoViewModels.Sum(r => r.SideStoneNumber),
-                    SideStoneWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneWeight),2),
-                    TotalSetStoneWorkingCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalSetStoneWorkingCost),2),
-                    SideStoneTotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneTotalAmount),2),
-                    BasicCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.BasicCost),2),
-                    OutputWaxCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OutputWaxCost),2),
-                    RiskFee = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.RiskFee),2),
-                    OtherCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OtherCost),2),
-                    TotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalAmount),2),
-                     Weight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Weight),2),
+                    SideStoneWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneWeight), 2),
+                    TotalSetStoneWorkingCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalSetStoneWorkingCost), 2),
+                    SideStoneTotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneTotalAmount), 2),
+                    BasicCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.BasicCost), 2),
+                    OutputWaxCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OutputWaxCost), 2),
+                    RiskFee = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.RiskFee), 2),
+                    OtherCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OtherCost), 2),
+                    TotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalAmount), 2),
+                    Weight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Weight), 2),
                 };
                 shipmentOrderInfoViewModels.Add(total);
             }
