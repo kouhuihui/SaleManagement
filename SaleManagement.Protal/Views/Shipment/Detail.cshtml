@@ -71,12 +71,10 @@
         @{
             var isEmployee = User.IdentityType == SaleManagement.Core.Models.IdentityType.Employee;
         }
-        @if (isEmployee)
-        {
-            <div class="pull-right">
-                <button id="btnPrint" class="btn btn-primary" onclick="printClick()">打印</button>
-            </div>
-        }
+
+        <div class="pull-right">
+            <button id="btnPrint" class="btn btn-primary" onclick="printClick()">打印</button>
+        </div>
         <div id="divPrint">
             <div class="text-center">
                 <h4>产品出货明细单</h4>

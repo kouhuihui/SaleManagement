@@ -386,6 +386,7 @@
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
     <Content Include="static\js\Crm\edit.js" />
+    <Content Include="static\js\Customer\Order\shipmentStatistics.js" />
     <Content Include="static\js\DailyGoldPrice\Add.js" />
     <Content Include="static\js\DailyGoldPrice\edit.js" />
     <Content Include="static\js\DailyGoldPrice\list.js" />
@@ -420,6 +421,7 @@
     </Content>
     <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
     <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\ShipmentStatistics.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="static\js\Mvc\jquery.validate.js" />

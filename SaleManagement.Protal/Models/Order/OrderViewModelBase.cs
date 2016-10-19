@@ -72,7 +72,7 @@ namespace SaleManagement.Protal.Models.Order
 
         [Display(Name = "件数")]
         [Required(ErrorMessage = "请输入{0}")]
-        [RegularExpression("^[0-9]*$",ErrorMessage ="请输入整数")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "请输入整数")]
         [Range(1, 1000, ErrorMessage = "{0}范围是1-1000")]
         public int Number { get; set; }
 
@@ -83,7 +83,7 @@ namespace SaleManagement.Protal.Models.Order
         public int MainStoneNumber { get; set; }
 
         [Display(Name = "主石大小")]
-        [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入两位小数的数字")]
+        [RegularExpression("^[0-9]+(.[0-9]{1,3})?$", ErrorMessage = "请输入三位小数的数字")]
         [Required(ErrorMessage = "请输入{0}")]
         public double MainStoneSize { get; set; }
 

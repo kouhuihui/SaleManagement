@@ -103,7 +103,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             var shipmentOrder = await manager.GetShipmentOrderByOrderIdAsync(orderId);
             var isWeChat = OwinContext.GetBrowser().IsWeChat;
             if (!isWeChat)
-                return RedirectToAction("Detail", "shipment", new { id = shipmentOrder.Id, Area="" });
+                return RedirectToAction("Detail", "shipment", new { id = shipmentOrder.Id, Area = "" });
 
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
             return View(shipmentOrderViewModel);
@@ -130,6 +130,89 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             }).ToList();
 
             return View("Booking", model);
+        }
+
+        public async Task<ActionResult> ShipmentStatistics(ShipmentReportQuery reportQuery)
+        {
+            if (!Request.IsAjaxRequest())
+                return View(reportQuery);
+
+            reportQuery.CustomerId = User.Id;
+            var shipmentOrderInfoViewModels = await GetShipmentOrderInfoViewModels(reportQuery);
+            return Json(true, string.Empty, shipmentOrderInfoViewModels);
+        }
+
+        public async Task<FileStreamResult> ShipmentStatisticsExport(ShipmentReportQuery reportQuery)
+        {
+            reportQuery.CustomerId = User.Id;
+            var shipmentOrderInfoViewModels = await GetShipmentOrderInfoViewModels(reportQuery);
+
+            var titles = new string[] { "序号", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额" };
+            var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "出货单明细", ws =>
+            {
+                var row = 2;
+                int index = 1;
+
+                foreach (var shipmentOrderInfo in shipmentOrderInfoViewModels)
+                {
+                    ws.Cells[row, 1].Value = index;
+                    ws.Cells[row, 2].Value = shipmentOrderInfo.Id;
+                    ws.Cells[row, 3].Value = shipmentOrderInfo.ProductCategoryName;
+                    ws.Cells[row, 4].Value = shipmentOrderInfo.DeliveryDate;
+                    ws.Cells[row, 5].Value = shipmentOrderInfo.Number;
+                    ws.Cells[row, 6].Value = shipmentOrderInfo.GoldWeight;
+                    ws.Cells[row, 7].Value = Math.Round(shipmentOrderInfo.GoldWeight * (1 + shipmentOrderInfo.LossRate / 100), 2);
+                    ws.Cells[row, 8].Value = shipmentOrderInfo.GoldAmount;
+                    ws.Cells[row, 9].Value = shipmentOrderInfo.SideStoneNumber;
+                    ws.Cells[row, 10].Value = shipmentOrderInfo.SideStoneWeight;
+                    ws.Cells[row, 11].Value = shipmentOrderInfo.TotalSetStoneWorkingCost;
+                    ws.Cells[row, 12].Value = shipmentOrderInfo.SideStoneTotalAmount;
+                    ws.Cells[row, 13].Value = shipmentOrderInfo.BasicCost;
+                    ws.Cells[row, 14].Value = shipmentOrderInfo.OutputWaxCost;
+                    ws.Cells[row, 15].Value = shipmentOrderInfo.RiskFee;
+                    ws.Cells[row, 16].Value = shipmentOrderInfo.OtherCost;
+                    ws.Cells[row, 17].Value = shipmentOrderInfo.TotalAmount;
+                    row++;
+                    index++;
+                }
+            });
+            return result;
+        }
+
+        private async Task<IEnumerable<ShipmentOrderInfoViewModel>> GetShipmentOrderInfoViewModels(ShipmentReportQuery reportQuery)
+        {
+            var manager = new ShipmentManager(User);
+
+            var shipmentOrderInfos = await manager.GetShipmentOrderInfosAsync(reportQuery.GetShipmentOrderInfosQueryFilter());
+            var shipmentOrderInfoViewModels = shipmentOrderInfos.Select(f =>
+            {
+                var shipmentOrderInfoViewModel = Mapper.Map<ShipmentOrderInfo, ShipmentOrderInfoViewModel>(f);
+                shipmentOrderInfoViewModel.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
+                return shipmentOrderInfoViewModel;
+            }).ToList();
+            if (shipmentOrderInfoViewModels.Any())
+            {
+                var total = new ShipmentOrderInfoViewModel
+                {
+                    Id = "总计",
+                    Number = shipmentOrderInfoViewModels.Sum(r => r.Number),
+                    GoldWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldWeight), 2),
+                    Hhz = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Hhz), 2),
+                    GoldAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.GoldAmount), 2),
+                    SideStoneNumber = shipmentOrderInfoViewModels.Sum(r => r.SideStoneNumber),
+                    SideStoneWeight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneWeight), 2),
+                    TotalSetStoneWorkingCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalSetStoneWorkingCost), 2),
+                    SideStoneTotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.SideStoneTotalAmount), 2),
+                    BasicCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.BasicCost), 2),
+                    OutputWaxCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OutputWaxCost), 2),
+                    RiskFee = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.RiskFee), 2),
+                    OtherCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OtherCost), 2),
+                    TotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalAmount), 2),
+                    Weight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Weight), 2),
+                };
+                shipmentOrderInfoViewModels.Add(total);
+            }
+            return shipmentOrderInfoViewModels;
         }
 
         private IList<AttachmentItem> GetAttachments(Order order)

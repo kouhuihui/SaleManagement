@@ -1,0 +1,78 @@
+﻿@model SaleManagement.Core.ViewModel.ShipmentReportQuery
+@{
+    Title("账目报表");
+    Layout = "~/Views/Shared/_customerLayout.cshtml";
+}
+@Styles.Render("~/Bundles/Static/Css/DateTimePicker")
+
+<div class="search">
+    <div class="date-conditions pull-left">
+        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">统计日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期" value="@Model.StatisticStartDate.ToShortDateString()"></div></div>
+        <span class="pull-left">-</span>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@Model.StatisticEndDate.ToShortDateString()"></div></div>
+    </div>
+    <button id="btnSearch" class="btn btn-primary">查询</button>
+</div>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>账目报表</h2>
+                <div class="box-icon">
+                    <a id="btnExport" class="btn">
+                        <i class="glyphicon glyphicon-export"></i>
+                        导出
+                    </a>
+                </div>
+            </div>
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable  responsive">
+                    <thead>
+                        <tr>
+                            <th>订单号</th>
+                            <th>件数</th>
+                            <th>总重（g）</th>
+                            <th>净金重（g）</th>
+                            <th>含耗重（g）</th>
+                            <th>金料额（元）</th>
+                            <th>副石数</th>
+                            <th>副石重（ct）</th>
+                            <th>镶石工费（元）</th>
+                            <th>副石额（元）</th>
+                            <th>基本工费（元）</th>
+                            <th>起版/出蜡（元）</th>
+                            <th>石值/风险（元）</th>
+                            <th>其他工艺（元）</th>
+                            <th>总额（元）</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" data-bind="foreach:shipmentStatistics">
+                    <tr>
+                        <td data-bind="text:id"></td>
+                        <td data-bind="text:number"></td>
+                        <td data-bind="text:weight"></td>
+                        <td data-bind="text:goldWeight"></td>
+                        <td data-bind="text:hhz"></td>
+                        <td data-bind="text:goldAmount"></td>
+                        <td data-bind="text:sideStoneNumber"></td>
+                        <td data-bind="text:sideStoneWeight"></td>
+                        <td data-bind="text:totalSetStoneWorkingCost"></td>
+                        <td data-bind="text:sideStoneTotalAmount"></td>
+                        <td data-bind="text:basicCost"></td>
+                        <td data-bind="text:outputWaxCost"></td>
+                        <td data-bind="text:riskFee"></td>
+                        <td data-bind="text:otherCost"></td>
+                        <td data-bind="text:totalAmount"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+@section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/customer/shipmentStatistics")
+}
