@@ -35,7 +35,8 @@
             <div>@Model.OrderStatistics.ShipmentCount</div>
         </a>
     </div>
-    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.CustomerService, SaleManagentConstants.SystemRole.Direktor))
+    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.CustomerService,
+        SaleManagentConstants.SystemRole.Direktor,SaleManagentConstants.SystemRole.SendAndReceive))
     {
         <div class="col-md-3 col-sm-3 col-xs-6">
             <a data-toggle="tooltip" title="" class="well top-block" href="/order/list?UrgentStatus=1">
