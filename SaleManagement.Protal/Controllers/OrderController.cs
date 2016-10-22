@@ -121,10 +121,8 @@ namespace SaleManagement.Protal.Controllers
             var order = Mapper.Map<OrderEditViewModel, Order>(request);
 
             var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
-            if (!order.DeliveryDate.HasValue)
-            {
-                order.DeliveryDate = DateTime.Now.AddDays(shippingScheduleDays);
-            }
+            SetOrderDeliveryDate(order, shippingScheduleDays);
+
             var serialNumberManager = new SerialNumberManager(User);
 
             order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
@@ -208,6 +206,10 @@ namespace SaleManagement.Protal.Controllers
             order.MinChainLength = request.MinChainLength;
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
+            order.OrderRushStatus = request.OrderRushStatus;
+
+            var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
+            SetOrderDeliveryDate(order, shippingScheduleDays);
             var result = await orderManager.UpdateOrderAsync(order);
 
             return Json(result);
@@ -774,6 +776,33 @@ namespace SaleManagement.Protal.Controllers
             }
 
             return bt;
+        }
+
+        private void SetOrderDeliveryDate(Order order, int shippingScheduleDays)
+        {
+            if (order.OrderRushStatus != OrderRushStatus.Normal)
+            {
+                order.DeliveryDate = order.Created.AddDays(GetRushDays(order.OrderRushStatus));
+                return;
+            }
+
+            if (!order.DeliveryDate.HasValue)
+            {
+                order.DeliveryDate = order.Created.AddDays(shippingScheduleDays);
+            }
+        }
+
+        private int GetRushDays(OrderRushStatus orderRushStatus)
+        {
+            switch (orderRushStatus)
+            {
+                case OrderRushStatus.Rush:
+                    return SaleManagentConstants.UI.OrderRushDays;
+                case OrderRushStatus.VeryRush:
+                    return SaleManagentConstants.UI.OrderVeryRushDays;
+                default:
+                    return 0;
+            }
         }
     }
 }

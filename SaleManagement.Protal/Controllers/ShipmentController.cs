@@ -77,6 +77,7 @@ namespace SaleManagement.Protal.Controllers
                 shipmentOrderInfoViewModel.SideStoneNumber = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Number);
                 shipmentOrderInfoViewModel.SideStoneWeight = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Weight);
                 shipmentOrderInfoViewModel.SideStoneTotalAmount = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100);
+                shipmentOrderInfoViewModel.RushCost = GetOrderRushCost(o);
                 return shipmentOrderInfoViewModel;
             }));
             shipmentOrderViewModel.CustomerName = customer.Name;
@@ -182,6 +183,22 @@ namespace SaleManagement.Protal.Controllers
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
             shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
             return View(shipmentOrderViewModel);
+        }
+
+
+        private double GetOrderRushCost(Core.Models.Order order)
+        {
+            if (order.OrderRushStatus == Core.Models.OrderRushStatus.Normal)
+                return 0;
+
+            var now = DateTime.Now;
+            if (order.OrderRushStatus == Core.Models.OrderRushStatus.VeryRush && now < order.DeliveryDate)
+                return 300;
+
+            if (now < order.Created.AddDays(8))
+                return 100;
+
+            return 0;
         }
     }
 }

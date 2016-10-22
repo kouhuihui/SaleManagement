@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SaleManagement.Core.ViewModel
+﻿namespace SaleManagement.Core.ViewModel
 {
     public class OrderStatistics
     {
@@ -17,5 +11,9 @@ namespace SaleManagement.Core.ViewModel
         public int UrgentCount { get; set; }
 
         public int VeryUrgentCount { get; set; }
+
+        public int RushCount { get; set; }
+
+        public int VeryRushCount { get; set; }
     }
 }

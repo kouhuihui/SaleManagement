@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaleManagement.Core.Models
 {
@@ -60,6 +55,8 @@ namespace SaleManagement.Core.Models
         public double OutputWaxCost { get; set; }
 
         public double OtherCost { get; set; }
+
+        public double RushCost { get; set; }
 
         public double TotalAmount { get; set; }
     }

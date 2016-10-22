@@ -17,6 +17,7 @@ namespace SaleManagement.Core.Models
             Created = DateTime.Now;
             Updated = DateTime.Now;
             OrderStatus = OrderStatus.UnConfirmed;
+            OrderRushStatus = OrderRushStatus.Normal;
         }
 
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
@@ -128,5 +129,7 @@ namespace SaleManagement.Core.Models
         public double Weight { get; set; }
 
         public double GoldWeight { get; set; }
+
+        public OrderRushStatus OrderRushStatus { get; set; }
     }
 }

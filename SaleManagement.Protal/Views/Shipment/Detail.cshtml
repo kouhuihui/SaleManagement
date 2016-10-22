@@ -104,6 +104,7 @@
                         <th>基本工费</th>
                         <th>起蜡/出版</th>
                         <th>其他工艺</th>
+                        <th>加急费用</th>
                         <th>总额</th>
                     </tr>
                     @{
@@ -117,6 +118,7 @@
                         double totalBasicCost = 0;
                         double totalOutputWaxCost = 0;
                         double totalOtherCost = 0;
+                        double totalRushCost = 0;
                     }
                     @foreach (var item in Model.ShipmentOrderInfos)
                     {
@@ -130,6 +132,7 @@
                         totalBasicCost = totalBasicCost + item.BasicCost;
                         totalOutputWaxCost = totalOutputWaxCost + item.OutputWaxCost;
                         totalOtherCost = totalOtherCost + item.OtherCost;
+                        totalRushCost = totalRushCost + item.RushCost;
                         <tr>
                             <td width="60">
                                 @item.Id
@@ -150,6 +153,7 @@
                             <td>@item.BasicCost</td>
                             <td>@item.OutputWaxCost</td>
                             <td>@item.OtherCost</td>
+                            <td>@item.RushCost</td>
                             <td>@item.TotalAmount</td>
                         </tr>
                     }
@@ -171,6 +175,7 @@
                         <td>@totalBasicCost</td>
                         <td>@totalOutputWaxCost</td>
                         <td>@totalOtherCost</td>
+                        <td>@totalRushCost</td>
                         <td>@Model.TotalAmount</td>
                     </tr>
                 </tbody>

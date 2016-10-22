@@ -35,6 +35,8 @@ namespace SaleManagement.Core
             public const int DefaultExpiringDays = 7;
             public const int OrderUrgentWaringDay = 6;
             public const int OrderVeryUrgentWaringDay = 3;
+            public const int OrderRushDays = 8;
+            public const int OrderVeryRushDays = 4;
             public static readonly string DateStringFormat = "yyyy-MM-dd";
         }
 
@@ -66,6 +68,7 @@ namespace SaleManagement.Core
             public static readonly string WithTheHand = "withTheHand";
             public static readonly string MicroInsert = "microInsert";
             public static readonly string Polishing = "polishing";
+            public static readonly string Direktor = "direktor";
         }
 
         public class ConfigKeys

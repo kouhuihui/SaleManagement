@@ -77,6 +77,8 @@ namespace SaleManagement.Protal.Models.Shipment
 
         public double OtherCost { get; set; }
 
+        public double RushCost { get; set; }
+
         /// <summary>
         /// 总额
         /// </summary>

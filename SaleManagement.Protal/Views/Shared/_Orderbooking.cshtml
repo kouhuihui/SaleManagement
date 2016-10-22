@@ -205,14 +205,33 @@
     <label class="control-label col-md-2 col-xs-4">戒臂内弧要求：</label>
     <div class="col-md-6 col-xs-8">
         @{
-            var radianRequirementList = EnumExtensions.EnumToList(typeof(RadianRequirement));
+            var radianRequirementList = EnumExtensions.EnumToList(typeof (RadianRequirement));
         }
         @foreach (var item in radianRequirementList)
         {
-            var currentClass = item.Key == (int)Model.RadianRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
+            var currentClass = item.Key == (int) Model.RadianRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
             <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         @Html.HiddenFor(model => model.RadianRequirement)
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 col-xs-4">戒臂内弧要求：</label>
+    <div class="col-md-6 col-xs-8">
+        @{
+            var orderRushStatusList = EnumExtensions.EnumToList(typeof(OrderRushStatus));
+        }
+        @foreach (var item in orderRushStatusList)
+        {
+            var currentClass = item.Key == (int)Model.OrderRushStatus ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
+            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+        }
+        <div style="color: red">
+            <div>注：1)紧急订单7天内出货,费用100元, 超过7天不收费。</div>
+            <div>2)特急出订单3天内出货费用300元,7天内出货费用300, 超过7天不收费。</div>
+            <div>3)加急天数从下单后第二天开始计算。</div>
+        </div>
+        @Html.HiddenFor(model => model.OrderRushStatus)
     </div>
 </div>
 <div class="form-group">

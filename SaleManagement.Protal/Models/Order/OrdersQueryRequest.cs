@@ -14,13 +14,15 @@ namespace SaleManagement.Protal.Models.Order
 
         public UrgentStatus? UrgentStatus { get; set; }
 
+        public OrderRushStatus? RushStatus { get; set; }
+
         public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
             {
                 if (user.Role.Code == SaleManagentConstants.SystemRole.CustomerService)
                 {
-                    query = query.Where(f => f.OrderStatus!= OrderStatus.Delete && f.OrderStatus != OrderStatus.ToBeShip && f.OrderStatus != OrderStatus.Shipmenting && f.OrderStatus!= OrderStatus.Shipment && f.OrderStatus != OrderStatus.HaveGoods);
+                    query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.ToBeShip && f.OrderStatus != OrderStatus.Shipmenting && f.OrderStatus != OrderStatus.Shipment && f.OrderStatus != OrderStatus.HaveGoods);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {
@@ -82,6 +84,12 @@ namespace SaleManagement.Protal.Models.Order
                 if (UrgentStatus.HasValue)
                 {
                     query = GetUrgentOrderQuery(query, UrgentStatus.Value);
+                }
+
+
+                if (RushStatus.HasValue)
+                {
+                    query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment && f.OrderRushStatus == RushStatus.Value);
                 }
 
                 return query.AsNoTracking();

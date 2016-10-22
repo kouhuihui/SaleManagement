@@ -51,6 +51,7 @@ namespace SaleManagement.Protal.Models.Order
             ProductCategoryName = order.ProductCategory?.Name;
             OutputWaxCost = order.OutputWaxCost;
             ModuleTypeName = order.ModuleType.GetDisplayName();
+            OrderRushStatus = order.OrderRushStatus;
         }
 
         public string Id { get; set; }
@@ -131,6 +132,8 @@ namespace SaleManagement.Protal.Models.Order
         public SideStoneRequiredment SideStoneRequiredment { get; set; }
 
         public RadianRequirement RadianRequirement { get; set; }
+
+        public OrderRushStatus OrderRushStatus { get; set; }
 
         [Display(Name = "客户")]
         [Required(ErrorMessage = "请选择{0}")]

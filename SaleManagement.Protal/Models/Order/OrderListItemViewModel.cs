@@ -15,6 +15,7 @@ namespace SaleManagement.Protal.Models.Order
             Status = (int)order.OrderStatus;
             CreatorName = order.CreatorName;
             Urgent = GetUrgentStatus(order);
+            OrderRushStatusName = order.OrderRushStatus.GetDisplayName();
         }
 
         public string StatusName { get; set; }
@@ -29,10 +30,12 @@ namespace SaleManagement.Protal.Models.Order
 
         public int Urgent { get; set; }
 
-        private int GetUrgentStatus(Core.Models.Order  order)
+        public string OrderRushStatusName { get; set; }
+
+        private int GetUrgentStatus(Core.Models.Order order)
         {
             var deliveryDate = order.DeliveryDate;
-            if (!deliveryDate.HasValue|| order.OrderStatus == OrderStatus.Delete || order.OrderStatus == OrderStatus.Shipment ||order.OrderStatus== OrderStatus.HaveGoods)
+            if (!deliveryDate.HasValue || order.OrderStatus == OrderStatus.Delete || order.OrderStatus == OrderStatus.Shipment || order.OrderStatus == OrderStatus.HaveGoods)
                 return (int)UrgentStatus.Normal;
 
             var now = DateTime.Now.Date;

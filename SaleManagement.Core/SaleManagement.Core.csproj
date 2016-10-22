@@ -114,6 +114,10 @@
     <Compile Include="Migrations\201610101450492_ReconciliationRemark.Designer.cs">
       <DependentUpon>201610101450492_ReconciliationRemark.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201610220307280_AddOrderRush.cs" />
+    <Compile Include="Migrations\201610220307280_AddOrderRush.Designer.cs">
+      <DependentUpon>201610220307280_AddOrderRush.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -136,6 +140,7 @@
     <Compile Include="Models\OrderOperationLog.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderAttachment.cs" />
+    <Compile Include="Models\OrderRushStatus.cs" />
     <Compile Include="Models\OrderSetStoneInfo.cs" />
     <Compile Include="Models\OrderStatus.cs" />
     <Compile Include="Models\ProductCategory.cs" />
@@ -205,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610101450492_ReconciliationRemark.resx">
       <DependentUpon>201610101450492_ReconciliationRemark.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201610220307280_AddOrderRush.resx">
+      <DependentUpon>201610220307280_AddOrderRush.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

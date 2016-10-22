@@ -103,6 +103,7 @@
                                 <th>基本工费</th>
                                 <th>起蜡/出版</th>
                                 <th>其他工艺</th>
+                                <th>加急费用</th>
                                 <th>总额</th>
                             </tr>
                         </thead>
@@ -136,6 +137,7 @@
                                     <td width="50"><input type="text" data-index="@index" data-name="basicCost" class="w50" name="ShipmentOrderInfos[@index].BasicCost" value="@item.BasicCost" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="outputWaxCost" name="ShipmentOrderInfos[@index].OutputWaxCost" value="@item.OutputWaxCost" class="w50" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="otherCost" name="ShipmentOrderInfos[@index].OtherCost" class="w50" value="@item.OtherCost"/></td>
+                                    <td width="50"><input type="text" data-index="@index" data-name="rushCost" name="ShipmentOrderInfos[@index].rushCost" class="w50" value="@item.RushCost" /></td>
                                     <td width="50"><input type="text" data-index="@index" data-name="totalAmount" name="ShipmentOrderInfos[@index].TotalAmount" class="w50" value="@item.TotalAmount" /></td>
                                 </tr>
                                 index++;
@@ -279,13 +281,14 @@
                  sideStoneTotalAmount = $tr.find("input[data-name=sideStoneTotalAmount]").val(),
                  outputWaxCost = $tr.find("input[data-name=outputWaxCost]").val(),
                  otherCost = $tr.find("input[data-name=otherCost]").val(),
+                 rushCost = $tr.find("input[data-name=rushCost]").val(),
                  basicCost = $tr.find("input[data-name=basicCost]").val(),
                  goldWeight = $tr.find("input[data-name=goldWeight]").val(),
                  hhz = (Number(goldWeight) * (1 + Number(lossRate) / 100)).toFixed(2);
                 $hhz.val(hhz);
                 $goldAmount.val((Number(goldPrice) * Number(hhz)).toFixed(2));
                 $totalAmount.val((Number($goldAmount.val()) + Number(riskFee) + Number(totalSetStoneWorkingCost)
-                    + Number(sideStoneTotalAmount) + Number(outputWaxCost) + Number(otherCost) + Number(basicCost)).toFixed(2))
+                    + Number(sideStoneTotalAmount) + Number(outputWaxCost) + Number(otherCost) + Number(rushCost) + Number(basicCost)).toFixed(2));
                 CalculationTotal();
             }
 
