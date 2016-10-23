@@ -110,11 +110,11 @@ namespace SaleManagement.Managers
                  .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).Select(a => new OrderSetStoneStatistic
                  {
                      SetStoneName = a.Key.MathchStoneName,
-                     Weight = a.Sum(g => g.Weight),
+                     Weight = Math.Round(a.Sum(g => g.Weight),3),
                      Number = a.Sum(g=> g.Number)
                  }).ToListAsync();
 
-            var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 2);
+            var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 3);
             var totalNumber = orderSetStoneStatistics.Sum(r => r.Number);
             orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight,Number = totalNumber });
             return orderSetStoneStatistics;
