@@ -536,6 +536,7 @@
     <Content Include="Views\Shipment\Detail.cshtml" />
     <Content Include="Views\Reconciliation\Edit.cshtml" />
     <Content Include="Views\Order\Stop.cshtml" />
+    <Content Include="Views\Order\Process.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

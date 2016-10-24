@@ -8,29 +8,39 @@
         $orderId = $("#orderId"),
         $status = $("#Status"),
         $colorFormId = $("#colorFormId"),
-        $urgentStatus = $("#UrgentStatus");
+        $urgentStatus = $("#UrgentStatus"),
+        $outPutWaxDate = $("#outPutWaxDate"),
+        $tbody = $("#tbody");
     var rec = {
         autoclose: true,
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
     }
-    //$('.date-conditions input[type="text"]').datetimepicker(rec);
+    $('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var Orders = function (data) {
         var self = this;
-        self.orders = ko.observableArray(data)
+        self.orders = ko.observableArray(data),
+        self.viewProcessClick = function (item, el) {
+            $("#modal").modal({
+                remote: "/Order/process?orderId=" + item.id
+            }).on("hidden.bs.modal", function () {
+                $(this).removeData("bs.modal");
+            });
+        }
     }
 
     var ordersView = new Orders([]);
     ko.applyBindings(ordersView);
-
+    $tbody.loading();
     $orderListPage.pager({
         url: '/Order/List',
         pageSize: 20,
         param: searchArgs(),
         method: "GET",
         callback: function (data, ui) {
+            $tbody.data("loading").hide();
             ordersView.orders(data.list);
         }
     });
@@ -42,7 +52,8 @@
             status: $status.val(),
             colorFormId: $colorFormId.val(),
             urgentStatus: $("#UrgentStatus").val(),
-            rushStatus: $("#RushStatus").val()
+            rushStatus: $("#RushStatus").val(),
+            outPutWaxDate: $outPutWaxDate.val()
         }
     }
 
@@ -50,6 +61,7 @@
         var pager = $orderListPage.data("pager");
         pager.opts.param = searchArgs();
         pager.jump(1);
+        $tbody.data("loading").show();
     }
 
     $("#btnSearch").on("click", function () {

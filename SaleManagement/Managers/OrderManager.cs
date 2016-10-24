@@ -88,12 +88,19 @@ namespace SaleManagement.Managers
             return new Paging<Order>(start, take, total, list);
         }
 
-        public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
+        public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null, DateTime? outPutWaxDate =null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId);
             if (filter != null)
             {
                 query = filter(query);
+            }
+            if (outPutWaxDate.HasValue)
+            {
+                var outPutWaxEndDate = outPutWaxDate.Value.AddDays(1);
+                var outPutWaxOrderIds = DbContext.Set<OrderOperationLog>().Where(o => o.Status == OrderStatus.OutputWax && o.Created >= outPutWaxDate
+                &o.Created<outPutWaxEndDate).Select(o => o.OrderId);
+                query = query.Where(o => outPutWaxOrderIds.Any(r => r == o.Id));
             }
             var total = await query.CountAsync();
             var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();

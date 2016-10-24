@@ -12,6 +12,8 @@ namespace SaleManagement.Protal.Models.Order
 
         public DateTime? DeliveryEndDate { get; set; }
 
+        public DateTime? OutPutWaxDate { get; set; }
+
         public UrgentStatus? UrgentStatus { get; set; }
 
         public OrderRushStatus? RushStatus { get; set; }

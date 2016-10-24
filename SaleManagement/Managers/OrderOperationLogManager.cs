@@ -60,6 +60,9 @@ namespace SaleManagement.Managers
                 case OrderStatus.CustomerTobeConfirm:
                     content = "设计师完成设计";
                     break;
+                case OrderStatus.CustomerConfirm:
+                    content = "客户确认设计";
+                    break;
                 case OrderStatus.OutputWax:
                     content = "进入出蜡部门";
                     break;
@@ -92,6 +95,9 @@ namespace SaleManagement.Managers
                     break;
                 case OrderStatus.Delete:
                     content = "订单已删除";
+                    break;
+                case OrderStatus.DumpModule:
+                    content = "进入倒模部门";
                     break;
             }
             return content;

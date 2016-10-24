@@ -19,7 +19,6 @@
     @Html.Partial("_Customer")
     <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
     @Html.Partial("_ColorForm")
-    
     <div class="textfield combobox pull-left">
         @{
             var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
@@ -43,6 +42,9 @@
         <div class="combobox-body" style="width: 100px;">
             @Html.DropDownListFor(m => m.RushStatus, orderRushStatusItems, "客户加急状态", new { Class = "pull-left form-control" })
         </div>
+    </div>
+    <div class="textfield date-conditions pull-left">
+        <div class="textfield pull-left"><div class="field-body" style="width: 80px;"><input class="form-control" id="outPutWaxDate" type="text" placeholder="出蜡日期"></div></div>
     </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
@@ -137,6 +139,7 @@
                         <tr>
                             <td><input type="checkbox" data-bind="value:id,attr:{status:status},checked:false"/></td>
                             <td>
+                                <a data-bind="click:$parent.viewProcessClick" title="查看订单流程"><i class="glyphicon glyphicon-eye-open"></i></a>
                                 <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
                                 </a>
                                 <!-- ko if:urgent==1 -->
