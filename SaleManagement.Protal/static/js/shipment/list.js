@@ -1,12 +1,21 @@
 ﻿$(function () {
-    $orderListPage = $("#orderListPage");
+    $orderListPage = $("#orderListPage"),
+    $shipmentOrderAduitStatus = $("#shipmentOrderAduitStatus"),
+    $shipmentOrderId = $("#shipmentOrderId"),
+    $deliveryStartDate = $("#deliveryStartDate"),
+    $deliveryEndDate = $("#deliveryEndDate"),
+    $orderId = $("#orderId");
     var rec = {
         autoclose: true,
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
     };
-    var customer = new Customer();
+    var customer = new Customer({
+        callback: function (data) {
+            search();
+        }
+    });
     $('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var Orders = function (data) {
@@ -19,7 +28,7 @@
     //分页
     $orderListPage.pager({
         url: '/Shipment/List',
-        pageSize: 10,
+        pageSize: 20,
         param: searchArgs(),
         method: "GET",
         callback: function (data, ui) {
@@ -29,12 +38,12 @@
 
     function searchArgs() {
         return {
-            orderId: $("#orderId").val(),
-            shipmentOrderId: $("#shipmentOrderId").val(),
+            orderId: $orderId.val(),
+            shipmentOrderId: $shipmentOrderId.val(),
             customerId: customer.getValue(),
-            deliveryStartDate: $("#deliveryStartDate").val(),
-            deliveryEndDate: $("#deliveryEndDate").val(),
-            status: $("#shipmentOrderAduitStatus").val()
+            deliveryStartDate: $deliveryStartDate.val(),
+            deliveryEndDate: $deliveryEndDate.val(),
+            status: $shipmentOrderAduitStatus.val()
         }
     }
 
@@ -43,6 +52,36 @@
         pager.opts.param = searchArgs();
         pager.jump(1);
     }
+
+    $shipmentOrderId.bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            var shipmentOrderId = $shipmentOrderId.val();
+            if (shipmentOrderId != "" && shipmentOrderId.lastIndexOf(',') != shipmentOrderId.length - 1) {
+                $shipmentOrderId.val(shipmentOrderId + ",");
+            }
+            search();
+            $shipmentOrderId.focus();
+        }
+    });
+
+    $orderId.bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            search();
+            $orderId.focus();
+        }
+    });
+
+    $shipmentOrderAduitStatus.bind('change', function () {
+        search();
+    })
+
+    $deliveryStartDate.bind('change', function () {
+        search();
+    })
+
+    $deliveryEndDate.bind('change', function () {
+        search();
+    })
 
     $("#btnSearch").on("click", function () {
         search();

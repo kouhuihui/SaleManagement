@@ -1,13 +1,21 @@
 ﻿$(function () {
-    var customer = new Customer();
-    var $orderListPage = $('#orderListPage');
+    var customer = new Customer({
+        callback: function (data) {
+            search();
+        }
+    });
+    var $orderListPage = $('#orderListPage'),
+        $orderId = $("#orderId"),
+        $status = $("#Status"),
+        $colorFormId = $("#colorFormId"),
+        $urgentStatus = $("#UrgentStatus");
     var rec = {
         autoclose: true,
         fontAwesome: true,
         format: "yyyy-mm-dd",
         minView: 2
     }
-    $('.date-conditions input[type="text"]').datetimepicker(rec);
+    //$('.date-conditions input[type="text"]').datetimepicker(rec);
 
     var Orders = function (data) {
         var self = this;
@@ -19,7 +27,7 @@
 
     $orderListPage.pager({
         url: '/Order/List',
-        pageSize: 10,
+        pageSize: 20,
         param: searchArgs(),
         method: "GET",
         callback: function (data, ui) {
@@ -29,14 +37,12 @@
 
     function searchArgs() {
         return {
-            orderId: $("#orderId").val(),
+            orderId: $orderId.val(),
             customerId: customer.getValue(),
-            deliveryStartDate: $("#deliveryStartDate").val(),
-            deliveryEndDate: $("#deliveryEndDate").val(),
-            status: $("#Status").val(),
-            colorFormId: $("#colorFormId").val(),
+            status: $status.val(),
+            colorFormId: $colorFormId.val(),
             urgentStatus: $("#UrgentStatus").val(),
-			rushStatus: $("#RushStatus").val()
+            rushStatus: $("#RushStatus").val()
         }
     }
 
@@ -47,6 +53,30 @@
     }
 
     $("#btnSearch").on("click", function () {
+        search();
+    })
+
+    $orderId.bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            var orderId = $orderId.val();
+            if (orderId != "" && orderId.lastIndexOf(',') != orderId.length - 1) {
+                $orderId.val(orderId + ",");
+            }
+            search();
+            $orderId.focus();
+        }
+    });
+
+
+    $status.bind('change', function () {
+        search();
+    })
+
+    $colorFormId.bind('change', function () {
+        search();
+    })
+
+    $urgentStatus.bind('change', function () {
         search();
     })
 

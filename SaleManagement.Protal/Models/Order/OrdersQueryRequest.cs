@@ -16,6 +16,8 @@ namespace SaleManagement.Protal.Models.Order
 
         public OrderRushStatus? RushStatus { get; set; }
 
+        public string CurrentUserId { get; set; }
+
         public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
@@ -53,7 +55,8 @@ namespace SaleManagement.Protal.Models.Order
 
                 if (!string.IsNullOrEmpty(OrderId))
                 {
-                    query = query.Where(f => f.Id.Contains(OrderId));
+                    var orderIds = OrderId.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries);
+                    query = query.Where(f => orderIds.Any(o=>f.Id.Contains(o)));
                 }
 
                 if (DeliveryStartDate.HasValue)
@@ -86,10 +89,14 @@ namespace SaleManagement.Protal.Models.Order
                     query = GetUrgentOrderQuery(query, UrgentStatus.Value);
                 }
 
-
                 if (RushStatus.HasValue)
                 {
                     query = query.Where(f => f.OrderStatus != OrderStatus.Delete && f.OrderStatus != OrderStatus.HaveGoods && f.OrderStatus != OrderStatus.Shipment && f.OrderRushStatus == RushStatus.Value);
+                }
+
+                if (!string.IsNullOrEmpty(CurrentUserId))
+                {
+                    query = query.Where(f => f.CurrentUserId == CurrentUserId);
                 }
 
                 return query.AsNoTracking();

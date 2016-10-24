@@ -1,6 +1,9 @@
 ﻿$(function () {
     var $currentUser = $("#currentUser"),
-        $orderListPage = $('#orderListPage');
+        $orderListPage = $('#orderListPage'),
+        $orderId = $("#orderId"),
+        $orderStatus = $("#orderStatus"),
+        $colorFormId = $("#colorFormId");
     var Orders = function (data) {
         var self = this;
         self.orders = ko.observableArray(data);
@@ -16,8 +19,8 @@
                 content: "确认进入客户确认阶段</br>设计费用(元)：<input style=\"width:40px\" name=\"outputWaxCost\"/>",
                 type: "confirm",
                 okCallBack: function (e, $el) {
-                    var outputWaxCost =$("input[name=outputWaxCost]").val();
-                    if(isNaN(Number(outputWaxCost))){
+                    var outputWaxCost = $("input[name=outputWaxCost]").val();
+                    if (isNaN(Number(outputWaxCost))) {
                         outputWaxCost = 0;
                     }
                     $.ajax({
@@ -44,7 +47,7 @@
     //分页
     $orderListPage.pager({
         url: '/Order/MyOrders',
-        pageSize: 10,
+        pageSize: 20,
         param: searchArgs(),
         callback: function (data, ui) {
             ordersView.orders(data.list);
@@ -53,10 +56,10 @@
 
     function searchArgs() {
         return {
-            orderId: $("#orderId").val(),
-            status: $("#orderStatus").val(),
-            currentUserId: $currentUser.val(),
-            colorFormId: $("#colorFormId").val(),
+            orderId: $orderId.val(),
+            status: $orderStatus.val(),
+            currentUserId: $currentUser.val() == null ? "" : $currentUser.val(),
+            colorFormId: $colorFormId.val(),
         }
     }
 
@@ -69,6 +72,29 @@
     $("#btnSearch").on("click", function () {
         search();
     })
+
+    $orderId.bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            var orderId = $orderId.val();
+            if (orderId != "" && orderId.lastIndexOf(',') != orderId.length - 1) {
+                $orderId.val(orderId + ",");
+            }
+            search();
+            $orderId.focus();
+        }
+    });
+
+    $orderStatus.bind('change', function () {
+        search();
+    })
+
+    $colorFormId.bind('change', function () {
+        search();
+    })
+
+    $currentUser.bind('change', function () {
+        search();
+    });
 
     $("#btnAssginToMe").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");
@@ -115,13 +141,13 @@
             return false;
         }
         for (var i = 0; i < length; i++) {
-        	var $inputChecked = $(inputCheckeds[i]);
-        	var orderId = $inputChecked.val();
-        	if ($inputChecked.attr("status") != 4) {
-        		shortTips(orderId + "订单不是客户确认状态，不能出蜡");
-        		return false;
-        	}
-        	ids = ids + orderId + ",";
+            var $inputChecked = $(inputCheckeds[i]);
+            var orderId = $inputChecked.val();
+            if ($inputChecked.attr("status") != 4) {
+                shortTips(orderId + "订单不是客户确认状态，不能出蜡");
+                return false;
+            }
+            ids = ids + orderId + ",";
         }
         $(window).modalDialog({
             title: "提示",
@@ -152,7 +178,7 @@
     function InitDesgin() {
         $.ajax({
             url: "/user/GetUsersByRole",
-            data:{"roleCode":"design"},
+            data: { "roleCode": "design" },
             success: function (rtn) {
                 if (rtn.succeeded) {
                     var data = rtn.data;

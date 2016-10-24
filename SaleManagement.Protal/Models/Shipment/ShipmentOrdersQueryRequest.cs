@@ -33,7 +33,8 @@ namespace SaleManagement.Protal.Models.Shipment
 
                 if (!string.IsNullOrEmpty(ShipmentOrderId))
                 {
-                    query = query.Where(f => f.Id.Contains(ShipmentOrderId));
+                    var shipmentOrderIds = ShipmentOrderId.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    query = query.Where(f => shipmentOrderIds.Any(s => f.Id.Contains(s)));
                 }
 
                 if (!string.IsNullOrEmpty(OrderId))
