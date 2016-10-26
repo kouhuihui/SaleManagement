@@ -42,6 +42,13 @@
             <div class="box-header well" data-original-title="">
                 <h2>生产单列表</h2>
                 <div class="box-icon">
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                    {
+                        <a id="btnCancelAudit" class="btn">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            取消审核
+                        </a>
+                    }
                     <a id="btnAudit" class="btn">
                         <i class="glyphicon glyphicon-ok"></i>
                         审核

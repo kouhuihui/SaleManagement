@@ -85,5 +85,7 @@ namespace SaleManagement.Protal.Models.Shipment
         public double TotalAmount { get; set; }
 
         public IEnumerable<OrderSetStoneInfoViewModel> OrderSetStoneInfos { get; set; }
+
+        public string IsShipOnTime { get; set; }
     }
 }

@@ -44,6 +44,13 @@
                         <i class="glyphicon glyphicon-plus"></i>
                         新增
                     </a>
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                    {
+                        <a id="btnRemove" class="btn">
+                            <i class="glyphicon glyphicon-remove"></i>
+                            删除
+                        </a>
+                    }
                     <a id="btnExport" class="btn">
                         <i class="glyphicon glyphicon-export"></i>
                         导出
@@ -54,6 +61,8 @@
                 <table class="table table-striped table-bordered bootstrap-datatable  responsive">
                     <thead>
                         <tr>
+                            <th></th>
+                            <th width="100">对账Id</th>
                             <th width="200">客户</th>
                             <th width="100">付/欠款</th>
                             <th width="100">金额(元)</th>
@@ -67,6 +76,8 @@
                     </thead>
                     <tbody id="tbody" data-bind="foreach:reconciliations">
                         <tr>
+                            <td><input type="checkbox" data-bind="value:id,checked:false" /></td>
+                            <td data-bind="text:id"></td>
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:reconciliationTypeName"></td>
                             <td data-bind="text:amount"></td>
@@ -74,7 +85,7 @@
                             <td data-bind="text:remark"></td>
                             @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                             {
-                             <td><a data-bind="attr:{href:'/Reconciliation/Edit?id='+id}" class="btn btn-danger btn-sm">编辑</a></td> 
+                                <td><a data-bind="attr:{href:'/Reconciliation/Edit?id='+id}" class="btn btn-danger btn-sm">编辑</a></td>
                             }
                         </tr>
                     </tbody>

@@ -6,8 +6,9 @@
         minView: 2
     };
     var customer = new Customer();
+    $shipmentList = $("#shipmentList");
     $('.date-conditions input[type="text"]').datetimepicker(rec);
-
+    $shipmentList.loading();
     var ShipmentStatistics = function (data) {
         var self = this;
         self.shipmentStatistics = ko.observableArray(data);
@@ -32,6 +33,7 @@
             data: searchArgs(),
             type: "Post",
             success: function (rtn) {
+                $shipmentList.data("loading").hide();
                 if (rtn.succeeded) {
                     var data = rtn.data;
                     shipmentStatisticsView.shipmentStatistics(data);
@@ -43,6 +45,7 @@
     }
 
     $("#btnSearch").on("click", function () {
+        $shipmentList.data("loading").show();
         Search();
     })
 

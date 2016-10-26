@@ -5,9 +5,9 @@ $.i10n = function (str) { return str; };
 $.ajaxSetup({ cache: false }); //禁止全局ajax缓存
 var mailReg = /^(\w+([-+.'']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*,?)+$/gi;
 
-function shortTips(text,time) {
+function shortTips(text, time) {
 	var $wrap = $('<div class="shortTips"></div>');
-	if (time === "") {
+	if (time === ""||time ===undefined) {
 		time = 1500;
 	}
 	$('<span class="bg img-rounded"></span>').append($.trim(text)).appendTo($wrap);

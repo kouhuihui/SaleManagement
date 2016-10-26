@@ -78,6 +78,21 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> Delete(int id)
+        {
+            var manager = new ReconciliationManager(User);          
+            var reconciliation = await manager.GetReconciliationAsync(id);
+            if (reconciliation == null)
+                return Json(false, "对账记录不存在");
+
+            if (reconciliation.Remark.Contains("出货"))
+                return Json(false, "出货单的对账记录只能取消审核出货单，不能直接删除");
+
+            var result = await manager.DeleteReconciliationAsync(reconciliation);
+            return Json(true, string.Empty, result); ;
+        }
+
+        [HttpPost]
         public async Task<JsonResult> Edit(ReconciliationItemViewModel request)
         {
             if (!ModelState.IsValid)

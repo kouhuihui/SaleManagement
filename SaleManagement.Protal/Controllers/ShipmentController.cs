@@ -176,6 +176,33 @@ namespace SaleManagement.Protal.Controllers
         }
 
 
+
+        [HttpPost]
+        public async Task<JsonResult> CancelAudit(string id)
+        {
+            var manager = new ShipmentManager(User);
+            var shipmentOrder = await manager.GetShipmentOrderAsync(id);
+            if(shipmentOrder==null)
+                 return Json(false,"出货单不存在");
+
+            if (shipmentOrder.AuditStatus != ShipmentOrderAduitStatus.Pass)
+                return Json(false, "出货单不是已审核状态");
+
+            shipmentOrder.AuditStatus = ShipmentOrderAduitStatus.New;
+            shipmentOrder.AuditorName = User.Name;
+            shipmentOrder.AuditDate = DateTime.Now;
+            var result = await manager.AuditShipmentOrder(shipmentOrder);
+            if (result.Succeeded)
+            {
+                var orderIds = shipmentOrder.ShipmentOrderInfos.Select(r => r.Id);
+                await new OrderManager(User).UpdateOrderStatusAsync(OrderStatus.Shipmenting, orderIds);
+                await new OrderOperationLogManager(User).AddLogAsync(OrderStatus.Shipmenting, orderIds);
+               
+                await new ReconciliationManager(User).DeleteReconciliationAsync(shipmentOrder.Id);
+            }
+            return Json(result);
+        }
+
         public async Task<ActionResult> Detail(string id)
         {
             var manager = new ShipmentManager(User);

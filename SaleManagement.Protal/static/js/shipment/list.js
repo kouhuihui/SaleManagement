@@ -131,4 +131,49 @@
             }
         });
     })
+
+    $("#btnCancelAudit").on("click", function () {
+        var $inputChecked = $("#tbody input:checkbox:checked");
+        var length = $inputChecked.length;
+        if (length === 0) {
+            shortTips("请选择出货单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个出货单");
+            return false;
+        }
+        if ($inputChecked.attr("status") != 1) {
+            shortTips("出货单不是已审核状态");
+            return false;
+        }
+        var id = $inputChecked.val();
+        $(window).modalDialog({
+            title: "提示",
+            content: "确定取消审核" + id + "出货单？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $orderListPage.loading();
+                $.ajax({
+                    url: "/shipment/CancelAudit?id=" + id,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            setTimeout(function () {
+                                shortTips("操作成功");
+                            }, 1000)
+                            location.reload();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    },
+                    error: function (result) {
+                        $orderListPage.data("loading").hide();
+                    }
+                });
+            }
+        });
+    })
 });

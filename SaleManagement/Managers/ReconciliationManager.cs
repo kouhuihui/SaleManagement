@@ -35,6 +35,25 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
+        public async Task<InvokedResult> DeleteReconciliationAsync(string shipmentOrderId)
+        {
+            var remark = shipmentOrderId + "出货";
+            var reconciliation = DbContext.Set<Reconciliation>().FirstOrDefault(r => r.Remark == remark);
+            if (reconciliation == null)
+                return InvokedResult.Fail("404", "不存在该出货单打对账记录");
+
+            DbContext.Set<Reconciliation>().Remove(reconciliation);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> DeleteReconciliationAsync(Reconciliation reconciliation)
+        {
+            DbContext.Set<Reconciliation>().Remove(reconciliation);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
         public async Task<Paging<Reconciliation>> GetReconciliationsAsync(int start, int take, Func<IQueryable<Reconciliation>, IQueryable<Reconciliation>> filter = null)
         {
             var query = DbContext.Set<Reconciliation>().Where(o => o.CompanyId == User.CompanyId);

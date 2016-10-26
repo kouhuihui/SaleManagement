@@ -1,5 +1,6 @@
 ﻿$(function () {
-    var $reconciliationListPage = $('#reconciliationListPage');
+    var $reconciliationListPage = $('#reconciliationListPage'),
+             $tbody = $("#tbody");
     var rec = {
         autoclose: true,
         fontAwesome: true,
@@ -16,12 +17,14 @@
     var reconciliationsView = new Reconciliations([]);
     ko.applyBindings(reconciliationsView);
     //分页
+    $tbody.loading();
     $reconciliationListPage.pager({
         url: '/Reconciliation/List',
         pageSize: 10,
         param: searchArgs(),
         method: "GET",
         callback: function (data, ui) {
+            $tbody.data("loading").hide();
             reconciliationsView.reconciliations(data.list);
         }
     });
@@ -39,36 +42,40 @@
         var pager = $reconciliationListPage.data("pager");
         pager.opts.param = searchArgs();
         pager.jump(1);
+        $tbody.data("loading").show();
     }
 
     $("#btnSearch").on("click", function () {
         search();
     })
 
-    $("#btnAudit").on("click", function () {
+    $("#btnRemove").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");
         var length = inputCheckeds.length;
         if (length === 0) {
-            shortTips("请选择出货单");
+            shortTips("请选择对账记录");
             return false;
         }
         if (length > 1) {
-            shortTips("只能选择一个出货单");
+            shortTips("只能选择一个对账记录");
             return false;
         }
         var id = inputCheckeds.val();
         $(window).modalDialog({
             title: "提示",
-            content: "确定审核通过" + id + "出货单？",
+            content: "确定删除Id为" + id + "的对账记录？",
             type: "confirm",
             okCallBack: function (e, $el) {
                 $.ajax({
-                    url: "/shipment/Audit?id=" + id,
+                    url: "/Reconciliation/Delete?id=" + id,
                     type: "POST",
                     dataType: "json",
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
+                            setTimeout(function () {
+                                shortTips("操作成功");
+                            }, 1000)
                             location.reload();
                         } else {
                             shortTips(errorMessage(result));
