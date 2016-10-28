@@ -77,6 +77,11 @@
                                     <i class="glyphicon glyphicon-eye-open"></i><span>跟单</span>
                                 </a>
                             </li>
+                            <li id="myorders">
+                                <a href="~/customer/order/myorders">
+                                    <i class="glyphicon glyphicon-list"></i><span>我的订单</span>
+                                </a>
+                            </li>
                             <li>
                                 <a href="~/customer/reconciliation/list">
                                     <i class="glyphicon glyphicon-list-alt"></i><span>对账</span>
@@ -84,7 +89,7 @@
                             </li>
                             <li>
                                 <a href="~/customer/order/ShipmentStatistics">
-                                    <i class="glyphicon glyphicon-list-alt"></i><span>出货统计</span>
+                                    <i class="glyphicon glyphicon-adjust"></i><span>出货统计</span>
                                 </a>
                             </li>
                         </ul>
@@ -107,6 +112,7 @@
                 $("#navigation").show();
             }
             else {
+                $(".sidebar-nav #myorders").hide();
                 $(".breadcrumb").hide();
                 $(".box-header .back").show();
                 $(".ftnav").show();

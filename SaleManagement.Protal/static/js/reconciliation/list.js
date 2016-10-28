@@ -20,7 +20,7 @@
     $tbody.loading();
     $reconciliationListPage.pager({
         url: '/Reconciliation/List',
-        pageSize: 10,
+        pageSize: 20,
         param: searchArgs(),
         method: "GET",
         callback: function (data, ui) {
@@ -34,7 +34,8 @@
             customerId: customer.getValue(),
             createdStartDate: $("#createdStartDate").val(),
             createdEndDate: $("#createdEndDate").val(),
-            type: $("#type").val()
+            type: $("#type").val(),
+            arrearageType: $("#arrearageType").val()
         }
     }
 

@@ -6,6 +6,7 @@ using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
+using SaleManagement.Protal.Areas.Customer.Models.Order;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Web;
@@ -21,7 +22,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
     public class OrderController : PortalController
     {
         [PagingParameterInspector]
-        public async Task<ActionResult> List(int start, int take, CustomerQueryOrderStatus status = CustomerQueryOrderStatus.All)
+        public async Task<ActionResult> List(CustomerOrdersQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View();
@@ -31,33 +32,79 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             {
                 query = query.Where(j => j.CustomerId == User.Id);
 
-                if (status == CustomerQueryOrderStatus.Process)
+                if (!string.IsNullOrEmpty(request.OrderId))
+                {
+                    query = query.Where(j => j.Id.Contains( request.OrderId));
+                }
+
+                if (request.QueryOrderStatus == CustomerQueryOrderStatus.Process)
                 {
                     query = query.Where(j => j.OrderStatus != OrderStatus.Delete && j.OrderStatus != OrderStatus.UnConfirmed && j.OrderStatus != OrderStatus.Shipment && j.OrderStatus != OrderStatus.HaveGoods);
                 }
 
-                if (status == CustomerQueryOrderStatus.ForGoods)
+                if (request.QueryOrderStatus == CustomerQueryOrderStatus.ForGoods)
                 {
                     query = query.Where(j => j.OrderStatus == OrderStatus.Shipment);
                 }
 
-                if (status == CustomerQueryOrderStatus.HaveGoods)
+                if (request.QueryOrderStatus == CustomerQueryOrderStatus.HaveGoods)
                 {
                     query = query.Where(j => j.OrderStatus == OrderStatus.HaveGoods);
                 }
 
-                if (status == CustomerQueryOrderStatus.CustomerTobeConfirm)
+                if (request.QueryOrderStatus == CustomerQueryOrderStatus.CustomerTobeConfirm)
                 {
                     query = query.Where(j => j.OrderStatus == OrderStatus.CustomerTobeConfirm);
                 }
                 return query;
             };
 
-            var paging = await manager.GetOrdersAsync(start, take, filter);
+            var paging = await manager.GetOrdersAsync(request.Start, request.Take, filter);
             var orders = paging.List.Select(u => new OrderListItemViewModel(u)
             {
                 Attachments = GetAttachments(u)
             });
+
+            return Json(true, string.Empty, new
+            {
+                paging.Total,
+                List = orders,
+            });
+        }
+
+
+        [PagingParameterInspector]
+        public async Task<ActionResult> MyOrders(OrderQueryRequestBase request)
+        {
+            if (!Request.IsAjaxRequest())
+                return View();
+
+            var manager = new OrderManager(User);
+            Func<IQueryable<Order>, IQueryable<Order>> filter = query =>
+            {
+                query = query.Where(j => j.CustomerId == User.Id);
+
+                if (!string.IsNullOrEmpty(request.OrderId))
+                {
+                    var orderIds = request.OrderId.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    query = query.Where(f => orderIds.Any(o => f.Id.Contains(o)));
+                }
+
+                if (request.ColorFormId.HasValue)
+                {
+                    query = query.Where(f => f.ColorFormId == request.ColorFormId.Value);
+                }
+
+                if (request.Status.HasValue)
+                {
+                    query = query.Where(f => f.OrderStatus == request.Status);
+                }
+
+                return query;
+            };
+
+            var paging = await manager.GetOrdersAsync(request.Start, request.Take, filter);
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u));
 
             return Json(true, string.Empty, new
             {

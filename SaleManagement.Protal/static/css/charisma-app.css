@@ -618,18 +618,6 @@ ul.github-buttons li {
 
 /* Tablet */
 @media only screen and (min-width: 768px) and (max-width: 979px) {
-    .box-icon {
-        display: none;
-    }
-
-    .box-header h2 {
-        font-size: 13px !important;
-    }
-
-    .box-header h3 {
-        font-size: 11px !important;
-    }
-
     .main-menu-span {
         width: 6.2% !important;
         margin-right: 4%;

@@ -233,6 +233,7 @@
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ReconciliationController.cs" />
     <Compile Include="Areas\Customer\CustomerAreaRegistration.cs" />
+    <Compile Include="Areas\Customer\Models\Order\CustomerOrdersQueryRequest.cs" />
     <Compile Include="BundleConfigurationActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttachmentController.cs" />
@@ -277,6 +278,7 @@
     <Compile Include="Models\Order\UploadOrderAttachmentRequest.cs" />
     <Compile Include="Models\Menu\RoleMenuAuthorizedViewModel.cs" />
     <Compile Include="Models\Order\UrgentStatus.cs" />
+    <Compile Include="Models\Reconciliation\ArrearageType.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationItemViewModel.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />
@@ -386,6 +388,7 @@
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
     <Content Include="static\js\Crm\edit.js" />
+    <Content Include="static\js\Customer\Order\myOrders.js" />
     <Content Include="static\js\Customer\Order\shipmentStatistics.js" />
     <Content Include="static\js\DailyGoldPrice\Add.js" />
     <Content Include="static\js\DailyGoldPrice\edit.js" />
@@ -422,6 +425,7 @@
     <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
     <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Order\ShipmentStatistics.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\MyOrders.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="static\js\Mvc\jquery.validate.js" />
@@ -540,7 +544,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Customer\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

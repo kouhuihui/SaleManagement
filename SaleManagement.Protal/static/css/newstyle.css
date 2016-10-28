@@ -1548,7 +1548,6 @@ input[type=checkbox] {
 }
 
 .textfield .field-body input {
-    margin-bottom: 5px;
     height: 36px;
 }
 
@@ -1603,7 +1602,10 @@ input[type=checkbox] {
 .date-conditions .textfield {
     margin-right: 0px;
 }
-
+.search{
+    margin-bottom:5px;
+    display:inline-block
+}
 .search input[type=text] {
     padding-left: 5px;
 }

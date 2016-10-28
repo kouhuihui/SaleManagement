@@ -25,6 +25,8 @@ namespace SaleManagement.Protal.Models.Reconciliation
 
         public ReconciliationType? Type { get; set; }
 
+        public ArrearageType? ArrearageType { get; set; }
+
         public Func<IQueryable<Core.Models.Reconciliation>, IQueryable<Core.Models.Reconciliation>> GetReconciliationListQueryFilter()
         {
             Func<IQueryable<Core.Models.Reconciliation>, IQueryable<Core.Models.Reconciliation>> filter = query =>
@@ -43,6 +45,17 @@ namespace SaleManagement.Protal.Models.Reconciliation
                 {
                     query = query.Where(f => f.Type == Type.Value);
                 }
+
+                if (ArrearageType.HasValue) {
+                    if(ArrearageType.Value == Reconciliation.ArrearageType.New) {
+                        query = query.Where(f =>f.Type== ReconciliationType.Arrearage && f.Remark.Contains("出货"));
+                    }
+                    else
+                    {
+                        query = query.Where(f => f.Type == ReconciliationType.Arrearage && !f.Remark.Contains("出货"));
+                    }
+                }
+
                 return query.AsNoTracking();
             };
             return filter;

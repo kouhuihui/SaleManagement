@@ -64,66 +64,72 @@
                 <span class="title">订单列表</span>
             </div>
             <div class="box-content">
-                <ul class="nav nav-pills" id="orderli">
-                    <li role="presentation" status="0"><a href="/customer/order/list">我的订单</a></li>
-                    <li role="presentation" status="4"><a href="/customer/order/list?status=4">设计确认</a></li>
-                    <li role="presentation" status="1"><a href="/customer/order/list?status=1">制作中</a></li>
-                    <li role="presentation" status="2"><a href="/customer/order/list?status=2">待收货</a></li>
-                    <li role="presentation" status="3"><a href="/customer/order/list?status=3">已收货</a></li>
-                </ul>
-                <div id="orderlist" data-bind="foreach:orders">
-                    <div style="border-bottom: 1px #2a13a3 solid">
-                        <div class="row title">
-                            <div class="col-xs-6 col-md-4">
-                                订单号：
-                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a>
-                            </div>
-                            <div class="col-xs-6 col-md-4">下单时间：<span data-bind="text:created"></span></div>
-                        </div>
-                        <div class="row title">
-                            <div class="col-xs-6 col-md-4">
-                            </div>
-                            <div class="col-xs-6 col-md-4">预计出货：<span data-bind="text:deliveryDate"></span></div>
-                        </div>
-                        <div class="orderdetail">
-                            <ul class="thumbnails" data-bind="foreach:{data:attachments,as:'iattachment'}">
-                                <li class="thumbnail">
-                                    <a target="_blank" class="cboxElement" data-bind="click:function(item,el){window.open('/attachment/'+iattachment.id+'/preview'); el.stopPropagation();}" href="javascript:void(0)"><img height="100" style="display: block;" data-bind="attr:{src:iattachment.url}"></a>
-                                </li>
-                            </ul>
-                            <div class="right">
-                                <div>
-                                    <span data-bind="text:colorFormName"></span>/
-                                    <span data-bind="text:gemCategoryName"></span>/
-                                    <span data-bind="text:productCategoryName"></span>
+                <div  style="height:36px; margin:5px">
+                    <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
+                    <button id="btnSearch" class="btn btn-primary">查询</button>
+                </div>
+                <div>
+                    <ul class="nav nav-pills" id="orderli">
+                        <li role="presentation" status="0"><a href="/customer/order/list">我的订单</a></li>
+                        <li role="presentation" status="4"><a href="/customer/order/list?status=4">设计确认</a></li>
+                        <li role="presentation" status="1"><a href="/customer/order/list?status=1">制作中</a></li>
+                        <li role="presentation" status="2"><a href="/customer/order/list?status=2">待收货</a></li>
+                        <li role="presentation" status="3"><a href="/customer/order/list?status=3">已收货</a></li>
+                    </ul>
+                    <div id="orderlist" data-bind="foreach:orders">
+                        <div style="border-bottom: 1px #2a13a3 solid">
+                            <div class="row title">
+                                <div class="col-xs-6 col-md-4">
+                                    订单号：
+                                    <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}"></a>
                                 </div>
-                                <div>
-                                    <!-- ko if:rangSize != null -->
-                                    <span data-bind="text:rangSize"></span>/
+                                <div class="col-xs-6 col-md-4">下单时间：<span data-bind="text:created"></span></div>
+                            </div>
+                            <div class="row title">
+                                <div class="col-xs-6 col-md-4">
+                                </div>
+                                <div class="col-xs-6 col-md-4">预计出货：<span data-bind="text:deliveryDate"></span></div>
+                            </div>
+                            <div class="orderdetail">
+                                <ul class="thumbnails" data-bind="foreach:{data:attachments,as:'iattachment'}">
+                                    <li class="thumbnail">
+                                        <a target="_blank" class="cboxElement" data-bind="click:function(item,el){window.open('/attachment/'+iattachment.id+'/preview'); el.stopPropagation();}" href="javascript:void(0)"><img height="100" style="display: block;" data-bind="attr:{src:iattachment.url}"></a>
+                                    </li>
+                                </ul>
+                                <div class="right">
+                                    <div>
+                                        <span data-bind="text:colorFormName"></span>/
+                                        <span data-bind="text:gemCategoryName"></span>/
+                                        <span data-bind="text:productCategoryName"></span>
+                                    </div>
+                                    <div>
+                                        <!-- ko if:rangSize != null -->
+                                        <span data-bind="text:rangSize"></span>/
+                                        <!-- /ko -->
+                                        <span data-bind="text:number"></span>件
+                                    </div>
+                                    <!-- ko if:outputWaxCost > 0 -->
+                                    <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
                                     <!-- /ko -->
-                                    <span data-bind="text:number"></span>件
+                                    <div data-bind="text:statusName" class="status"></div>
                                 </div>
-                                <!-- ko if:outputWaxCost > 0 -->
-                                <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
-                                <!-- /ko -->
-                                <div data-bind="text:statusName" class="status"></div>
                             </div>
-                        </div>
 
-                        <div style="display: inline-block">
-                            <!-- ko if:status == 3 -->
-                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
-                            <!-- /ko -->
-                            <!-- ko if:status == 11 -->
-                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
-                            <!-- /ko -->
-                            <!-- ko if:status == 11 | status == 12 -->
-                            <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
-                            <!-- /ko -->
-                            <!-- ko if:status ==0 -->
-                            <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
-                            <!-- /ko -->
-                            <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
+                            <div style="display: inline-block">
+                                <!-- ko if:status == 3 -->
+                                <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
+                                <!-- /ko -->
+                                <!-- ko if:status == 11 -->
+                                <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.ConfirmHaveGoods">收货</button>
+                                <!-- /ko -->
+                                <!-- ko if:status == 11 | status == 12 -->
+                                <button class="btn  btn-sm btn-xs" data-bind="click:$parent.ViewShipmentOrder">出货单</button>
+                                <!-- /ko -->
+                                <!-- ko if:status ==0 -->
+                                <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/edit?orderId='+id}">编辑</a>
+                                <!-- /ko -->
+                                <a target="_blank" class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/process?orderId='+id}">查看进度</a>
+                            </div>
                         </div>
                     </div>
                 </div>

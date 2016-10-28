@@ -30,7 +30,14 @@
             @Html.DropDownList("type", reconciliationType, "请选择欠付款", new { Class = "pull-left form-control" })
         </div>
     </div>
-
+    <div class="combobox pull-left">
+        @{
+            var arrearageType = EnumHelper.GetSelectList(typeof(SaleManagement.Protal.Models.Reconciliation.ArrearageType));
+        }
+        <div class="combobox-body" style="width: 150px;">
+            @Html.DropDownList("arrearageType", arrearageType, "请选择欠付类型", new { Class = "pull-left form-control" })
+        </div>
+    </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 

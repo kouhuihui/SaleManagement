@@ -1,21 +1,18 @@
 ﻿$(function () {
-    var status = getQueryString("status"),
-       $orderlist = $("#orderlist"),
+    var $currentUser = $("#currentUser"),
+        $orderListPage = $('#orderListPage'),
         $orderId = $("#orderId"),
-       $orderListPage = $('#orderListPage');
-
-    if (status == null) {
-        status = "0";
-    }
-    $("#orderli li[status=" + status + "]").addClass("active").siblings("li").removeClass("active");
+        $orderStatus = $("#Status"),
+        $colorFormId = $("#colorFormId"),
+        $tbody = $("#tbody");;
     var Orders = function (data) {
         var self = this;
-        self.orders = ko.observableArray(data);
+        self.orders = ko.observableArray(data),
         self.CustomerConfirmClick = function (item, el) {
             $(window).modalDialog({
                 title: "提示",
                 smallTitle: "",
-                content: "确认通过设计师的设计方案",
+                content: "设计费用" + item.outputWaxCost + "元,确认通过设计师的设计方案",
                 type: "confirm",
                 okCallBack: function (e, $el) {
                     $.ajax({
@@ -28,7 +25,7 @@
                         success: function (result) {
                             if (result.succeeded) {
                                 $el.data("bs.modal").hide();
-                                location.reload();
+                                search();
                             } else {
                                 shortTips(errorMessage(result));
                             }
@@ -56,7 +53,7 @@
                             if (result.succeeded) {
                                 shortTips("操作成功");
                                 $el.data("bs.modal").hide();
-                                self.orders.remove(item);
+                                search();
                             } else {
                                 shortTips(errorMessage(result));
                             }
@@ -66,33 +63,34 @@
             });
             el.stopPropagation();
         };
-	    self.ViewProcess = function(item, el) {
-		    location.href = '/customer/order/Process?orderId=' + item.id;
-	    };
-	    self.ViewShipmentOrder = function (item, el) {
-	    	location.href = '/customer/order/ShipmentOrderDetail?orderId=' + item.id;
-	    	el.stopPropagation();
-	    };
+        self.viewProcessClick = function (item, el) {
+            $("#modal").modal({
+                remote: "/Order/process?orderId=" + item.id
+            }).on("hidden.bs.modal", function () {
+                $(this).removeData("bs.modal");
+            });
+        };
     }
 
     var ordersView = new Orders([]);
     ko.applyBindings(ordersView);
-    $orderlist.loading();
+    $tbody.loading();
     //分页
     $orderListPage.pager({
-        url: '/Customer/Order/List',
-        pageSize: 10,
+        url: '/Customer/Order/MyOrders',
+        pageSize: 20,
         param: searchArgs(),
         callback: function (data, ui) {
-            $orderlist.data("loading").hide();
+            $tbody.data("loading").hide();
             ordersView.orders(data.list);
         }
     });
 
     function searchArgs() {
         return {
-            queryOrderStatus: status,
-            orderId: $orderId.val()
+            orderId: $orderId.val(),
+            status: $orderStatus.val(),
+            colorFormId: $colorFormId.val()
         }
     }
 
@@ -100,11 +98,29 @@
         var pager = $orderListPage.data("pager");
         pager.opts.param = searchArgs();
         pager.jump(1);
-        $orderlist.data("loading").show();
+        $tbody.data("loading").show();
     }
 
     $("#btnSearch").on("click", function () {
         search();
     })
 
+    $orderId.bind('keypress', function (event) {
+        if (event.keyCode == "13") {
+            var orderId = $orderId.val();
+            if (orderId != "" && orderId.lastIndexOf(',') != orderId.length - 1) {
+                $orderId.val(orderId + ",");
+            }
+            search();
+            $orderId.focus();
+        }
+    });
+
+    $orderStatus.bind('change', function () {
+        search();
+    })
+
+    $colorFormId.bind('change', function () {
+        search();
+    })
 });
