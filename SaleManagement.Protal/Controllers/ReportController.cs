@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SaleManagement.Protal.Controllers
@@ -106,7 +105,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var shipmentOrderInfoViewModels = await GetShipmentOrderInfoViewModels(reportQuery);
 
-            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额" ,"正常/逾期"};
+            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额", "正常/逾期" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "出货单明细", ws =>
             {
                 var row = 2;
@@ -151,6 +150,7 @@ namespace SaleManagement.Protal.Controllers
                 shipmentOrderInfoViewModel.CustomerName = f.Order.Customer.Name;
                 shipmentOrderInfoViewModel.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
                 shipmentOrderInfoViewModel.IsShipOnTime = f.ShipmentOrder.Created < f.Order.DeliveryDate.Value ? "正常" : "逾期";
+                shipmentOrderInfoViewModel.DeliveryDate = f.ShipmentOrder.Created.ToShortDateString();
                 return shipmentOrderInfoViewModel;
             }).ToList();
             if (shipmentOrderInfoViewModels.Any())
@@ -171,7 +171,7 @@ namespace SaleManagement.Protal.Controllers
                     OtherCost = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.OtherCost), 2),
                     TotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalAmount), 2),
                     Weight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Weight), 2),
-                    IsShipOnTime =$"正常{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "正常")},逾期{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "逾期")}"
+                    IsShipOnTime = $"正常{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "正常")},逾期{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "逾期")}",
                 };
                 shipmentOrderInfoViewModels.Add(total);
             }
