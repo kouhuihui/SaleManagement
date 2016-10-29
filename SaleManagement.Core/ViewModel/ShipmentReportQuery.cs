@@ -1,9 +1,6 @@
 ﻿using SaleManagement.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaleManagement.Core.ViewModel
 {
@@ -31,7 +28,7 @@ namespace SaleManagement.Core.ViewModel
                     query = query.Where(f => f.Order.CustomerId == CustomerId);
                 }
 
-                query = query.Where(f => f.ShipmentOrder.DeliveryDate > StatisticStartDate);
+                query = query.Where(f => f.ShipmentOrder.DeliveryDate >= StatisticStartDate);
                 var endDate = StatisticEndDate.AddDays(1);
                 query = query.Where(f => f.ShipmentOrder.DeliveryDate < endDate);
 
