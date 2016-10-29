@@ -2,7 +2,6 @@
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
@@ -40,7 +39,7 @@ namespace SaleManagement.Managers
             var remark = shipmentOrderId + "出货";
             var reconciliation = DbContext.Set<Reconciliation>().FirstOrDefault(r => r.Remark == remark);
             if (reconciliation == null)
-                return InvokedResult.Fail("404", "不存在该出货单打对账记录");
+                return InvokedResult.Fail("404", "不存在该出货单的对账记录");
 
             DbContext.Set<Reconciliation>().Remove(reconciliation);
             await DbContext.SaveChangesAsync();

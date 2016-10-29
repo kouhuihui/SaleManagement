@@ -116,10 +116,8 @@
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
-                            setTimeout(function () {
-                                shortTips("操作成功");
-                            }, 1000)
-                            location.reload();
+                            shortTips("操作成功"); 
+                            search();
                         } else {
                             shortTips(errorMessage(result));
                         }
@@ -161,10 +159,8 @@
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
-                            setTimeout(function () {
-                                shortTips("操作成功");
-                            }, 1000)
-                            location.reload();
+                            shortTips("操作成功");
+	                        search();
                         } else {
                             shortTips(errorMessage(result));
                         }
