@@ -84,7 +84,7 @@ namespace SaleManagement.Protal.Controllers
                     ws.Cells[row, 1].Value = index;
                     ws.Cells[row, 2].Value = orderSetStoneStatistic.SetStoneName;
                     ws.Cells[row, 3].Value = orderSetStoneStatistic.Weight;
-                    ws.Cells[row, 3].Value = orderSetStoneStatistic.Number;
+                    ws.Cells[row, 4].Value = orderSetStoneStatistic.Number;
                     row++;
                     index++;
                 };

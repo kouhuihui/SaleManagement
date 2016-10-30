@@ -66,7 +66,7 @@ $(function () {
         url: addAttachmentUrl,
         dataType: 'json',
         formData: { orderId: orderId },
-        singleFileUploads: false,
+        singleFileUploads: true,
         limitMultiFileUploads: 1,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
         send: function (e, data) {
@@ -76,7 +76,7 @@ $(function () {
             $wrap.data("loading").hide();
         },
         add: function (e, data) {
-            if (filesData.length >= 2) {
+            if ((data.originalFiles.length + filesData.length) > 2) {
                 shortTips("最多只能上传2张图片");
                 return false;
             }
@@ -137,6 +137,7 @@ $(function () {
                 }, timeOut);
             } else {
                 shortTips(errorMessage(result));
+                $form.data("loading").hide();
             }
         }
     });

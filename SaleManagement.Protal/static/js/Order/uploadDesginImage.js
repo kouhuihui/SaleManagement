@@ -19,7 +19,7 @@ $(function () {
             $wrap.data("loading").hide();
         },
         add: function (e, data) {
-            if ($wrap.find('li').length >= 2) {
+            if ((data.originalFiles.length + $wrap.find('li').length) > 2) {
                 shortTips("最多只能上传2张图片");
                 return false;
             }

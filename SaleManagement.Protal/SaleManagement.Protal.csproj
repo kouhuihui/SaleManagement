@@ -406,7 +406,6 @@
     <Content Include="static\js\jquery.PrintArea.js" />
     <Content Include="static\js\jquery.raty.min.js" />
     <Content Include="static\js\jquery.ui.widget.js" />
-    <Content Include="static\js\jquery.uploadify-3.1.min.js" />
     <Content Include="static\js\knockout-3.4.0.js" />
     <Content Include="static\js\modalDialog.js" />
     <Content Include="static\bootstrap\fonts\fontawesome-webfont.eot" />
