@@ -24,7 +24,7 @@
         }
 
             .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
-                padding: 5px;
+                padding: 3px;
                 border: 1px solid #000000;
             }
 
@@ -32,6 +32,13 @@
                 background-color: #ffffff;
                 font-weight: normal;
             }
+        .hightTd{
+            background:#e2f1f1!important; 
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e2f1f1', endColorstr='#e2f9f9', GradientType=0);  
+        }
+        .text-right{
+            text-align:right;
+        }
     </style>
 </head>
 <body>
@@ -45,9 +52,49 @@
         }
         <div id="divPrint">
             <div class="text-center">
-                <h4>生产订单</h4>
+                <h4>镜像生产单</h4>
             </div>
-            <div>
+            <table class="table table-bordered bootstrap-datatable" border="1">
+                <tbody>
+                    <tr>
+                        <td colspan="2" class="text-center">订单号：@Model.Id</td>
+                        <td colspan="2" class="text-center">制单日期：@Model.Created</td>
+                        <td colspan="2" class="text-center">预计交货日期：@Model.DeliveryDate</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">成色：<span style="background-color:#b6ff00">@Model.ColorFormName</span></td>
+                        <td colspan="2" class="text-center">客户：@Model.CustomerName</td>
+                        <td colspan="2" class="text-center">制单人：@Model.CreatorName</td>
+                    </tr>
+                    <tr>
+                        <td class="hightTd text-right">宝石</td><td class="hightTd text-center"> @Model.GemCategoryName</td>
+                        <td class="hightTd text-right">主石镶口要求</td><td class="hightTd text-center"> @Model.RabbetRequirement.GetDisplayName()</td>
+                        <td colspan="2" class="hightTd">字印要求：@Model.WordsPrinted</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">品类</td><td class="text-center">@Model.ProductCategoryName</td>
+                        <td class="text-right">金重控制要求</td><td class="text-center">@Model.GoldWeightRequirement.GetDisplayName()</td>
+                        <td rowspan="5" width="35%">备注：@Model.Remark</td>
+                    </tr>
+                    <tr>
+                        <td class="hightTd text-right">指圈</td><td class="hightTd text-center">@Model.RangSize</td>
+                        <td class="hightTd text-right">副石控制要求</td><td class="hightTd text-center">@Model.SideStoneRequiredment.GetDisplayName()</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">件数</td><td class="text-center">@Model.Number</td>
+                        <td class="text-right">戒臂内弧要求</td><td class="text-center">@Model.RadianRequirement.GetDisplayName()</td>
+                    </tr>
+                    <tr>
+                        <td class="hightTd text-right">主石重</td><td class="hightTd text-center">@Model.MainStoneSize</td>
+                        <td class="hightTd text-right">客来石描述</td><td class="hightTd text-center">@Model.StoneDescribe.GetDisplayName()</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right">证书号</td><td class="text-center">@Model.Certificate</td>
+                        <td class="text-right">有无旧料</td><td class="text-center">@(Model.HasOldMaterial ? "有" : "无")</td>
+                    </tr>
+                </tbody>
+            </table>
+            @*<div>
                 <div class="col-md-4 col-xs-4">订单号：@Model.Id</div>
                 <div class="col-md-4 col-xs-4">客户：@Model.CustomerName</div>
                 <div class="col-md-4 col-xs-4">制单人：@Model.CreatorName</div>
@@ -80,12 +127,12 @@
             <div>
                 <div class="col-md-4 col-xs-4">证书号：@Model.Certificate</div>
                 <div class="col-md-4 col-xs-4">字印要求：@Model.WordsPrinted</div>
-                @*<div class="col-md-4 col-xs-4">客户加急：@Model.OrderRushStatusName</div>*@
+                <div class="col-md-4 col-xs-4">客户加急：@Model.OrderRushStatusName</div>
             </div>
 
             <div>
                 <div class="col-md-12 col-xs-12" style="height:20px">备注：@Model.Remark</div>
-            </div>
+            </div>*@
             <div class="ptop5" style="min-height:590px;width:800px; margin-left:5px;display:inline-block" id="divImage">
                 @{
                     foreach (var item in Model.Attachments)

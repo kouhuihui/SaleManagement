@@ -1619,7 +1619,8 @@ input[type=checkbox] {
         padding-right: 0px;
         padding-left: 0px;
     }
-
+     body { -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;}  
 }
 
 th {
