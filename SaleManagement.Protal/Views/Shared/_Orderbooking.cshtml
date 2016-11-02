@@ -35,7 +35,6 @@
 
 <input type="hidden" name="attachmentIds" id="attachmentIds" />
 <input type="hidden" value="@User.IdentityType" name="identityType" id="identityType" />
-@Html.HiddenFor(model => model.Id)
 @Html.AntiForgeryToken()
 <div class="form-group">
     <div class="col-md-12">

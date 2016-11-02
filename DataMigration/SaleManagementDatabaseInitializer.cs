@@ -235,6 +235,25 @@ namespace DataMigration
                 IsSystemRole = true
             };
 
+            var direktorRole = new Role
+            {
+                Name = "厂长",
+                Description = "负责工厂管理",
+                Type = RoleType.Production,
+                Deleted = false,
+                Code = SaleManagentConstants.SystemRole.Direktor,
+                IsSystemRole = true
+            };
+            var orderViewRole = new Role
+            {
+                Name = "订单查看",
+                Description = "订单查看",
+                Type = RoleType.Production,
+                Deleted = false,
+                Code = SaleManagentConstants.SystemRole.OrderView,
+                IsSystemRole = true
+            };
+
             context.Roles.Add(commonUserRole);
             context.Roles.Add(adminRole);
             context.Roles.Add(customerServiceRole);
@@ -248,6 +267,8 @@ namespace DataMigration
             context.Roles.Add(withTheHandRole);
             context.Roles.Add(microInsertRole);
             context.Roles.Add(polishingRole);
+            context.Roles.Add(direktorRole);
+            context.Roles.Add(orderViewRole);
             context.SaveChanges();
         }
 
@@ -476,6 +497,8 @@ namespace DataMigration
             context.Menus.Add(menu18);
             context.Menus.Add(menu19);
             context.Menus.Add(menu20);
+            context.Menus.Add(menu21);
+            context.Menus.Add(menu22);
             context.SaveChanges();
             #endregion
         }

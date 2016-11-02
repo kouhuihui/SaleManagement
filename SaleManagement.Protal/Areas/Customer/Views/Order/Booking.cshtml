@@ -19,6 +19,7 @@
                 <form method="post" action="~/order/booking" id="OrderBooking">
                     <div class="form-horizontal">
                         @Html.Hidden("customerId", User.Id)
+                        @Html.HiddenFor(model => model.Id)
                         @Html.HiddenFor(model => model.DeliveryDate)
                         @Html.Partial("_Orderbooking")
                     </div>

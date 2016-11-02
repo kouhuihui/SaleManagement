@@ -124,8 +124,16 @@ namespace SaleManagement.Protal.Controllers
             SetOrderDeliveryDate(order, shippingScheduleDays);
 
             var serialNumberManager = new SerialNumberManager(User);
-
-            order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
+            var manager = new OrderManager(User);
+            if (string.IsNullOrEmpty(order.Id))
+            {
+                order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
+            }
+            else
+            {
+                if (await manager.GetOrderAsync(order.Id) != null)
+                    return Json(false, "订单号已存在");
+            }
 
             if (attachmentIds.Any())
             {
@@ -138,7 +146,6 @@ namespace SaleManagement.Protal.Controllers
                         CreatorId = User.Id
                     }));
             }
-            var manager = new OrderManager(User);
             var result = await manager.CreateOrder(order);
             if (result.Succeeded)
             {
@@ -327,6 +334,19 @@ namespace SaleManagement.Protal.Controllers
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
             }
+            return Json(result);
+        }
+
+        [HttpPost, Route("{orderId}/SetOutputwaxCost")]
+        public async Task<JsonResult> SetOutputwaxCost(string orderId, double outputWaxCost = 0)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            order.OutputWaxCost = outputWaxCost;
+            var result = await manager.UpdateOrderAsync(order);
             return Json(result);
         }
 

@@ -69,6 +69,7 @@ namespace SaleManagement.Core
             public static readonly string MicroInsert = "microInsert";
             public static readonly string Polishing = "polishing";
             public static readonly string Direktor = "direktor";
+            public static readonly string OrderView = "orderView";
         }
 
         public class ConfigKeys

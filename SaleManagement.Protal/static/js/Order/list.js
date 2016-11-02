@@ -226,7 +226,8 @@
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
-                            location.reload();
+                            shortTips("修改成功");
+                            search();
                         } else {
                             shortTips(errorMessage(result));
                         }
@@ -262,7 +263,8 @@
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
-                            location.reload();
+                            shortTips("修改成功");
+                            search();
                         } else {
                             shortTips(errorMessage(result));
                         }
@@ -296,6 +298,49 @@
             remote: "/Order/Stop?orderId=" + id
         }).on("hidden.bs.modal", function () {
             $(this).removeData("bs.modal");
+        });
+    })
+
+    $("#btnSetDesginCost").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+        var id = inputCheckeds.val();
+        var outputWaxCost = inputCheckeds.attr("outputWaxCost");
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "设计费用(元)：<input style=\"width:40px\" name=\"outputWaxCost\" value=\""+ outputWaxCost+"\"/>",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                var outputWaxCost = $("input[name=outputWaxCost]").val();
+                if (isNaN(Number(outputWaxCost))) {
+                    outputWaxCost = 0;
+                }
+                $.ajax({
+                    url: "/order/" + id + "/CustomerTobeConfirm",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "outputWaxCost": outputWaxCost },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            shortTips("修改成功");
+                            search();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
         });
     })
 });

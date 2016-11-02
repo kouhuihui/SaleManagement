@@ -100,13 +100,14 @@
                     }
                     @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                     {
+                        <a id="btnSetDesginCost" class="btn">
+                            <i class="glyphicon glyphicon-floppy-save"></i>
+                            修改设计费
+                        </a>
                         <a id="btnDelete" class="btn">
                             <i class="glyphicon glyphicon-remove"></i>
                             删除
                         </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
-                    {
                         <a id="btnStop" class="btn">
                             <i class="glyphicon glyphicon-stop"></i>
                             消单
@@ -137,7 +138,7 @@
                     </thead>
                     <tbody id="tbody" data-bind="foreach:orders">
                         <tr>
-                            <td><input type="checkbox" data-bind="value:id,attr:{status:status},checked:false"/></td>
+                            <td><input type="checkbox" data-bind="value:id,attr:{status:status,outputWaxCost:outputWaxCost},checked:false"/></td>
                             <td>
                                 <a data-bind="click:$parent.viewProcessClick" title="查看订单流程"><i class="glyphicon glyphicon-eye-open"></i></a>
                                 <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
