@@ -103,7 +103,7 @@ namespace SaleManagement.Managers
                 query = query.Where(o => outPutWaxOrderIds.Any(r => r == o.Id));
             }
             var total = await query.CountAsync();
-            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
+            var list = await query.OrderByDescending(u => u.Id).Skip(start).Take(take).ToListAsync();
 
             return new Paging<Order>(start, take, total, list);
         }

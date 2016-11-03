@@ -172,4 +172,48 @@
             }
         });
     })
+
+    $("#btnCreatedRecord").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        if (length === 0) {
+            shortTips("请选择出货单");
+            return false;
+        }
+        var ids = "";
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            if ($inputChecked.attr("status") != 0) {
+                shortTips("出货单不是待审核状态");
+                return false;
+            }
+            ids = ids + $inputChecked.val() + ",";
+        }
+         
+        $(window).modalDialog({
+            title: "提示",
+            content: "确定生成出货记录？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $orderListPage.loading();
+                $.ajax({
+                    url: "/shipment/CreatedRecord?orderIds=" + ids,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            shortTips("操作成功");
+                            search();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    },
+                    error: function (result) {
+                        $orderListPage.data("loading").hide();
+                    }
+                });
+            }
+        });
+    })
 });

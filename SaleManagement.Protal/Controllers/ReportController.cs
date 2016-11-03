@@ -149,8 +149,8 @@ namespace SaleManagement.Protal.Controllers
                 var shipmentOrderInfoViewModel = Mapper.Map<ShipmentOrderInfo, ShipmentOrderInfoViewModel>(f);
                 shipmentOrderInfoViewModel.CustomerName = f.Order.Customer.Name;
                 shipmentOrderInfoViewModel.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
-                shipmentOrderInfoViewModel.IsShipOnTime = f.ShipmentOrder.Created < f.Order.DeliveryDate.Value ? "正常" : "逾期";
-                shipmentOrderInfoViewModel.DeliveryDate = f.ShipmentOrder.Created.ToShortDateString();
+                shipmentOrderInfoViewModel.IsShipOnTime = f.ShipmentOrder.DeliveryDate < f.Order.DeliveryDate.Value ? "正常" : "逾期";
+                shipmentOrderInfoViewModel.DeliveryDate = f.ShipmentOrder.DeliveryDate.ToShortDateString();
                 return shipmentOrderInfoViewModel;
             }).ToList();
             if (shipmentOrderInfoViewModels.Any())

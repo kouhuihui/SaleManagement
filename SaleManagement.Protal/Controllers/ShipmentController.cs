@@ -46,8 +46,8 @@ namespace SaleManagement.Protal.Controllers
 
             var orderManager = new OrderManager(User);
             var orders = await orderManager.GetOrdersAsync(orderIds);
-            if (!orders.All(r => r.OrderStatus == OrderStatus.ToBeShip))
-                return Error("订单号状态不是待出货");
+            //if (!orders.All(r => r.OrderStatus == OrderStatus.ToBeShip))
+            //    return Error("订单号状态不是待出货");
 
             var customers = orders.Select(r => r.Customer).Distinct().ToList();
             if (customers.Count > 1)
@@ -178,7 +178,28 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        [HttpPost]
+        public async Task<JsonResult> CreatedRecord([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var manager = new ShipmentManager(User);
+            foreach (var id in orderIds)
+            {
+                var shipmentOrder = await manager.GetShipmentOrderAsync(id);
+                if (shipmentOrder.AuditStatus == ShipmentOrderAduitStatus.Pass)
+                    return Json(false, $"{id}出货单已经通过审核，不能再次审核");
 
+                shipmentOrder.AuditStatus = ShipmentOrderAduitStatus.Pass;
+                shipmentOrder.AuditorName = User.Name;
+                shipmentOrder.AuditDate = DateTime.Now;
+                var result = await manager.AuditShipmentOrder(shipmentOrder);
+                if (result.Succeeded)
+                {
+                    var orderInfoId = shipmentOrder.ShipmentOrderInfos.Select(r => r.Id);
+                    await new OrderManager(User).UpdateOrderStatusAsync(OrderStatus.Shipment, orderInfoId);
+                }
+            }
+            return Json(true);
+        }
 
         [HttpPost]
         public async Task<JsonResult> CancelAudit(string id)

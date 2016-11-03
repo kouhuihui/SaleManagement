@@ -42,6 +42,10 @@
             <div class="box-header well" data-original-title="">
                 <h2>生产单列表</h2>
                 <div class="box-icon">
+                    <a id="btnCreatedRecord" class="btn" title="出货单不进入对账">
+                        <i class="glyphicon glyphicon-book"></i>
+                        生产出货记录
+                    </a>
                     @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                     {
                         <a id="btnCancelAudit" class="btn">

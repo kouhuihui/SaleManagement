@@ -102,10 +102,10 @@
         }
         for (var i = 0; i < length; i++) {
             var $inputChecked = $(inputCheckeds[i]);
-            if ($inputChecked.attr("status") != 9) {
-                shortTips("订单不是待出货状态");
-                return false;
-            }
+            //if ($inputChecked.attr("status") != 9) {
+            //    shortTips("订单不是待出货状态");
+            //    return false;
+            //}
             ids = ids + $inputChecked.val() + ",";
         }
         location.href = "/shipment/create?orderIds=" + ids;
