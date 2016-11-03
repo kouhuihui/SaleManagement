@@ -105,6 +105,7 @@ namespace SaleManagement.Protal.Controllers
             model.GemCategories = await manager.GetGemCategoriesAsync();
 
             var shippingScheduleDays = await manager.GetShippingScheduleDaysAsync();
+            model.Created = DateTime.Now.ToString(SaleManagentConstants.UI.DateStringFormat);
             model.DeliveryDate = DateTime.Now.AddDays(shippingScheduleDays).ToString(SaleManagentConstants.UI.DateStringFormat);
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
@@ -214,6 +215,7 @@ namespace SaleManagement.Protal.Controllers
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
             order.OrderRushStatus = request.OrderRushStatus;
+            order.Created = Convert.ToDateTime(request.Created);
 
             var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
             SetOrderDeliveryDate(order, shippingScheduleDays);

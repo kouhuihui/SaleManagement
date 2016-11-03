@@ -32,8 +32,16 @@
                         <div class="form-group">
                             <label class="control-label col-md-2"><span class="text-danger">*</span>客户：</label>
                             <div class="col-md-2">
-                                @Html.Partial("_Customer")
-                                @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                @if (string.IsNullOrEmpty(Model.CustomerId))
+                                {
+                                    @Html.Partial("_Customer")
+                                    @Html.ValidationMessageFor(model => model.CustomerId, "", new { @class = "text-danger" })
+                                }
+                                else
+                                {
+                                    <span class="control-label col-md-2">@Model.CustomerName</span>
+                                    @Html.HiddenFor(model => model.CustomerId)
+                                }
                             </div>
                         </div>
                         <div class="form-group">
@@ -41,11 +49,18 @@
                             <div class="col-md-2">
                                 @Html.TextBoxFor(model => model.Id, new { @class = "form-control", @autocomplete = "off" })
                             </div>
+                            <span class="control-label col-md-4" style="color:red">恢复旧单时填写原单号，新单可不填</span>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2">预计交货日期：</label>
                             <div class="col-md-2">
-                                @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control", @autocomplete ="off"})
+                                @Html.TextBoxFor(model => model.DeliveryDate, new { @class = "form-control", @autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">下单日期：</label>
+                            <div class="col-md-2">
+                                @Html.TextBoxFor(model => model.Created, new { @class = "form-control", @autocomplete = "off" })
                             </div>
                         </div>
                         @Html.Partial("_Orderbooking")

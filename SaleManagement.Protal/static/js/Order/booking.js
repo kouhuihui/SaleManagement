@@ -9,12 +9,22 @@
     $deliveryDate = $("input[name=DeliveryDate]"),
     $minChainLength = $("#MinChainLength"),
     $maxChainLength = $("#MaxChainLength"),
-    $handSize = $("#HandSize");
+    $handSize = $("#HandSize"),
+    $created = $("input[name=Created]");
 
 $(function () {
     var customer = new Customer();
     if ($deliveryDate.length > 0) {
         $deliveryDate.datetimepicker({
+            autoclose: true,
+            fontAwesome: true,
+            format: "yyyy-mm-dd",
+            minView: 2,
+            initialDate: new Date()
+        });
+    }
+    if ($created.length > 0) {
+        $created.datetimepicker({
             autoclose: true,
             fontAwesome: true,
             format: "yyyy-mm-dd",
