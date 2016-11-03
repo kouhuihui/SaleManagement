@@ -60,12 +60,19 @@
     function search() {
         var pager = $orderListPage.data("pager");
         pager.opts.param = searchArgs();
+        pager.jump(pager.opts.currentPage);
+        $tbody.data("loading").show();
+    }
+
+    function Query() {
+        var pager = $orderListPage.data("pager");
+        pager.opts.param = searchArgs();
         pager.jump(1);
         $tbody.data("loading").show();
     }
 
     $("#btnSearch").on("click", function () {
-        search();
+        Query();
     })
 
     $orderId.bind('keypress', function (event) {
@@ -74,22 +81,22 @@
             if (orderId != "" && orderId.lastIndexOf(',') != orderId.length - 1) {
                 $orderId.val(orderId + ",");
             }
-            search();
+            Query();
             $orderId.focus();
         }
     });
 
 
     $status.bind('change', function () {
-        search();
+        Query();
     })
 
     $colorFormId.bind('change', function () {
-        search();
+        Query();
     })
 
     $urgentStatus.bind('change', function () {
-        search();
+        Query();
     })
 
     $("#shipment").on("click", function () {
@@ -326,7 +333,7 @@
                     outputWaxCost = 0;
                 }
                 $.ajax({
-                    url: "/order/" + id + "/CustomerTobeConfirm",
+                    url: "/order/" + id + "/SetOutputwaxCost",
                     type: "POST",
                     dataType: "json",
                     data: { "outputWaxCost": outputWaxCost },

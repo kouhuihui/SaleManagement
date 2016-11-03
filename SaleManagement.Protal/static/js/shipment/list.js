@@ -4,7 +4,8 @@
     $shipmentOrderId = $("#shipmentOrderId"),
     $deliveryStartDate = $("#deliveryStartDate"),
     $deliveryEndDate = $("#deliveryEndDate"),
-    $orderId = $("#orderId");
+    $orderId = $("#orderId"),
+    $tbody = $("#tbody");
     var rec = {
         autoclose: true,
         fontAwesome: true,
@@ -25,6 +26,7 @@
 
     var ordersView = new Orders([]);
     ko.applyBindings(ordersView);
+    $tbody.loading();
     //分页
     $orderListPage.pager({
         url: '/Shipment/List',
@@ -33,6 +35,7 @@
         method: "GET",
         callback: function (data, ui) {
             ordersView.orders(data.list);
+            $tbody.data("loading").hide();
         }
     });
 
@@ -51,6 +54,14 @@
         var pager = $orderListPage.data("pager");
         pager.opts.param = searchArgs();
         pager.jump(1);
+        $tbody.data("loading").show();
+    }
+
+    function getData() {
+        var pager = $orderListPage.data("pager");
+        pager.opts.param = searchArgs();
+        pager.jump(pager.opts.currentPage);
+        $tbody.data("loading").show();
     }
 
     $shipmentOrderId.bind('keypress', function (event) {
@@ -117,7 +128,7 @@
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
                             shortTips("操作成功"); 
-                            search();
+                            getData();
                         } else {
                             shortTips(errorMessage(result));
                         }
@@ -160,7 +171,7 @@
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
                             shortTips("操作成功");
-	                        search();
+                            getData();
                         } else {
                             shortTips(errorMessage(result));
                         }
@@ -204,7 +215,7 @@
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();
                             shortTips("操作成功");
-                            search();
+                            getData();
                         } else {
                             shortTips(errorMessage(result));
                         }
