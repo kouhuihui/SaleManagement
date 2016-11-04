@@ -99,6 +99,7 @@ namespace SaleManagement.Protal.Controllers
             user.Mobile = model.Mobile;
             user.Name = model.Name;
             user.Email = model.Email;
+            user.RoleId = model.RoleId;
 
             var result = await manager.UpdateAsync(user);
             return Json(result);
