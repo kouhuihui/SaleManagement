@@ -3,6 +3,9 @@
 @{
     Title("首页");
 }
+@section css{
+    <link href="~/static/fullcalendar/fullcalendar.css" rel="stylesheet" />
+}
 <div>
     <ul class="breadcrumb">
         <li>
@@ -64,3 +67,62 @@
         </a>
     </div>
 </div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>预计出货日历</h2>
+            </div>
+
+            <div class="box-content">
+                <div id='calendar' class="ptop5"></div>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+@section scripts{
+    <script src="~/static/moment/moment.min.js"></script>
+    <script src="~/static/fullcalendar/fullcalendar.js"></script>
+    <script src="~/static/fullcalendar/locale-all.js"></script>
+    <script type="text/javascript">
+        $().ready(function () {
+            var initialLocaleCode = 'en';
+
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: ''
+                },
+                locale: 'zh-cn',
+                buttonIcons: false, // show the prev/next text
+                navLinks: true, // can click day/week names to navigate views
+                editable: true,
+                eventLimit: true, // allow "more" link when too many events
+                events: function (start, end, timezone, callback) {
+                    $.ajax({
+                        url: '/order/Calendar',
+                        dataType: 'json',
+                        data: {
+                            // our hypothetical feed requires UNIX timestamps
+                            start: start._d.toLocaleDateString(),
+                            end: end._d.toLocaleDateString()
+                        },
+                        success: function (result) {
+                            if (result.succeeded) {
+                                callback(result.data);
+                            }
+                        }
+                    });
+                },
+                eventClick: function (calEvent, jsEvent, view) {
+                    var startDate = formatDate(calEvent.start._d);
+                    location.href = "/order/list?IsProcess=true&DeliveryStartDate=" + startDate + "&DeliveryEndDate=" + startDate;
+                }
+            });
+        })
+    </script>
+}

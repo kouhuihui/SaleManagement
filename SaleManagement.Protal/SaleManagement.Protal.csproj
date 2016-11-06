@@ -347,6 +347,7 @@
     <Content Include="static\fullcalendar\fullcalendar.css" />
     <Content Include="static\fullcalendar\fullcalendar.js" />
     <Content Include="static\fullcalendar\fullcalendar.min.js" />
+    <Content Include="static\fullcalendar\locale-all.js" />
     <Content Include="static\images\404.png" />
     <Content Include="static\images\ajax-loaders\ajax-loader-1.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-2.gif" />
@@ -448,7 +449,6 @@
     <Content Include="static\js\User\edit.js" />
     <Content Include="static\js\User\users.js" />
     <Content Include="static\misc\uploadify.swf" />
-    <Content Include="static\moment\moment.js" />
     <Content Include="static\moment\moment.min.js" />
     <Content Include="static\responsive-tables\responsive-tables.css" />
     <Content Include="static\responsive-tables\responsive-tables.js" />

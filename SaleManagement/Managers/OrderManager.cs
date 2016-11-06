@@ -88,7 +88,7 @@ namespace SaleManagement.Managers
             return new Paging<Order>(start, take, total, list);
         }
 
-        public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null, DateTime? outPutWaxDate =null)
+        public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null, DateTime? outPutWaxDate = null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId);
             if (filter != null)
@@ -99,7 +99,7 @@ namespace SaleManagement.Managers
             {
                 var outPutWaxEndDate = outPutWaxDate.Value.AddDays(1);
                 var outPutWaxOrderIds = DbContext.Set<OrderOperationLog>().Where(o => o.Status == OrderStatus.OutputWax && o.Created >= outPutWaxDate
-                &o.Created<outPutWaxEndDate).Select(o => o.OrderId);
+                & o.Created < outPutWaxEndDate).Select(o => o.OrderId);
                 query = query.Where(o => outPutWaxOrderIds.Any(r => r == o.Id));
             }
             var total = await query.CountAsync();
@@ -147,6 +147,37 @@ namespace SaleManagement.Managers
                 RushCount = unionList.FirstOrDefault(k => k.Status == "rush")?.Count ?? 0,
                 VeryRushCount = unionList.FirstOrDefault(k => k.Status == "veryRush")?.Count ?? 0,
             };
+        }
+
+        public async Task<IEnumerable<OrderCalendar>> GetOrderCalendarsAsync(DateTime start, DateTime end)
+        {
+            var query = DbContext.Set<Order>().AsQueryable().Where(o => o.ComplayId == User.CompanyId && o.DeliveryDate >= start && o.DeliveryDate <= end);
+
+            var filter = GetNoShipOrderFilter();
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            var deliveryDates = await query.Select(r => new { DeliveryDate = r.DeliveryDate.Value }).ToListAsync();
+
+            var deliveryDateList = new List<DateTime>();
+            foreach (var deliveryDate in deliveryDates)
+            {
+                deliveryDateList.Add(deliveryDate.DeliveryDate.Date);
+            }
+
+            return deliveryDateList.GroupBy(o => o).Select(w => new OrderCalendar
+            {
+                Date = w.Key,
+                ProcessCount = w.Count()
+            });
+        }
+
+        private Func<IQueryable<Order>, IQueryable<Order>> GetNoShipOrderFilter()
+        {
+            Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query => query.Where(o =>  o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
+            return filter;
         }
     }
 }

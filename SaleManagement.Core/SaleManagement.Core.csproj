@@ -169,6 +169,7 @@
     <Compile Include="Store\SaleManagementDbContext.cs" />
     <Compile Include="ViewModel\AccountStatistic.cs" />
     <Compile Include="ViewModel\AttachmentItem.cs" />
+    <Compile Include="ViewModel\OrderCalendar.cs" />
     <Compile Include="ViewModel\OrderSetStoneStatistic.cs" />
     <Compile Include="ViewModel\OrderStatistics.cs" />
     <Compile Include="ViewModel\PagingRequest.cs" />

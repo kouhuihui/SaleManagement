@@ -20,6 +20,8 @@ namespace SaleManagement.Protal.Models.Order
 
         public string CurrentUserId { get; set; }
 
+        public bool IsProcess { get; set; }
+
         public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
@@ -57,8 +59,8 @@ namespace SaleManagement.Protal.Models.Order
 
                 if (!string.IsNullOrEmpty(OrderId))
                 {
-                    var orderIds = OrderId.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries);
-                    query = query.Where(f => orderIds.Any(o=>f.Id.Contains(o)));
+                    var orderIds = OrderId.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    query = query.Where(f => orderIds.Any(o => f.Id.Contains(o)));
                 }
 
                 if (DeliveryStartDate.HasValue)
@@ -69,7 +71,7 @@ namespace SaleManagement.Protal.Models.Order
                 if (DeliveryEndDate.HasValue)
                 {
                     var endDate = DeliveryEndDate.Value.AddDays(1);
-                    query = query.Where(f => f.DeliveryDate <= endDate);
+                    query = query.Where(f => f.DeliveryDate < endDate);
                 }
 
                 if (ColorFormId.HasValue)
@@ -99,6 +101,11 @@ namespace SaleManagement.Protal.Models.Order
                 if (!string.IsNullOrEmpty(CurrentUserId))
                 {
                     query = query.Where(f => f.CurrentUserId == CurrentUserId);
+                }
+
+                if (IsProcess)
+                {
+                    query = query.Where(o => o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
                 }
 
                 return query.AsNoTracking();

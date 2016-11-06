@@ -53,7 +53,10 @@
             colorFormId: $colorFormId.val(),
             urgentStatus: $("#UrgentStatus").val(),
             rushStatus: $("#RushStatus").val(),
-            outPutWaxDate: $outPutWaxDate.val()
+            outPutWaxDate: $outPutWaxDate.val(),
+            deliveryStartDate: $("#DeliveryStartDate").val(),
+            deliveryEndDate: $("#DeliveryEndDate").val(),
+            isProcess:  $("#IsProcess").val()
         }
     }
 

@@ -619,6 +619,17 @@ namespace SaleManagement.Protal.Controllers
             return View(logs);
         }
 
+        public async Task<JsonResult> Calendar(DateTime start, DateTime end)
+        {
+            var manager = new OrderManager(User);
+            var calendars = await manager.GetOrderCalendarsAsync(start, end);
+            return Json(true, string.Empty, calendars.Select(c => new
+            {
+                title = c.ProcessCount,
+                start = c.Date.ToString(SaleManagentConstants.UI.DateStringFormat)
+            }));
+        }
+
         private static MemoryStream MakeThumbnail(Stream originalImageStream, int dHeight, int dWidth)
         {
             Image iSource = Image.FromStream(originalImageStream); ;//从指定的文件创建Image
@@ -724,13 +735,13 @@ namespace SaleManagement.Protal.Controllers
         {
             if (order.OrderRushStatus != OrderRushStatus.Normal)
             {
-                order.DeliveryDate = order.Created.AddDays(GetRushDays(order.OrderRushStatus));
+                order.DeliveryDate = order.Created.Date.AddDays(GetRushDays(order.OrderRushStatus));
                 return;
             }
 
             if (!order.DeliveryDate.HasValue)
             {
-                order.DeliveryDate = order.Created.AddDays(shippingScheduleDays);
+                order.DeliveryDate = order.Created.Date.AddDays(shippingScheduleDays);
             }
         }
 

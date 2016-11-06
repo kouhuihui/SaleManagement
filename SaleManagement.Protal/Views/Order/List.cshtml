@@ -1,5 +1,5 @@
 ﻿@using SaleManagement.Core;
-@model SaleManagement.Protal.Models.Order.OrdersQueryRequest 
+@model SaleManagement.Protal.Models.Order.OrdersQueryRequest
 @{
     Title("订单管理");
 }
@@ -16,37 +16,56 @@
     </ul>
 </div>
 <div class="search">
-    <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
-    @Html.Partial("_Customer")    
-    @Html.Partial("_ColorForm")
-    <div class="textfield combobox pull-left">
-        @{
-            var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
-        }
-        <div class="combobox-body" style="width: 120px;">
-            @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
+    <div style=" display:inline-block;margin-bottom:5px;">
+        <div class="textfield pull-left "><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
+        @Html.Partial("_Customer")
+        @Html.Partial("_ColorForm")
+        <div class="textfield combobox pull-left">
+            @{
+                var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
+            }
+            <div class="combobox-body" style="width: 200px;">
+                @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
+            </div>
         </div>
     </div>
-    <div class="textfield  pull-left">
-        @{
+    <div>
+        <div class="textfield  pull-left ">
+            @{
             var urgentStatuItems = EnumHelper.GetSelectList(typeof (SaleManagement.Protal.Models.Order.UrgentStatus));
-        }
-        <div class="combobox-body" style="width: 80px;">
-            @Html.DropDownListFor(m => m.UrgentStatus, urgentStatuItems, "加急状态", new {Class = "pull-left form-control"})
+            }
+            <div class="combobox-body" style="width: 200px;">
+                @Html.DropDownListFor(m => m.UrgentStatus, urgentStatuItems, "加急状态", new {Class = "pull-left form-control"})
+            </div>
         </div>
-    </div>
-    <div class="textfield  pull-left hidden">
-        @{
+        <div class="textfield  pull-left hidden">
+            @{
             var orderRushStatusItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderRushStatus));
-        }
-        <div class="combobox-body" style="width: 100px;">
-            @Html.DropDownListFor(m => m.RushStatus, orderRushStatusItems, "客户加急状态", new { Class = "pull-left form-control" })
+            }
+            <div class="combobox-body" style="width: 200px;">
+                @Html.DropDownListFor(m => m.RushStatus, orderRushStatusItems, "客户加急状态", new { Class = "pull-left form-control" })
+            </div>
         </div>
+        <div class="textfield date-conditions pull-left">
+            <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input class="form-control" id="outPutWaxDate" type="text" placeholder="出蜡日期"></div></div>
+        </div>
+        <div class="textfield date-conditions pull-left">
+            <div class="textfield pull-left">
+                <div class="field-body" style="width: 200px;">
+                    @Html.TextBoxFor(m => m.DeliveryStartDate,new { Class= "form-control", placeholder = "预计出货开始日期" })
+                </div>
+            </div>
+        </div>
+        <div class="textfield date-conditions pull-left">
+            <div class="textfield pull-left">
+                <div class="field-body" style="width: 200px;">
+                    @Html.TextBoxFor(m => m.DeliveryEndDate, new { Class = "form-control", placeholder = "预计出货结束日期" })
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(m=>m.IsProcess)
+        <button id="btnSearch" class="btn btn-primary">查询</button>
     </div>
-    <div class="textfield date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-body" style="width: 80px;"><input class="form-control" id="outPutWaxDate" type="text" placeholder="出蜡日期"></div></div>
-    </div>
-    <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 
 <div class="row">
@@ -138,7 +157,7 @@
                     </thead>
                     <tbody id="tbody" data-bind="foreach:orders">
                         <tr>
-                            <td><input type="checkbox" data-bind="value:id,attr:{status:status,outputWaxCost:outputWaxCost},checked:false"/></td>
+                            <td><input type="checkbox" data-bind="value:id,attr:{status:status,outputWaxCost:outputWaxCost},checked:false" /></td>
                             <td>
                                 <a data-bind="click:$parent.viewProcessClick" title="查看订单流程"><i class="glyphicon glyphicon-eye-open"></i></a>
                                 <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
@@ -147,7 +166,7 @@
                                 <i class="glyphicon glyphicon-bell yellow" title="紧急"></i>
                                 <!-- /ko -->
                                 <!-- ko if:urgent==2 -->
-                                <i class="glyphicon glyphicon-bell red"  title="非常紧急"></i>
+                                <i class="glyphicon glyphicon-bell red" title="非常紧急"></i>
                                 <!-- /ko -->
                             </td>
                             <td data-bind="text:statusName"></td>
