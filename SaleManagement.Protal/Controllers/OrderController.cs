@@ -215,7 +215,10 @@ namespace SaleManagement.Protal.Controllers
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
             order.OrderRushStatus = request.OrderRushStatus;
-            order.Created = Convert.ToDateTime(request.Created);
+            if (request.Created != null)
+            {
+                order.Created = Convert.ToDateTime(request.Created);
+            }
 
             var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
             SetOrderDeliveryDate(order, shippingScheduleDays);

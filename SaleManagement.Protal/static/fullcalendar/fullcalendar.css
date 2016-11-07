@@ -517,9 +517,9 @@ temporary rendered events).
 .fc-event {
 	position: relative; /* for resize handle and other inner positioning */
 	display: block; /* make the <a> tag block */
-	font-size: 14px;
-	line-height: 25px;
-    text-align:center;
+	font-size: 24px;
+	line-height: 50px;
+     text-align:center;
 	border-radius: 3px;
 	border: 1px solid #3a87ad; /* default BORDER color */
 	font-weight: normal; /* undo jqui's ui-widget-header bold */
