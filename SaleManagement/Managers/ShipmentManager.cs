@@ -84,6 +84,7 @@ namespace SaleManagement.Managers
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
+
         public async Task<IEnumerable<OrderSetStoneStatistic>> GetOrderSetStoneStatisticsAsync(ReportQueryBaseDto reportQuery)
         {
             var query = DbContext.Set<ShipmentOrderInfo>().Where(t => t.Order.ComplayId == User.CompanyId);
@@ -99,24 +100,24 @@ namespace SaleManagement.Managers
 
             if (!string.IsNullOrEmpty(reportQuery.CustomerId))
             {
-                query = query.Where(t => t.ShipmentOrder.CustomerId== reportQuery.CustomerId);
+                query = query.Where(t => t.ShipmentOrder.CustomerId == reportQuery.CustomerId);
             }
 
             var orderIds = query.Select(r => r.Order.Id);
-            if (orderIds == null || !orderIds.Any())
+            if (!orderIds.Any())
                 return Enumerable.Empty<OrderSetStoneStatistic>();
 
-            var orderSetStoneStatistics = await DbContext.Set<OrderSetStoneInfo>().Where(r => orderIds.Contains(r.OrderId))
-                 .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).Select(a => new OrderSetStoneStatistic
+            var orderSetStoneStatistics = DbContext.Set<OrderSetStoneInfo>().Where(r => orderIds.Contains(r.OrderId))
+                 .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).ToList().Select(a => new OrderSetStoneStatistic
                  {
                      SetStoneName = a.Key.MathchStoneName,
-                     Weight = Math.Round(a.Sum(g => g.Weight),3),
-                     Number = a.Sum(g=> g.Number)
-                 }).ToListAsync();
+                     Weight = a.Sum(g => (decimal)g.Weight),
+                     Number = a.Sum(g => g.Number)
+                 }).ToList();
 
-            var totalWeight = Math.Round(orderSetStoneStatistics.Sum(r => r.Weight), 3);
+            var totalWeight = orderSetStoneStatistics.Sum(r => r.Weight);
             var totalNumber = orderSetStoneStatistics.Sum(r => r.Number);
-            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight,Number = totalNumber });
+            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight, Number = totalNumber });
             return orderSetStoneStatistics;
         }
         private async Task UpdateShipmentOrderInfosAsync(ShipmentOrder order)
