@@ -126,15 +126,7 @@ namespace SaleManagement.Protal.Controllers
 
             var serialNumberManager = new SerialNumberManager(User);
             var manager = new OrderManager(User);
-            if (string.IsNullOrEmpty(order.Id))
-            {
-                order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
-            }
-            else
-            {
-                if (await manager.GetOrderAsync(order.Id) != null)
-                    return Json(false, "订单号已存在");
-            }
+            order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
 
             if (attachmentIds.Any())
             {
@@ -215,11 +207,6 @@ namespace SaleManagement.Protal.Controllers
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
             order.OrderRushStatus = request.OrderRushStatus;
-            if (request.Created != null)
-            {
-                order.Created = Convert.ToDateTime(request.Created);
-            }
-
             var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
             SetOrderDeliveryDate(order, shippingScheduleDays);
             var result = await orderManager.UpdateOrderAsync(order);

@@ -54,9 +54,9 @@
                 <span class="text-danger">*</span>角色
             </label>
             <div class="col-md-6">
-                @Html.DropDownList("SystemRoles",null, new { @class = "form-control text-box single-line" })
-                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-            </div>
+             @Html.DropDownListFor(model => model.RoleId, (IEnumerable<SelectListItem>)ViewBag.Roles, "请选择", new { @class = "form-control text-box single-line" })
+            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+           </div>
         </div>
         <div class="form-group">
             <label class="control-label col-md-2" for="Account">

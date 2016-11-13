@@ -76,13 +76,11 @@ namespace SaleManagement.Protal.Controllers
             var manager = new UserManager();
             var user = await manager.FindByIdAsync(id);
             var roles = await new RoleManager(User).GetRolesAsync();
-            ViewBag.SystemRoles = new SelectList(roles, "Id", "Name", user.RoleId);
-            //    Select(r => new SelectListItem
-            //{
-            //    Text = r.Name,
-            //    Value = r.Id.ToString(),
-            //    Selected = r.Id == user.RoleId
-            //}).ToList();
+            ViewBag.Roles = roles.Select(r => new SelectListItem
+            {
+                Text = r.Name,
+                Value = r.Id.ToString()
+            });
             return View(new SaleUserEditViewModel(user));
         }
 

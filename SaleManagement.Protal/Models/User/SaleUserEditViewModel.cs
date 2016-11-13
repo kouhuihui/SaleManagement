@@ -22,6 +22,7 @@ namespace SaleManagement.Protal.Models
             Email = user.Email;
             UserName = user.UserName;
             Name = user.Name;
+            RoleId = user.RoleId;
         }
 
 

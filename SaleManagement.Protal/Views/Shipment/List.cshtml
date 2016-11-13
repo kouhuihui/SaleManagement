@@ -16,24 +16,25 @@
 </div>
 
 <div class="search">
-    @Html.Partial("_Customer")
-    <div class="textfield pull-left"><div class="field-body" style="width: 150px;"><input id="shipmentOrderId" class="form-control" type="text" placeholder="输入出货单号"></div></div>
-    <div class="date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">预计交货时间：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryStartDate" type="text" placeholder="开始日期"></div></div>
-        <span class="pull-left">-</span>
-        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="deliveryEndDate" type="text" placeholder="结束日期"></div></div>
+    <div style=" display:inline-block;margin-bottom:5px;">
+        @Html.Partial("_Customer")
+        <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="shipmentOrderId" class="form-control" type="text" placeholder="输入出货单号"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input class="form-control" id="deliveryStartDate" type="text" placeholder="预计交货开始日期"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input class="form-control" id="deliveryEndDate" type="text" placeholder="预计交货结束日期"></div></div>
     </div>
-    <div class="textfield pull-left"><div class="field-body" style="width: 150px;"><input id="orderId" class="form-control" type="text" placeholder="输入订单号"></div></div>
-    <div class="combobox pull-left">
-        @{
-            var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.ShipmentOrderAduitStatus));
-        }
-        <div class="combobox-body" style="width: 150px;">
-            @Html.DropDownList("shipmentOrderAduitStatus", orderStatusItem, "请选择出货单状态", new { Class = "pull-left form-control" })
+    <div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入订单号"></div></div>
+        <div class="combobox pull-left">
+            @{
+                var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.ShipmentOrderAduitStatus));
+            }
+            <div class="combobox-body" style="width: 200px;">
+                @Html.DropDownList("shipmentOrderAduitStatus", orderStatusItem, "请选择出货单状态", new { Class = "pull-left form-control" })
+            </div>
         </div>
-    </div>
 
-    <button id="btnSearch" class="btn btn-primary">查询</button>
+        <button id="btnSearch" class="btn btn-primary">查询</button>
+    </div>
 </div>
 
 <div class="row">
@@ -42,12 +43,12 @@
             <div class="box-header well" data-original-title="">
                 <h2>生产单列表</h2>
                 <div class="box-icon">
-                    <a id="btnCreatedRecord" class="btn" title="出货单不进入对账">
-                        <i class="glyphicon glyphicon-book"></i>
-                        生产出货记录
-                    </a>
                     @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                     {
+                        <a id="btnCreatedRecord" class="btn" title="出货单不进入对账">
+                            <i class="glyphicon glyphicon-book"></i>
+                            生产出货记录
+                        </a>
                         <a id="btnCancelAudit" class="btn">
                             <i class="glyphicon glyphicon-remove"></i>
                             取消审核

@@ -132,7 +132,7 @@ namespace SaleManagement.Managers
                              {
                                  CustomerId = a.CustomerId,
                                  CustomerName = c.Name,
-                                 PaymentInQuery = ur?.Payment ?? 0,
+                                 PaymentInQuery = Math.Round(ur?.Payment ?? 0,2),
                                  SurplusArrearage = Math.Round(a.SurplusArrearage, 2)
                              }).OrderByDescending(c => c.SurplusArrearage).ToList();
             var totalPaymentInQuery = Math.Round(statistic.Sum(r => r.PaymentInQuery), 2);

@@ -46,8 +46,8 @@ namespace SaleManagement.Protal.Controllers
 
             var orderManager = new OrderManager(User);
             var orders = await orderManager.GetOrdersAsync(orderIds);
-            //if (!orders.All(r => r.OrderStatus == OrderStatus.ToBeShip))
-            //    return Error("订单号状态不是待出货");
+            if (!orders.All(r => r.OrderStatus == OrderStatus.ToBeShip))
+                return Error("订单号状态不是待出货");
 
             var customers = orders.Select(r => r.Customer).Distinct().ToList();
             if (customers.Count > 1)
