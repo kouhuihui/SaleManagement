@@ -46,8 +46,9 @@
                            <div class="clearfix"></div><br>
                             <div class="input-group input-group-lg">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-lock red"></i></span>
-                                @Html.PasswordFor(model => model.Password, new { @class = "form-control", placeholder = "请输入密码" })
+                                @Html.PasswordFor(model => model.Password, new {@class = "form-control", placeholder = "请输入密码"})
                             </div>
+                            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl"/>
                             <div class="clearfix"></div>
                             <p class="center">
                                 <button type="submit" class="btn btn-primary">登录</button>
