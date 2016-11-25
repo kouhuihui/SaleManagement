@@ -298,6 +298,20 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Areas\Customer\Views\web.config" />
+    <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\List.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\Booking.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\Process.cshtml" />
+    <Content Include="Areas\Customer\Views\Reconciliation\List.cshtml" />
+    <Content Include="Bundles.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
+    <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\ShipmentStatistics.cshtml" />
+    <Content Include="Areas\Customer\Views\Order\MyOrders.cshtml" />
+    <None Include="Properties\PublishProfiles\publish.pubxml" />
     <Content Include="static\bootstrap-datepicker\css\bootstrap-datetimepicker.css" />
     <Content Include="static\bootstrap-datepicker\css\datepicker-custom.css" />
     <Content Include="static\bootstrap-datepicker\js\bootstrap-datepicker.js" />
@@ -313,8 +327,15 @@
     <Content Include="static\bootstrap\css\bootstrap.css" />
     <Content Include="static\bootstrap\css\font-awesome-ie7.min.css" />
     <Content Include="static\bootstrap\css\font-awesome.css" />
+    <Content Include="static\bootstrap\fonts\fontawesome-webfont.eot" />
     <Content Include="static\bootstrap\fonts\fontawesome-webfont.svg" />
+    <Content Include="static\bootstrap\fonts\fontawesome-webfont.ttf" />
+    <Content Include="static\bootstrap\fonts\fontawesome-webfont.woff" />
+    <Content Include="static\bootstrap\fonts\FontAwesome.otf" />
+    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="static\bootstrap\js\bootstrap.js" />
     <Content Include="static\bootstrap\js\bootstrap.min.js" />
     <Content Include="static\bootstrap\js\html5shiv.min.js" />
@@ -343,7 +364,10 @@
     <Content Include="static\css\uploadify.css" />
     <Content Include="static\FileUpload\jquery.fileupload.js" />
     <Content Include="static\FileUpload\jquery.iframe-transport.js" />
+    <Content Include="static\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="static\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="static\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="static\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="static\fullcalendar\fullcalendar.css" />
     <Content Include="static\fullcalendar\fullcalendar.js" />
     <Content Include="static\fullcalendar\fullcalendar.min.js" />
@@ -378,17 +402,17 @@
     <Content Include="static\js\BasicData\editColorForm.js" />
     <Content Include="static\js\BasicData\editGemCategory.js" />
     <Content Include="static\js\BasicData\editMatchStone.js" />
+    <Content Include="static\js\BasicData\editProductCategory.js" />
     <Content Include="static\js\BasicData\gemCategories.js" />
     <Content Include="static\js\BasicData\matchStones.js" />
     <Content Include="static\js\BasicData\productCategories.js" />
-    <Content Include="static\js\BasicData\editProductCategory.js" />
     <Content Include="static\js\charisma.js" />
     <Content Include="static\js\common.js" />
     <Content Include="static\js\Control\colorForm.js" />
     <Content Include="static\js\Control\customer.js" />
+    <Content Include="static\js\Crm\edit.js" />
     <Content Include="static\js\Crm\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
-    <Content Include="static\js\Crm\edit.js" />
     <Content Include="static\js\Customer\Order\myOrders.js" />
     <Content Include="static\js\Customer\Order\shipmentStatistics.js" />
     <Content Include="static\js\DailyGoldPrice\Add.js" />
@@ -409,25 +433,6 @@
     <Content Include="static\js\jquery.ui.widget.js" />
     <Content Include="static\js\knockout-3.4.0.js" />
     <Content Include="static\js\modalDialog.js" />
-    <Content Include="static\bootstrap\fonts\fontawesome-webfont.eot" />
-    <Content Include="static\bootstrap\fonts\fontawesome-webfont.ttf" />
-    <Content Include="static\bootstrap\fonts\fontawesome-webfont.woff" />
-    <Content Include="static\bootstrap\fonts\FontAwesome.otf" />
-    <Content Include="Areas\Customer\Views\web.config" />
-    <Content Include="Areas\Customer\Views\Home\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\Order\List.cshtml" />
-    <Content Include="Areas\Customer\Views\Order\Booking.cshtml" />
-    <Content Include="Areas\Customer\Views\Order\Process.cshtml" />
-    <Content Include="Areas\Customer\Views\Reconciliation\List.cshtml" />
-    <Content Include="Bundles.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Areas\Customer\Views\Order\ShipmentOrderDetail.cshtml" />
-    <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
-    <Content Include="Areas\Customer\Views\Order\ShipmentStatistics.cshtml" />
-    <Content Include="Areas\Customer\Views\Order\MyOrders.cshtml" />
-    <None Include="Properties\PublishProfiles\publish.pubxml" />
-    <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="static\js\Mvc\jquery.validate.js" />
     <Content Include="static\js\Mvc\jquery.validate.min.js" />
     <Content Include="static\js\Mvc\jquery.validate.unobtrusive.js" />
@@ -475,12 +480,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="static\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="static\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="static\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="static\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Views\User\List.cshtml" />
     <Content Include="Views\User\Create.cshtml" />
     <Content Include="Views\User\_EditForm.cshtml" />
@@ -540,6 +539,7 @@
     <Content Include="Views\Reconciliation\Edit.cshtml" />
     <Content Include="Views\Order\Stop.cshtml" />
     <Content Include="Views\Order\Process.cshtml" />
+    <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

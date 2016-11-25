@@ -78,10 +78,13 @@ Customer.prototype = {
             $vCustomerInput.select();
             $customerUl.show();
         });
-        $vCustomerInput.on("keyup", function () {
+        $vCustomerInput.on("blur", function () {
+           $customerUl.hide();
+        });
+          $vCustomerInput.on("keyup", function () {
             _this.doSearch();
         });
-        $customerUl.delegate("li", "click", function () {
+        $customerUl.delegate("li", "mousedown", function () {
             var $this = $(this);
             var value = $this.attr("value");
             if (value === "") {

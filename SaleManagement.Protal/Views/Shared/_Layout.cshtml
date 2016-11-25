@@ -73,15 +73,12 @@
     <div class="ch-container">
         <div class="row">
             <!-- left menu starts -->
-            <div class="col-sm-2 col-lg-2">
+            <div class="col-sm-2 col-lg-2 pr0">
                 <div class="sidebar-nav">
                     <div class="nav-canvas">
                         <div class="nav-sm nav nav-stacked">
                         </div>
                         <ul class="nav nav-pills nav-stacked main-menu">
-                            <li>
-                                <a class="ajax-link" href="~/home/index"><i class="glyphicon glyphicon-eye-open"></i><span>首页</span></a>
-                            </li>
                             @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 1000))
                             {
                                 <li class="accordion">
@@ -197,7 +194,7 @@
             </div>
             <!--/span-->
             <!-- left menu ends -->
-            <div id="content" class="col-lg-10 col-sm-10">
+            <div id="content" class="col-lg-10 col-sm-10 pl8">
                 @RenderBody()
             </div>
         </div>

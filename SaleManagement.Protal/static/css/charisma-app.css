@@ -13,13 +13,20 @@ html, body {
     font-family:  Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif; 
 }
 
+.pr0{
+    padding-right: 0px;
+}
+.pl8{
+    padding-left: 8px;
+}
+
 
 select {
     background-color: #fff;
 }
 
 .ch-container {
-    padding: 0 15px;
+    padding: 0 0px;
 }
 
 .top-block {
@@ -306,9 +313,17 @@ div.center, p.center, img.center {
     border-radius: 5px;
     margin-bottom: 0;
     padding-bottom: 0;
-    max-height: none;
+    max-height: none; 
 }
 
+.sidebar-nav a{
+    color: #333;
+}
+
+.sidebar-nav a>i{
+    color: #1992fd;
+    margin-right: 5px;
+}
     .sidebar-nav > ul > li:not(.nav-header) {
         margin-right: -2px;
         margin-left: -2px;
@@ -342,10 +357,8 @@ div.center, p.center, img.center {
 }
 
 .navbar-inner {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    line-height: 30px;
-    height: 60px;
+    line-height: 50px;
+    height: 50px;
 }
 
 
@@ -426,6 +439,8 @@ ul.ajax-loaders {
 
 .main-menu > li > a {
     border: 1px solid rgba(221, 221, 221, 0.46);
+    border-radius: 0px;
+    padding-left: 50px;
 }
 
 .main-menu > li {
@@ -448,12 +463,16 @@ ul.ajax-loaders {
 }
 
 ul.main-menu li:hover {
-    margin-left: 8px;
+    margin-left: 0px;
 }
 
 ul.main-menu li.active {
-    margin-left: 8px;
+    margin-left: 0px;
 }
+ul.main-menu li.active a {
+    color: #1992fd;
+}
+
 
 ul.main-menu li.nav-header:hover {
     margin-left: 0;
@@ -469,9 +488,18 @@ ul.main-menu li:not(.nav-header) {
 
 .accordion > ul {
     display: none;
-    margin-left: 10px;
+    padding-left: 50px;
 }
 
+.accordion a.current,
+.accordion a.current:hover,
+.accordion a.current:focus{
+    background-color: #09C;
+    color: #fff;
+}
+.accordion a.current i{
+    color: #fff;
+}
 .nav-sm {
     display: none;
 }
@@ -652,7 +680,7 @@ ul.github-buttons li {
     }
 
     .ch-container {
-        padding: 0 20px;
+        padding: 0 0px;
     }
 }
 
@@ -862,4 +890,8 @@ ul.github-buttons li {
 }
 .box-header .back{
     display:none;
+}
+
+.table tr:hover{
+    background-color: #ebf4ff!important;
 }
