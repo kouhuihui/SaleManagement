@@ -98,6 +98,7 @@
     <Compile Include="AjaxResponse.cs" />
     <Compile Include="Extensions\IOwinContextExtensions.cs" />
     <Compile Include="Help\ExcelHelp.cs" />
+    <Compile Include="Mvc\BaseAuthorizeAttribute.cs" />
     <Compile Include="Mvc\BaseController.cs" />
     <Compile Include="Mvc\BaseAuthenticateAttribute.cs" />
     <Compile Include="Mvc\DciksonUserWebViewPage.cs" />

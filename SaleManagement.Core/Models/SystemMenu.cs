@@ -21,5 +21,8 @@ namespace SaleManagement.Core.Models
         public int? parentId {get;set;}
 
         public int Order { get; set; }
+
+        [StringLength(SaleManagentConstants.Validations.DefaultStringLength)]
+        public string ControllerAction { get; set; }
     }
 }

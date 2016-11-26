@@ -24,6 +24,7 @@ namespace SaleManagement.Protal.Controllers
     [RoutePrefix("order")]
     public class OrderController : PortalController
     {
+        [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> List(OrdersQueryRequest request)
         {
@@ -46,6 +47,7 @@ namespace SaleManagement.Protal.Controllers
             });
         }
 
+        [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> MyOrders(OrdersQueryRequest request)
         {

@@ -18,6 +18,7 @@ namespace SaleManagement.Protal.Controllers
             return View();
         }
 
+        [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> List(CustomerQueryRequest request)
         {

@@ -14,6 +14,7 @@ namespace SaleManagement.Protal.Controllers
 {
     public class ShipmentController : PortalController
     {
+        [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> List(ShipmentOrdersQueryRequest request)
         {

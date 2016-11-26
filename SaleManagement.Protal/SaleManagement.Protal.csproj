@@ -293,6 +293,7 @@
     <Compile Include="Web\PortalAuthenticateAttribute.cs" />
     <Compile Include="Web\PortalController.cs" />
     <Compile Include="Web\PortalWebViewPage.cs" />
+    <Compile Include="Web\UrlAuthorizeAttribute.cs" />
     <Compile Include="Web\WeChatAttribute.cs" />
   </ItemGroup>
   <ItemGroup>

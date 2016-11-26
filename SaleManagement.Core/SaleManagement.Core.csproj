@@ -118,6 +118,10 @@
     <Compile Include="Migrations\201610220307280_AddOrderRush.Designer.cs">
       <DependentUpon>201610220307280_AddOrderRush.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201611261231283_ControllerAction.cs" />
+    <Compile Include="Migrations\201611261231283_ControllerAction.Designer.cs">
+      <DependentUpon>201611261231283_ControllerAction.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -214,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610220307280_AddOrderRush.resx">
       <DependentUpon>201610220307280_AddOrderRush.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201611261231283_ControllerAction.resx">
+      <DependentUpon>201611261231283_ControllerAction.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

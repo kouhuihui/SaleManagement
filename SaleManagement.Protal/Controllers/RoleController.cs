@@ -13,6 +13,7 @@ namespace SaleManagement.Protal.Controllers
     public class RoleController : PortalController
     {
         // GET: Role
+        [UrlAuthorize]
         public async Task<ActionResult> List()
         {
             var manager = new RoleManager(User);

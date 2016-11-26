@@ -18,6 +18,7 @@ namespace SaleManagement.Protal.Controllers
         /// 账目统计
         /// </summary>
         /// <returns></returns>
+        [UrlAuthorize]
         public async Task<ActionResult> AccountStatistics(ReportQueryBaseDto reportQuery)
         {
             if (!Request.IsAjaxRequest())
@@ -58,7 +59,7 @@ namespace SaleManagement.Protal.Controllers
             return result;
         }
 
-
+        [UrlAuthorize]
         public async Task<ActionResult> OrderSetStoneStatistics(SetStoneReportQuery reportQuery)
         {
             if (!Request.IsAjaxRequest())
@@ -92,6 +93,7 @@ namespace SaleManagement.Protal.Controllers
             return result;
         }
 
+        [UrlAuthorize]
         public async Task<ActionResult> ShipmentStatistics(ShipmentReportQuery reportQuery)
         {
             if (!Request.IsAjaxRequest())

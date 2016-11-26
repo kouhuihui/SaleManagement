@@ -15,6 +15,7 @@ namespace SaleManagement.Protal.Controllers
     {
         // GET: User
         [PagingParameterInspector]
+        [UrlAuthorize]
         public async Task<ActionResult> List(UserQueryRequest request)
         {
             if (!Request.IsAjaxRequest())

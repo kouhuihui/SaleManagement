@@ -17,6 +17,7 @@ namespace SaleManagement.Protal.Controllers
 {
     public class ReconciliationController : PortalController
     {
+        [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> List(ReconciliationQueryRequest request)
         {
