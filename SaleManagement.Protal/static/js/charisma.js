@@ -53,31 +53,18 @@ $(document).ready(function () {
             $(this).parent().addClass('active');
     });
 
-    //ajaxify menus
-    $('a.ajax-link').click(function (e) {
-        if (msie) e.which = 1;
-        if (e.which != 1 || !$('#is-ajax').prop('checked') || $(this).parent().hasClass('active')) return;
-        e.preventDefault();
-        $('.sidebar-nav').removeClass('active');
-        $('.navbar-toggle').removeClass('active');
-        $('#loading').remove();
-        $('#content').fadeOut().parent().append('<div id="loading" class="center">Loading...<div class="center"></div></div>');
-        var $clink = $(this);
-        History.pushState(null, null, $clink.attr('href'));
-        $('ul.main-menu li.active').removeClass('active');
-        $clink.parent('li').addClass('active');
-    });
-
     $('.accordion > a').click(function (e) {
         e.preventDefault();
         var $ul = $(this).siblings('ul');
         var $li = $(this).parent();
-        if ($ul.is(':visible')) $li.removeClass('active');
-        else $li.addClass('active');
+        //if ($ul.is(':visible')) $li.removeClass('active');
+        //else $li.addClass('active');
         $ul.slideToggle();
     });
 
-    $('.accordion li.active:first').parents('ul').slideDown();
+    var $activeli = $('.accordion li.active:first');
+    $activeli.parents('ul').slideDown();
+    $activeli.parents("ul").prev().addClass("current")
 });
 
 
