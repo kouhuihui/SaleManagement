@@ -119,7 +119,8 @@
             content: "确定审核通过" + id + "出货单？",
             type: "confirm",
             okCallBack: function (e, $el) {
-                $orderListPage.loading();
+                var $okModalBtn = $el.find(".okModalBtn");
+                $okModalBtn.attr("disabled", true)
                 $.ajax({
                     url: "/shipment/Audit?id=" + id,
                     type: "POST",
@@ -134,7 +135,7 @@
                         }
                     },
                     error: function (result) {
-                        $orderListPage.data("loading").hide();
+                        $okModalBtn.attr("disabled", false);
                     }
                 });
             }
