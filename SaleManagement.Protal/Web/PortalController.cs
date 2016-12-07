@@ -31,10 +31,10 @@ namespace SaleManagement.Protal.Web
                 Debugger.Break();
             }
 
-            LoggerHelper.Logger.LogError(string.Format("请求发生异常\r\nUrl:{0}\r\nController:{1}\r\nAction:{2}\r\n{3}",
+            LoggerHelper.Logger.LogError(string.Format("请求发生异常\r\nUrl:{0}\r\nController:{1}\r\nAction:{2}\r\n{3}\r\n{4}",
                 filterContext.HttpContext.Request.RawUrl,
                 filterContext.RouteData.GetRequiredString("controller"),
-                filterContext.RouteData.GetRequiredString("action"),filterContext.Exception.Message),
+                filterContext.RouteData.GetRequiredString("action"),filterContext.Exception.Message,filterContext.Exception.StackTrace),
                 filterContext.Exception);
 
             var validationException = filterContext.Exception as DbEntityValidationException;
