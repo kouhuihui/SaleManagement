@@ -77,7 +77,10 @@
                     </thead>
                     <tbody data-bind="foreach:shipmentStatistics">
                         <tr>
-                            <td data-bind="text:id"></td>
+                            <td>
+                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
+                                </a>
+                            </td>
                             <!-- ko if:customerName==null -->
                             <td>总计：</td>
                             <!-- /ko -->

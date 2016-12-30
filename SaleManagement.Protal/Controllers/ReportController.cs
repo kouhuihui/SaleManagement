@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
+using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
@@ -6,6 +8,7 @@ using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Web;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -145,7 +148,9 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
 
+            var stopwatch = Stopwatch.StartNew();
             var shipmentOrderInfos = await manager.GetShipmentOrderInfosAsync(reportQuery.GetShipmentOrderInfosQueryFilter());
+            stopwatch.Stop();
             var shipmentOrderInfoViewModels = shipmentOrderInfos.Select(f =>
             {
                 var shipmentOrderInfoViewModel = Mapper.Map<ShipmentOrderInfo, ShipmentOrderInfoViewModel>(f);
@@ -155,6 +160,8 @@ namespace SaleManagement.Protal.Controllers
                 shipmentOrderInfoViewModel.DeliveryDate = f.ShipmentOrder.DeliveryDate.ToShortDateString();
                 return shipmentOrderInfoViewModel;
             }).ToList();
+
+            var stopwatch2 = Stopwatch.StartNew();
             if (shipmentOrderInfoViewModels.Any())
             {
                 var total = new ShipmentOrderInfoViewModel
@@ -177,6 +184,8 @@ namespace SaleManagement.Protal.Controllers
                 };
                 shipmentOrderInfoViewModels.Add(total);
             }
+            stopwatch2.Stop();
+            LoggerHelper.Logger.LogInformation($"获取数据耗时{stopwatch.ElapsedMilliseconds}毫秒,统计数据耗时{stopwatch2.ElapsedMilliseconds}毫秒");
             return shipmentOrderInfoViewModels;
         }
     }
