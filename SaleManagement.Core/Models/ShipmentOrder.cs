@@ -49,5 +49,7 @@ namespace SaleManagement.Core.Models
         public ShipmentOrderAduitStatus AuditStatus { get; set; }
 
         public virtual ICollection<ShipmentOrderInfo> ShipmentOrderInfos { get; set; }
+
+        public virtual ICollection<RepairOrder> RepairOrders { get; set; }
     }
 }

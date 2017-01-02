@@ -30,15 +30,15 @@
             text-align: center;
         }
 
-        .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
-            padding: 5px;
-            border: 1px solid #000000;
-        }
+            .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+                padding: 5px;
+                border: 1px solid #000000;
+            }
 
-        .table tr th {
-            background-color: #ffffff;
-            font-weight: normal;
-        }
+            .table tr th {
+                background-color: #ffffff;
+                font-weight: normal;
+            }
     </style>
     <style type="text/css" media="print">
         @@media print {
@@ -59,10 +59,10 @@
                 width: 1200px;
             }
 
-            .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
-                padding: 5px;
-                border: 1px solid #000000 !important;
-            }
+                .table thead > tr > th, .table tbody > tr > th, .table tfoot > tr > th, .table thead > tr > td, .table tbody > tr > td, .table tfoot > tr > td {
+                    padding: 5px;
+                    border: 1px solid #000000 !important;
+                }
         }
     </style>
 </head>
@@ -180,50 +180,83 @@
                     </tr>
                 </tbody>
             </table>
-
-            <div class="mtop10">
-                <table class="table table-bordered bootstrap-datatable">
-                    <tbody>
-                        <tr>
-                            <th>订单号</th>
-                            <th>副石名称</th>
-                            <th>价格(元/ct)</th>
-                            <th>数量(粒)</th>
-                            <th>工费(元)</th>
-                            <th>总重(ct)</th>
-                            <th>副石额(元)</th>
-                        </tr>
-                        @foreach (var item in Model.ShipmentOrderInfos)
-                        {
-                            var count = item.OrderSetStoneInfos.Count();
-                            if (count > 0)
+            @if (Model.RepairOrders != null && Model.RepairOrders.Any())
+            {
+                <div class="mtop10">
+                    <div class="col-md-4 col-xs-4">维修货</div>
+                    <table class="table table-bordered bootstrap-datatable">
+                        <tbody>
+                            <tr>
+                                <th>品类</th>
+                                <th>金重(g)</th>
+                                <th>金额(元)</th>
+                                <th>粒数</th>
+                                <th>石重(ct)</th>
+                                <th>石值(元)</th>
+                                <th>总额(元)</th>
+                            </tr>
+                            @foreach (var item in Model.RepairOrders)
                             {
                                 <tr>
-                                    <td rowspan="@(count == 0 ? 0 : count + 2)">@item.Id</td>
-                                </tr>
-                                foreach (var setStone in item.OrderSetStoneInfos)
-                                {
-                                    <tr>
-                                        <td>@setStone.MatchStoneName</td>
-                                        <td>@setStone.Price</td>
-                                        <td>@setStone.Number</td>
-                                        <td>@setStone.SetStoneWorkingCost</td>
-                                        <td>@setStone.Weight</td>
-                                        <td>@setStone.TotalAmount.ToString("f2")</td>
-                                    </tr>
-                                }
-                                <tr>
-                                    <td colspan="2">总计（折后）</td>
-                                    <td>@item.SideStoneNumber</td>
-                                    <td>@item.TotalSetStoneWorkingCost</td>
-                                    <td>@item.SideStoneWeight</td>
-                                    <td>@item.SideStoneTotalAmount.ToString("f2")</td>
+                                    <td>@item.ProductName</td>
+                                    <td>@item.GoldWeight</td>
+                                    <td>@item.GoldAmount</td>
+                                    <td>@item.StoneNumber</td>
+                                    <td>@item.StoneWeight</td>
+                                    <td>@item.StoneAmount.ToString("f2")</td>
+                                    <td>@item.TotalAmount.ToString("f2")</td>
                                 </tr>
                             }
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
+            }
+            @if (Model.ShipmentOrderInfos != null && Model.ShipmentOrderInfos.Any())
+            {
+                <div class="mtop10">
+                    <table class="table table-bordered bootstrap-datatable">
+                        <tbody>
+                            <tr>
+                                <th>订单号</th>
+                                <th>副石名称</th>
+                                <th>价格(元/ct)</th>
+                                <th>数量(粒)</th>
+                                <th>工费(元)</th>
+                                <th>总重(ct)</th>
+                                <th>副石额(元)</th>
+                            </tr>
+                            @foreach (var item in Model.ShipmentOrderInfos)
+                            {
+                                var count = item.OrderSetStoneInfos.Count();
+                                if (count > 0)
+                                {
+                                    <tr>
+                                        <td rowspan="@(count == 0 ? 0 : count + 2)">@item.Id</td>
+                                    </tr>
+                                    foreach (var setStone in item.OrderSetStoneInfos)
+                                    {
+                                        <tr>
+                                            <td>@setStone.MatchStoneName</td>
+                                            <td>@setStone.Price</td>
+                                            <td>@setStone.Number</td>
+                                            <td>@setStone.SetStoneWorkingCost</td>
+                                            <td>@setStone.Weight</td>
+                                            <td>@setStone.TotalAmount.ToString("f2")</td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td colspan="2">总计（折后）</td>
+                                        <td>@item.SideStoneNumber</td>
+                                        <td>@item.TotalSetStoneWorkingCost</td>
+                                        <td>@item.SideStoneWeight</td>
+                                        <td>@item.SideStoneTotalAmount.ToString("f2")</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
             <div>
                 <div class="col-md-4 col-xs-4">本单小写金额： ￥@Model.TotalAmount</div>
                 <div class="col-md-4 col-xs-4">制单人：@Model.CreatorName</div>

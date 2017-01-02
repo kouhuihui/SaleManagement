@@ -122,6 +122,10 @@
     <Compile Include="Migrations\201611261231283_ControllerAction.Designer.cs">
       <DependentUpon>201611261231283_ControllerAction.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701011005334_RepairOrder.cs" />
+    <Compile Include="Migrations\201701011005334_RepairOrder.Designer.cs">
+      <DependentUpon>201701011005334_RepairOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -151,6 +155,7 @@
     <Compile Include="Models\RadianRequirement.cs" />
     <Compile Include="Models\Reconciliation.cs" />
     <Compile Include="Models\ReconciliationType.cs" />
+    <Compile Include="Models\RepairOrder.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RoleMenu.cs" />
     <Compile Include="Models\RoleType.cs" />
@@ -221,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611261231283_ControllerAction.resx">
       <DependentUpon>201611261231283_ControllerAction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701011005334_RepairOrder.resx">
+      <DependentUpon>201701011005334_RepairOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

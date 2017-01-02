@@ -1,5 +1,6 @@
 ﻿using SaleManagement.Core;
 using SaleManagement.Core.Models;
+using SaleManagement.Protal.Models.RepairOrder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,5 +42,7 @@ namespace SaleManagement.Protal.Models.Shipment
         public int AuditStatus { get; set; }
 
         public IEnumerable<ShipmentOrderInfoViewModel> ShipmentOrderInfos { get; set; }
+
+        public IEnumerable<RepairOrderViewModel> RepairOrders { get; set; }
     }
 }

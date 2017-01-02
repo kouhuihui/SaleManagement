@@ -30,6 +30,7 @@ namespace SaleManagement.Protal.Controllers
                 shipmentOrderViewModel.Created = u.Created.ToString(SaleManagentConstants.UI.DateStringFormat);
                 shipmentOrderViewModel.DeliveryDate = u.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat);
                 shipmentOrderViewModel.AuditDate = u.AuditDate.HasValue ? u.AuditDate.Value.ToString(SaleManagentConstants.UI.DateStringFormat) : "";
+                shipmentOrderViewModel.TotalAmount = Math.Round(shipmentOrderViewModel.TotalAmount, 2);
                 return shipmentOrderViewModel;
             });
 

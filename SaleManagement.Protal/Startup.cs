@@ -8,6 +8,7 @@ using Owin;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Protal.Models.Order;
+using SaleManagement.Protal.Models.RepairOrder;
 using SaleManagement.Protal.Models.Shipment;
 using System;
 using System.Web.Helpers;
@@ -85,6 +86,8 @@ namespace SaleManagement.Protal
                 .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat)))
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat))); 
             Mapper.CreateMap<ShipmentOrderInfo, ShipmentOrderInfoViewModel>();
+            Mapper.CreateMap<RepairOrder, RepairOrderViewModel>();
+            Mapper.CreateMap<RepairOrderViewModel, RepairOrder>();
         }
     }
 }
