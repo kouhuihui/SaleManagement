@@ -1,0 +1,104 @@
+﻿@model SaleManagement.Protal.Models.RepairOrder.RepairOrderViewModel
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("Create", "RepairOrder", FormMethod.Post, new { id = "repairOrderForm" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ShipmentOrderId)
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">维修货</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="ProductName">
+                    品类
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.ProductName, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="GoldWeight">
+                    金重(g)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.GoldWeight, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.GoldWeight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="GoldAmount">
+                    金额(元)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.GoldAmount, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.GoldAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="StoneNumber">
+                    粒数
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.StoneNumber, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.StoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="StoneWeight">
+                    石重(ct)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.StoneWeight, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.StoneWeight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="StoneAmount">
+                    石值(元)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.StoneAmount, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.StoneAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="TotalAmount">
+                    总额(元)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.TotalAmount, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" value="保存" />
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+<script type="text/javascript">
+    var $from = $("#repairOrderForm");
+    $(function () {
+        $from.ajaxForm({
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    $('#modal').modal('toggle')
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+
+</script>

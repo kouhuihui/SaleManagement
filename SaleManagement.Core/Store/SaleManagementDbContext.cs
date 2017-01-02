@@ -64,6 +64,8 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<AccountBinding> AccountBindings { get; set; }
 
+        public IDbSet<RepairOrder> RepairOrders { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

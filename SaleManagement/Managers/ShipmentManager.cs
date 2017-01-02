@@ -68,6 +68,15 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
+        public async Task<InvokedResult> UpdateTotalAmountAsync(string Id,double difference)
+        {
+            var shipmentOrder = await GetShipmentOrderAsync(Id);
+            shipmentOrder.TotalAmount = shipmentOrder.TotalAmount + difference;
+            DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+ 
         public async Task<InvokedResult> AuditShipmentOrder(ShipmentOrder shipmentOrder)
         {
             DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);

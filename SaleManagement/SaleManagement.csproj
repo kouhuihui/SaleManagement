@@ -124,6 +124,7 @@
     <Compile Include="Managers\OrderOperationLogManager.cs" />
     <Compile Include="Managers\OrderSetStoneInfoManager.cs" />
     <Compile Include="Managers\ReconciliationManager.cs" />
+    <Compile Include="Managers\RepairOrderManager.cs" />
     <Compile Include="Managers\RoleManager.cs" />
     <Compile Include="Managers\RoleMenuManager.cs" />
     <Compile Include="Managers\SerialNumberManager.cs" />

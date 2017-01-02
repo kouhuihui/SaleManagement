@@ -247,6 +247,7 @@
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ReconciliationController.cs" />
+    <Compile Include="Controllers\RepairOrderController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Models\Reconciliation\ArrearageType.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationItemViewModel.cs" />
     <Compile Include="Models\Reconciliation\ReconciliationQueryRequest.cs" />
+    <Compile Include="Models\RepairOrder\RepairOrderViewModel.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
@@ -541,6 +543,7 @@
     <Content Include="Views\Order\Stop.cshtml" />
     <Content Include="Views\Order\Process.cshtml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
+    <Content Include="Views\RepairOrder\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
