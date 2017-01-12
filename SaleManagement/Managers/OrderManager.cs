@@ -159,18 +159,11 @@ namespace SaleManagement.Managers
                 query = filter(query);
             }
 
-            var deliveryDates = await query.Select(r => new { DeliveryDate = r.DeliveryDate.Value }).ToListAsync();
-
-            var deliveryDateList = new List<DateTime>();
-            foreach (var deliveryDate in deliveryDates)
-            {
-                deliveryDateList.Add(deliveryDate.DeliveryDate.Date);
-            }
-
-            return deliveryDateList.GroupBy(o => o).Select(w => new OrderCalendar
+            var deliveryDates = await query.Select(r => new { DeliveryDate = r.DeliveryDate.Value,Number = r.Number }).ToListAsync();
+            return deliveryDates.GroupBy(o => o.DeliveryDate).Select(w => new OrderCalendar
             {
                 Date = w.Key,
-                ProcessCount = w.Count()
+                ProcessCount = w.Sum(a=>a.Number)
             });
         }
 
