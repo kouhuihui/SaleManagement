@@ -11,6 +11,7 @@ namespace SaleManagement.Protal.Models.Order
         Process = 1,
         ForGoods = 2,
         HaveGoods = 3,
-        CustomerTobeConfirm = 4
+        CustomerTobeConfirm = 4,
+        WaitStone = 5
     }
 }

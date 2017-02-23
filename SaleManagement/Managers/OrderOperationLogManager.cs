@@ -99,6 +99,9 @@ namespace SaleManagement.Managers
                 case OrderStatus.DumpModule:
                     content = "进入倒模部门";
                     break;
+                case OrderStatus.WaitStone:
+                    content = "进入等石阶段";
+                    break;
             }
             return content;
         }

@@ -65,16 +65,24 @@
             </div>
             <div class="box-content">
                 <div  style="height:36px; margin:5px">
-                    <div class="textfield pull-left"><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
+                    <div class="textfield pull-left"><div class="field-body" style="width: 200px; margin-left:5px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
                     <button id="btnSearch" class="btn btn-primary">查询</button>
                 </div>
                 <div>
                     <ul class="nav nav-pills" id="orderli">
                         <li role="presentation" status="0"><a href="/customer/order/list">我的订单</a></li>
                         <li role="presentation" status="4"><a href="/customer/order/list?status=4">设计确认</a></li>
-                        <li role="presentation" status="1"><a href="/customer/order/list?status=1">制作中</a></li>
+                        <li role="presentation" status="5"><a href="/customer/order/list?status=5">等石</a></li>
                         <li role="presentation" status="2"><a href="/customer/order/list?status=2">待收货</a></li>
-                        <li role="presentation" status="3"><a href="/customer/order/list?status=3">已收货</a></li>
+                        <li role="presentation" status="3">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#"  aria-haspopup="true" aria-expanded="false">
+                                更多 <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                               <li><a href="/customer/order/list?status=3">已收货</a></li>
+                               <li><a href="/customer/order/list?status=1">制作中</a></li>
+                            </ul>
+                        </li>
                     </ul>
                     <div id="orderlist" data-bind="foreach:orders">
                         <div style="border-bottom: 1px #2a13a3 solid">
