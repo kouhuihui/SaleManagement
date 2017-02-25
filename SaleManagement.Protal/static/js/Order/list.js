@@ -11,6 +11,7 @@
         $urgentStatus = $("#UrgentStatus"),
         $outPutWaxDate = $("#outPutWaxDate"),
         $tbody = $("#tbody");
+
     var rec = {
         autoclose: true,
         fontAwesome: true,
@@ -340,6 +341,43 @@
                     type: "POST",
                     dataType: "json",
                     data: { "outputWaxCost": outputWaxCost },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            shortTips("修改成功");
+                            search();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
+
+    $("#waitStone").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "确认进入等石阶段？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/GotoWaitStone",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids },
                     success: function (result) {
                         if (result.succeeded) {
                             $el.data("bs.modal").hide();

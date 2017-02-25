@@ -359,6 +359,13 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
+        public async Task<JsonResult> GotoWaitStone([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
+        {
+            var result = await ChangeStep(orderIds, OrderStatus.WaitStone);
+            return Json(result);
+        }
+
+        [HttpPost]
         public async Task<JsonResult> Delete([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
         {
             var result = await ChangeStep(orderIds, OrderStatus.Delete);
