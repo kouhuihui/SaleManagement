@@ -24,7 +24,7 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "工费")]
         [Required(ErrorMessage = "请填写{0}")]
-        public int WorkingCost  { get; set; }
+        public double WorkingCost  { get; set; }
 
         public bool Deleted { get; set; }
     }
