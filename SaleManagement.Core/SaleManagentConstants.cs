@@ -38,6 +38,8 @@ namespace SaleManagement.Core
             public const int OrderRushDays = 8;
             public const int OrderVeryRushDays = 4;
             public static readonly string DateStringFormat = "yyyy-MM-dd";
+            public static readonly string[] MainStoneTypes = new string[] { "0.30ct", "0.40ct", "0.50-0.60ct", "0.70-0.80ct", "0.90-1.00ct" };
+            public static readonly int[] HandSizes = new int[] { 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 };
         }
 
         public class Misc
@@ -45,12 +47,14 @@ namespace SaleManagement.Core
             public static readonly string JsonResponseContentType = "text/html";
             public static readonly string OrderPrefix = "KS";
             public static readonly string ShipmentOrderPrefix = "CKD";
+            public static readonly string SpotGoodsPrefix = "XH";
         }
 
         public class SerialNames
         {
             public static readonly string Order = "order";
             public static readonly string ShipmentOrder = "shipmentOrder";
+            public static readonly string SpotGoods = "SpotGoods";
         }
 
         public class SystemRole

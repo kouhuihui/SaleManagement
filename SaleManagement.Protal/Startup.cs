@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dickson.Core.Common.Extensions;
 using Dickson.Logging.EnterpriseLibrary;
 using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.Logging;
@@ -10,6 +11,7 @@ using SaleManagement.Core.Models;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.RepairOrder;
 using SaleManagement.Protal.Models.Shipment;
+using SaleManagement.Protal.Models.SpotGoods;
 using System;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -88,6 +90,11 @@ namespace SaleManagement.Protal
             Mapper.CreateMap<ShipmentOrderInfo, ShipmentOrderInfoViewModel>();
             Mapper.CreateMap<RepairOrder, RepairOrderViewModel>();
             Mapper.CreateMap<RepairOrderViewModel, RepairOrder>();
+            Mapper.CreateMap<SpotGoodsEditViewModel, SpotGoods>();
+            Mapper.CreateMap<SpotGoods, SpotGoodsBase>()
+                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
+                 .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
+                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.status.GetDisplayName()));
         }
     }
 }
