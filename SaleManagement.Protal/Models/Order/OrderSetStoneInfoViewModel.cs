@@ -30,7 +30,7 @@ namespace SaleManagement.Protal.Models.Order
 
         public double TotalAmount { get; set; }
 
-        public int SetStoneWorkingCost { get; set; }
+        public double SetStoneWorkingCost { get; set; }
 
         public IEnumerable<MatchStone> MatchStones { get; set; }
     }

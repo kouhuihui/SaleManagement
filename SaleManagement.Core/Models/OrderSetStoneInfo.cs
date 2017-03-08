@@ -22,7 +22,7 @@ namespace SaleManagement.Core.Models
 
         public double Price { get; set; }
 
-        public int WorkingCost { get; set; }
+        public double WorkingCost { get; set; }
 
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
         public string OrderId { get; set; }

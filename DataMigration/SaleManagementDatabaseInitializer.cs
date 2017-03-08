@@ -281,7 +281,8 @@ namespace DataMigration
                 Level = 1,
                 Name = "系统管理",
                 parentId = null,
-                Order = 1
+                Order = 1,
+                ControllerAction = null
             };
 
             var menu1 = new SystemMenu
@@ -290,7 +291,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "员工管理",
                 parentId = 1000,
-                Order = 1
+                Order = 1,
+                ControllerAction = "User_List"
             };
 
             var menu2 = new SystemMenu
@@ -299,7 +301,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "部门管理",
                 parentId = 1000,
-                Order = 2
+                Order = 2,
+                ControllerAction = null
             };
 
             var menu3 = new SystemMenu
@@ -308,7 +311,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "角色管理",
                 parentId = 1000,
-                Order = 3
+                Order = 3,
+                ControllerAction = "Role_List"
             };
 
             var menu18 = new SystemMenu
@@ -317,7 +321,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "客户管理",
                 parentId = 1000,
-                Order = 4
+                Order = 4,
+                ControllerAction = "Crm_List"
             };
 
             var menu4 = new SystemMenu
@@ -326,7 +331,8 @@ namespace DataMigration
                 Level = 1,
                 Name = "生产管理",
                 parentId = null,
-                Order = 2
+                Order = 2,
+                ControllerAction = null
             };
             var menu5 = new SystemMenu
             {
@@ -334,7 +340,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "生产单",
                 parentId = 2000,
-                Order = 1
+                Order = 1,
+                ControllerAction = "Order_List"
             };
             var menu6 = new SystemMenu
             {
@@ -342,7 +349,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "待设计的订单",
                 parentId = 2000,
-                Order = 2
+                Order = 2,
+                ControllerAction = "Order_Myorders"
             };
 
             var menu13 = new SystemMenu
@@ -351,7 +359,8 @@ namespace DataMigration
                 Level = 3,
                 Name = "下单",
                 parentId = 2000,
-                Order = 3
+                Order = 3,
+                ControllerAction = ""
             };
             var menu14 = new SystemMenu
             {
@@ -359,7 +368,8 @@ namespace DataMigration
                 Level = 3,
                 Name = "出货单",
                 parentId = 2000,
-                Order = 4
+                Order = 4,
+                ControllerAction = "Shipment_List"
             };
 
             var menu7 = new SystemMenu
@@ -447,15 +457,17 @@ namespace DataMigration
                 Level = 2,
                 Name = "对账",
                 parentId = 4000,
-                Order = 1
+                Order = 1,
+                ControllerAction = "Reconciliation_List"
             };
-            var menu20= new SystemMenu
+            var menu20 = new SystemMenu
             {
                 Id = 4002,
                 Level = 2,
                 Name = "账目报表",
                 parentId = 4000,
-                Order = 2
+                Order = 2,
+                ControllerAction = "Report_AccountStatistics"
             };
 
             var menu21 = new SystemMenu
@@ -464,7 +476,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "出货统计",
                 parentId = 4000,
-                Order = 3
+                Order = 3,
+                ControllerAction = "Report_shipmentStatistics"
             };
 
             var menu22 = new SystemMenu
@@ -473,7 +486,8 @@ namespace DataMigration
                 Level = 2,
                 Name = "配石报表",
                 parentId = 4000,
-                Order = 4
+                Order = 4,
+                ControllerAction = "Report_OrderSetStoneStatistics"
             };
 
             context.Menus.Add(menu);

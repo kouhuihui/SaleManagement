@@ -7,13 +7,13 @@ namespace SaleManagement.Core.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class spotGoods : IMigrationMetadata
+    public sealed partial class spotGood : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(spotGoods));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(spotGood));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702260303400_spotGoods"; }
+            get { return "201703081425324_spotGood"; }
         }
         
         string IMigrationMetadata.Source

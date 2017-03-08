@@ -3,7 +3,7 @@ namespace SaleManagement.Core.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class spotGoods : DbMigration
+    public partial class spotGood : DbMigration
     {
         public override void Up()
         {
@@ -25,6 +25,7 @@ namespace SaleManagement.Core.Migrations
                         Created = c.DateTime(nullable: false),
                         IsLock = c.Boolean(nullable: false),
                         status = c.Int(nullable: false),
+                        Price = c.Double(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.ColorForms", t => t.ColorFormId, cascadeDelete: true)

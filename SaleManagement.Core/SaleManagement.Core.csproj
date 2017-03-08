@@ -126,13 +126,13 @@
     <Compile Include="Migrations\201701011005334_RepairOrder.Designer.cs">
       <DependentUpon>201701011005334_RepairOrder.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702260303400_spotGoods.cs" />
-    <Compile Include="Migrations\201702260303400_spotGoods.Designer.cs">
-      <DependentUpon>201702260303400_spotGoods.cs</DependentUpon>
+    <Compile Include="Migrations\201703011233474_ChangeMatchStone.cs" />
+    <Compile Include="Migrations\201703011233474_ChangeMatchStone.Designer.cs">
+      <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702280035401_addPrice.cs" />
-    <Compile Include="Migrations\201702280035401_addPrice.Designer.cs">
-      <DependentUpon>201702280035401_addPrice.cs</DependentUpon>
+    <Compile Include="Migrations\201703081425324_spotGood.cs" />
+    <Compile Include="Migrations\201703081425324_spotGood.Designer.cs">
+      <DependentUpon>201703081425324_spotGood.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
@@ -244,11 +244,11 @@
     <EmbeddedResource Include="Migrations\201701011005334_RepairOrder.resx">
       <DependentUpon>201701011005334_RepairOrder.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702260303400_spotGoods.resx">
-      <DependentUpon>201702260303400_spotGoods.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703011233474_ChangeMatchStone.resx">
+      <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702280035401_addPrice.resx">
-      <DependentUpon>201702280035401_addPrice.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703081425324_spotGood.resx">
+      <DependentUpon>201703081425324_spotGood.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

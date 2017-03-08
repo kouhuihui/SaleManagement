@@ -7,13 +7,13 @@ namespace SaleManagement.Core.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class addPrice : IMigrationMetadata
+    public sealed partial class ChangeMatchStone : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(addPrice));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(ChangeMatchStone));
         
         string IMigrationMetadata.Id
         {
-            get { return "201702280035401_addPrice"; }
+            get { return "201703011233474_ChangeMatchStone"; }
         }
         
         string IMigrationMetadata.Source
