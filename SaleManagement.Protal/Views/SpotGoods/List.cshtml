@@ -19,7 +19,7 @@
             <div class="box-header well" data-original-title="">
                 <h2>现货列表</h2>
                 <div class="box-icon">
-                   
+
                 </div>
             </div>
 
@@ -42,7 +42,9 @@
                     </thead>
                     <tbody id="tbody" data-bind="foreach:spotGoods">
                         <tr>
-                            <td data-bind="text:id"></td>
+                            <td>
+                                <a target="_blank" data-bind="text:id,attr:{href:'/spotgoods/detail?id='+id}"></a>
+                            </td>
                             <td data-bind="text:name"></td>
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:mainStone"></td>

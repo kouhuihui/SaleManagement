@@ -1,10 +1,6 @@
 ﻿using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.SpotGoods
 {
@@ -26,8 +22,6 @@ namespace SaleManagement.Protal.Models.SpotGoods
         [Display(Name = "成色")]
         [Required(ErrorMessage = "请选择{0}")]
         public int ColorFormId { get; set; }
-
-        public string ColorFormName { get; set; }
 
         [Display(Name = "手寸")]
         [Required(ErrorMessage = "请选择{0}")]
@@ -54,14 +48,10 @@ namespace SaleManagement.Protal.Models.SpotGoods
 
         public string CreatorId { get; set; }
 
-        public string Created { get; set; }
-
         public bool IsLock { get; set; }
 
         [Display(Name = "总额")]
         [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入二位小数的数字")]
         public double Price { get; set; }
-
-        public string StatusName { get; set; }
     }
 }

@@ -33,7 +33,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>现货名称：</label>
                             <div class="col-md-4 col-xs-8">
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "请输入现货名称" })
+                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "请输入现货名称", autocomplete = "off"})
                                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                         <div class="form-group">
                             <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>总额：</label>
                             <div class="col-md-2 col-xs-8">
-                                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "请输入镶嵌费用", autocomplete = "off" })
+                                @Html.TextBoxFor(model => model.Price, new { @class = "form-control", placeholder = "请输入总额", autocomplete = "off" })
                                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                                </div>
                         </div>

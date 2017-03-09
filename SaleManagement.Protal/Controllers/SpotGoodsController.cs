@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dickson.Core.Common.Extensions;
+using Dickson.Core.ComponentModel;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
@@ -8,10 +9,8 @@ using SaleManagement.Protal.Models.SpotGoods;
 using SaleManagement.Protal.Web;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using WebGrease.Css.Extensions;
 
@@ -26,10 +25,11 @@ namespace SaleManagement.Protal.Controllers
                 return View(request);
 
             var manager = new SpotGoodsManager(User);
-            var paging = await manager.GetSpotGoodsAsync(request.Start, request.Take, null);
+            var paging = await manager.GetSpotGoodsListAsync(request.Start, request.Take, null);
 
-            var spotGoodList = paging.List.Select(u => {
-                var spotGoods = Mapper.Map<SpotGoods, SpotGoodsBase>(u);
+            var spotGoodList = paging.List.Select(u =>
+            {
+                var spotGoods = (SpotGoodsListItemViewModel)Mapper.Map<SpotGoods, SpotGoodsViewModel>(u);
                 return spotGoods;
             });
             return Json(true, string.Empty, new
@@ -47,7 +47,7 @@ namespace SaleManagement.Protal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<JsonResult> Create(SpotGoodsEditViewModel  request, [NamedModelBinder(typeof(CommaSeparatedModelBinder), "attachmentIds")] string[] attachmentIds)
+        public async Task<JsonResult> Create(SpotGoodsEditViewModel request, [NamedModelBinder(typeof(CommaSeparatedModelBinder), "attachmentIds")] string[] attachmentIds)
         {
             if (!ModelState.IsValid)
                 return Json(false, data: ErrorToDictionary());
@@ -60,9 +60,9 @@ namespace SaleManagement.Protal.Controllers
 
             if (attachmentIds.Any())
             {
-                spotGoods.Attachments = new List<SpotGoodsAttachment>();
+                spotGoods.SpotGoodsAttachments = new List<SpotGoodsAttachment>();
                 attachmentIds.ForEach<string>(a =>
-                    spotGoods.Attachments.Add(new SpotGoodsAttachment
+                    spotGoods.SpotGoodsAttachments.Add(new SpotGoodsAttachment
                     {
                         FileInfoId = a,
                         SpotGoodsId = spotGoods.Id,
@@ -73,6 +73,16 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        public async Task<ActionResult> Detail(string id)
+        {
+            Requires.NotNullOrEmpty("id", nameof(id));
+
+            var manager = new SpotGoodsManager(User);
+            var spotGoods = await manager.GetSpotGoods(id);
+            var spotGoodViewModel = Mapper.Map<SpotGoods, SpotGoodsViewModel>(spotGoods);
+
+            return View(spotGoodViewModel);
+        }
 
         [HttpPost]
         public async Task<JsonResult> AddAttachment(SpotGoodsAttachmentRequest request)
@@ -85,7 +95,7 @@ namespace SaleManagement.Protal.Controllers
                 ContentType = request.File.ContentType,
                 FileName = request.File.FileName,
                 Purpose = FilePurpose.SpotGoodsAttachment.GetDisplayName(),
-                Data = await request.File.InputStream.ReadAllBytesAsync(), 
+                Data = await request.File.InputStream.ReadAllBytesAsync(),
                 ContentLength = request.File.ContentLength
             };
 

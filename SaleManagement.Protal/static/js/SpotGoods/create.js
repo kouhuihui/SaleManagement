@@ -86,7 +86,7 @@
                 var timeOut = 1500;
                 shortTips("保存成功");
                 setTimeout(function () {
-                    location.href = "spotGoods/list";
+                    location.href = "/spotGoods/list";
                 }, timeOut);
             } else {
                 shortTips(errorMessage(result));

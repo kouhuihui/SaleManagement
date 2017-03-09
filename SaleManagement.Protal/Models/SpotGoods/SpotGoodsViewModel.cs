@@ -1,15 +1,9 @@
-﻿using SaleManagement.Core;
-using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
-using System;
+﻿using SaleManagement.Core.ViewModel;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.SpotGoods
 {
-    public class SpotGoodsViewModel: SpotGoodsBase
+    public class SpotGoodsViewModel : SpotGoodsListItemViewModel
     {
         public SpotGoodsViewModel()
         {

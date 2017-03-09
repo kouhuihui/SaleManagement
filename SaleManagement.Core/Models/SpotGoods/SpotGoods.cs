@@ -52,7 +52,7 @@ namespace SaleManagement.Core.Models
 
         public double Price { get; set; }
 
-        public virtual ICollection<SpotGoodsAttachment> Attachments { get; set; }
+        public virtual ICollection<SpotGoodsAttachment> SpotGoodsAttachments { get; set; }
 
         public virtual ICollection<SpotGoodsSetStoneInfo> SetStoneInfos { get; set; }
     }

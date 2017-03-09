@@ -82,16 +82,16 @@ namespace SaleManagement.Protal
         {
             Mapper.CreateMap<OrderEditViewModel, Order>();
             Mapper.CreateMap<OrderSetStoneInfoViewModel, OrderSetStoneInfo>();
-            Mapper.CreateMap<ShipmentOrderViewModel, ShipmentOrder>();                    
+            Mapper.CreateMap<ShipmentOrderViewModel, ShipmentOrder>();
             Mapper.CreateMap<ShipmentOrderInfoViewModel, ShipmentOrderInfo>();
             Mapper.CreateMap<ShipmentOrder, ShipmentOrderViewModel>()
                 .ForMember(dest => dest.DeliveryDate, opt => opt.MapFrom(src => src.DeliveryDate.ToString(SaleManagentConstants.UI.DateStringFormat)))
-                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat))); 
+                .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)));
             Mapper.CreateMap<ShipmentOrderInfo, ShipmentOrderInfoViewModel>();
             Mapper.CreateMap<RepairOrder, RepairOrderViewModel>();
             Mapper.CreateMap<RepairOrderViewModel, RepairOrder>();
             Mapper.CreateMap<SpotGoodsEditViewModel, SpotGoods>();
-            Mapper.CreateMap<SpotGoods, SpotGoodsBase>()
+            Mapper.CreateMap<SpotGoods, SpotGoodsViewModel>()
                  .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
                  .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
                  .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.status.GetDisplayName()));

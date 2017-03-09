@@ -291,6 +291,7 @@
     <Compile Include="Models\SpotGoods\SpotGoodsEditViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsAttachmentRequest.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsBase.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsListItemViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsQueryRequest.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsViewModel.cs" />
     <Compile Include="Models\User\ResetPasswordRequest.cs" />
@@ -555,6 +556,7 @@
     <Content Include="Views\RepairOrder\Create.cshtml" />
     <Content Include="Views\SpotGoods\List.cshtml" />
     <Content Include="Views\SpotGoods\Create.cshtml" />
+    <Content Include="Views\SpotGoods\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
