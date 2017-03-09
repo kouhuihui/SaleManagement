@@ -16,7 +16,11 @@ namespace SaleManagement.Managers
 
         public async Task<CustomerDiscountRate> GetCustomerDiscountRateAsync(string customerId)
         {
-            return await DbContext.Set<CustomerDiscountRate>().FirstOrDefaultAsync(c => c.CustomerId == customerId);
+            var discountRate = await DbContext.Set<CustomerDiscountRate>().FirstOrDefaultAsync(c => c.CustomerId == customerId);
+            if (discountRate == null)
+                return new CustomerDiscountRate();
+
+            return discountRate;
         }
 
         public async Task<IEnumerable<CustomerDiscountRate>> GetCustomerDiscountRatesAsync(IEnumerable<string> customerIds)

@@ -59,32 +59,35 @@ namespace SaleManagement.Protal.Controllers
 
             var discountRateManager = new DiscountRateManager();
             var discountRate = await discountRateManager.GetCustomerDiscountRateAsync(customer.Id);
-            if (discountRate == null)
-                discountRate = new CustomerDiscountRate();
 
-            var shipmentOrderViewModel = new ShipmentOrderViewModel();
+            var shipmentOrderViewModel = new ShipmentOrderViewModel()
+            {
+                SideStoneRate = (double)discountRate.SideStone / 100
+            };
 
             shipmentOrderViewModel.ShipmentOrderInfos = await Task.WhenAll(orders.Select(async o =>
-            {
-                var dailyGoldPriceManager = new DailyGoldPriceManager();
-                var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId, DateTime.Now.Date);
-                var shipmentOrderInfoViewModel = new ShipmentOrderInfoViewModel(o)
                 {
-                    GoldPrice = dailyGoldPrice == null ? 0 : dailyGoldPrice.Price,
-                    LossRate = o.ColorForm.Name.ToLower().Contains("pt") ? discountRate.LossPt : discountRate.Loss18K
-                };
-                shipmentOrderInfoViewModel.Hhz = Math.Round(shipmentOrderInfoViewModel.GoldWeight * (1 + shipmentOrderInfoViewModel.LossRate / 100), 2);
-                shipmentOrderInfoViewModel.GoldAmount = shipmentOrderInfoViewModel.GoldPrice * shipmentOrderInfoViewModel.Hhz;
-                shipmentOrderInfoViewModel.TotalSetStoneWorkingCost = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.SetStoneWorkingCost) * ((double)discountRate.StoneSetter / 100);
-                shipmentOrderInfoViewModel.SideStoneNumber = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Number);
-                shipmentOrderInfoViewModel.SideStoneWeight = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Weight);
-                shipmentOrderInfoViewModel.SideStoneTotalAmount = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100);
-                shipmentOrderInfoViewModel.RushCost = GetOrderRushCost(o);
-                return shipmentOrderInfoViewModel;
-            }));
+                    var dailyGoldPriceManager = new DailyGoldPriceManager();
+                    var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId, DateTime.Now.Date);
+                    var shipmentOrderInfoViewModel = new ShipmentOrderInfoViewModel(o)
+                    {
+                        GoldPrice = dailyGoldPrice == null ? 0 : dailyGoldPrice.Price,
+                        LossRate = o.ColorForm.Name.ToLower().Contains("pt") ? discountRate.LossPt : discountRate.Loss18K,
+                    };
+
+                    shipmentOrderInfoViewModel.Hhz = Math.Round(shipmentOrderInfoViewModel.GoldWeight * (1 + shipmentOrderInfoViewModel.LossRate / 100), 2);
+                    shipmentOrderInfoViewModel.GoldAmount = shipmentOrderInfoViewModel.GoldPrice * shipmentOrderInfoViewModel.Hhz;
+                    shipmentOrderInfoViewModel.TotalSetStoneWorkingCost = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.SetStoneWorkingCost) * ((double)discountRate.StoneSetter / 100);
+                    shipmentOrderInfoViewModel.SideStoneNumber = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Number);
+                    shipmentOrderInfoViewModel.SideStoneWeight = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Weight);
+                    shipmentOrderInfoViewModel.SideStoneTotalAmount = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100); ;
+                    shipmentOrderInfoViewModel.RushCost = GetOrderRushCost(o);
+                    return shipmentOrderInfoViewModel;
+                }));
             shipmentOrderViewModel.CustomerName = customer.Name;
             shipmentOrderViewModel.CustomerId = customer.Id;
             shipmentOrderViewModel.TotalNumber = shipmentOrderViewModel.ShipmentOrderInfos.Sum(r => r.Number);
+
             return View(shipmentOrderViewModel);
         }
 
@@ -96,9 +99,8 @@ namespace SaleManagement.Protal.Controllers
 
             var discountRateManager = new DiscountRateManager();
             var discountRate = await discountRateManager.GetCustomerDiscountRateAsync(shipmentOrder.CustomerId);
-            if (discountRate == null)
-                discountRate = new CustomerDiscountRate();
 
+            shipmentOrderViewModel.SideStoneRate = (double)discountRate.SideStone / 100;
             shipmentOrderViewModel.ShipmentOrderInfos.Each(f =>
             {
                 f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2);
@@ -233,7 +235,14 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
             var shipmentOrder = await manager.GetShipmentOrderAsync(id);
+
+
+            var discountRateManager = new DiscountRateManager();
+            var discountRate = await discountRateManager.GetCustomerDiscountRateAsync(shipmentOrder.CustomerId);
+
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
+            shipmentOrderViewModel.SideStoneRate = (double)discountRate.SideStone / 100;
+
             shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
             return View(shipmentOrderViewModel);
         }

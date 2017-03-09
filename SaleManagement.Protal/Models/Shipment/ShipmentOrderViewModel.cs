@@ -1,10 +1,7 @@
 ﻿using SaleManagement.Core;
-using SaleManagement.Core.Models;
 using SaleManagement.Protal.Models.RepairOrder;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.Shipment
 {
@@ -44,5 +41,7 @@ namespace SaleManagement.Protal.Models.Shipment
         public IEnumerable<ShipmentOrderInfoViewModel> ShipmentOrderInfos { get; set; }
 
         public IEnumerable<RepairOrderViewModel> RepairOrders { get; set; }
+
+        public double SideStoneRate { get; set; }
     }
 }

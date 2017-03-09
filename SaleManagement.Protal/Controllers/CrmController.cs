@@ -171,10 +171,6 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new DiscountRateManager();
             var discountRate = await manager.GetCustomerDiscountRateAsync(model.Id);
-            if (discountRate == null)
-            {
-                discountRate = new CustomerDiscountRate();
-            }
 
             discountRate.CreatorId = User.Id;
             discountRate.Created = DateTime.Now;
