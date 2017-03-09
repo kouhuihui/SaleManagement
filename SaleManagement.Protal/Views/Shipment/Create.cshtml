@@ -230,26 +230,19 @@
                                 if (count > 0)
                                 {
                                     <tr>
-                                        <td rowspan="@(count == 0 ? 0 : count + 2)">@item.Id</td>
+                                        <td rowspan="@(count == 0 ? 0 : count + 1)">@item.Id</td>
                                     </tr>
                                     foreach (var setStone in item.OrderSetStoneInfos)
                                     {
                                         <tr>
                                             <td>@setStone.MatchStoneName</td>
-                                            <td>@setStone.Price</td>
+                                            <td>@(setStone.Price * Model.SideStoneRate)</td>
                                             <td>@setStone.Number</td>
                                             <td>@setStone.SetStoneWorkingCost</td>
                                             <td>@setStone.Weight</td>
-                                            <td>@setStone.TotalAmount.ToString("f2")</td>
+                                            <td>@((setStone.TotalAmount * Model.SideStoneRate).ToString("f2"))</td>
                                         </tr>
                                     }
-                                    <tr>
-                                        <td colspan="2">总计（折后）</td>
-                                        <td>@item.SideStoneNumber</td>
-                                        <td>@item.TotalSetStoneWorkingCost</td>
-                                        <td>@item.SideStoneWeight</td>
-                                        <td>@item.SideStoneTotalAmount.ToString("f2")</td>
-                                    </tr>
                                 }
                             }
                         </tbody>
