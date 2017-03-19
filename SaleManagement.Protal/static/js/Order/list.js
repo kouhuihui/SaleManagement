@@ -95,6 +95,10 @@
 
 
     $status.bind('change', function () {
+        var status = $status.val();
+        if (status === '-1' || status === "1" || status === "11" || status === "12") {
+            $chxProcess.attr("checked", false);
+        }
         Query();
     })
 
