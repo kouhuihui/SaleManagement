@@ -10,7 +10,9 @@
         $colorFormId = $("#colorFormId"),
         $urgentStatus = $("#UrgentStatus"),
         $outPutWaxDate = $("#outPutWaxDate"),
-        $tbody = $("#tbody");
+        $tbody = $("#tbody"),
+        $chxProcess = $("#chxProcess"),
+        $process = $("#IsProcess")
 
     var rec = {
         autoclose: true,
@@ -19,7 +21,8 @@
         minView: 2
     }
     $('.date-conditions input[type="text"]').datetimepicker(rec);
-
+    
+ 
     var Orders = function (data) {
         var self = this;
         self.orders = ko.observableArray(data),
@@ -50,14 +53,14 @@
         return {
             orderId: $orderId.val(),
             customerId: customer.getValue(),
-            status: $status.val(),
+            status: $status != undefined ? $status.val() : "",
             colorFormId: $colorFormId.val(),
             urgentStatus: $("#UrgentStatus").val(),
             rushStatus: $("#RushStatus").val(),
             outPutWaxDate: $outPutWaxDate.val(),
             deliveryStartDate: $("#DeliveryStartDate").val(),
             deliveryEndDate: $("#DeliveryEndDate").val(),
-            isProcess:  $("#IsProcess").val()
+            isProcess: $process.val()
         }
     }
 
@@ -329,7 +332,7 @@
         $(window).modalDialog({
             title: "提示",
             smallTitle: "",
-            content: "设计费用(元)：<input style=\"width:40px\" name=\"outputWaxCost\" value=\""+ outputWaxCost+"\"/>",
+            content: "设计费用(元)：<input style=\"width:40px\" name=\"outputWaxCost\" value=\"" + outputWaxCost + "\"/>",
             type: "confirm",
             okCallBack: function (e, $el) {
                 var outputWaxCost = $("input[name=outputWaxCost]").val();
@@ -390,5 +393,15 @@
                 });
             }
         });
+    })
+
+    $chxProcess.change(function () {
+        if ($chxProcess.is(':checked')) {
+            $process.val("true");
+        }
+        else {
+            $process.val("false");
+        }
+        Query();
     })
 });

@@ -20,7 +20,8 @@
         <div class="textfield pull-left "><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
         @Html.Partial("_Customer")
         @Html.Partial("_ColorForm")
-        <div class="textfield combobox pull-left">
+        @Html.HiddenFor(m => m.IsProcess)
+        <div class="textfield combobox pull-left" id="divOrderStatus">
             @{
                 var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
             }
@@ -28,19 +29,22 @@
                 @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
             </div>
         </div>
+        <div class="checkbox pull-left" style="width:200px" id="divIsProcess">
+            <label><input type="checkbox" id="chxProcess" checked="@(Model.IsProcess)" />生产中</label>
+        </div>
     </div>
     <div>
         <div class="textfield  pull-left ">
             @{
-            var urgentStatuItems = EnumHelper.GetSelectList(typeof (SaleManagement.Protal.Models.Order.UrgentStatus));
+                var urgentStatuItems = EnumHelper.GetSelectList(typeof(SaleManagement.Protal.Models.Order.UrgentStatus));
             }
             <div class="combobox-body" style="width: 200px;">
-                @Html.DropDownListFor(m => m.UrgentStatus, urgentStatuItems, "加急状态", new {Class = "pull-left form-control"})
+                @Html.DropDownListFor(m => m.UrgentStatus, urgentStatuItems, "加急状态", new { Class = "pull-left form-control" })
             </div>
         </div>
         <div class="textfield  pull-left hidden">
             @{
-            var orderRushStatusItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderRushStatus));
+                var orderRushStatusItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderRushStatus));
             }
             <div class="combobox-body" style="width: 200px;">
                 @Html.DropDownListFor(m => m.RushStatus, orderRushStatusItems, "客户加急状态", new { Class = "pull-left form-control" })
@@ -52,7 +56,7 @@
         <div class="textfield date-conditions pull-left">
             <div class="textfield pull-left">
                 <div class="field-body" style="width: 200px;">
-                    @Html.TextBoxFor(m => m.DeliveryStartDate,new { Class= "form-control", placeholder = "预计出货开始日期" })
+                    @Html.TextBoxFor(m => m.DeliveryStartDate, new { Class = "form-control", placeholder = "预计出货开始日期" })
                 </div>
             </div>
         </div>
@@ -63,7 +67,6 @@
                 </div>
             </div>
         </div>
-        @Html.HiddenFor(m=>m.IsProcess)
         <button id="btnSearch" class="btn btn-primary">查询</button>
     </div>
 </div>

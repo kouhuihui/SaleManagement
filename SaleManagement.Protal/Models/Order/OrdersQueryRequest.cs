@@ -80,6 +80,11 @@ namespace SaleManagement.Protal.Models.Order
                     query = query.Where(f => f.ColorFormId == ColorFormId.Value);
                 }
 
+                if (IsProcess)
+                {
+                    query = query.Where(o => o.OrderStatus != OrderStatus.UnConfirmed && o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
+                }
+
                 if (Status.HasValue)
                 {
                     query = query.Where(f => f.OrderStatus == Status);
@@ -102,11 +107,6 @@ namespace SaleManagement.Protal.Models.Order
                 if (!string.IsNullOrEmpty(CurrentUserId))
                 {
                     query = query.Where(f => f.CurrentUserId == CurrentUserId);
-                }
-
-                if (IsProcess)
-                {
-                    query = query.Where(o => o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
                 }
 
                 return query.AsNoTracking();
