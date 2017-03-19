@@ -10,6 +10,6 @@ namespace SaleManagement.Protal.Models.SpotGoods
             Attachments = new List<AttachmentItem>();
         }
 
-        public IEnumerable<AttachmentItem> Attachments { get; set; }
+        public IList<AttachmentItem> Attachments { get; set; }
     }
 }

@@ -8,11 +8,13 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
+using SaleManagement.Core.ViewModel;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.RepairOrder;
 using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Models.SpotGoods;
 using System;
+using System.Linq;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -94,7 +96,12 @@ namespace SaleManagement.Protal
             Mapper.CreateMap<SpotGoods, SpotGoodsViewModel>()
                  .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
                  .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
-                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.status.GetDisplayName()));
+                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.status.GetDisplayName()))
+                 .ForMember(dest => dest.Attachments, opt => opt.MapFrom(src => src.SpotGoodsAttachments.Select(a => new AttachmentItem
+                 {
+                     Id = a.FileInfoId,
+                     Url = "/Attachment/" + a.FileInfoId + "/preview"
+                 })));
         }
     }
 }
