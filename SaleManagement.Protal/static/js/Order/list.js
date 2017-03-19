@@ -398,6 +398,7 @@
     $chxProcess.change(function () {
         if ($chxProcess.is(':checked')) {
             $process.val("true");
+            $status.val('');
         }
         else {
             $process.val("false");
