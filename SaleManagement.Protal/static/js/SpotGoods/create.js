@@ -6,13 +6,14 @@
         $form = $("#SpotGoodsForm"),
         $wrap = $(".attachment");
 
-    var Attachment = function (data) {
-        var self = this;
-        self.files = ko.observableArray(data);
-        self.addFile = function (item, el) {
-            self.files.push(item);
-        }
-        self.deleteFile = function (item, el) {
+    var viewModel = {
+        files: ko.observableArray(filesData),
+        setStonInfos: ko.observableArray(stoneData),
+        addFile: function (item, el) {
+            this.files.push(item);
+        },
+        deleteFile: function (item, el) {
+            var _this = this;
             $(window).modalDialog({
                 title: "提示",
                 smallTitle: "删除款式图片",
@@ -26,13 +27,13 @@
                         dataType: "json",
                         data: {
                             fileId: item.id,
-                            orderId: orderId
+                            orderId: spotGoodsId
                         },
                         success: function (result) {
                             $wrap.data("loading").hide();
                             if (result.succeeded) {
                                 $el.data("bs.modal").hide();
-                                self.files.remove(item);
+                                _this.files.remove(item);
                             } else {
                                 shortTips(errorMessage(result));
                             }
@@ -40,10 +41,33 @@
                     });
                 }
             });
+        },
+        addSetStone: function (el) {
+            var _this = this;
+            $("#modal").modal({
+                remote: "/SpotGoods/AddSetStone",
+            }).on("hidden.bs.modal", function () {
+                var $matchStoneNumber = $("#matchStoneNumber");
+                var $matchStoneWeight = $("#matchStoneWeight");
+                var $matchStoneId = $("#matchStoneId");
+                if ($matchStoneId.val() !== "") {
+                    var stoneInfo = {
+                        "mathchStoneName": $matchStoneId.find("option:selected").text(),
+                        "matchStoneId": $matchStoneId.val(),
+                        "number": $matchStoneNumber.val(),
+                        "weight": $matchStoneWeight.val()
+                    };
+                    _this.setStonInfos.push(stoneInfo);
+                }
+                $(this).removeData("bs.modal");
+            });
+        },
+        saveClick: function () {
+
         }
-    };
-    var attachment = new Attachment(filesData);
-    ko.applyBindings(attachment);
+    }
+    ko.applyBindings(viewModel);
+
     $(".upload-btn").fileupload({
         autoUpload: true,//是否自动上传
         url: addAttachmentUrl,
@@ -71,7 +95,7 @@
         success: function (result) {//设置文件上传完毕事件的回调函数
             if (result['succeeded']) {
                 result.data.acceptVisible = ko.observable(false);
-                attachment.addFile(result.data);
+                viewModel.addFile(result.data);
             } else {
                 shortTips(errorMessage(result));
             }
@@ -105,6 +129,7 @@
             attachmentIds += filesData[i].id + ",";
         }
         $("#attachmentIds").val(attachmentIds);
+        $("#SetStoneInfos").val(JSON.stringify(stoneData));
         if (!isAdd) {
             $form.attr("target", "_self").attr("action", "/spotGoods/edit");
         }

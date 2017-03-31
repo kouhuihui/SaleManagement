@@ -2,6 +2,7 @@
 using Dickson.Core.Common.Extensions;
 using Dickson.Core.ComponentModel;
 using Dickson.Web.Mvc.ModelBinding;
+using Newtonsoft.Json.Linq;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Managers;
@@ -52,11 +53,32 @@ namespace SaleManagement.Protal.Controllers
             if (!ModelState.IsValid)
                 return Json(false, data: ErrorToDictionary());
 
+            var basicDataManager = new BasicDataManager();
+            var matchStones = await basicDataManager.GetMatchStonesAsync();
+
+            JArray jarry = JArray.Parse(Request.Form["SetStoneInfos"]);
+            List<SpotGoodsSetStoneInfo> SpotGoodsSetStoneInfos = new List<SpotGoodsSetStoneInfo>();
+
+
             var spotGoods = Mapper.Map<SpotGoodsEditViewModel, SpotGoods>(request);
 
             var serialNumberManager = new SerialNumberManager(User);
             var manager = new SpotGoodsManager(User);
             spotGoods.Id = SaleManagentConstants.Misc.SpotGoodsPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.SpotGoods);
+            for (int i = 0; i < jarry.Count; ++i)  //遍历JArray  
+            {
+                var setStoneInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<SpotGoodsSetStoneInfo>(jarry[i].ToString());
+                var matchStone = matchStones.FirstOrDefault(r => r.Id == setStoneInfo.MatchStoneId);
+                if (matchStone == null)
+                    break;
+
+                setStoneInfo.Price = matchStone.Price;
+                setStoneInfo.WorkingCost = (int)matchStone.WorkingCost * setStoneInfo.Number;
+                setStoneInfo.CreatorId = User.Id;
+                setStoneInfo.SpotGoodsId = spotGoods.Id;
+                SpotGoodsSetStoneInfos.Add(setStoneInfo);
+            }
+            spotGoods.SetStoneInfos = SpotGoodsSetStoneInfos;
 
             if (attachmentIds.Any())
             {
@@ -115,6 +137,14 @@ namespace SaleManagement.Protal.Controllers
             }
             return Json(true, data: new { id = file.Id, url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data), name = file.FileName, length = file.Data.Length },
                    contentType: SaleManagentConstants.Misc.JsonResponseContentType);
+        }
+
+        public async Task<ActionResult> AddSetStone()
+        {
+            var manager = new BasicDataManager();
+            var matchStones = await manager.GetMatchStonesAsync();
+            ViewBag.matchStones = matchStones;
+            return View();
         }
     }
 }

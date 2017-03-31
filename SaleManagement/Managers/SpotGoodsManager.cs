@@ -11,6 +11,11 @@ namespace SaleManagement.Managers
 {
     public class SpotGoodsManager : BaseManager
     {
+        public SpotGoodsManager() : base()
+        {
+
+        }
+
         public SpotGoodsManager(SaleUser user) : base(user)
         {
 

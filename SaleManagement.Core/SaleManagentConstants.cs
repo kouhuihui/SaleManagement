@@ -1,4 +1,5 @@
 ﻿using Dickson.Core.ComponentModel;
+using System.Configuration;
 
 namespace SaleManagement.Core
 {
@@ -48,6 +49,7 @@ namespace SaleManagement.Core
             public static readonly string OrderPrefix = "KS";
             public static readonly string ShipmentOrderPrefix = "CKD";
             public static readonly string SpotGoodsPrefix = "XH";
+            public static readonly string SaleMangementWeb = ConfigurationManager.AppSettings["SaleMangementWeb"];
         }
 
         public class SerialNames

@@ -1,0 +1,93 @@
+﻿@using SaleManagement.Core.Models;
+@{
+    Layout = null;
+}
+
+<div class="form-horizontal">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">新增配石</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Name">
+                <span class="text-danger">*</span>名称
+            </label>
+            <div class="col-md-6">
+                @{
+                    var matchStones = ((IEnumerable<MatchStone>)ViewBag.MatchStones).Select(c => new SelectListItem
+                    {
+                        Value = c.Id.ToString(),
+                        Text = c.Name
+                    });
+                }
+
+                @Html.DropDownList("matchStoneId", matchStones, "请选择", new { @class = "form-control" })
+
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Number">
+                <span class="text-danger">*</span>数量
+            </label>
+            <div class="col-md-6">
+                <input id="matchStoneNumber" name="matchStoneNumber" class="form-control" placeholder="请输入配石数量" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="Weight">
+                <span class="text-danger">*</span>重量(ct)
+            </label>
+            <div class="col-md-6">
+                <input id="matchStoneWeight" name="matchStoneWeight" class="form-control" placeholder="请输入重量" />
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+        <input class="btn btn-primary" id="btnSave" type="submit" value="保存" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var $matchStoneNumber = $("#matchStoneNumber"),
+            $matchStoneWeight = $("#matchStoneWeight");
+
+        $matchStoneNumber.blur(function () {
+            var matchStoneNumber = $matchStoneNumber.val()
+            if (isNaN(matchStoneNumber)) {
+                $matchStoneNumber.val("");
+                return false
+            }
+            $matchStoneNumber.val(parseInt($matchStoneNumber.val(), 10));
+        });
+
+        $matchStoneWeight.blur(function () {
+            var matchStoneWeight = $matchStoneWeight.val();
+
+            if (isNaN(matchStoneWeight)) {
+                $matchStoneWeight.val("");
+                return false
+            }
+            $matchStoneWeight.val(matchStoneWeight.substr(0, matchStoneWeight.indexOf(".") + 4));
+        })
+
+        $("#btnSave").click(function () {
+            if ($("#matchStoneId").val() === "") {
+                shortTips("请选择配石品类", 1000);
+                return false;
+            }
+            if ($matchStoneNumber.val() === "") {
+                shortTips("请输入配石数量", 1000);
+                return false;
+            }
+
+            if ($matchStoneWeight.val() === "") {
+                shortTips("请输入配石重量", 1000);
+                return false;
+            }
+            $("#modal").modal('hide');
+        })
+    })
+</script>
