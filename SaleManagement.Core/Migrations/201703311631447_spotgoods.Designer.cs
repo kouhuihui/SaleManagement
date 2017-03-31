@@ -6,14 +6,14 @@ namespace SaleManagement.Core.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class spotGood : IMigrationMetadata
+    [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
+    public sealed partial class spotgoods : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(spotGood));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(spotgoods));
         
         string IMigrationMetadata.Id
         {
-            get { return "201703081425324_spotGood"; }
+            get { return "201703311631447_spotgoods"; }
         }
         
         string IMigrationMetadata.Source

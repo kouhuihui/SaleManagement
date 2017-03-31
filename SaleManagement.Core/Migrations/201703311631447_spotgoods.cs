@@ -3,7 +3,7 @@ namespace SaleManagement.Core.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class spotGood : DbMigration
+    public partial class spotgoods : DbMigration
     {
         public override void Up()
         {
@@ -32,20 +32,6 @@ namespace SaleManagement.Core.Migrations
                 .Index(t => t.ColorFormId);
             
             CreateTable(
-                "dbo.SpotGoodsAttachments",
-                c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 36),
-                        SpotGoodsId = c.String(nullable: false, maxLength: 36),
-                        FileInfoId = c.String(nullable: false, maxLength: 36),
-                        Created = c.DateTime(nullable: false),
-                        CreatorId = c.String(nullable: false, maxLength: 36),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.SpotGoods", t => t.SpotGoodsId, cascadeDelete: true)
-                .Index(t => t.SpotGoodsId);
-            
-            CreateTable(
                 "dbo.SpotGoodsSetStoneInfoes",
                 c => new
                     {
@@ -64,18 +50,32 @@ namespace SaleManagement.Core.Migrations
                 .ForeignKey("dbo.SpotGoods", t => t.SpotGoodsId, cascadeDelete: true)
                 .Index(t => t.SpotGoodsId);
             
+            CreateTable(
+                "dbo.SpotGoodsAttachments",
+                c => new
+                    {
+                        Id = c.String(nullable: false, maxLength: 36),
+                        SpotGoodsId = c.String(nullable: false, maxLength: 36),
+                        FileInfoId = c.String(nullable: false, maxLength: 36),
+                        Created = c.DateTime(nullable: false),
+                        CreatorId = c.String(nullable: false, maxLength: 36),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.SpotGoods", t => t.SpotGoodsId, cascadeDelete: true)
+                .Index(t => t.SpotGoodsId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.SpotGoodsAttachments", "SpotGoodsId", "dbo.SpotGoods");
             DropForeignKey("dbo.SpotGoodsSetStoneInfoes", "SpotGoodsId", "dbo.SpotGoods");
             DropForeignKey("dbo.SpotGoods", "ColorFormId", "dbo.ColorForms");
-            DropForeignKey("dbo.SpotGoodsAttachments", "SpotGoodsId", "dbo.SpotGoods");
-            DropIndex("dbo.SpotGoodsSetStoneInfoes", new[] { "SpotGoodsId" });
             DropIndex("dbo.SpotGoodsAttachments", new[] { "SpotGoodsId" });
+            DropIndex("dbo.SpotGoodsSetStoneInfoes", new[] { "SpotGoodsId" });
             DropIndex("dbo.SpotGoods", new[] { "ColorFormId" });
-            DropTable("dbo.SpotGoodsSetStoneInfoes");
             DropTable("dbo.SpotGoodsAttachments");
+            DropTable("dbo.SpotGoodsSetStoneInfoes");
             DropTable("dbo.SpotGoods");
         }
     }

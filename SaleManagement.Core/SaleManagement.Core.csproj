@@ -131,9 +131,9 @@
     <Compile Include="Migrations\201703011233474_ChangeMatchStone.Designer.cs">
       <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703081425324_spotGood.cs" />
-    <Compile Include="Migrations\201703081425324_spotGood.Designer.cs">
-      <DependentUpon>201703081425324_spotGood.cs</DependentUpon>
+    <Compile Include="Migrations\201703311631447_spotgoods.cs" />
+    <Compile Include="Migrations\201703311631447_spotgoods.Designer.cs">
+      <DependentUpon>201703311631447_spotgoods.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
@@ -248,8 +248,8 @@
     <EmbeddedResource Include="Migrations\201703011233474_ChangeMatchStone.resx">
       <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703081425324_spotGood.resx">
-      <DependentUpon>201703081425324_spotGood.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201703311631447_spotgoods.resx">
+      <DependentUpon>201703311631447_spotgoods.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
