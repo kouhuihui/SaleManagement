@@ -149,6 +149,7 @@
         $("#modal").modal({
             remote: "/Order/DistributionOrder?orderIds=" + ids
         }).on("hidden.bs.modal", function () {
+            Query();
             $(this).removeData("bs.modal");
         });
     })

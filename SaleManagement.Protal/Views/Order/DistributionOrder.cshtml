@@ -61,9 +61,8 @@
             },
             success: function (result) {
                 if (result.succeeded) {
-                    shortTips("保存成功");
-                    parent.location.reload();
-
+                    shortTips("保存成功"); 
+                    $("#modal").modal('hide')
                 } else {
                     shortTips(errorMessage(result));
                 }

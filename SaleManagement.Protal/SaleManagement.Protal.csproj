@@ -251,9 +251,11 @@
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\ShipmentController.cs" />
+    <Compile Include="Controllers\SpotGoodsController.cs" />
     <Compile Include="Controllers\SystemMenuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AttachmentRequestBase.cs" />
     <Compile Include="Models\Customer\CustomerQueryRequest.cs" />
     <Compile Include="Models\Customer\CustomerUserEditViewModel.cs" />
     <Compile Include="Models\Customer\CustomerViewModel.cs" />
@@ -286,6 +288,13 @@
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SetStoneInfoViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsEditViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsAttachmentRequest.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsBase.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsListItemViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsQueryRequest.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsViewModel.cs" />
     <Compile Include="Models\User\ResetPasswordRequest.cs" />
     <Compile Include="Models\User\SaleUserEditViewModel.cs" />
     <Compile Include="Models\User\SaleUserViewModel.cs" />
@@ -453,6 +462,8 @@
     <Content Include="static\js\Report\setStoneStatistics.js" />
     <Content Include="static\js\Report\shipmentStatistics.js" />
     <Content Include="static\js\shipment\list.js" />
+    <Content Include="static\js\SpotGoods\create.js" />
+    <Content Include="static\js\SpotGoods\list.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
     <Content Include="static\js\User\edit.js" />
     <Content Include="static\js\User\users.js" />
@@ -544,6 +555,10 @@
     <Content Include="Views\Order\Process.cshtml" />
     <None Include="static\js\Mvc\jquery.validate-vsdoc.js" />
     <Content Include="Views\RepairOrder\Create.cshtml" />
+    <Content Include="Views\SpotGoods\List.cshtml" />
+    <Content Include="Views\SpotGoods\Create.cshtml" />
+    <Content Include="Views\SpotGoods\Detail.cshtml" />
+    <Content Include="Views\SpotGoods\AddSetStone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
