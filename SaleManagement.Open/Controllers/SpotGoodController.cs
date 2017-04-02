@@ -7,7 +7,7 @@ using System.Web.Http;
 namespace SaleManagement.Open.Controllers
 {
     [RoutePrefix("SpotGood")]
-    public class SpotGoodController : ApiController
+    public class SpotGoodController : OpenApiController
     {
         [Route("~/SpotGoods")]
         public async Task<IHttpActionResult> SpotGoods(SpotGoodsQueryRequest request)

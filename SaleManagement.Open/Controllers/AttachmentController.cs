@@ -8,7 +8,7 @@ using System.Web.Http;
 
 namespace SaleManagement.Open.Controllers
 {
-    public class AttachmentController : ApiController
+    public class AttachmentController : OpenApiController
     {
         [HttpGet]
         [Route("~/Attachment/{fileId}/Preview")]
