@@ -68,7 +68,7 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
-        public async Task<InvokedResult> UpdateTotalAmountAsync(string Id,double difference)
+        public async Task<InvokedResult> UpdateTotalAmountAsync(string Id, double difference)
         {
             var shipmentOrder = await GetShipmentOrderAsync(Id);
             shipmentOrder.TotalAmount = shipmentOrder.TotalAmount + difference;
@@ -76,7 +76,7 @@ namespace SaleManagement.Managers
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
- 
+
         public async Task<InvokedResult> AuditShipmentOrder(ShipmentOrder shipmentOrder)
         {
             DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
@@ -116,19 +116,29 @@ namespace SaleManagement.Managers
             if (!orderIds.Any())
                 return Enumerable.Empty<OrderSetStoneStatistic>();
 
-            var orderSetStoneStatistics = DbContext.Set<OrderSetStoneInfo>().Where(r => orderIds.Contains(r.OrderId))
-                 .GroupBy(r => new { r.MatchStoneId, r.MathchStoneName }).ToList().Select(a => new OrderSetStoneStatistic
-                 {
-                     SetStoneName = a.Key.MathchStoneName,
-                     Weight = a.Sum(g => (decimal)g.Weight),
-                     Number = a.Sum(g => g.Number)
-                 }).ToList();
+            var orderSetStones = await (from a in DbContext.Set<OrderSetStoneInfo>()
+                                        join b in DbContext.Set<Order>()
+                                        on a.OrderId equals b.Id
+                                        join c in DbContext.Set<CustomerDiscountRate>()
+                                        on b.CustomerId equals c.CustomerId
+                                        where orderIds.Contains(a.OrderId)
+                                        group new { a, c } by new { a.MatchStoneId, a.MathchStoneName })
+                                                 .ToListAsync();
+            var orderSetStoneStatistics = orderSetStones.Select(g => new OrderSetStoneStatistic
+            {
+                SetStoneName = g.Key.MathchStoneName,
+                Weight = g.Sum(ga => (decimal)ga.a.Weight),
+                Number = g.Sum(ga => ga.a.Number),
+                SetStoneAmount = g.Sum(ga => ((decimal)(ga.c.SideStone / 100.0 * ga.a.Price * ga.a.Weight)))
+            }).ToList();
 
             var totalWeight = orderSetStoneStatistics.Sum(r => r.Weight);
             var totalNumber = orderSetStoneStatistics.Sum(r => r.Number);
-            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight, Number = totalNumber });
+            var setStoneAmount = orderSetStoneStatistics.Sum(r => r.SetStoneAmount);
+            orderSetStoneStatistics.Add(new OrderSetStoneStatistic { SetStoneName = "总计", Weight = totalWeight, Number = totalNumber, SetStoneAmount = setStoneAmount });
             return orderSetStoneStatistics;
         }
+
         private async Task UpdateShipmentOrderInfosAsync(ShipmentOrder order)
         {
             var shipmentOrderInfos = DbContext.Set<ShipmentOrderInfo>();

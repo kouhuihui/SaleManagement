@@ -25,7 +25,7 @@ namespace SaleManagement.Protal.Controllers
         public async Task<ActionResult> AccountStatistics(ReportQueryBaseDto reportQuery)
         {
             if (!Request.IsAjaxRequest())
-                return View();
+                return View(reportQuery);
 
             var manager = new ReconciliationManager(User);
             var list = await manager.GetAccountStatisticsAsync(reportQuery);
@@ -66,7 +66,7 @@ namespace SaleManagement.Protal.Controllers
         public async Task<ActionResult> OrderSetStoneStatistics(SetStoneReportQuery reportQuery)
         {
             if (!Request.IsAjaxRequest())
-                return View();
+                return View(reportQuery);
 
             var manager = new ShipmentManager(User);
             var list = await manager.GetOrderSetStoneStatisticsAsync(reportQuery);
@@ -77,7 +77,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var manager = new ShipmentManager(User);
             var orderSetStoneStatistics = await manager.GetOrderSetStoneStatisticsAsync(reportQuery);
-            var titles = new string[] { "序号", "配石名称", "重量（ct）", "数量" };
+            var titles = new string[] { "序号", "配石名称", "重量（ct）", "数量", "副石额" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "配石报表", ws =>
             {
                 var row = 2;
@@ -89,6 +89,7 @@ namespace SaleManagement.Protal.Controllers
                     ws.Cells[row, 2].Value = orderSetStoneStatistic.SetStoneName;
                     ws.Cells[row, 3].Value = orderSetStoneStatistic.Weight;
                     ws.Cells[row, 4].Value = orderSetStoneStatistic.Number;
+                    ws.Cells[row, 5].Value = orderSetStoneStatistic.SetStoneAmount;
                     row++;
                     index++;
                 };

@@ -8,14 +8,7 @@ namespace SaleManagement.Core.ViewModel
     {
         public ShipmentReportQuery()
         {
-            DateTime now = DateTime.Now;
-            StatisticStartDate = new DateTime(now.Year, now.Month, 1);
-            StatisticEndDate = StatisticStartDate.AddMonths(1).AddDays(-1);
         }
-
-        public new DateTime StatisticStartDate { get; set; }
-
-        public new DateTime StatisticEndDate { get; set; }
 
         public Func<IQueryable<Core.Models.ShipmentOrderInfo>, IQueryable<Core.Models.ShipmentOrderInfo>> GetShipmentOrderInfosQueryFilter()
         {
@@ -29,7 +22,7 @@ namespace SaleManagement.Core.ViewModel
                 }
 
                 query = query.Where(f => f.ShipmentOrder.DeliveryDate >= StatisticStartDate);
-                var endDate = StatisticEndDate.AddDays(1);
+                var endDate = StatisticEndDate.Value.AddDays(1);
                 query = query.Where(f => f.ShipmentOrder.DeliveryDate < endDate);
 
                 return query;

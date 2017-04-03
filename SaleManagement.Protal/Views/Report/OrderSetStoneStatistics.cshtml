@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SaleManagement.Core.ViewModel.ReportQueryBaseDto
+@{
     Title("配石报表");
 }
 @Styles.Render("~/Bundles/Static/Css/DateTimePicker")
@@ -15,9 +16,9 @@
 <div class="search">
     @Html.Partial("_Customer")
     <div class="date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">统计日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期"></div></div>
+        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">统计日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期" value="@(Model.StatisticStartDate.HasValue?Model.StatisticStartDate.Value.ToShortDateString():"")"></div></div>
         <span class="pull-left">-</span>
-        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@(Model.StatisticEndDate.HasValue?Model.StatisticEndDate.Value.ToShortDateString():"")"></div></div>
     </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
@@ -40,6 +41,7 @@
                             <th>配石名称</th>
                             <th>重量（ct）</th>
                             <th>数量</th>
+                            <th>配石额</th>
                         </tr>
                     </thead>
                     <tbody id="tbody" data-bind="foreach:setStoneStatistics">
@@ -47,6 +49,7 @@
                             <td class="col-md-3" data-bind="text:setStoneName"></td>
                             <td data-bind="text:weight"></td>
                             <td data-bind="text:number"></td>
+                            <td data-bind="text:setStoneAmount"></td>
                         </tr>
                     </tbody>
                 </table>

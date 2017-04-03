@@ -7,5 +7,7 @@
         public decimal Weight { get; set; }
 
         public double Number { get; set; }
+
+        public decimal SetStoneAmount { get; set; }
     }
 }
