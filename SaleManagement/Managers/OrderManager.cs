@@ -118,6 +118,7 @@ namespace SaleManagement.Managers
 
         public async Task<OrderStatistics> GetOrderStatisticsAsync()
         {
+
             var query = DbContext.Set<Order>().AsQueryable().Where(o => o.ComplayId == User.CompanyId);
             var unConfirmedCountQuery = query.Where(o => o.OrderStatus == OrderStatus.UnConfirmed).Select(j => new { Key = "unconfirmed", Number = j.Number });
             var processingCountQuery = query.Where(o => o.OrderStatus != OrderStatus.UnConfirmed && o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete).Select(j => new { Key = "processing", Number = j.Number });
