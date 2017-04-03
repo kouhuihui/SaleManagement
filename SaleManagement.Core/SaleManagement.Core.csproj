@@ -131,9 +131,9 @@
     <Compile Include="Migrations\201703011233474_ChangeMatchStone.Designer.cs">
       <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201703311631447_spotgoods.cs" />
-    <Compile Include="Migrations\201703311631447_spotgoods.Designer.cs">
-      <DependentUpon>201703311631447_spotgoods.cs</DependentUpon>
+    <Compile Include="Migrations\201704031434474_addSpotGoodsPattern.cs" />
+    <Compile Include="Migrations\201704031434474_addSpotGoodsPattern.Designer.cs">
+      <DependentUpon>201704031434474_addSpotGoodsPattern.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
@@ -176,6 +176,7 @@
     <Compile Include="Models\ShipmentOrderInfo.cs" />
     <Compile Include="Models\ShippingScheduleSetting.cs" />
     <Compile Include="Models\SideStoneRequiredment.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsPattern.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsStatus.cs" />
     <Compile Include="Models\SpotGoods\SpotGoods.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsAttachment.cs" />
@@ -248,8 +249,8 @@
     <EmbeddedResource Include="Migrations\201703011233474_ChangeMatchStone.resx">
       <DependentUpon>201703011233474_ChangeMatchStone.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201703311631447_spotgoods.resx">
-      <DependentUpon>201703311631447_spotgoods.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201704031434474_addSpotGoodsPattern.resx">
+      <DependentUpon>201704031434474_addSpotGoodsPattern.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

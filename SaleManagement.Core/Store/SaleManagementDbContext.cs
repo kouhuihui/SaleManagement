@@ -66,13 +66,13 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<RepairOrder> RepairOrders { get; set; }
 
-       /// public IDbSet<Test> Tests { get; set; }
+        public IDbSet<SpotGoodsPattern> SpotGoodsPatterns { get; set; }
 
-        public IDbSet<SpotGoods> SpotGoods { get; set; }
+        //public IDbSet<SpotGoods> SpotGoods { get; set; }
 
-        public IDbSet<SpotGoodsAttachment> SpotGoodsAttachments { get; set; }
+        //public IDbSet<SpotGoodsAttachment> SpotGoodsAttachments { get; set; }
 
-        public IDbSet<SpotGoodsSetStoneInfo> SpotGoodsSetStoneInfos { get; set; }
+        //public IDbSet<SpotGoodsSetStoneInfo> SpotGoodsSetStoneInfos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
