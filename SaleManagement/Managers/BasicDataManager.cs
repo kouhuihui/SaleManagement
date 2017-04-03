@@ -173,12 +173,6 @@ namespace SaleManagement.Managers
             return await DbContext.Set<ShippingScheduleSetting>().FirstOrDefaultAsync(r => r.CompanyId == User.CompanyId);
         }
 
-        public async Task<int> GetShippingScheduleDaysAsync()
-        {
-            var shippingScheduleSetting =  await DbContext.Set<ShippingScheduleSetting>().FirstOrDefaultAsync(r => r.CompanyId == User.CompanyId);
-            return shippingScheduleSetting == null ? 20 : shippingScheduleSetting.Days;
-        }
-
         public async Task<InvokedResult> SaveShippingScheduleSettingAsync(ShippingScheduleSetting shippingScheduleSetting)
         {
             shippingScheduleSetting.CompanyId = User.CompanyId;

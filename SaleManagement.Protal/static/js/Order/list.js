@@ -363,6 +363,49 @@
         });
     })
 
+    $("#btnDeliverDay").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            ids = ids + $inputChecked.val() + ",";
+        }
+        var id = inputCheckeds.val();
+        $(window).modalDialog({
+            title: "设置交货日期",
+            smallTitle: "",
+            content: ' <div style="margin-bottom:5px">预计<input style="width:40px" name="deliverDay" />天后出货</div><div id="selDeliverDay"><button class="btn btn-primary btn-sm" onclick="setDeliverDay(3)">3</button>  <button class="btn btn-primary btn-sm" onclick="setDeliverDay(5)">5</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(15)">15</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(20)">20</button></div>',
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                var deliverDay = $("input[name=deliverDay]").val();
+                if (deliverDay === '' || isNaN(Number(deliverDay))) {
+                    shortTips("请输入正确的出货天数");
+                    return false;
+                }
+                $.ajax({
+                    url: "/order/SetDeliverDay",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids, "deliverDay": deliverDay },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            shortTips("修改成功");
+                            search();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
+
     $("#waitStone").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");
         var length = inputCheckeds.length;
@@ -411,3 +454,7 @@
         Query();
     })
 });
+
+function setDeliverDay(value) {
+    $("input[name=deliverDay]").val(value);
+}

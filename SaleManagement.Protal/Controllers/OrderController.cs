@@ -105,10 +105,7 @@ namespace SaleManagement.Protal.Controllers
             model.ProductCategories = await manager.GetProductCategoriesAsync();
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
-
-            var shippingScheduleDays = await manager.GetShippingScheduleDaysAsync();
             model.Created = DateTime.Now.ToString(SaleManagentConstants.UI.DateStringFormat);
-            model.DeliveryDate = DateTime.Now.AddDays(shippingScheduleDays).ToString(SaleManagentConstants.UI.DateStringFormat);
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
             return View(model);
@@ -122,10 +119,6 @@ namespace SaleManagement.Protal.Controllers
                 return Json(false, data: ErrorToDictionary());
 
             var order = Mapper.Map<OrderEditViewModel, Order>(request);
-
-            var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
-            SetOrderDeliveryDate(order, shippingScheduleDays);
-
             var serialNumberManager = new SerialNumberManager(User);
             var manager = new OrderManager(User);
             order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
@@ -150,8 +143,7 @@ namespace SaleManagement.Protal.Controllers
                 return Json(result.Succeeded, data:
                     new
                     {
-                        orderId = order.Id,
-                        notice = $"最近出货期限{shippingScheduleDays}天"
+                        orderId = order.Id
                     });
             }
 
@@ -209,8 +201,6 @@ namespace SaleManagement.Protal.Controllers
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
             order.OrderRushStatus = request.OrderRushStatus;
-            var shippingScheduleDays = await new BasicDataManager(User).GetShippingScheduleDaysAsync();
-            SetOrderDeliveryDate(order, shippingScheduleDays);
             var result = await orderManager.UpdateOrderAsync(order);
 
             return Json(result);
@@ -629,6 +619,14 @@ namespace SaleManagement.Protal.Controllers
             }));
         }
 
+        [HttpPost]
+        public async Task<JsonResult> SetDeliverDay([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, int deliverDay)
+        {
+            var manager = new OrderManager(User);
+            var result = await manager.SetDeliverDay(orderIds, deliverDay);
+            return Json(result);
+        }
+
         private static MemoryStream MakeThumbnail(Stream originalImageStream, int dHeight, int dWidth)
         {
             Image iSource = Image.FromStream(originalImageStream); ;//从指定的文件创建Image
@@ -728,20 +726,6 @@ namespace SaleManagement.Protal.Controllers
             }
 
             return bt;
-        }
-
-        private void SetOrderDeliveryDate(Order order, int shippingScheduleDays)
-        {
-            if (order.OrderRushStatus != OrderRushStatus.Normal)
-            {
-                order.DeliveryDate = order.Created.Date.AddDays(GetRushDays(order.OrderRushStatus));
-                return;
-            }
-
-            if (!order.DeliveryDate.HasValue)
-            {
-                order.DeliveryDate = order.Created.Date.AddDays(shippingScheduleDays);
-            }
         }
 
         private int GetRushDays(OrderRushStatus orderRushStatus)

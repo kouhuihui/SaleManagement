@@ -76,73 +76,80 @@
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
                 <h2>生产单列表</h2>
-                <div class="box-icon">
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.CustomerService))
-                    {
-                        <a id="btnDistribution" class="btn">
-                            <i class="glyphicon glyphicon-share"></i>
-                            调配
-                        </a>
-                        <a id="btnEdit" class="btn">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            编辑
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.OutputWax))
-                    {
-                        <a id="btnDumpModule" class="btn">
-                            <i class="glyphicon glyphicon-arrow-right"></i>
-                            进入倒模
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.SendAndReceive))
-                    {
-                        <a id="btnNextStep" class="btn">
-                            <i class="glyphicon glyphicon-arrow-right"></i>
-                            下一工序
-                        </a>
-                        <a id="btnPack" class="btn">
-                            <i class="glyphicon glyphicon-shopping-cart"></i>
-                            打包
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
-                    {
-                        <a id="setStone" class="btn">
-                            <i class="glyphicon glyphicon-edit"></i>
-                            配石
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
-                    {
-                        <a id="waitStone" class="btn">
-                            <i class="glyphicon glyphicon-euro"></i>
-                            等石
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.Finance))
-                    {
-                        <a id="shipment" class="btn">
-                            <i class="glyphicon glyphicon-share-alt"></i>
-                            生成出货单
-                        </a>
-                    }
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
-                    {
-                        <a id="btnSetDesginCost" class="btn">
-                            <i class="glyphicon glyphicon-floppy-save"></i>
-                            修改设计费
-                        </a>
-                        <a id="btnDelete" class="btn">
-                            <i class="glyphicon glyphicon-remove"></i>
-                            删除
-                        </a>
-                        <a id="btnStop" class="btn">
-                            <i class="glyphicon glyphicon-stop"></i>
-                            消单
-                        </a>
-                    }
-                </div>
+            </div>
+            <div class="box-icon" style="background-color:#f5f5f5; float:inherit">
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.CustomerService))
+                {
+                    <a id="btnDistribution" class="btn">
+                        <i class="glyphicon glyphicon-share"></i>
+                        调配
+                    </a>
+                    <a id="btnEdit" class="btn">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        编辑
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.OutputWax))
+                {
+                    <a id="btnDumpModule" class="btn">
+                        <i class="glyphicon glyphicon-arrow-right"></i>
+                        进入倒模
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.SendAndReceive))
+                {
+                    <a id="btnNextStep" class="btn">
+                        <i class="glyphicon glyphicon-arrow-right"></i>
+                        下一工序
+                    </a>
+                    <a id="btnPack" class="btn">
+                        <i class="glyphicon glyphicon-shopping-cart"></i>
+                        打包
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="setStone" class="btn">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        配石
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="waitStone" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        等石
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.Finance))
+                {
+                    <a id="shipment" class="btn">
+                        <i class="glyphicon glyphicon-share-alt"></i>
+                        生成出货单
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                {
+                    <a id="btnSetDesginCost" class="btn">
+                        <i class="glyphicon glyphicon-floppy-save"></i>
+                        修改设计费
+                    </a>
+                    <a id="btnDelete" class="btn">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        删除
+                    </a>
+                    <a id="btnStop" class="btn">
+                        <i class="glyphicon glyphicon-stop"></i>
+                        消单
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.CustomerService))
+                {
+                    <a id="btnDeliverDay" class="btn">
+                        <i class="glyphicon glyphicon-time"></i>
+                        设置交货日期
+                    </a>
+                }
             </div>
 
             <div class="box-content">

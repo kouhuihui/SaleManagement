@@ -1,4 +1,5 @@
 ﻿using Dickson.Core.ComponentModel;
+using EntityFramework.Extensions;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
@@ -136,7 +137,7 @@ namespace SaleManagement.Managers
             var unionList = await unConfirmedCountQuery.Concat(processingCountQuery)
                 .Concat(shipmentCountQuery).Concat(urgentCountQuery).Concat(veryUrgentCountQuery)
                 .Concat(rushCountQuery).Concat(veryRushCountQuery)
-                .GroupBy(a => a.Key).Select(g => new { Status = g.Key, Count = g.Sum(a=>a.Number) }).ToListAsync();
+                .GroupBy(a => a.Key).Select(g => new { Status = g.Key, Count = g.Sum(a => a.Number) }).ToListAsync();
             return new OrderStatistics()
             {
                 UnConfirmedCount = unionList.FirstOrDefault(k => k.Status == "unconfirmed")?.Count ?? 0,
@@ -159,17 +160,24 @@ namespace SaleManagement.Managers
                 query = filter(query);
             }
 
-            var deliveryDates = await query.Select(r => new { DeliveryDate = r.DeliveryDate.Value,Number = r.Number }).ToListAsync();
+            var deliveryDates = await query.Select(r => new { DeliveryDate = r.DeliveryDate.Value, Number = r.Number }).ToListAsync();
             return deliveryDates.GroupBy(o => o.DeliveryDate).Select(w => new OrderCalendar
             {
                 Date = w.Key,
-                ProcessCount = w.Sum(a=>a.Number)
+                ProcessCount = w.Sum(a => a.Number)
             });
+        }
+
+        public async Task<InvokedResult> SetDeliverDay(string[] orderIds, int day)
+        {
+            var deliverDate = DateTime.Now.AddDays(day).Date;
+            await DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId && orderIds.Contains(o.Id)).UpdateAsync(u => new Order { DeliveryDate = deliverDate });
+            return InvokedResult.SucceededResult;
         }
 
         private Func<IQueryable<Order>, IQueryable<Order>> GetNoShipOrderFilter()
         {
-            Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query => query.Where(o =>  o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
+            Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query => query.Where(o => o.OrderStatus != OrderStatus.Shipment && o.OrderStatus != OrderStatus.HaveGoods && o.OrderStatus != OrderStatus.Delete);
             return filter;
         }
     }
