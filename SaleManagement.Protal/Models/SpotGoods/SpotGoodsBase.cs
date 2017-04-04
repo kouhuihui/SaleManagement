@@ -1,5 +1,4 @@
-﻿using SaleManagement.Core;
-using SaleManagement.Core.Models;
+﻿using SaleManagement.Core.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Protal.Models.SpotGoods
@@ -12,10 +11,9 @@ namespace SaleManagement.Protal.Models.SpotGoods
 
         public string Id { get; set; }
 
-        [Display(Name = "名称")]
-        [Required(ErrorMessage = "请填写{0}")]
-        [StringLength(SaleManagentConstants.Validations.DefaultNameStringLength, ErrorMessage = "{0}不能超过{1}个字符")]
-        public string Name { get; set; }
+        public string SpotGoodsPatternId { get; set; }
+
+        public string SpotGoodsPatternName { get; set; }
 
         public SpotGoodsType SpotGoodsType { get; set; }
 

@@ -2,6 +2,7 @@
 using EntityFramework.Extensions;
 using SaleManagement.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -19,6 +20,21 @@ namespace SaleManagement.Managers
         public SpotGoodsManager(SaleUser user) : base(user)
         {
 
+        }
+
+        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodsType type)
+        {
+            return await DbContext.Set<SpotGoodsPattern>().Where(r => r.Type == type).AsNoTracking().ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string partterId)
+        {
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == partterId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetSpotGoodsHandSizeListAsync(string partterId)
+        {
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == partterId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
         }
 
         public async Task<Paging<SpotGoods>> GetSpotGoodsListAsync(int start, int take, Func<IQueryable<SpotGoods>, IQueryable<SpotGoods>> filter = null)
@@ -48,6 +64,19 @@ namespace SaleManagement.Managers
             DbContext.Set<SpotGoods>().AddOrUpdate(spotGoods);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> DeleteSpotGoodsSetStoneInfo(string spotGoodsId, int id)
+        {
+            await DbContext.Set<SpotGoodsSetStoneInfo>().Where(r => r.Id == id & r.SpotGoodsId == spotGoodsId).DeleteAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<SpotGoodsSetStoneInfo> AddSpotGoodsSetStoneInfo(SpotGoodsSetStoneInfo spotGoodsSetStoneInfo)
+        {
+            DbContext.Set<SpotGoodsSetStoneInfo>().AddOrUpdate(spotGoodsSetStoneInfo);
+            await DbContext.SaveChangesAsync();
+            return spotGoodsSetStoneInfo;
         }
     }
 }

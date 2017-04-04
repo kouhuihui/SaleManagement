@@ -221,6 +221,7 @@
     <Compile Include="Models\ApiError.cs" />
     <Compile Include="Models\ApiException.cs" />
     <Compile Include="Models\SpotGood\SpotGoodListItemViewModel.cs" />
+    <Compile Include="Models\SpotGood\SpotGoodsPatternViewModel.cs" />
     <Compile Include="Models\SpotGood\SpotGoodsQueryRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

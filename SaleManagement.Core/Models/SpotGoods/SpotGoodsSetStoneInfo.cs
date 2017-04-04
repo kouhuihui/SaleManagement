@@ -14,7 +14,7 @@ namespace SaleManagement.Core.Models
 
         public int MatchStoneId { get; set; }
 
-        public string MathchStoneName { get; set; }
+        public string MatchStoneName { get; set; }
 
         public double Price { get; set; }
 

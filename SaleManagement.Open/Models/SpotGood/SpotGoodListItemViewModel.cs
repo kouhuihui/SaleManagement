@@ -1,9 +1,5 @@
 ﻿using Dickson.Core.Common.Extensions;
-using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SaleManagement.Open.Models.SpotGood
 {
@@ -12,8 +8,8 @@ namespace SaleManagement.Open.Models.SpotGood
         public SpotGoodListItemViewModel(SpotGoods spotGood)
         {
             Id = spotGood.Id;
-            Name = spotGood.Name;
-            SpotGoodsType = spotGood.SpotGoodsType.GetDisplayName();
+            Name = spotGood.SpotGoodsPattern.Name;
+            SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
             HandSize = spotGood.HandSize;
             MainStone = spotGood.MainStone;
             Weight = spotGood.Weight;
@@ -21,11 +17,6 @@ namespace SaleManagement.Open.Models.SpotGood
             IsMosaic = spotGood.IsMosaic;
             Price = spotGood.Price;
             ColorFormName = spotGood.ColorForm.Name;
-            Attachments = spotGood.SpotGoodsAttachments.Select(r => new AttachmentItem
-            {
-                Id = r.FileInfoId,
-                Url = SaleManagentConstants.Misc.SaleMangementWeb + "/Attachment/" + r.FileInfoId + "/preview"
-            });
         }
 
         public string Id { get; set; }
@@ -52,7 +43,5 @@ namespace SaleManagement.Open.Models.SpotGood
         public double Price { get; set; }
 
         public string ColorFormName { get; set; }
-
-        public IEnumerable<AttachmentItem> Attachments { get; set; }
     }
 }

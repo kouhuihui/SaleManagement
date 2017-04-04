@@ -28,13 +28,14 @@
                     <thead>
                         <tr>
                             <th>单号</th>
-                            <th>名称</th>
+                            <th>款式</th>
+                            <th>款式名称</th>
                             <th>成色</th>
                             <th>主石</th>
                             <th>手寸</th>
                             <th>总重(g)</th>
                             <th>金重(g)</th>
-                            <th>镶嵌风险费</th>
+                            <th>总价</th>
                             <th>状态</th>
                             <th>创建日期</th>
                             <th>操作</th>
@@ -43,18 +44,21 @@
                     <tbody id="tbody" data-bind="foreach:spotGoods">
                         <tr>
                             <td>
-                                <a target="_blank" data-bind="text:id,attr:{href:'/spotgoods/detail?id='+id}"></a>
+                                <a target="_blank" data-bind="text:id,attr:{href:'/spotgoods/edit?id='+id}"></a>
                             </td>
-                            <td data-bind="text:name"></td>
+                            <td data-bind="text:spotGoodTypeName"></td>
+                            <td data-bind="text:spotGoodsPatternName"></td>
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:mainStone"></td>
                             <td data-bind="text:handSize"></td>
                             <td data-bind="text:weight"></td>
                             <td data-bind="text:goldWeight"></td>
-                            <td data-bind="text:mosaicCost"></td>
+                            <td data-bind="text:price"></td>
                             <td data-bind="text:statusName"></td>
                             <td data-bind="text:created"></td>
-                            <td></td>
+                            <td>
+                                <a  data-bind="attr:{href:'/spotgoods/Edit?id='+id}"><i class="glyphicon glyphicon-edit"></i>编辑</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

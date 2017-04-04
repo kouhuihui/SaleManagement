@@ -2,6 +2,7 @@
 using EntityFramework.Extensions;
 using SaleManagement.Core.Models;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
@@ -33,6 +34,12 @@ namespace SaleManagement.Managers
             var list = await query.OrderByDescending(u => u.Id).Skip(start).Take(take).ToListAsync();
 
             return new Paging<SpotGoodsPattern>(start, take, futureCount.Value, list);
+        }
+
+        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodsType type)
+        {
+            var query = DbContext.Set<SpotGoodsPattern>().Where(r => r.Type == type).AsNoTracking();
+            return await query.ToListAsync();
         }
 
         public async Task<InvokedResult> SaveSpotGoodsPattern(SpotGoodsPattern spotGoodsPattern)

@@ -1,106 +1,74 @@
 ﻿$(function () {
-    var addAttachmentUrl = "/SpotGoods/AddAttachment",
-        removeAttachmentUrl = "/SpotGoods/RemoveAttachment",
-        spotGoodsId = $("#Id").val(),
+    var spotGoodsId = $("#Id").val(),
         isAdd = spotGoodsId === "",
         $form = $("#SpotGoodsForm"),
         $wrap = $(".attachment");
-
-    var viewModel = {
-        files: ko.observableArray(filesData),
-        setStonInfos: ko.observableArray(stoneData),
-        addFile: function (item, el) {
-            this.files.push(item);
-        },
-        deleteFile: function (item, el) {
-            var _this = this;
-            $(window).modalDialog({
-                title: "提示",
-                smallTitle: "删除款式图片",
-                content: "确定删除该款式图片吗？",
-                type: "confirm",
-                okCallBack: function (e, $el) {
-                    $wrap.loading();
-                    $.ajax({
-                        url: removeAttachmentUrl,
-                        type: "POST",
-                        dataType: "json",
-                        data: {
-                            fileId: item.id,
-                            orderId: spotGoodsId
-                        },
-                        success: function (result) {
-                            $wrap.data("loading").hide();
-                            if (result.succeeded) {
-                                $el.data("bs.modal").hide();
-                                _this.files.remove(item);
-                            } else {
-                                shortTips(errorMessage(result));
-                            }
-                        }
-                    });
-                }
-            });
-        },
-        addSetStone: function (el) {
-            var _this = this;
+ 
+    var ViewModel = function() {
+        var self = this;  
+        self.setStonInfos = ko.observableArray(stoneData),
+        self.patterns = ko.observableArray([]),
+        self.addSetStone = function (el) {
             $("#modal").modal({
                 remote: "/SpotGoods/AddSetStone",
             }).on("hidden.bs.modal", function () {
                 var $matchStoneNumber = $("#matchStoneNumber");
                 var $matchStoneWeight = $("#matchStoneWeight");
                 var $matchStoneId = $("#matchStoneId");
-                if ($matchStoneId.val() !== "") {
-                    var stoneInfo = {
-                        "mathchStoneName": $matchStoneId.find("option:selected").text(),
-                        "matchStoneId": $matchStoneId.val(),
-                        "number": $matchStoneNumber.val(),
-                        "weight": $matchStoneWeight.val()
-                    };
-                    _this.setStonInfos.push(stoneInfo);
+                var stoneInfo = {
+                    "matchStoneName": $matchStoneId.find("option:selected").text(),
+                    "matchStoneId": $matchStoneId.val(),
+                    "number": $matchStoneNumber.val(),
+                    "weight": $matchStoneWeight.val(),
+                    "spotGoodsId": spotGoodsId,
+                    "id": "0"
+                };
+                if (spotGoodsId !== "") {
+                    $.ajax({
+                        url: "/SpotGoods/AddSetStone",
+                        type: "post",
+                        data: { spotGoodsSetStoneInfoViewModel: stoneInfo},
+                        success: function (rtn) {
+                            if (rtn.succeeded) {
+                                self.setStonInfos.push(stoneInfo);
+                            }
+                        },
+                        error: function () {
+                            shortTips(errorMessage(rtn));
+                        }
+                    });
+                }
+                else {
+                    self.setStonInfos.push(stoneInfo);
                 }
                 $(this).removeData("bs.modal");
             });
         },
-        saveClick: function () {
-
+        self.deleteClick = function (item, el) { 
+            if (item.id !== "") {
+                $.ajax({
+                    url: "/SpotGoods/DeleteSetStone",
+                    type: "post",
+                    data:{"id":item.id,"spotGoodsId":spotGoodsId},
+                    success: function (rtn) {
+                        if (rtn.succeeded) {
+                            self.setStonInfos.remove(item);
+                        }
+                    },
+                    error: function () {
+                        shortTips(errorMessage(result));
+                    }
+                });
+            }
+            else {
+                self.setStonInfos.remove(item);
+            }
         }
     }
-    ko.applyBindings(viewModel);
+    var soptViewModel = new ViewModel();
 
-    $(".upload-btn").fileupload({
-        autoUpload: true,//是否自动上传
-        url: addAttachmentUrl,
-        dataType: 'json',
-        formData: { SpotGoodsId: spotGoodsId },
-        singleFileUploads: true,
-        limitMultiFileUploads: 1,
-        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-        send: function (e, data) {
-            $wrap.loading();
-        },
-        fail: function () {
-            $wrap.data("loading").hide();
-        },
-        add: function (e, data) {
-            if ((data.originalFiles.length + filesData.length) > 7) {
-                shortTips("最多只能上传7张图片");
-                return false;
-            }
-            data.submit();
-        },
-        done: function () {
-            $wrap.data("loading").hide();
-        },
-        success: function (result) {//设置文件上传完毕事件的回调函数
-            if (result['succeeded']) {
-                result.data.acceptVisible = ko.observable(false);
-                viewModel.addFile(result.data);
-            } else {
-                shortTips(errorMessage(result));
-            }
-        }
-    });
+    ko.applyBindings(soptViewModel);
+    InitPatterns();
     $form.ajaxForm({
         beforeSubmit: function () {
             $form.loading();
@@ -120,15 +88,6 @@
     });
 
     $("#saveSpotGoods").click(function () {
-        if (filesData.length < 1) {
-            shortTips("请上传款式图片");
-            return false;
-        }
-        var attachmentIds = "";
-        for (var i = 0; i < filesData.length; i++) {
-            attachmentIds += filesData[i].id + ",";
-        }
-        $("#attachmentIds").val(attachmentIds);
         $("#SetStoneInfos").val(JSON.stringify(stoneData));
         if (!isAdd) {
             $form.attr("target", "_self").attr("action", "/spotGoods/edit");
@@ -140,4 +99,20 @@
         $spanBtn.addClass("btn-primary");
         $spanBtn.siblings("input").val($spanBtn.attr("data-value"));
     });
+
+    function InitPatterns() {
+        $.ajax({
+            url: "/SpotGoodsPattern/GetSpotGoodsPatterns?type=0",
+            success: function (rtn) {
+                if (rtn.succeeded) {
+                    var data = rtn.data;
+                    soptViewModel.patterns(data);
+                    $("#spotGoodsPatternId").val($("#hideSpotGoodsPatternId").val());
+                }
+            },
+            error: function () {
+                shortTips(errorMessage(result));
+            }
+        });
+    }
 })
