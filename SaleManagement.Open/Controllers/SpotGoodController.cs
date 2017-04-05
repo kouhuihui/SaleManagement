@@ -12,16 +12,16 @@ namespace SaleManagement.Open.Controllers
     public class SpotGoodController : OpenApiController
     {
         [Route("~/SpotGoods")]
+        [HttpPost]
         public async Task<IHttpActionResult> SpotGoods(SpotGoodsQueryRequest request)
         {
             var manager = new SpotGoodsManager();
-            var spotGoodsList = await manager.GetSpotGoodsListAsync(request.Start, request.Take, null);
+            var spotGoods = await manager.GetSpotGoodsAsync(request.GetSpotGoodsListQueryFilter());
 
-            var spotGoodsViewModels = spotGoodsList.List.Select(u =>
-            {
-                var spotGoods = new SpotGoodListItemViewModel(u);
-                return spotGoods;
-            });
+            if (spotGoods == null)
+                return NotFound("现货不存在");
+
+            var spotGoodsViewModels = new SpotGoodListItemViewModel(spotGoods);
             return Ok(spotGoodsViewModels);
         }
 
@@ -39,19 +39,27 @@ namespace SaleManagement.Open.Controllers
             return Ok(spotGoodsPatternViewModels);
         }
 
-        [Route("MainStones")]
-        public async Task<IHttpActionResult> MainStones(string patterId)
+        [Route("ColorForms")]
+        public async Task<IHttpActionResult> ColorForms(string patternId)
         {
             var manager = new SpotGoodsManager();
-            var mainStoneList = await manager.GetSpotGoodsMainStoneListAsync(patterId);
+            var colorFormList = await manager.GetSpotGoodsColorFromListAsync(patternId);
+            return Ok(colorFormList);
+        }
+
+        [Route("MainStones")]
+        public async Task<IHttpActionResult> MainStones(string patternId, int colorFromId)
+        {
+            var manager = new SpotGoodsManager();
+            var mainStoneList = await manager.GetSpotGoodsMainStoneListAsync(patternId, colorFromId);
             return Ok(mainStoneList);
         }
 
         [Route("HandSizes")]
-        public async Task<IHttpActionResult> MainStones(string patterId, string mainStones)
+        public async Task<IHttpActionResult> HandSizes(string patternId, int colorFromId, string mainStone)
         {
             var manager = new SpotGoodsManager();
-            var handSizeList = await manager.GetSpotGoodsHandSizeListAsync(patterId);
+            var handSizeList = await manager.GetSpotGoodsHandSizeListAsync(patternId, colorFromId, mainStone);
             return Ok(handSizeList);
         }
     }

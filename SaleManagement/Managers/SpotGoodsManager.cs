@@ -27,14 +27,19 @@ namespace SaleManagement.Managers
             return await DbContext.Set<SpotGoodsPattern>().Where(r => r.Type == type).AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string partterId)
+        public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string patternId, int colorFromId)
         {
-            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == partterId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.ColorForm.Id == colorFromId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
         }
 
-        public async Task<IEnumerable<string>> GetSpotGoodsHandSizeListAsync(string partterId)
+        public async Task<IEnumerable<ColorForm>> GetSpotGoodsColorFromListAsync(string patternId)
         {
-            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == partterId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.ColorForm).Distinct().ToListAsync();
+        }
+
+        public async Task<IEnumerable<int>> GetSpotGoodsHandSizeListAsync(string patternId, int colorFromId, string mainStone)
+        {
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.MainStone == mainStone && r.ColorForm.Id == colorFromId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.HandSize).Distinct().ToListAsync();
         }
 
         public async Task<Paging<SpotGoods>> GetSpotGoodsListAsync(int start, int take, Func<IQueryable<SpotGoods>, IQueryable<SpotGoods>> filter = null)
@@ -49,6 +54,19 @@ namespace SaleManagement.Managers
             var list = await query.OrderByDescending(u => u.Id).Skip(start).Take(take).ToListAsync();
 
             return new Paging<SpotGoods>(start, take, futureCount.Value, list);
+        }
+
+        public async Task<SpotGoods> GetSpotGoodsAsync(Func<IQueryable<SpotGoods>, IQueryable<SpotGoods>> filter = null)
+        {
+            var query = DbContext.Set<SpotGoods>().AsQueryable();
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            var spotGoods = await query.FirstOrDefaultAsync();
+
+            return spotGoods;
         }
 
         public async Task<SpotGoods> GetSpotGoods(string id)

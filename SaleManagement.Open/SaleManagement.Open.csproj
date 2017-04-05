@@ -225,6 +225,8 @@
     <Compile Include="Models\SpotGood\SpotGoodsQueryRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="Results\BadRequestNegotiatedContentResult.cs" />
+    <Compile Include="Results\NotFoundNegotiatedContentResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -269,7 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Results\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>

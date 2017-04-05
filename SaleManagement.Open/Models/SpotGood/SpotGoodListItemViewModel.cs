@@ -1,5 +1,6 @@
 ﻿using Dickson.Core.Common.Extensions;
 using SaleManagement.Core.Models;
+using System.Linq;
 
 namespace SaleManagement.Open.Models.SpotGood
 {
@@ -17,6 +18,9 @@ namespace SaleManagement.Open.Models.SpotGood
             IsMosaic = spotGood.IsMosaic;
             Price = spotGood.Price;
             ColorFormName = spotGood.ColorForm.Name;
+            SetStoneNames = string.Join("/", spotGood.SetStoneInfos.Select(r => r.MatchStoneName));
+            SetStoneNumbers = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Number));
+            SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
         }
 
         public string Id { get; set; }
@@ -43,5 +47,11 @@ namespace SaleManagement.Open.Models.SpotGood
         public double Price { get; set; }
 
         public string ColorFormName { get; set; }
+
+        public string SetStoneNames { get; set; }
+
+        public string SetStoneNumbers { get; set; }
+
+        public string SetStoneWeights { get; set; }
     }
 }
