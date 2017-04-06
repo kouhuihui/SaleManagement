@@ -98,7 +98,7 @@ namespace SaleManagement.Protal
             Mapper.CreateMap<SpotGoods, SpotGoodsListItemViewModel>()
                  .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
                  .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
-                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.status.GetDisplayName()))
+                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.GetDisplayName()))
                  .ForMember(dest => dest.SpotGoodsPatternName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Name))
                  .ForMember(dest => dest.SpotGoodTypeName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Type.GetDisplayName()));
         }

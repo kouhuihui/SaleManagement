@@ -16,8 +16,9 @@ namespace SaleManagement.Open.Models.SpotGood
             Weight = spotGood.Weight;
             GoldWeight = spotGood.GoldWeight;
             IsMosaic = spotGood.IsMosaic;
-            Price = spotGood.Price;
+            Price = decimal.Round((decimal)spotGood.Price, 2);
             ColorFormName = spotGood.ColorForm.Name;
+            ColorFormId = spotGood.ColorForm.Id;
             SetStoneNames = string.Join("/", spotGood.SetStoneInfos.Select(r => r.MatchStoneName));
             SetStoneNumbers = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Number));
             SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
@@ -44,7 +45,9 @@ namespace SaleManagement.Open.Models.SpotGood
 
         public bool IsMosaic { get; set; }
 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
+
+        public int ColorFormId { get; set; }
 
         public string ColorFormName { get; set; }
 

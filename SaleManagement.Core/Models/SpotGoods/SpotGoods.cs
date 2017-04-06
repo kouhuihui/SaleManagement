@@ -49,7 +49,7 @@ namespace SaleManagement.Core.Models
 
         public bool IsLock { get; set; }
 
-        public SpotGoodsStatus status { get; set; }
+        public SpotGoodsStatus Status { get; set; }
 
         public double Price { get; set; }
 

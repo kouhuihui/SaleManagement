@@ -19,7 +19,7 @@ namespace SaleManagement.Open.Models.SpotGood
         {
             Func<IQueryable<Core.Models.SpotGoods>, IQueryable<Core.Models.SpotGoods>> filter = query =>
             {
-                query = query.Where(r => r.status == SpotGoodsStatus.New);
+                query = query.Where(r => r.Status == SpotGoodsStatus.New);
                 if (!string.IsNullOrEmpty(PatternId))
                 {
                     query = query.Where(r => r.SpotGoodsPattern.Id == PatternId);

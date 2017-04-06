@@ -35,7 +35,7 @@ namespace SaleManagement.Managers
         public async Task<InvokedResult> SaveDailyGoldPrice(DailyGoldPrice dailyGoldPrice)
         {
             var dbSet = DbContext.Set<DailyGoldPrice>();
-            var existDailyGoldPrice = dbSet.FirstOrDefault(d => d.CompanyId == User.CompanyId && d.Date ==dailyGoldPrice.Date && d.ColorFormId == dailyGoldPrice.ColorFormId && dailyGoldPrice.Id != d.Id);
+            var existDailyGoldPrice = dbSet.FirstOrDefault(d => d.CompanyId == User.CompanyId && d.Date == dailyGoldPrice.Date && d.ColorFormId == dailyGoldPrice.ColorFormId && dailyGoldPrice.Id != d.Id);
             if (existDailyGoldPrice != null)
                 return InvokedResult.Fail("DailyGoldPriceIsExist",
                     $"{existDailyGoldPrice.ColorForm.Name}在{existDailyGoldPrice.Date}的金价已设置,不能重复添加");
@@ -56,7 +56,7 @@ namespace SaleManagement.Managers
                         $"{existDailyGoldPrice.ColorForm.Name}在{existDailyGoldPrice.Date}的金价已设置,不能重复添加");
                 dbSet.AddOrUpdate(dailyGoldPrice);
             }
-   
+
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
@@ -69,9 +69,9 @@ namespace SaleManagement.Managers
             return await DbContext.Set<DailyGoldPrice>().FirstOrDefaultAsync(r => r.Id == id);
         }
 
-        public async Task<DailyGoldPrice> GetDailyGoldPriceAsync(int colorFormId, DateTime date)
+        public async Task<DailyGoldPrice> GetNewDailyGoldPriceAsync(int colorFormId)
         {
-            return await DbContext.Set<DailyGoldPrice>().FirstOrDefaultAsync(r => r.Date == date && r.ColorFormId == colorFormId);
+            return await DbContext.Set<DailyGoldPrice>().OrderByDescending(r => r.Date).FirstOrDefaultAsync(r => r.ColorFormId == colorFormId);
         }
 
         public async Task<InvokedResult> DeleteDailyGoldPriceAsync(int id)

@@ -29,17 +29,17 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string patternId, int colorFromId)
         {
-            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.ColorForm.Id == colorFromId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.ColorForm.Id == colorFromId && r.Status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.MainStone).Distinct().ToListAsync();
         }
 
         public async Task<IEnumerable<ColorForm>> GetSpotGoodsColorFromListAsync(string patternId)
         {
-            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.ColorForm).Distinct().ToListAsync();
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.Status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.ColorForm).Distinct().ToListAsync();
         }
 
         public async Task<IEnumerable<int>> GetSpotGoodsHandSizeListAsync(string patternId, int colorFromId, string mainStone)
         {
-            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.MainStone == mainStone && r.ColorForm.Id == colorFromId && r.status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.HandSize).Distinct().ToListAsync();
+            return await DbContext.Set<SpotGoods>().Where(r => r.SpotGoodsPatternId == patternId && r.MainStone == mainStone && r.ColorForm.Id == colorFromId && r.Status == SpotGoodsStatus.New).AsNoTracking().Select(r => r.HandSize).Distinct().ToListAsync();
         }
 
         public async Task<Paging<SpotGoods>> GetSpotGoodsListAsync(int start, int take, Func<IQueryable<SpotGoods>, IQueryable<SpotGoods>> filter = null)

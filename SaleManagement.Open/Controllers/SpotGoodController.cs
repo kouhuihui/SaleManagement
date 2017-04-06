@@ -21,8 +21,14 @@ namespace SaleManagement.Open.Controllers
             if (spotGoods == null)
                 return NotFound("现货不存在");
 
-            var spotGoodsViewModels = new SpotGoodListItemViewModel(spotGoods);
-            return Ok(spotGoodsViewModels);
+            var spotGoodsViewModel = new SpotGoodListItemViewModel(spotGoods);
+            if (spotGoodsViewModel.Price == 0)
+            {
+                var dailyGoldPriceManager = new DailyGoldPriceManager();
+                var dailyGoldPrice = await dailyGoldPriceManager.GetNewDailyGoldPriceAsync(spotGoodsViewModel.ColorFormId);
+                spotGoodsViewModel.Price = decimal.Round(((decimal)(dailyGoldPrice.Price * spotGoodsViewModel.GoldWeight + spotGoods.SetStoneInfos.Sum(r => r.Price * r.Weight + r.Number * r.WorkingCost))), 2);
+            }
+            return Ok(spotGoodsViewModel);
         }
 
 
