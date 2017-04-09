@@ -44,8 +44,8 @@
                     <div class="col-md-2 col-xs-2">
                     </div>
                     @{ 
-                        var arreargaeSum = Model.Where(r => r.Type == ReconciliationType.Arrearage).Sum(r => r.Amount);
-                        var paymentSum = Model.Where(r => r.Type == ReconciliationType.Payment).Sum(r => r.Amount);
+                        var arreargaeSum = Model.Where(r => r.Type == ReconciliationType.Arrearage).Sum(r => (decimal)r.Amount);
+                        var paymentSum = Model.Where(r => r.Type == ReconciliationType.Payment).Sum(r => (decimal)r.Amount);
 
                     }
                     <div class="col-md-4 col-xs-4 text-center fee">
@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-md-4 col-xs-4 text-center fee">
                         <span>已付</span>
-                        <div>@(Model.Where(r => r.Type == ReconciliationType.Payment).Sum(r => r.Amount)) 元</div>
+                        <div>@paymentSum 元</div>
                     </div>
                     <div class="col-md-2 col-xs-2">
                     </div>
