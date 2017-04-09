@@ -135,6 +135,10 @@
     <Compile Include="Migrations\201704031434474_addSpotGoodsPattern.Designer.cs">
       <DependentUpon>201704031434474_addSpotGoodsPattern.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704040557090_addSpotGoods.cs" />
+    <Compile Include="Migrations\201704040557090_addSpotGoods.Designer.cs">
+      <DependentUpon>201704040557090_addSpotGoods.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -179,7 +183,6 @@
     <Compile Include="Models\SpotGoods\SpotGoodsPattern.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsStatus.cs" />
     <Compile Include="Models\SpotGoods\SpotGoods.cs" />
-    <Compile Include="Models\SpotGoods\SpotGoodsAttachment.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfo.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsType.cs" />
     <Compile Include="Models\StoneDescribe.cs" />
@@ -251,6 +254,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704031434474_addSpotGoodsPattern.resx">
       <DependentUpon>201704031434474_addSpotGoodsPattern.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704040557090_addSpotGoods.resx">
+      <DependentUpon>201704040557090_addSpotGoods.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

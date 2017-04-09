@@ -181,7 +181,6 @@ namespace SaleManagement.Protal.Controllers
             if (order == null)
                 return Json(false, SaleManagentConstants.Errors.OrderNotFound);
 
-            order.DeliveryDate = Convert.ToDateTime(request.DeliveryDate);
             order.GemCategoryId = request.GemCategoryId;
             order.ProductCategoryId = request.ProductCategoryId;
             order.ColorFormId = request.ColorFormId;

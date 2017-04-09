@@ -1,4 +1,4 @@
-﻿namespace SaleManagement.Protal.Models.SpotGoodsPattern
+﻿namespace SaleManagement.Protal.Models
 {
     public class SpotGoodsPatternListItemViewModel
     {

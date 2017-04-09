@@ -32,19 +32,21 @@
                     @Html.HiddenFor(model => model.Id)
                     <div class="form-horizontal ptop5">
                         <div class="form-group">
-                            <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>现货名称：</label>
-                            <div class="col-md-4 col-xs-8">
-                                @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "请输入现货名称", autocomplete = "off" })
-                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                            <label class="control-label col-md-2"><span class="text-danger">*</span>现货款式：</label>
+                            <div class="col-md-2 col-xs-8">
+                                <select id="spotGoodsPatternId" name="spotGoodsPatternId" class = "form-control" data-bind="foreach:patterns">
+                                    <option data-bind="text: name,value:id"></option>
+                                </select>
+                               <input id="hideSpotGoodsPatternId" type="hidden" value="@Model.SpotGoodsPatternId"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-2"><span class="text-danger">*</span>成色：</label>
                             <div class="col-md-10 col-xs-8">
-                                <span class="btn btn-default btn-sm" name="btnSpan" data-value="5">18K白</span>
-                                <span class="btn btn-default btn-sm" name="btnSpan" data-value="4">18K红</span>
-                                <span class="btn btn-default btn-sm" name="btnSpan" data-value="3">18K黄</span>
-                                @Html.HiddenFor(model => model.ColorFormId)
+                                <span class="@(Model.ColorFormId==5 ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default")" name="btnSpan" data-value="5">18K白</span>
+                                <span class="@(Model.ColorFormId==4 ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default")" name="btnSpan" data-value="4">18K红</span>
+                                <span class="@(Model.ColorFormId==3 ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default")" name="btnSpan" data-value="3">18K黄</span>
+                                @Html.TextBoxFor(model => model.ColorFormId, new { @class = "form-control hide" })
                                 @Html.ValidationMessageFor(model => model.ColorFormId, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -53,9 +55,9 @@
                             <div class="col-md-10 col-xs-8">
                                 @foreach (var mainStoneType in SaleManagement.Core.SaleManagentConstants.UI.MainStoneTypes)
                                 {
-                                    <span class="btn btn-default btn-sm" name="btnSpan" data-value="@mainStoneType">@mainStoneType</span>
+                                    <span class="@(mainStoneType == Model.MainStone ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default")" name="btnSpan" data-value="@mainStoneType">@mainStoneType</span>
                                 }
-                                @Html.HiddenFor(model => model.MainStone)
+                                @Html.TextBoxFor(model => model.MainStone, new { @class = "form-control hide" })
                                 @Html.ValidationMessageFor(model => model.MainStone, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -64,7 +66,7 @@
                             <div class="col-md-10 col-xs-8" id="divColorFormId">
                                 @foreach (var handSize in SaleManagement.Core.SaleManagentConstants.UI.HandSizes)
                                 {
-                                    <span class="btn btn-default btn-sm" name="btnSpan" data-value="@handSize">@handSize</span>
+                                    <span class="@(handSize == Model.HandSize ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default")" name="btnSpan" data-value="@handSize">@handSize</span>
                                 }
                                 @Html.HiddenFor(model => model.HandSize)
                                 @Html.ValidationMessageFor(model => model.HandSize, "", new { @class = "text-danger" })
@@ -98,28 +100,7 @@
                                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <div class="attachment">
-                                    <ul data-bind="foreach:files" class="thumbnails gallery">
-                                        <li class="thumbnail">
-                                            <a class="cboxElement" href="javascript:void(0)"><img data-bind="text:name,attr:{src:url}" style="display: block;"></a>
-                                            <div class="well gallery-controls">
-                                                <a data-bind="click:$parent.deleteFile" href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-2"></div>
-                            <div class="col-md-10">
-                                <a class="upload-btn btn btn-danger" href="javascript:void(0);" role="button" data-toggle="popover" data-container="body" data-placement="bottom" data-original-title="" title="">
-                                    提交款式图片
-                                    <input type="file" name="file" multiple>
-                                </a>
-                                <span style="color:red">最多可上传2个，每个不超过4M</span>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <div class="box-content">
                                 <div class="center"><button type="button" data-bind="click:addSetStone" class="btn btn-primary">新增副石</button></div>
@@ -128,23 +109,26 @@
                                         <tr>
                                             <th>副石品类</th>
                                             <th>数目</th>
-                                            <th>石重（ct）</th> 
+                                            <th>石重（ct）</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody data-bind="foreach:setStonInfos">
                                         <tr>
-                                            <td data-bind="text:mathchStoneName"></td>
+                                            <td data-bind="text:matchStoneName"></td>
                                             <td data-bind="text:number"></td>
                                             <td data-bind="text:weight"></td>
-
+                                            <td>
+                                                <a data-bind="click:$parent.deleteClick" class="btn btn-sm btn-primary"  ><i class="glyphicon glyphicon-remove"></i>删除</a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            </div>
+                        </div>
 
                         <div class="form-group text-center">
-                            <button type="submit" id="saveSpotGoods"  class="btn btn-primary text-center">保存</button>
+                            <button type="submit" id="saveSpotGoods" class="btn btn-primary text-center">保存</button>
                         </div>
                     </div>
                 }
@@ -163,20 +147,16 @@
     </div>
 </div>
 @{
-    var jsonItems = Model.Attachments.Select(item => string.Format("{{name:\"{0}\",length:\"{1}\",id:\"{2}\",url:\"{3}\"}}",
-        item.Name, item.Length, item.Id, item.Url)).ToList();
 
-    //var stoneJsonItems = Model.SetStoneInfos.Select(item => string.Format("{{matchStoneName:\"{0}\",number:\"{1}\",weight:\"{2}\",id:\"{3}\"}}",
-    //    item.MathchStoneName, item.Number, item.Number, item.MatchStoneId)).ToList();
+    var stoneJsonItems = Model.SetStoneInfos.Select(item => string.Format("{{matchStoneName:\"{0}\",number:\"{1}\",weight:\"{2}\",matchStoneId:\"{3}\",id:\"{4}\"}}",
+        item.MatchStoneName, item.Number, item.Weight, item.MatchStoneId,item.Id)).ToList();
 }
 <script type="text/javascript">
-    var filesData = [@Html.Raw(string.Join(",", jsonItems))];
-    var stoneData = [];
+    var stoneData =[@Html.Raw(string.Join(",", stoneJsonItems))];
 </script>
 @section scripts{
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/jqueryval")
     @Scripts.Render("~/bundles/js/ajaxForm")
-    @Scripts.Render("~/bundles/js/fileupload")
     @Scripts.Render("~/bundles/js/SpotGoods/create")
 }

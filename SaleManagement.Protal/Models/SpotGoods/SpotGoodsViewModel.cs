@@ -1,5 +1,4 @@
-﻿using SaleManagement.Core.ViewModel;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace SaleManagement.Protal.Models.SpotGoods
 {
@@ -7,9 +6,9 @@ namespace SaleManagement.Protal.Models.SpotGoods
     {
         public SpotGoodsViewModel()
         {
-            Attachments = new List<AttachmentItem>();
+            SetStoneInfos = new List<SpotGoodsSetStoneInfoViewModel>();
         }
 
-        public IList<AttachmentItem> Attachments { get; set; }
+        public IEnumerable<SpotGoodsSetStoneInfoViewModel> SetStoneInfos { get; set; }
     }
 }

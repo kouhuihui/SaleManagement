@@ -68,7 +68,7 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrderViewModel.ShipmentOrderInfos = await Task.WhenAll(orders.Select(async o =>
                 {
                     var dailyGoldPriceManager = new DailyGoldPriceManager();
-                    var dailyGoldPrice = await dailyGoldPriceManager.GetDailyGoldPriceAsync(o.ColorFormId, DateTime.Now.Date);
+                    var dailyGoldPrice = await dailyGoldPriceManager.GetNewDailyGoldPriceAsync(o.ColorFormId);
                     var shipmentOrderInfoViewModel = new ShipmentOrderInfoViewModel(o)
                     {
                         GoldPrice = dailyGoldPrice == null ? 0 : dailyGoldPrice.Price,

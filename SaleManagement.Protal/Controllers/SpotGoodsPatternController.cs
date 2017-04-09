@@ -5,7 +5,6 @@ using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models;
-using SaleManagement.Protal.Models.SpotGoodsPattern;
 using SaleManagement.Protal.Web;
 using System;
 using System.Linq;
@@ -91,6 +90,13 @@ namespace SaleManagement.Protal.Controllers
             var manager = new FileManager(User);
             var result = await manager.DeleteAsync(fileId);
             return Json(result);
+        }
+
+        public async Task<JsonResult> GetSpotGoodsPatterns(SpotGoodsType type)
+        {
+            var manager = new SpotGoodsPatternManager(User);
+            var result = await manager.GetSpotGoodsPatternListAsync(type);
+            return Json(true, string.Empty, result);
         }
     }
 }

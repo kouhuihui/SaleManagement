@@ -379,7 +379,7 @@
         $(window).modalDialog({
             title: "设置交货日期",
             smallTitle: "",
-            content: ' <div style="margin-bottom:5px">预计<input style="width:40px" name="deliverDay" />天后出货</div><div id="selDeliverDay"><button class="btn btn-primary btn-sm" onclick="setDeliverDay(3)">3</button>  <button class="btn btn-primary btn-sm" onclick="setDeliverDay(5)">5</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(15)">15</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(20)">20</button></div>',
+            content: ' <div style="margin-bottom:5px">预计<input style="width:40px" name="deliverDay" />天后出货</div><div id="selDeliverDay"><button class="btn btn-primary btn-sm" onclick="setDeliverDay(5)">5</button>  <button class="btn btn-primary btn-sm" onclick="setDeliverDay(10)">10</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(15)">15</button> <button class="btn btn-primary btn-sm" onclick="setDeliverDay(20)">20</button></div>',
             type: "confirm",
             okCallBack: function (e, $el) {
                 var deliverDay = $("input[name=deliverDay]").val();

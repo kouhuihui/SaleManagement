@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SaleManagement.Core.Models
 {
@@ -21,10 +17,9 @@ namespace SaleManagement.Core.Models
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
         public string Id { get; set; }
 
-        [Required, StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
-        public string Name { get; set; }
+        public string SpotGoodsPatternId { get; set; }
 
-        public SpotGoodsType SpotGoodsType { get; set; }
+        public virtual SpotGoodsPattern SpotGoodsPattern { get; set; }
 
         public int ColorFormId { get; set; }
 
@@ -38,8 +33,14 @@ namespace SaleManagement.Core.Models
 
         public double GoldWeight { get; set; }
 
+        /// <summary>
+        /// 镶嵌费用
+        /// </summary>
         public double MosaicCost { get; set; }
 
+        /// <summary>
+        /// 是否镶嵌
+        /// </summary>
         public bool IsMosaic { get; set; }
 
         public string CreatorId { get; set; }
@@ -48,11 +49,9 @@ namespace SaleManagement.Core.Models
 
         public bool IsLock { get; set; }
 
-        public SpotGoodsStatus status { get; set; }
+        public SpotGoodsStatus Status { get; set; }
 
         public double Price { get; set; }
-
-        public virtual ICollection<SpotGoodsAttachment> SpotGoodsAttachments { get; set; }
 
         public virtual ICollection<SpotGoodsSetStoneInfo> SetStoneInfos { get; set; }
     }

@@ -290,7 +290,7 @@
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
     <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternListItemViewModel.cs" />
-    <Compile Include="Models\SpotGoods\SetStoneInfoViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfoViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsEditViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsAttachmentRequest.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsBase.cs" />

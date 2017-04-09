@@ -1,8 +1,5 @@
 ﻿using Dickson.Core.Common.Extensions;
-using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace SaleManagement.Open.Models.SpotGood
@@ -12,20 +9,19 @@ namespace SaleManagement.Open.Models.SpotGood
         public SpotGoodListItemViewModel(SpotGoods spotGood)
         {
             Id = spotGood.Id;
-            Name = spotGood.Name;
-            SpotGoodsType = spotGood.SpotGoodsType.GetDisplayName();
+            Name = spotGood.SpotGoodsPattern.Name;
+            SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
             HandSize = spotGood.HandSize;
             MainStone = spotGood.MainStone;
             Weight = spotGood.Weight;
             GoldWeight = spotGood.GoldWeight;
             IsMosaic = spotGood.IsMosaic;
-            Price = spotGood.Price;
+            Price = decimal.Round((decimal)spotGood.Price, 2);
             ColorFormName = spotGood.ColorForm.Name;
-            Attachments = spotGood.SpotGoodsAttachments.Select(r => new AttachmentItem
-            {
-                Id = r.FileInfoId,
-                Url = SaleManagentConstants.Misc.SaleMangementWeb + "/Attachment/" + r.FileInfoId + "/preview"
-            });
+            ColorFormId = spotGood.ColorForm.Id;
+            SetStoneNames = string.Join("/", spotGood.SetStoneInfos.Select(r => r.MatchStoneName));
+            SetStoneNumbers = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Number));
+            SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
         }
 
         public string Id { get; set; }
@@ -49,10 +45,16 @@ namespace SaleManagement.Open.Models.SpotGood
 
         public bool IsMosaic { get; set; }
 
-        public double Price { get; set; }
+        public decimal Price { get; set; }
+
+        public int ColorFormId { get; set; }
 
         public string ColorFormName { get; set; }
 
-        public IEnumerable<AttachmentItem> Attachments { get; set; }
+        public string SetStoneNames { get; set; }
+
+        public string SetStoneNumbers { get; set; }
+
+        public string SetStoneWeights { get; set; }
     }
 }
