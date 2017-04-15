@@ -7,9 +7,9 @@
 
 <div class="search">
     <div class="date-conditions pull-left">
-        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">统计日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期" value="@Model.StatisticStartDate.ToShortDateString()"></div></div>
+        <div class="textfield pull-left"><div class="field-label" style="width: 100px;">统计日期：</div><div class="field-body" style="width: 100px;"><input class="form-control" id="createdStartDate" type="text" placeholder="开始日期" value="@Model.StatisticStartDate.Value.ToShortDateString()"></div></div>
         <span class="pull-left">-</span>
-        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@Model.StatisticEndDate.ToShortDateString()"></div></div>
+        <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@Model.StatisticEndDate.Value.ToShortDateString()"></div></div>
     </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
