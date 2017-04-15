@@ -43,5 +43,7 @@ namespace SaleManagement.Protal.Models.Shipment
         public IEnumerable<RepairOrderViewModel> RepairOrders { get; set; }
 
         public double SideStoneRate { get; set; }
+
+        public double StoneSetterRate { get; set; }
     }
 }

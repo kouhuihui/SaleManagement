@@ -62,7 +62,8 @@ namespace SaleManagement.Protal.Controllers
 
             var shipmentOrderViewModel = new ShipmentOrderViewModel()
             {
-                SideStoneRate = (double)discountRate.SideStone / 100
+                SideStoneRate = (double)discountRate.SideStone / 100,
+                StoneSetterRate = (double)discountRate.StoneSetter / 100
             };
 
             shipmentOrderViewModel.ShipmentOrderInfos = await Task.WhenAll(orders.Select(async o =>
@@ -242,6 +243,7 @@ namespace SaleManagement.Protal.Controllers
 
             var shipmentOrderViewModel = Mapper.Map<ShipmentOrder, ShipmentOrderViewModel>(shipmentOrder);
             shipmentOrderViewModel.SideStoneRate = (double)discountRate.SideStone / 100;
+            shipmentOrderViewModel.StoneSetterRate = (double)discountRate.StoneSetter / 100;
 
             shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
             return View(shipmentOrderViewModel);
