@@ -290,6 +290,7 @@
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
     <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternListItemViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsOrderViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfoViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsEditViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsAttachmentRequest.cs" />
@@ -467,6 +468,7 @@
     <Content Include="static\js\SpotGoodsPattern\list.js" />
     <Content Include="static\js\SpotGoods\create.js" />
     <Content Include="static\js\SpotGoods\list.js" />
+    <Content Include="static\js\SpotGoods\sellList.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
     <Content Include="static\js\User\edit.js" />
     <Content Include="static\js\User\users.js" />
@@ -564,6 +566,7 @@
     <Content Include="Views\SpotGoods\AddSetStone.cshtml" />
     <Content Include="Views\SpotGoodsPattern\List.cshtml" />
     <Content Include="Views\SpotGoodsPattern\Add.cshtml" />
+    <Content Include="Views\SpotGoods\SellList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

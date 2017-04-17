@@ -1,7 +1,9 @@
-﻿using SaleManagement.Core.Models;
+﻿using AutoMapper;
+using SaleManagement.Core.Models;
 using SaleManagement.Managers;
 using SaleManagement.Open.Models;
 using SaleManagement.Open.Models.SpotGood;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -67,6 +69,36 @@ namespace SaleManagement.Open.Controllers
             var manager = new SpotGoodsManager();
             var handSizeList = await manager.GetSpotGoodsHandSizeListAsync(patternId, colorFromId, mainStone);
             return Ok(handSizeList);
+        }
+
+        [Route("UpdateLockStatus")]
+        public async Task<IHttpActionResult> UpdateLockStatus(string orderId, bool isLock)
+        {
+            var manager = new SpotGoodsManager();
+            var result = await manager.UpdateSpotGoodLock(orderId, isLock);
+            return Ok(result);
+        }
+
+        [Route("~/SpotGoodsOrder/Create")]
+        [HttpPost]
+        public async Task<IHttpActionResult> Create(SpotGoodsOrderViewModel request)
+        {
+            var manager = new SpotGoodsManager();
+            var spotGoodsOrder = Mapper.Map<SpotGoodsOrderViewModel, SpotGoodsOrder>(request);
+            spotGoodsOrder.Created = DateTime.Now;
+            var result = await manager.CreateSpotGoodsOrder(spotGoodsOrder);
+
+            return Ok(result);
+        }
+
+        [Route("~/SpotGoodsOrder/CustomerInfo/Update")]
+        [HttpPost]
+        public async Task<IHttpActionResult> UpdateOrderCustomerInfo(CustomerAddressViewModel request)
+        {
+            var manager = new SpotGoodsManager();
+            var result = await manager.UpdateOrderCustomerInfo(request.SpotGoodsId, request.Address, request.CustomerPhone, request.CustomerName, request.IsSF);
+
+            return Ok(result);
         }
     }
 }

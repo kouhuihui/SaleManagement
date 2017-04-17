@@ -15,7 +15,6 @@ namespace SaleManagement.Open.Models.SpotGood
             MainStone = spotGood.MainStone;
             Weight = spotGood.Weight;
             GoldWeight = spotGood.GoldWeight;
-            IsMosaic = spotGood.IsMosaic;
             Price = decimal.Round((decimal)spotGood.Price, 2);
             ColorFormName = spotGood.ColorForm.Name;
             ColorFormId = spotGood.ColorForm.Id;

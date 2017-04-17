@@ -191,7 +191,28 @@
                                     </ul>
                                 </li>
                             }
+                            @if (User.RoleMenus.Any(r => r.SystemMenu.parentId == 5000))
+                            {
+                                <li class="accordion">
+                                    <a href="#"><i class="glyphicon glyphicon-credit-card"></i><span>现货管理</span></a>
+                                    <ul class="nav nav-pills nav-stacked">
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 5001))
+                                        {
+                                            <li><a href="/spotGoodspattern/List">现货款式</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 5002))
+                                        {
+                                            <li><a href="/spotGoods/list">现货列表</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 5003))
+                                        {
+                                            <li><a href="/spotGoods/sellList">销售列表</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
                         </ul>
+
                     </div>
                 </div>
             </div>

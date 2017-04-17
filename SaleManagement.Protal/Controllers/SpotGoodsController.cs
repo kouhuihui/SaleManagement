@@ -38,6 +38,27 @@ namespace SaleManagement.Protal.Controllers
             });
         }
 
+        [PagingParameterInspector]
+        public async Task<ActionResult> SellList(SpotGoodsQueryRequest request)
+        {
+            if (!Request.IsAjaxRequest())
+                return View(request);
+
+            var manager = new SpotGoodsManager(User);
+            var paging = await manager.GetSpotGoodsOrderListAsync(request.Start, request.Take, null);
+
+            var spotGoodList = paging.List.Select(u =>
+            {
+                var spotGoods = Mapper.Map<SpotGoodsOrder, SpotGoodsOrderViewModel>(u);
+                return spotGoods;
+            });
+            return Json(true, string.Empty, new
+            {
+                paging.Total,
+                List = spotGoodList
+            });
+        }
+
         public ActionResult Create()
         {
             var spotGoodViewModel = new SpotGoodsViewModel();

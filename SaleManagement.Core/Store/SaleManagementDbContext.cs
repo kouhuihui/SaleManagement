@@ -72,6 +72,10 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<SpotGoodsSetStoneInfo> SpotGoodsSetStoneInfos { get; set; }
 
+        public IDbSet<CustomerAddress> CustomerAddresses { get; set; }
+
+        public IDbSet<SpotGoodsOrder> SpotGoodsOrders { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
