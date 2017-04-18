@@ -1,0 +1,68 @@
+﻿@{
+    Title("现货管理");
+}
+
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/SpotGoods/list">现货管理</a>
+        </li>
+        <li>
+            <a href="/SpotGoods/SellList">销售列表</a>
+        </li>
+    </ul>
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>销售列表</h2>
+                <div class="box-icon">
+
+                </div>
+            </div>
+
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable  responsive">
+                    <thead>
+                        <tr>
+                            <th>单号</th>
+                            <th>付款单号</th>
+                            <th>销售价格</th>
+                            <th>镶嵌</th>
+                            <th>销售日期</th>
+                            <th>出货单状态</th>
+                            <th>收件人姓名</th>
+                            <th>收件人电话</th>
+                            <th>收件人地址</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" data-bind="foreach:spotGoodsOrders">
+                        <tr>
+                            <td data-bind="text:spotGoodsId"></td>
+                            <td data-bind="text:productNo"></td>
+                            <td data-bind="text:price"></td>
+                            <td data-bind="text:isMosaic?'是':'否'"></td>
+                            <td data-bind="text:created"></td>
+                            <td data-bind="text:statusName"></td>
+                            <td data-bind="text:customerName"></td>
+                            <td data-bind="text:customerPhone"></td>
+                            <td data-bind="text:address"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center"><ul id="spotGoodsOrderListPage"></ul></div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/spotGoods/sellList")
+}

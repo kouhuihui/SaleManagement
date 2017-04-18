@@ -38,11 +38,6 @@ namespace SaleManagement.Core.Models
         /// </summary>
         public double MosaicCost { get; set; }
 
-        /// <summary>
-        /// 是否镶嵌
-        /// </summary>
-        public bool IsMosaic { get; set; }
-
         public string CreatorId { get; set; }
 
         public DateTime Created { get; set; }

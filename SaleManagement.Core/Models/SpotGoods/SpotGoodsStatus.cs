@@ -1,27 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Core.Models
 {
     public enum SpotGoodsStatus
     {
         [Display(Name = "新建")]
-        New = 0 ,
+        New = 0,
+
+        [Display(Name = "已卖出")]
+        Sell = 1,
 
         [Display(Name = "待自取")]
-        PickBySelf = 1,
+        PickBySelf = 2,
 
         [Display(Name = "待发货")]
-        SF = 2,
+        SF = 3,
 
         [Display(Name = "已自取")]
-        HasTaken = 3,
+        HasTaken = 4,
 
-        [Display(Name = "已发货")]
-        HasSendGoods = 4
+        [Display(Name = "已顺丰")]
+        HasSendGoods = 5
     }
 }

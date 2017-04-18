@@ -84,6 +84,61 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
+        public async Task<InvokedResult> UpdateSpotGoodsStatus(string spotGoodsId, SpotGoodsStatus status)
+        {
+            DbContext.Set<SpotGoods>().Where(r => r.Id == spotGoodsId).Update(r => new SpotGoods() { Status = status });
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> CreateSpotGoodsOrder(SpotGoodsOrder spotGoodsOrder)
+        {
+            DbContext.Set<SpotGoodsOrder>().AddOrUpdate(spotGoodsOrder);
+            await DbContext.SaveChangesAsync();
+            await UpdateSpotGoodsStatus(spotGoodsOrder.SpotGoodsId, SpotGoodsStatus.Sell);
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<Paging<SpotGoodsOrder>> GetSpotGoodsOrderListAsync(int start, int take, Func<IQueryable<SpotGoodsOrder>, IQueryable<SpotGoodsOrder>> filter = null)
+        {
+            var query = DbContext.Set<SpotGoodsOrder>().Include("SpotGoods").AsQueryable();
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            var futureCount = query.FutureCount();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
+
+            return new Paging<SpotGoodsOrder>(start, take, futureCount.Value, list);
+        }
+
+        public async Task<IEnumerable<SpotGoodsOrder>> GetSpotGoodsOrderListAsync(Func<IQueryable<SpotGoodsOrder>, IQueryable<SpotGoodsOrder>> filter = null)
+        {
+            var query = DbContext.Set<SpotGoodsOrder>().Include("SpotGoods").AsQueryable();
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            return await query.OrderByDescending(u => u.Created).ToListAsync();
+        }
+
+        public async Task<InvokedResult> UpdateOrderCustomerInfo(string spotGoodsId, string address, string phone, string name, bool isSF)
+        {
+            DbContext.Set<SpotGoodsOrder>().Where(r => r.SpotGoodsId == spotGoodsId).Update(r =>
+            new SpotGoodsOrder()
+            {
+                Address = address,
+                CustomerName = name,
+                CustomerPhone = phone
+            });
+            await DbContext.SaveChangesAsync();
+            await UpdateSpotGoodsStatus(spotGoodsId, isSF ? SpotGoodsStatus.SF : SpotGoodsStatus.PickBySelf);
+            return InvokedResult.SucceededResult;
+
+        }
+
         public async Task<InvokedResult> DeleteSpotGoodsSetStoneInfo(string spotGoodsId, int id)
         {
             await DbContext.Set<SpotGoodsSetStoneInfo>().Where(r => r.Id == id & r.SpotGoodsId == spotGoodsId).DeleteAsync();
@@ -95,6 +150,13 @@ namespace SaleManagement.Managers
             DbContext.Set<SpotGoodsSetStoneInfo>().AddOrUpdate(spotGoodsSetStoneInfo);
             await DbContext.SaveChangesAsync();
             return spotGoodsSetStoneInfo;
+        }
+
+        public async Task<InvokedResult> UpdateSpotGoodLock(string spotGoodsId, bool isLock)
+        {
+            DbContext.Set<SpotGoods>().Where(r => r.Id == spotGoodsId).Update(t => new SpotGoods() { IsLock = isLock });
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
         }
     }
 }

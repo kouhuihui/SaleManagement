@@ -139,6 +139,18 @@
     <Compile Include="Migrations\201704040557090_addSpotGoods.Designer.cs">
       <DependentUpon>201704040557090_addSpotGoods.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201704161029518_addCustomerAddress.cs" />
+    <Compile Include="Migrations\201704161029518_addCustomerAddress.Designer.cs">
+      <DependentUpon>201704161029518_addCustomerAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704171413268_addOpenId.cs" />
+    <Compile Include="Migrations\201704171413268_addOpenId.Designer.cs">
+      <DependentUpon>201704171413268_addOpenId.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201704181649293_addGoldPrice.cs" />
+    <Compile Include="Migrations\201704181649293_addGoldPrice.Designer.cs">
+      <DependentUpon>201704181649293_addGoldPrice.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -180,6 +192,8 @@
     <Compile Include="Models\ShipmentOrderInfo.cs" />
     <Compile Include="Models\ShippingScheduleSetting.cs" />
     <Compile Include="Models\SideStoneRequiredment.cs" />
+    <Compile Include="Models\SpotGoods\CustomerAddress.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsOrder.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsPattern.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsStatus.cs" />
     <Compile Include="Models\SpotGoods\SpotGoods.cs" />
@@ -257,6 +271,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704040557090_addSpotGoods.resx">
       <DependentUpon>201704040557090_addSpotGoods.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704161029518_addCustomerAddress.resx">
+      <DependentUpon>201704161029518_addCustomerAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704171413268_addOpenId.resx">
+      <DependentUpon>201704171413268_addOpenId.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201704181649293_addGoldPrice.resx">
+      <DependentUpon>201704181649293_addGoldPrice.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
