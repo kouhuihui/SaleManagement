@@ -21,6 +21,8 @@ namespace SaleManagement.Core.Models
         /// </summary>
         public bool IsMosaic { get; set; }
 
+        public double GoldPrice { get; set; }
+
         public decimal Price { get; set; }
 
         public DateTime Created { get; set; }

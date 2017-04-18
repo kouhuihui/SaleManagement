@@ -108,9 +108,20 @@ namespace SaleManagement.Managers
             }
 
             var futureCount = query.FutureCount();
-            var list = await query.OrderByDescending(u => u.Id).Skip(start).Take(take).ToListAsync();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
 
             return new Paging<SpotGoodsOrder>(start, take, futureCount.Value, list);
+        }
+
+        public async Task<IEnumerable<SpotGoodsOrder>> GetSpotGoodsOrderListAsync(Func<IQueryable<SpotGoodsOrder>, IQueryable<SpotGoodsOrder>> filter = null)
+        {
+            var query = DbContext.Set<SpotGoodsOrder>().Include("SpotGoods").AsQueryable();
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+
+            return await query.OrderByDescending(u => u.Created).ToListAsync();
         }
 
         public async Task<InvokedResult> UpdateOrderCustomerInfo(string spotGoodsId, string address, string phone, string name, bool isSF)

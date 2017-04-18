@@ -1,4 +1,5 @@
 ﻿using Dickson.Core.Common.Extensions;
+using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using System.Linq;
 
@@ -23,6 +24,29 @@ namespace SaleManagement.Open.Models.SpotGood
             SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
         }
 
+
+        public SpotGoodListItemViewModel(SpotGoodsOrder SpotGoodsOrder)
+        {
+            var spotGood = SpotGoodsOrder.SpotGoods;
+            Id = spotGood.Id;
+            Name = spotGood.SpotGoodsPattern.Name;
+            SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
+            HandSize = spotGood.HandSize;
+            MainStone = spotGood.MainStone;
+            Weight = spotGood.Weight;
+            GoldWeight = spotGood.GoldWeight;
+            Price = SpotGoodsOrder.Price;
+            ColorFormName = spotGood.ColorForm.Name;
+            DailyGoldPrice = SpotGoodsOrder.GoldPrice;
+            IsMosaic = SpotGoodsOrder.IsMosaic;
+            ColorFormId = spotGood.ColorForm.Id;
+            SetStoneNames = string.Join("/", spotGood.SetStoneInfos.Select(r => r.MatchStoneName));
+            SetStoneNumbers = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Number));
+            SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
+            ImageUrl = SaleManagentConstants.Misc.SaleMangementWeb + "/Attachment/" + spotGood.SpotGoodsPattern.FileInfoId + "/preview";
+            StatusName = spotGood.Status.GetDisplayName();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
@@ -44,6 +68,8 @@ namespace SaleManagement.Open.Models.SpotGood
 
         public bool IsMosaic { get; set; }
 
+        public double DailyGoldPrice { get; set; }
+
         public decimal Price { get; set; }
 
         public int ColorFormId { get; set; }
@@ -55,5 +81,9 @@ namespace SaleManagement.Open.Models.SpotGood
         public string SetStoneNumbers { get; set; }
 
         public string SetStoneWeights { get; set; }
+
+        public string ImageUrl { get; set; }
+
+        public string StatusName { get; set; }
     }
 }

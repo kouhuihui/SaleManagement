@@ -24,10 +24,11 @@ namespace SaleManagement.Open.Controllers
                 return NotFound("现货不存在");
 
             var spotGoodsViewModel = new SpotGoodListItemViewModel(spotGoods);
+            var dailyGoldPriceManager = new DailyGoldPriceManager();
+            var dailyGoldPrice = await dailyGoldPriceManager.GetNewDailyGoldPriceAsync(spotGoodsViewModel.ColorFormId);
+            spotGoodsViewModel.DailyGoldPrice = dailyGoldPrice.Price;
             if (spotGoodsViewModel.Price == 0)
             {
-                var dailyGoldPriceManager = new DailyGoldPriceManager();
-                var dailyGoldPrice = await dailyGoldPriceManager.GetNewDailyGoldPriceAsync(spotGoodsViewModel.ColorFormId);
                 spotGoodsViewModel.Price = decimal.Round(((decimal)(dailyGoldPrice.Price * spotGoodsViewModel.GoldWeight + spotGoods.SetStoneInfos.Sum(r => r.Price * r.Weight + r.Number * r.WorkingCost))), 2);
             }
             return Ok(spotGoodsViewModel);
@@ -100,5 +101,29 @@ namespace SaleManagement.Open.Controllers
 
             return Ok(result);
         }
+
+        public async Task<IHttpActionResult> GetSpotGoodsOrders(string openId, LogisticType logisticType)
+        {
+            var manager = new SpotGoodsManager();
+
+            Func<IQueryable<SpotGoodsOrder>, IQueryable<SpotGoodsOrder>> filter = query =>
+            {
+                query = query.Where(r => r.OpenId == openId);
+                if (logisticType == LogisticType.Self)
+                {
+                    query = query.Where(r => r.SpotGoods.Status == SpotGoodsStatus.PickBySelf || r.SpotGoods.Status == SpotGoodsStatus.HasTaken);
+                }
+                if (logisticType == LogisticType.SF)
+                {
+                    query = query.Where(r => r.SpotGoods.Status == SpotGoodsStatus.SF || r.SpotGoods.Status == SpotGoodsStatus.HasSendGoods);
+                }
+                return query;
+            };
+            var result = await manager.GetSpotGoodsOrderListAsync(filter);
+            var orders = result.Select(r => new SpotGoodListItemViewModel(r)).ToList();
+
+            return Ok(orders);
+        }
+
     }
 }
