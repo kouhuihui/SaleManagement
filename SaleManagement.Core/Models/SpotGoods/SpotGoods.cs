@@ -48,6 +48,10 @@ namespace SaleManagement.Core.Models
 
         public double Price { get; set; }
 
+        public double BasicCost { get; set; }
+
+        public int Loss18KRate { get; set; }
+
         public virtual ICollection<SpotGoodsSetStoneInfo> SetStoneInfos { get; set; }
     }
 }

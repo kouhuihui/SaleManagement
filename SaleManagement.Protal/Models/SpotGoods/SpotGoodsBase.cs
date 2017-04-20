@@ -51,5 +51,11 @@ namespace SaleManagement.Protal.Models.SpotGoods
         [Display(Name = "总额")]
         [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入二位小数的数字")]
         public double Price { get; set; }
+
+        public double BasicCost { get; set; }
+
+        [Display(Name = "18K耗损比")]
+        [Range(1, 20, ErrorMessage = "请输入1~20之间数字")]
+        public int Loss18KRate { get; set; }
     }
 }

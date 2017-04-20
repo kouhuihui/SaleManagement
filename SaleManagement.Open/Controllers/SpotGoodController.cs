@@ -29,7 +29,8 @@ namespace SaleManagement.Open.Controllers
             spotGoodsViewModel.DailyGoldPrice = dailyGoldPrice.Price;
             if (spotGoodsViewModel.Price == 0)
             {
-                spotGoodsViewModel.Price = decimal.Round(((decimal)(dailyGoldPrice.Price * spotGoodsViewModel.GoldWeight + spotGoods.SetStoneInfos.Sum(r => r.Price * r.Weight + r.Number * r.WorkingCost))), 2);
+                var goldCost = dailyGoldPrice.Price * spotGoodsViewModel.GoldWeight * (1 + (double)spotGoodsViewModel.Loss18KRate / 100);
+                spotGoodsViewModel.Price = decimal.Round(((decimal)(spotGoodsViewModel.BasicCost + goldCost + spotGoods.SetStoneInfos.Sum(r => r.Price * r.Weight + r.Number * r.WorkingCost))), 2);
             }
             return Ok(spotGoodsViewModel);
         }
@@ -76,6 +77,16 @@ namespace SaleManagement.Open.Controllers
         public async Task<IHttpActionResult> UpdateLockStatus(string orderId, bool isLock)
         {
             var manager = new SpotGoodsManager();
+            var spotGoods = await manager.GetSpotGoods(orderId);
+            if (spotGoods == null)
+                return NotFound("商品不存在");
+
+            if (spotGoods.Status != SpotGoodsStatus.New)
+                return NotFound("商品已出售");
+
+            if (spotGoods.IsLock && isLock)
+                return NotFound("商品已锁定");
+
             var result = await manager.UpdateSpotGoodLock(orderId, isLock);
             return Ok(result);
         }
@@ -125,5 +136,20 @@ namespace SaleManagement.Open.Controllers
             return Ok(orders);
         }
 
+        [Route("~/GetNewSfAddress")]
+        public async Task<IHttpActionResult> GetNewSfAddress(string openId)
+        {
+            var manager = new SpotGoodsManager();
+            var result = await manager.GetNewSfSpotGoodsOrder(openId);
+            if (result == null)
+                return Ok(new CustomerAddressViewModel());
+
+            return Ok(new CustomerAddressViewModel
+            {
+                Address = result.Address,
+                CustomerName = result.CustomerName,
+                CustomerPhone = result.CustomerPhone
+            });
+        }
     }
 }

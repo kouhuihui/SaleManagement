@@ -35,5 +35,8 @@ namespace SaleManagement.Core.Models
         public string CustomerPhone { get; set; }
 
         public string Address { get; set; }
+
+        [Required, StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
+        public string SfNo { get; set; }
     }
 }

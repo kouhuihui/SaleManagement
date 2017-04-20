@@ -22,6 +22,8 @@ namespace SaleManagement.Open.Models.SpotGood
             SetStoneNames = string.Join("/", spotGood.SetStoneInfos.Select(r => r.MatchStoneName));
             SetStoneNumbers = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Number));
             SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
+            BasicCost = spotGood.BasicCost;
+            Loss18KRate = spotGood.Loss18KRate;
         }
 
 
@@ -45,6 +47,9 @@ namespace SaleManagement.Open.Models.SpotGood
             SetStoneWeights = string.Join("/", spotGood.SetStoneInfos.Select(r => r.Weight));
             ImageUrl = SaleManagentConstants.Misc.SaleMangementWeb + "/Attachment/" + spotGood.SpotGoodsPattern.FileInfoId + "/preview";
             StatusName = spotGood.Status.GetDisplayName();
+            BasicCost = spotGood.BasicCost;
+            Loss18KRate = spotGood.Loss18KRate;
+            SfNo = SpotGoodsOrder.SfNo;
         }
 
         public string Id { get; set; }
@@ -85,5 +90,11 @@ namespace SaleManagement.Open.Models.SpotGood
         public string ImageUrl { get; set; }
 
         public string StatusName { get; set; }
+
+        public double BasicCost { get; set; }
+
+        public int Loss18KRate { get; set; }
+
+        public string SfNo { get; set; }
     }
 }

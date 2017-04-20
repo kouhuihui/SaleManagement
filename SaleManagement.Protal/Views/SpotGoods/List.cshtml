@@ -19,7 +19,10 @@
             <div class="box-header well" data-original-title="">
                 <h2>现货列表</h2>
                 <div class="box-icon">
-
+                    <a href="/spotgoods/create" class="btn">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        新增
+                    </a>
                 </div>
             </div>
 
@@ -35,6 +38,8 @@
                             <th>手寸</th>
                             <th>总重(g)</th>
                             <th>金重(g)</th>
+                            <th>损耗比</th>
+                            <th>基本工费</th>
                             <th>总价</th>
                             <th>状态</th>
                             <th>创建日期</th>
@@ -53,6 +58,8 @@
                             <td data-bind="text:handSize"></td>
                             <td data-bind="text:weight"></td>
                             <td data-bind="text:goldWeight"></td>
+                            <td data-bind="text:loss18KRate"></td>
+                            <td data-bind="text:basicCost"></td>
                             <td data-bind="text:price"></td>
                             <td data-bind="text:statusName"></td>
                             <td data-bind="text:created"></td>

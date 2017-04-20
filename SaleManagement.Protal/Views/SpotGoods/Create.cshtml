@@ -87,6 +87,20 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>损耗比：</label>
+                            <div class="col-md-2 col-xs-8">
+                                @Html.TextBoxFor(model => model.Loss18KRate, new { @class = "form-control", placeholder = "请输入损耗比", autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.Loss18KRate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>基本工费：</label>
+                            <div class="col-md-2 col-xs-8">
+                                @Html.TextBoxFor(model => model.BasicCost, new { @class = "form-control", placeholder = "请输入基本工费", autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.BasicCost, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>镶嵌费用：</label>
                             <div class="col-md-2 col-xs-8">
                                 @Html.TextBoxFor(model => model.MosaicCost, new { @class = "form-control", placeholder = "请输入镶嵌费用", autocomplete = "off" })

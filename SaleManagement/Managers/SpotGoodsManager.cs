@@ -158,5 +158,12 @@ namespace SaleManagement.Managers
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
         }
+
+        public async Task<SpotGoodsOrder> GetNewSfSpotGoodsOrder(string openId)
+        {
+            return await DbContext.Set<SpotGoodsOrder>().OrderByDescending(r => r.Created).FirstOrDefaultAsync(r => r.OpenId == openId && (r.SpotGoods.Status == SpotGoodsStatus.SF
+             || r.SpotGoods.Status == SpotGoodsStatus.HasSendGoods));
+        }
+
     }
 }
