@@ -57,5 +57,7 @@ namespace SaleManagement.Protal.Models.SpotGoods
         [Display(Name = "18K耗损比")]
         [Range(1, 20, ErrorMessage = "请输入1~20之间数字")]
         public int Loss18KRate { get; set; }
+
+        public int Status { get; set; }
     }
 }

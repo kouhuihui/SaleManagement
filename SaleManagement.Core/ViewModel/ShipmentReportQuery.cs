@@ -10,7 +10,7 @@ namespace SaleManagement.Core.ViewModel
         {
             DateTime now = DateTime.Now;
             StatisticStartDate = new DateTime(now.Year, now.Month, 1);
-            StatisticEndDate = now.AddMonths(1).AddDays(-1);
+            StatisticEndDate = StatisticStartDate.Value.AddMonths(1).AddDays(-1);
         }
 
         public Func<IQueryable<Core.Models.ShipmentOrderInfo>, IQueryable<Core.Models.ShipmentOrderInfo>> GetShipmentOrderInfosQueryFilter()

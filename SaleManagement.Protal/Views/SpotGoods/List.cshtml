@@ -64,8 +64,10 @@
                             <td data-bind="text:statusName"></td>
                             <td data-bind="text:created"></td>
                             <td>
+                                <!-- ko if:status==0 -->
                                 <a  data-bind="attr:{href:'/spotgoods/Edit?id='+id}"><i class="glyphicon glyphicon-edit"></i>编辑</a>
-                            </td>
+                                <!-- /ko --> 
+                             </td>
                         </tr>
                     </tbody>
                 </table>

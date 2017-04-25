@@ -25,7 +25,7 @@
             </div>
             <div class="box-content">
                 <div class="row">
-                    <div class="col-md-3"><label>品名：</label>@Model.Name</div> 
+                    <div class="col-md-3"><label>品名：</label>@Model.SpotGoodsPatternName</div> 
                     <div class="col-md-3"><label>成色：</label>@Model.ColorFormName</div> 
                     <div class="col-md-3"><label>主石：</label>@Model.MainStone</div> 
                     <div class="col-md-3"><label>手寸：</label>@Model.HandSize</div> 
@@ -40,12 +40,4 @@
     </div>
     <!--/span-->
 </div><!--/row-->
-@{
-    var jsonItems = Model.Attachments.Select(item => string.Format("{{name:\"{0}\",length:\"{1}\",id:\"{2}\",url:\"{3}\"}}",
-        item.Name, item.Length, item.Id, item.Url)).ToList();
-}
-<script type="text/javascript">
-    var filesData = [@Html.Raw(string.Join(",", jsonItems))];
-</script>
-@section scripts{
-}
+ 
