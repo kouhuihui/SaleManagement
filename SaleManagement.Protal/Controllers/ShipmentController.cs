@@ -83,6 +83,7 @@ namespace SaleManagement.Protal.Controllers
                     shipmentOrderInfoViewModel.SideStoneWeight = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.Weight);
                     shipmentOrderInfoViewModel.SideStoneTotalAmount = shipmentOrderInfoViewModel.OrderSetStoneInfos.Sum(r => r.TotalAmount) * ((double)discountRate.SideStone / 100); ;
                     shipmentOrderInfoViewModel.RushCost = GetOrderRushCost(o);
+                    shipmentOrderInfoViewModel.RiskFee = o.IsInsure ? GetRiskFee(o.Insurance, o.RiskType) : 0;
                     return shipmentOrderInfoViewModel;
                 }));
             shipmentOrderViewModel.CustomerName = customer.Name;
@@ -263,6 +264,24 @@ namespace SaleManagement.Protal.Controllers
                 return 100;
 
             return 0;
+        }
+
+        private double GetRiskFee(int Insurance, RiskType type)
+        {
+            double insuranceFee = 0;
+            switch (type)
+            {
+                case RiskType.Low:
+                    insuranceFee = Insurance > 3000 ? Insurance * 0.005 : 0;
+                    break;
+                case RiskType.Middle:
+                    insuranceFee = Insurance * 0.01;
+                    break;
+                case RiskType.High:
+                    insuranceFee = Insurance * 0.03;
+                    break;
+            }
+            return insuranceFee;
         }
     }
 }

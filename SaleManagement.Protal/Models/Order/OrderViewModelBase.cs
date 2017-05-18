@@ -18,6 +18,7 @@ namespace SaleManagement.Protal.Models.Order
             SideStoneRequiredment = SaleManagement.Core.Models.SideStoneRequiredment.Normal;
             RadianRequirement = SaleManagement.Core.Models.RadianRequirement.Normal;
             HasOldMaterial = false;
+            IsInsure = true;
         }
 
         public OrderViewModelBase(Core.Models.Order order)
@@ -52,6 +53,8 @@ namespace SaleManagement.Protal.Models.Order
             OutputWaxCost = order.OutputWaxCost;
             ModuleTypeName = order.ModuleType.GetDisplayName();
             OrderRushStatus = order.OrderRushStatus;
+            IsInsure = order.IsInsure;
+            Insurance = order.Insurance;
         }
 
         public string Id { get; set; }
@@ -156,6 +159,13 @@ namespace SaleManagement.Protal.Models.Order
         public double OutputWaxCost { get; set; }
 
         public string ModuleTypeName { get; set; }
+
+        public bool IsInsure { get; set; }
+
+        [Display(Name = "保价总额")]
+        [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入正确格式保价总额")]
+        [Required(ErrorMessage = "请输入{0}")]
+        public int Insurance { get; set; }
 
         string GetRang(SaleManagement.Core.Models.Order order)
         {

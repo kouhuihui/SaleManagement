@@ -121,6 +121,13 @@
                         等石
                     </a>
                 }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.Finance))
+                {
+                    <a id="shipment" class="btn">
+                        <i class="glyphicon glyphicon-share-alt"></i>
+                        生成出货单
+                    </a>
+                }
                 @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                 {
                     <a id="btnSetDesginCost" class="btn">

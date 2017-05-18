@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SaleManagement.Core.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SaleManagement.Protal.Models.Order
@@ -24,5 +25,7 @@ namespace SaleManagement.Protal.Models.Order
         }
 
         public IEnumerable<OrderSetStoneInfoViewModel> OrderSetStoneInfos { get; set; }
+
+        public RiskType RiskType { get; set; }
     }
 }

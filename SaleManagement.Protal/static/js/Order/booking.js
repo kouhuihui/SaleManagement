@@ -1,11 +1,11 @@
 ﻿var $wrap = $(".attachment"),
-	$form = $("#OrderBooking"),
-	addAttachmentUrl = "/Order/AddAttachment",
-	removeAttachmentUrl = "/Order/RemoveAttachment",
-	identityType = $("#identityType").val(),
-	listUrl = identityType === "Employee" ? "/order/list" : "/customer/order/list",
-	orderId = $("#Id").val(),
-	isAdd = orderId === "",
+    $form = $("#OrderBooking"),
+    addAttachmentUrl = "/Order/AddAttachment",
+    removeAttachmentUrl = "/Order/RemoveAttachment",
+    identityType = $("#identityType").val(),
+    listUrl = identityType === "Employee" ? "/order/list" : "/customer/order/list",
+    orderId = $("#Id").val(),
+    isAdd = orderId === "",
     $deliveryDate = $("input[name=DeliveryDate]"),
     $minChainLength = $("#MinChainLength"),
     $maxChainLength = $("#MaxChainLength"),
@@ -14,6 +14,17 @@
 
 $(function () {
     var customer = new Customer();
+    
+    var context = "手工有风险  镶嵌需谨慎"+
+                   "<div>◆高风险◆易裂、易伤祖母绿、p级钻、磷灰石、萤石、等多裂或低硬度彩宝及薄如纸的翡翠。3%保价。</div>" +
+                   "<div>中风险◆崩边、点坑红蓝宝、碧玺、坦桑、等边棱角易磨损型其它彩宝。1%保价。</div>" +
+                   "<div>低风险◆崩角、划痕钻石类及高价值翡翠。0.5%保价。50分以上强制保险，详情询客服。</div>" +
+                   "<div>【赔付标准】保价赔付100%，不保价视风险程度至多赔付10倍工费。低于3000元的低价值类彩宝免费保赔偿。</div>";
+    $("#showInsureDetail").popover({ 
+        html: true,
+        placement: 'bottom',
+        content: context,
+    })
     if ($deliveryDate.length > 0) {
         $deliveryDate.datetimepicker({
             autoclose: true,
@@ -182,6 +193,17 @@ $(function () {
         $maxChainLength.val(0);
         $handSize.val(0);
     });
+    $("#divIsInsure span").click(function () {
+        var $spanBtn = $(this);
+        $divInsurance = $("#divInsurance");
+        var spanText = $spanBtn.html();
+        if (spanText === "保价") {
+            $divInsurance.show();
+        } else {
+            $divInsurance.hide();
+            $divInsurance.find("input").val("0");
+        }
+    })
 
     if (!isAdd) {
         var spanText = $("#divProductCategory .btn-primary").html()

@@ -24,34 +24,52 @@
             <div class="box-content">
                 @using (Html.BeginForm("SetStone", "Order", FormMethod.Post, new { id = "setStoneForm" }))
                 {
-                    <div class="form-inline">
-                        <div class="form-group col-md-4">
-                            <label class="control-label">订单号：</label>
-                            <span >@Model.Id</span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label">客户：</label>
-                            <span>@Model.CustomerName</span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label">下单日期：</label>
-                            <span>@Model.Created</span>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label">主石数：</label>
-                            @Html.TextBoxFor(model => model.MainStoneNumber, new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.MainStoneNumber, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label class="control-label">
-                                主石大小(ct)：
-                            </label>
-                            @Html.TextBoxFor(model => model.MainStoneSize, new {@class = "form-control"})
-                            @Html.ValidationMessageFor(model => model.MainStoneSize, "", new {@class = "text-danger"})
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-4">订单号：</label>
+                            <div class="control-label col-md-1 col-xs-4">@Model.Id</div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" id="saveOrderMainStone" class="btn btn-primary">保存主石信息</button>
+                            <label class="control-label col-md-2 col-xs-4">客户：</label>
+                            <div class="control-label col-md-2 col-xs-4">@Model.CustomerName</div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label  col-md-2 col-xs-4">下单日期：</label>
+                            <div class="control-label  col-md-2 col-xs-4">@Model.Created</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label  col-md-2 col-xs-4">主石数：</label>
+                            <div class="col-md-2 col-xs-4">
+                                @Html.TextBoxFor(model => model.MainStoneNumber, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MainStoneNumber, "", new { @class = "text-danger" })
+                            </div>
+                           
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-4">
+                                主石大小(ct)：
+                            </label>
+                            <div class="col-md-2 col-xs-4">
+                                @Html.TextBoxFor(model => model.MainStoneSize, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.MainStoneSize, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2 col-xs-4">
+                               风险类别：
+                            </label>
+                            <div class="col-md-2 col-xs-4">
+                                @{
+                                    var riskTypes = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.RiskType));
+                                }
+                                    @Html.DropDownListFor(m => m.RiskType, riskTypes, "宝石风险级别", new { Class = "pull-left form-control" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="center col-md-4">
+                                <button type="submit" id="saveOrderMainStone" class="btn btn-primary">保存主石信息</button>
+                            </div>
+                            </div> 
                         @Html.HiddenFor(model=>model.Id)
                     </div>
                 }

@@ -155,6 +155,14 @@
     <Compile Include="Migrations\201704201431201_updateSpootGood.Designer.cs">
       <DependentUpon>201704201431201_updateSpootGood.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705130143116_addInsurance.cs" />
+    <Compile Include="Migrations\201705130143116_addInsurance.Designer.cs">
+      <DependentUpon>201705130143116_addInsurance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705130502094_addInsurance1.cs" />
+    <Compile Include="Migrations\201705130502094_addInsurance1.Designer.cs">
+      <DependentUpon>201705130502094_addInsurance1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -185,6 +193,7 @@
     <Compile Include="Models\Reconciliation.cs" />
     <Compile Include="Models\ReconciliationType.cs" />
     <Compile Include="Models\RepairOrder.cs" />
+    <Compile Include="Models\RiskType.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\RoleMenu.cs" />
     <Compile Include="Models\RoleType.cs" />
@@ -287,6 +296,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201704201431201_updateSpootGood.resx">
       <DependentUpon>201704201431201_updateSpootGood.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705130143116_addInsurance.resx">
+      <DependentUpon>201705130143116_addInsurance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705130502094_addInsurance1.resx">
+      <DependentUpon>201705130502094_addInsurance1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

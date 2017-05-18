@@ -131,5 +131,17 @@ namespace SaleManagement.Core.Models
         public double GoldWeight { get; set; }
 
         public OrderRushStatus OrderRushStatus { get; set; }
+
+        /// <summary>
+        /// 是否保价
+        /// </summary>
+        public bool IsInsure { get; set; }
+
+        /// <summary>
+        /// 保价额
+        /// </summary>
+        public int Insurance { get; set; }
+
+        public RiskType RiskType { get; set; }
     }
 }

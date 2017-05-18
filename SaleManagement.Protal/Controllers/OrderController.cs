@@ -106,6 +106,8 @@ namespace SaleManagement.Protal.Controllers
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
             model.Created = DateTime.Now.ToString(SaleManagentConstants.UI.DateStringFormat);
+            model.Insurance = 0;
+            model.IsInsure = true;
             var customers = await new UserManager().GetAllCustomersAsync();
             model.Customers = customers;
             return View(model);
@@ -506,6 +508,7 @@ namespace SaleManagement.Protal.Controllers
 
             order.MainStoneNumber = request.MainStoneNumber;
             order.MainStoneSize = request.MainStoneSize;
+            order.RiskType = request.RiskType;
             var result = await manager.UpdateOrderAsync(order);
             return Json(result);
         }

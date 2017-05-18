@@ -16,6 +16,7 @@ namespace SaleManagement.Protal.Models.Order
             CreatorName = order.CreatorName;
             Urgent = GetUrgentStatus(order);
             OrderRushStatusName = order.OrderRushStatus.GetDisplayName();
+            Insurance = order.Insurance;
         }
 
         public string StatusName { get; set; }
@@ -31,6 +32,8 @@ namespace SaleManagement.Protal.Models.Order
         public int Urgent { get; set; }
 
         public string OrderRushStatusName { get; set; }
+
+        public double Insurance { get; set; }
 
         private int GetUrgentStatus(Core.Models.Order order)
         {

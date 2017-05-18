@@ -100,8 +100,9 @@
                     <tr>
                         <td class="text-right">证书号</td>
                         <td class="text-center">@Model.Certificate</td>
-                        <td class="text-right">有无旧料</td>
-                        <td class="text-center">@(Model.HasOldMaterial ? "有" : "无")</td>
+                        <td class="text-right">保价金额</td>
+                        @*<td class="text-center">@(Model.HasOldMaterial ? "有" : "无")</td>*@
+                        <td class="text-center">@(Model.Insurance)</td>
                     </tr>
                 </tbody>
             </table>

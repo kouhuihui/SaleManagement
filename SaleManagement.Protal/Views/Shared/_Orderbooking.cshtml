@@ -29,7 +29,7 @@
     .form-group span{
         margin-top:5px;
     }
-    .form-group label{ 
+    .form-group label{
     }
 </style>
 
@@ -65,7 +65,7 @@
         @foreach (var category in Model.ProductCategories)
         {
             var currentClass = category.Id == Model.ProductCategoryId ? "btn btn-default btn-sm btn-primary" : "btn btn-sm btn-default";
-            <span class="@currentClass"  data-value="@category.Id">@category.Name</span>
+            <span class="@currentClass" data-value="@category.Id">@category.Name</span>
         }
         @Html.HiddenFor(model => model.ProductCategoryId)
         @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
@@ -80,7 +80,7 @@
 
     </div>
 </div>
-<div class="form-group" id="divChain"  style="display:none">
+<div class="form-group" id="divChain" style="display:none">
     <label class="control-label col-md-2 col-xs-4">链长：</label>
     <div class="col-md-1 col-xs-3">
         @Html.TextBoxFor(model => model.MinChainLength, new { Class = "form-control" })
@@ -133,6 +133,27 @@
     </div>
 </div>
 <div class="form-group">
+    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>是否保价：</label>
+    <div class="col-md-2 col-xs-8" id="divIsInsure">
+        <span class="btn btn-sm btn-default btn-primary" name="btnSpan" data-value="1">保价</span>
+        <span class="btn btn-sm btn-default" name="btnSpan" data-value="0">不保价</span>
+    </div>
+    @Html.HiddenFor(model => model.IsInsure)
+</div>
+<div class="form-group">
+    <label class="control-label col-md-2 col-xs-4"></label>
+    <div class="col-md-4 col-xs-8">
+        <a tabindex="0" class="btn btn-sm btn-danger" role="button" id="showInsureDetail" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="保价说明">查看保价说明</a>
+    </div>
+</div>
+<div class="form-group" id="divInsurance">
+    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>保价金额：</label>
+    <div class="col-md-2 col-xs-8">
+        @Html.TextBoxFor(model => model.Insurance, new { @class = "form-control number", placeholder = "请输入保价金额" })
+        @Html.ValidationMessageFor(model => model.Insurance, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
     <label class="control-label col-md-2 col-xs-4">证书号：</label>
     <div class="col-md-2 col-xs-8">
         @Html.TextBoxFor(model => model.Certificate, new { @class = "form-control", placeholder = "请输入证书号" })
@@ -182,7 +203,7 @@
         @foreach (var item in goldWeightRequirementList)
         {
             var currentClass = item.Key == (int)Model.GoldWeightRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+        <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         @Html.HiddenFor(model => model.GoldWeightRequirement)
     </div>
@@ -210,7 +231,7 @@
         @foreach (var item in radianRequirementList)
         {
             var currentClass = item.Key == (int) Model.RadianRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+        <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         @Html.HiddenFor(model => model.RadianRequirement)
     </div>
@@ -224,7 +245,7 @@
         @foreach (var item in orderRushStatusList)
         {
             var currentClass = item.Key == (int)Model.OrderRushStatus ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+        <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         <div style="color: red">
             <div>注：1)紧急订单7天内出货,费用100元, 超过7天不收费。</div>
@@ -248,7 +269,7 @@
     </div>
 </div>
 <div class="form-group text-center">
-    <button type="submit" id="saveOrder" class="btn btn-primary text-center">@(string.IsNullOrEmpty(Model.Id)?"下单":"保存")</button>
+    <button type="submit" id="saveOrder" class="btn btn-primary text-center">@(string.IsNullOrEmpty(Model.Id) ? "下单" : "保存")</button>
 </div>
 @{
     var jsonItems = Model.Attachments.Select(item => string.Format("{{name:\"{0}\",length:\"{1}\",id:\"{2}\",url:\"{3}\"}}",
