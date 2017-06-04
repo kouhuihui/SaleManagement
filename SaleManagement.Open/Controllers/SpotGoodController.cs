@@ -108,8 +108,8 @@ namespace SaleManagement.Open.Controllers
         public async Task<IHttpActionResult> UpdateOrderCustomerInfo(CustomerAddressViewModel request)
         {
             var manager = new SpotGoodsManager();
-            var result = await manager.UpdateOrderCustomerInfo(request.SpotGoodsId, request.Address, request.CustomerPhone, request.CustomerName, request.IsSF);
-
+            var result = await manager.UpdateOrderCustomerInfo(request.SpotGoodsId, request.Address, request.CustomerPhone, request.CustomerName);
+            await manager.UpdateSpotGoodsStatus(request.SpotGoodsId, request.IsSF ? SpotGoodsStatus.SF : SpotGoodsStatus.PickBySelf);
             return Ok(result);
         }
 

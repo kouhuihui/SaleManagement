@@ -1,4 +1,6 @@
-﻿namespace SaleManagement.Protal.Models
+﻿using SaleManagement.Core.Models;
+
+namespace SaleManagement.Protal.Models
 {
     public class SpotGoodsOrderViewModel
     {
@@ -26,5 +28,9 @@
         public string CustomerPhone { get; set; }
 
         public string Address { get; set; }
+
+        public string SfNo { get; set; }
+
+        public SpotGoodsStatus Status { get; set; }
     }
 }

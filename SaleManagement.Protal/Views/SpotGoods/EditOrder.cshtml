@@ -1,0 +1,84 @@
+﻿@model SaleManagement.Protal.Models.SpotGoodsOrderViewModel
+@{
+    Layout = null;
+}
+
+@using (Html.BeginForm("EditOrder", "SpotGoods", FormMethod.Post, new { id = "orderForm" }))
+{
+    @Html.HiddenFor(model => model.SpotGoodsId)
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">编辑销售单</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Status">
+                    订单状态
+                </label>
+                @{
+                    var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.SpotGoodsStatus));
+                }
+                <div class="col-md-6">
+                    @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择状态", new { Class = "pull-left form-control",name = "Status" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CustomerName">
+                    客户姓名
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control" }) 
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="CustomerPhone">
+                  客户电话
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.CustomerPhone, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Address">
+                    客户地址
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="SfNo">
+                    顺丰单号
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.SfNo, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" value="保存" />
+        </div>
+    </div>
+}
+
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+<script type="text/javascript">
+    var $from = $("#orderForm");
+    $(function () {
+        $from.ajaxForm({
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    parent.location.reload();
+
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+
+</script>

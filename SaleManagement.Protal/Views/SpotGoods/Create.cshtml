@@ -140,10 +140,14 @@
                                 </table>
                             </div>
                         </div>
-
-                        <div class="form-group text-center">
-                            <button type="submit" id="saveSpotGoods" class="btn btn-primary text-center">保存</button>
-                        </div>
+                        @if (Model.Status == (int)SaleManagement.Core.Models.SpotGoodsStatus.New)
+                        {
+                            <div class="form-group text-center">
+                                <button type="submit" id="saveSpotGoods" class="btn btn-primary text-center">保存</button>
+                            </div>
+                        }
+ 
+                       
                     </div>
                 }
             </div>

@@ -5,6 +5,12 @@ namespace SaleManagement.Core.Models
 {
     public class SpotGoodsOrder
     {
+        public SpotGoodsOrder()
+        {
+            Id = Guid.NewGuid().ToString();
+            SfNo = "";
+        }
+
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
         public string Id { get; set; }
 
@@ -36,7 +42,7 @@ namespace SaleManagement.Core.Models
 
         public string Address { get; set; }
 
-        [Required, StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
+        [StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
         public string SfNo { get; set; }
     }
 }

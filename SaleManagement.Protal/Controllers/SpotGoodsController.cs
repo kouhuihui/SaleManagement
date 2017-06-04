@@ -24,7 +24,7 @@ namespace SaleManagement.Protal.Controllers
                 return View(request);
 
             var manager = new SpotGoodsManager(User);
-            var paging = await manager.GetSpotGoodsListAsync(request.Start, request.Take, null);
+            var paging = await manager.GetSpotGoodsListAsync(request.Start, request.Take, request.GetSpotGoodsListQueryFilter());
 
             var spotGoodList = paging.List.Select(u =>
             {
@@ -45,7 +45,7 @@ namespace SaleManagement.Protal.Controllers
                 return View(request);
 
             var manager = new SpotGoodsManager(User);
-            var paging = await manager.GetSpotGoodsOrderListAsync(request.Start, request.Take, null);
+            var paging = await manager.GetSpotGoodsOrderListAsync(request.Start, request.Take, request.GetSpotGoodsOrderListQueryFilter());
 
             var spotGoodList = paging.List.Select(u =>
             {
@@ -57,6 +57,24 @@ namespace SaleManagement.Protal.Controllers
                 paging.Total,
                 List = spotGoodList
             });
+        }
+
+        public async Task<ActionResult> EditOrder(string id)
+        {
+            var manager = new SpotGoodsManager(User);
+            var spotGoodOrder = await manager.GetSpotGoodsOrderAsync(id);
+            var spotGoods = Mapper.Map<SpotGoodsOrder, SpotGoodsOrderViewModel>(spotGoodOrder);
+            return View(spotGoods);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> EditOrder(SpotGoodsOrderEdit request)
+        {
+            var manager = new SpotGoodsManager(User);
+            var result = await manager.UpdateOrderCustomerInfo(request.SpotGoodsId, request.Address, request.CustomerPhone, request.CustomerName, request.SfNo);
+            await manager.UpdateSpotGoodsStatus(request.SpotGoodsId, request.Status);
+
+            return Json(result);
         }
 
         public ActionResult Create()

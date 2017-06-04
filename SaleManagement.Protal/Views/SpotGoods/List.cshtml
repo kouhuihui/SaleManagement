@@ -1,7 +1,7 @@
 ﻿@{
     Title("现货管理");
 }
-
+@model SaleManagement.Protal.Models.SpotGoods.SpotGoodsQueryRequest
 <div>
     <ul class="breadcrumb">
         <li>
@@ -11,6 +11,22 @@
             <a href="/SpotGoods/list">现货管理</a>
         </li>
     </ul>
+</div>
+
+<div class="search">
+    <div style=" display:inline-block;margin-bottom:5px;">
+        <div class="textfield pull-left "><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
+       
+        <div class="textfield combobox pull-left" id="divOrderStatus">
+            @{
+                var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.SpotGoodsStatus));
+            }
+            <div class="combobox-body" style="width: 200px;">
+                @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择状态", new { Class = "pull-left form-control" })
+            </div>
+        </div>
+        <button id="btnSearch" class="btn btn-primary">查询</button>
+    </div>
 </div>
 
 <div class="row">

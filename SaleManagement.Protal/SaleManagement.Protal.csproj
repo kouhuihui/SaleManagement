@@ -290,6 +290,7 @@
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
     <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternListItemViewModel.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsOrderEdit.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsOrderViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfoViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsEditViewModel.cs" />
@@ -567,6 +568,7 @@
     <Content Include="Views\SpotGoodsPattern\List.cshtml" />
     <Content Include="Views\SpotGoodsPattern\Add.cshtml" />
     <Content Include="Views\SpotGoods\SellList.cshtml" />
+    <Content Include="Views\SpotGoods\EditOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

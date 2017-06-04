@@ -163,6 +163,10 @@
     <Compile Include="Migrations\201705130502094_addInsurance1.Designer.cs">
       <DependentUpon>201705130502094_addInsurance1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706030844272_updatesf.cs" />
+    <Compile Include="Migrations\201706030844272_updatesf.Designer.cs">
+      <DependentUpon>201706030844272_updatesf.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705130502094_addInsurance1.resx">
       <DependentUpon>201705130502094_addInsurance1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706030844272_updatesf.resx">
+      <DependentUpon>201706030844272_updatesf.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

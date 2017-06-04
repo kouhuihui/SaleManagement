@@ -124,17 +124,23 @@ namespace SaleManagement.Managers
             return await query.OrderByDescending(u => u.Created).ToListAsync();
         }
 
-        public async Task<InvokedResult> UpdateOrderCustomerInfo(string spotGoodsId, string address, string phone, string name, bool isSF)
+        public async Task<SpotGoodsOrder> GetSpotGoodsOrderAsync(string id)
+        {
+            return await DbContext.Set<SpotGoodsOrder>().Include("SpotGoods").FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        public async Task<InvokedResult> UpdateOrderCustomerInfo(string spotGoodsId, string address, string phone, string name, string sfno = "")
         {
             DbContext.Set<SpotGoodsOrder>().Where(r => r.SpotGoodsId == spotGoodsId).Update(r =>
-            new SpotGoodsOrder()
-            {
-                Address = address,
-                CustomerName = name,
-                CustomerPhone = phone
-            });
+              new SpotGoodsOrder()
+              {
+                  Address = string.IsNullOrEmpty(address) ? r.Address : address,
+                  CustomerName = string.IsNullOrEmpty(name) ? r.CustomerName : name,
+                  CustomerPhone = string.IsNullOrEmpty(phone) ? r.CustomerPhone : phone,
+                  SfNo = string.IsNullOrEmpty(sfno) ? r.SfNo : sfno,
+              });
             await DbContext.SaveChangesAsync();
-            await UpdateSpotGoodsStatus(spotGoodsId, isSF ? SpotGoodsStatus.SF : SpotGoodsStatus.PickBySelf);
+
             return InvokedResult.SucceededResult;
 
         }

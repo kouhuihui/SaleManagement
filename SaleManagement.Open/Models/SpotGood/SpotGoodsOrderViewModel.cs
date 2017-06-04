@@ -24,5 +24,7 @@ namespace SaleManagement.Open.Models.SpotGood
         public DateTime Created { get; set; }
 
         public string OpenId { get; set; }
+
+        public string CustomerName { get; set; }
     }
 }
