@@ -126,7 +126,7 @@ namespace SaleManagement.Protal.Controllers
                     ws.Cells[row, 5].Value = shipmentOrderInfo.DeliveryDate;
                     ws.Cells[row, 6].Value = shipmentOrderInfo.Number;
                     ws.Cells[row, 7].Value = shipmentOrderInfo.GoldWeight;
-                    ws.Cells[row, 8].Value = Math.Round(shipmentOrderInfo.GoldWeight * (1 + shipmentOrderInfo.LossRate / 100), 2);
+                    ws.Cells[row, 8].Value = shipmentOrderInfo.Hhz;
                     ws.Cells[row, 9].Value = shipmentOrderInfo.GoldAmount;
                     ws.Cells[row, 10].Value = shipmentOrderInfo.SideStoneNumber;
                     ws.Cells[row, 11].Value = shipmentOrderInfo.SideStoneWeight;

@@ -202,6 +202,8 @@ namespace SaleManagement.Protal.Controllers
             order.MaxChainLength = request.MaxChainLength;
             order.HandSize = request.HandSize;
             order.OrderRushStatus = request.OrderRushStatus;
+            order.IsInsure = request.IsInsure;
+            order.Insurance = request.Insurance;
             var result = await orderManager.UpdateOrderAsync(order);
 
             return Json(result);
