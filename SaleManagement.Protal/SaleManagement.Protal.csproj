@@ -629,9 +629,10 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>1587</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost/SaleManagement.Protal</IISUrl>
+          <IISUrl>http://localhost:1587/</IISUrl>
           <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
-          <IISAppRootUrl>http://www.sale.com</IISAppRootUrl>
+          <IISAppRootUrl>
+          </IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

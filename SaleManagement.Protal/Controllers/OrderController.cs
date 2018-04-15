@@ -123,8 +123,15 @@ namespace SaleManagement.Protal.Controllers
             var order = Mapper.Map<OrderEditViewModel, Order>(request);
             var serialNumberManager = new SerialNumberManager(User);
             var manager = new OrderManager(User);
-            order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
-
+            if (string.IsNullOrEmpty(order.Id))
+            {
+                order.Id = SaleManagentConstants.Misc.OrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.Order);
+            }
+            else
+            {
+                if (await manager.GetOrderAsync(order.Id) != null)
+                    return Json(false, "订单号已存在");
+            }
             if (attachmentIds.Any())
             {
                 order.Attachments = new List<OrderAttachment>();
