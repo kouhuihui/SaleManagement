@@ -6,6 +6,7 @@ using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
+using SaleManagement.Protal.Models;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Web;
 using System;
@@ -129,6 +130,11 @@ namespace SaleManagement.Protal.Controllers
             }
             else
             {
+                order.Id = order.Id.Trim();
+
+                if (order.Id.Length != 12)
+                    return Json(false, "订单号格式不正确");
+
                 if (await manager.GetOrderAsync(order.Id) != null)
                     return Json(false, "订单号已存在");
             }
@@ -228,7 +234,7 @@ namespace SaleManagement.Protal.Controllers
             {
                 ContentType = request.File.ContentType,
                 FileName = request.File.FileName,
-                Purpose = FilePurpose.OrderAttachment.GetDisplayName(),
+                Purpose = request.FilePurpose == 0 ? FilePurpose.OrderAttachment.GetDisplayName() : request.FilePurpose.GetDisplayName(),
                 Data = GetByteImage(image),
                 ThumbnailData = MakeThumbnail(request.File.InputStream, 300, 300).ReadAllBytes(),
                 ContentLength = request.File.ContentLength
@@ -559,6 +565,69 @@ namespace SaleManagement.Protal.Controllers
         {
             var orderSetStoneInfoManager = new OrderSetStoneInfoManager();
             var result = await orderSetStoneInfoManager.DeleteOrderSetStoneAsync(id);
+            return Json(result);
+        }
+
+        public async Task<ActionResult> SetMainStone(string orderId)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            var orderSetMainStoneViewModel = new OrderSetMainStoneViewModel(order);
+            return View(orderSetMainStoneViewModel);
+        }
+
+        public async Task<ActionResult> AddMainStone(string orderId)
+        {
+            var manager = new BasicDataManager();
+            var mainStones = await manager.GetMainStonesync();
+            var orderMainStoneInfoViewModel = new OrderMainStoneInfoViewModel
+            {
+                OrderId = orderId,
+                MainStones = mainStones
+            };
+            return View(orderMainStoneInfoViewModel);
+        }
+
+
+        [HttpPost]
+        public async Task<JsonResult> AddMainStone(OrderMainStoneInfoViewModel request, [NamedModelBinder(typeof(CommaSeparatedModelBinder), "attachmentIds")] string[] attachmentIds)
+        {
+            if (!ModelState.IsValid)
+                return Json(false, data: ErrorToDictionary());
+
+            var orderMainStoneInfo = Mapper.Map<OrderMainStoneInfoViewModel, OrderMainStoneInfo>(request);
+
+            orderMainStoneInfo.CreatorId = User.Id;
+            orderMainStoneInfo.Created = DateTime.Now;
+
+            var orderMainStoneInfoManager = new OrderMainStoneInfoManager(User);
+            var result = await orderMainStoneInfoManager.CreateOrderMainStoneInfoAsync(orderMainStoneInfo, attachmentIds);
+            return Json(result);
+        }
+
+        public async Task<ActionResult> ViewMainStoneAttachements(int mainStoneId)
+        {
+            List<AttachmentItem> attachments = new List<AttachmentItem>();
+
+            var manager = new OrderMainStoneInfoManager(User);
+            var mainStoneAttachments = await manager.GetOrderMainStoneAttachments(mainStoneId);
+            if (mainStoneAttachments != null)
+            {
+                attachments = mainStoneAttachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+                {
+                    Id = a.FileInfoId,
+                    Url = "/Attachment/" + a.FileInfoId + "/preview"
+                }).ToList();
+            }
+
+            return View(attachments);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteMainStone(int id)
+        {
+            var orderMainStoneInfoManager = new OrderMainStoneInfoManager();
+            var result = await orderMainStoneInfoManager.DeleteOrderSetStoneAsync(id);
             return Json(result);
         }
 

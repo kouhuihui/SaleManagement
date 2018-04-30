@@ -1,0 +1,25 @@
+﻿@model IEnumerable<SaleManagement.Core.ViewModel.AttachmentItem>
+
+@{
+    Title("查看主石图片");
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="box col-md-12">
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <img src="@item.Url" style="display: block;">
+            }
+        }
+        else
+        {
+            <div>没有主石图片</div>
+        }
+    </div>
+</div>
+ 
+ 

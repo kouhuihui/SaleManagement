@@ -121,6 +121,8 @@ namespace SaleManagement.Core.Models
 
         public virtual ICollection<OrderSetStoneInfo> OrderSetStoneInfos { get; set; }
 
+        public virtual ICollection<OrderMainStoneInfo> OrderMainStoneInfos { get; set; }
+
         /// <summary>
         /// 出蜡倒模费用
         /// </summary>

@@ -17,7 +17,7 @@ namespace SaleManagement.Protal.Models.Shipment
             ProductName = order.ColorForm.Name + order.GemCategory.Name + order.ProductCategory.Name;
             Weight = order.Weight;
             GoldWeight = order.GoldWeight;
-            OrderSetStoneInfos = order.OrderSetStoneInfos.Select(o => new OrderSetStoneInfoViewModel
+            OrderSetStoneInfos = order.OrderSetStoneInfos != null ? order.OrderSetStoneInfos.Select(o => new OrderSetStoneInfoViewModel
             {
                 MatchStoneId = o.MatchStoneId,
                 MatchStoneName = o.MathchStoneName,
@@ -26,7 +26,7 @@ namespace SaleManagement.Protal.Models.Shipment
                 Price = o.Price,
                 TotalAmount = o.Price * (double)o.Weight,
                 SetStoneWorkingCost = o.WorkingCost
-            });
+            }) : null;
         }
 
         public string ProductName { get; set; }

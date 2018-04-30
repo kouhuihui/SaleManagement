@@ -76,6 +76,10 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<SpotGoodsOrder> SpotGoodsOrders { get; set; }
 
+        public IDbSet<MainStone> MainStones { get; set; }
+
+        public IDbSet<OrderMainStoneAttachment> OrderMainStoneAttachments { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

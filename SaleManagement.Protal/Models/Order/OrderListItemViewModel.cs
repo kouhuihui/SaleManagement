@@ -1,9 +1,11 @@
-﻿using Dickson.Core.Common.Extensions;
+﻿using AutoMapper;
+using Dickson.Core.Common.Extensions;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SaleManagement.Protal.Models.Order
 {
@@ -17,6 +19,11 @@ namespace SaleManagement.Protal.Models.Order
             Urgent = GetUrgentStatus(order);
             OrderRushStatusName = order.OrderRushStatus.GetDisplayName();
             Insurance = order.Insurance;
+            MainStoneInfos = order.OrderMainStoneInfos.Select(u =>
+            {
+                var mainStoneInfo = Mapper.Map<OrderMainStoneInfo, OrderMainStoneInfoViewModel>(u);
+                return mainStoneInfo;
+            });
         }
 
         public string StatusName { get; set; }
@@ -33,7 +40,7 @@ namespace SaleManagement.Protal.Models.Order
 
         public string OrderRushStatusName { get; set; }
 
-        public double Insurance { get; set; }
+        public IEnumerable<OrderMainStoneInfoViewModel> MainStoneInfos { get; set; }
 
         private int GetUrgentStatus(Core.Models.Order order)
         {

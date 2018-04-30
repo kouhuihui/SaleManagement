@@ -1,0 +1,181 @@
+﻿@model SaleManagement.Protal.Models.OrderMainStoneInfoViewModel
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("AddMainStone", "Order", FormMethod.Post, new { id = "addMainStoneFrom" }))
+{
+    @Html.HiddenFor(model => model.OrderId)
+    <input type="hidden" name="attachmentIds" id="attachmentIds" />
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">新增主石</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Name">
+                    <span class="text-danger">*</span>名称
+                </label>
+                <div class="col-md-6">
+                    @{
+                        var mainStones = Model.MainStones.Select(c => new SelectListItem
+                        {
+                            Value = c.Id.ToString(),
+                            Text = c.Name
+                        });
+                    }
+
+                    @Html.DropDownListFor(model => model.MainStoneId, mainStones, "请选择", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MainStoneName, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Weight">
+                    <span class="text-danger">*</span>重量(ct)
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Weight, new { @class = "form-control", placeholder = "请输入重量" })
+                    @Html.ValidationMessageFor(model => model.Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="attachment">
+                    <ul data-bind="foreach:files" class="thumbnails gallery">
+                        <li class="thumbnail">
+                            <a class="cboxElement" href="javascript:void(0)"><img data-bind="text:name,attr:{src:url}" style="display: block;"></a>
+                            <div class="well gallery-controls">
+                                <a data-bind="click:$parent.deleteFile" href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+                <a class="upload-btn btn btn-danger" href="javascript:void(0);" role="button" data-toggle="popover" data-container="body" data-placement="bottom" data-original-title="" title="">
+                    提交款式图片
+                    <input type="file" name="file" multiple>
+                </a>
+                <span style="color:red">最多可上传2个，每个不超过4M</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" value="保存" />
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/js/knockout")
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+@Scripts.Render("~/bundles/js/fileupload")
+<script type="text/javascript">
+    var $wrap = $(".attachment"),
+    addAttachmentUrl = "/Order/AddAttachment",
+    removeAttachmentUrl = "/Order/RemoveAttachment",
+    filesData = [];
+
+    $(function () {
+        var $from = $("#addMainStoneFrom");
+        $from.ajaxForm({
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000)
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+        var Attachment = function (data) {
+            var self = this;
+            self.files = ko.observableArray(data);
+            self.addFile = function (item, el) {
+                self.files.push(item);
+            }
+            self.deleteFile = function (item, el) {
+                $(window).modalDialog({
+                    title: "提示",
+                    smallTitle: "删除主石图片",
+                    content: "确定删除该主石图片吗？",
+                    type: "confirm",
+                    okCallBack: function (e, $el) {
+                        $wrap.loading();
+                        $.ajax({
+                            url: removeAttachmentUrl,
+                            type: "POST",
+                            dataType: "json",
+                            data: {
+                                fileId: item.id
+                            },
+                            success: function (result) {
+                                $wrap.data("loading").hide();
+                                if (result.succeeded) {
+                                    $el.data("bs.modal").hide();
+                                    self.files.remove(item);
+                                    SetAttachmentIds();
+                                } else {
+                                    shortTips(errorMessage(result));
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        };
+        var attachment = new Attachment(filesData);
+        ko.applyBindings(attachment);
+
+        $(".upload-btn").fileupload({
+            autoUpload: true,//是否自动上传
+            url: addAttachmentUrl,
+            dataType: 'json',
+            formData: { FilePurpose: 3},
+            singleFileUploads: true,
+            limitMultiFileUploads: 1,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            send: function (e, data) {
+                $wrap.loading();
+            },
+            fail: function () {
+                $wrap.data("loading").hide();
+            },
+            add: function (e, data) {
+                if ((data.originalFiles.length + filesData.length) > 2) {
+                    shortTips("最多只能上传2张图片");
+                    return false;
+                }
+                data.submit();
+            },
+            done: function () {
+                $wrap.data("loading").hide();
+            },
+            success: function (result) {//设置文件上传完毕事件的回调函数
+                if (result['succeeded']) {
+                    result.data.acceptVisible = ko.observable(false);
+                    attachment.addFile(result.data);
+                    SetAttachmentIds();
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+
+
+    function SetAttachmentIds() {
+        var attachmentIds = "";
+        for (var i = 0; i < filesData.length; i++) {
+            attachmentIds += filesData[i].id + ",";
+        }
+        $("#attachmentIds").val(attachmentIds);
+    }
+</script>

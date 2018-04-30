@@ -167,6 +167,22 @@
     <Compile Include="Migrations\201706030844272_updatesf.Designer.cs">
       <DependentUpon>201706030844272_updatesf.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201804241415039_--addMainStone.cs" />
+    <Compile Include="Migrations\201804241415039_--addMainStone.Designer.cs">
+      <DependentUpon>201804241415039_--addMainStone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804251455337_--addordermainstone.cs" />
+    <Compile Include="Migrations\201804251455337_--addordermainstone.Designer.cs">
+      <DependentUpon>201804251455337_--addordermainstone.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804290625519_--AddOrderMainStoneAttachment.cs" />
+    <Compile Include="Migrations\201804290625519_--AddOrderMainStoneAttachment.Designer.cs">
+      <DependentUpon>201804290625519_--AddOrderMainStoneAttachment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804290726448_--UpdateOrderMainStoneAttachment.cs" />
+    <Compile Include="Migrations\201804290726448_--UpdateOrderMainStoneAttachment.Designer.cs">
+      <DependentUpon>201804290726448_--UpdateOrderMainStoneAttachment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -183,9 +199,12 @@
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\GoldWeightRequirement.cs" />
     <Compile Include="Models\IdentityType.cs" />
+    <Compile Include="Models\MainStone.cs" />
     <Compile Include="Models\MatchStone.cs" />
     <Compile Include="Models\ModuleType.cs" />
     <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\OrderMainStoneAttachment.cs" />
+    <Compile Include="Models\OrderMainStoneInfo.cs" />
     <Compile Include="Models\OrderOperationLog.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderAttachment.cs" />
@@ -309,6 +328,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706030844272_updatesf.resx">
       <DependentUpon>201706030844272_updatesf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804241415039_--addMainStone.resx">
+      <DependentUpon>201804241415039_--addMainStone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804251455337_--addordermainstone.resx">
+      <DependentUpon>201804251455337_--addordermainstone.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804290625519_--AddOrderMainStoneAttachment.resx">
+      <DependentUpon>201804290625519_--AddOrderMainStoneAttachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804290726448_--UpdateOrderMainStoneAttachment.resx">
+      <DependentUpon>201804290726448_--UpdateOrderMainStoneAttachment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

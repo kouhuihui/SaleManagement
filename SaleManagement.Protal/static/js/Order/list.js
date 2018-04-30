@@ -443,6 +443,21 @@
         });
     })
 
+
+    $("#receivedStone").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+        location.href = "/order/setMainStone?orderId=" + inputCheckeds.val();
+    })
+
     $chxProcess.change(function () {
         if ($chxProcess.is(':checked')) {
             $process.val("true");

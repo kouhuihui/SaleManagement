@@ -16,7 +16,7 @@ namespace SaleManagement.Managers
         {
         }
 
-        public BasicDataManager(SaleUser user):base(user)
+        public BasicDataManager(SaleUser user) : base(user)
         {
         }
 
@@ -30,7 +30,7 @@ namespace SaleManagement.Managers
             if (id < 1)
                 throw new ArgumentOutOfRangeException();
 
-            return await DbContext.Set<ProductCategory>().FirstOrDefaultAsync(r => !r.Deleted &&r.Id == id);
+            return await DbContext.Set<ProductCategory>().FirstOrDefaultAsync(r => !r.Deleted && r.Id == id);
         }
 
         public async Task<InvokedResult> DeleteProductCategoryAsync(int id)
@@ -96,7 +96,7 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<ColorForm>> GetColorFormsAsync()
         {
-            return await DbContext.Set<ColorForm>().Where(r=>!r.Deleted).OrderByDescending(d => d.Id).ToListAsync();
+            return await DbContext.Set<ColorForm>().Where(r => !r.Deleted).OrderByDescending(d => d.Id).ToListAsync();
         }
 
         public async Task<ColorForm> GetColorFormAsync(int id)
@@ -122,7 +122,7 @@ namespace SaleManagement.Managers
 
             var dbSet = DbContext.Set<ColorForm>();
             var colorForm = await dbSet.FirstOrDefaultAsync(c => c.Id == id);
-            if(colorForm==null)
+            if (colorForm == null)
                 return InvokedResult.Fail("ColorFormNoExists", "数据不存在");
 
             colorForm.Deleted = true;
@@ -133,7 +133,7 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<MatchStone>> GetMatchStonesAsync()
         {
-            return await DbContext.Set<MatchStone>().Where(m=>!m.Deleted).OrderBy(d => d.Id).ToListAsync();
+            return await DbContext.Set<MatchStone>().Where(m => !m.Deleted).OrderBy(d => d.Id).ToListAsync();
         }
 
         public async Task<MatchStone> GetMatchStoneAsync(int id)
@@ -178,6 +178,40 @@ namespace SaleManagement.Managers
             shippingScheduleSetting.CompanyId = User.CompanyId;
             shippingScheduleSetting.UserId = User.Id;
             DbContext.Set<ShippingScheduleSetting>().AddOrUpdate(shippingScheduleSetting);
+            await DbContext.SaveChangesAsync();
+
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<IEnumerable<MainStone>> GetMainStonesync()
+        {
+            return await DbContext.Set<MainStone>().Where(r => !r.Deleted).OrderByDescending(d => d.Id).ToListAsync();
+        }
+
+        public async Task<MainStone> GetMainStoneAsync(int id)
+        {
+            return await DbContext.Set<MainStone>().FirstOrDefaultAsync(r => r.Id == id);
+        }
+
+        public async Task<InvokedResult> DeleteMainStoneAsync(int id)
+        {
+            if (id < 1)
+                throw new ArgumentOutOfRangeException();
+
+            var dbSet = DbContext.Set<MainStone>();
+            var mainStone = await dbSet.FirstOrDefaultAsync(c => c.Id == id);
+            if (mainStone == null)
+                return InvokedResult.Fail("mainStoneNoExists", "数据不存在");
+
+            mainStone.Deleted = true;
+            dbSet.AddOrUpdate(mainStone);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> SaveMainStoneAsync(MainStone mainStone)
+        {
+            DbContext.Set<MainStone>().AddOrUpdate(mainStone);
             await DbContext.SaveChangesAsync();
 
             return InvokedResult.SucceededResult;

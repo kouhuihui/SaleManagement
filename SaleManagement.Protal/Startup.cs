@@ -105,6 +105,7 @@ namespace SaleManagement.Protal
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.SpotGoods.Status))
                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.SpotGoods.Status.GetDisplayName()));
+            Mapper.CreateMap<OrderMainStoneInfoViewModel, OrderMainStoneInfo>().ReverseMap();
         }
     }
 }

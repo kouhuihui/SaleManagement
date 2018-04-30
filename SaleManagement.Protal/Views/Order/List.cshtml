@@ -121,6 +121,14 @@
                         等石
                     </a>
                 }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="receivedStone" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        收石
+                    </a>
+                }
+
                 @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.Finance))
                 {
                     <a id="shipment" class="btn">

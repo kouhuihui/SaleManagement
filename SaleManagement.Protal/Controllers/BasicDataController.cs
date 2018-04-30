@@ -218,5 +218,47 @@ namespace SaleManagement.Protal.Controllers
             var result = await manager.SaveShippingScheduleSettingAsync(shippingScheduleSetting);
             return Json(result);
         }
+
+        public async Task<ActionResult> MainStones()
+        {
+            var manager = new BasicDataManager(User);
+            var matinStones = await manager.GetMainStonesync();
+            return View(matinStones);
+        }
+
+        public async Task<ActionResult> EditMainStone(int? id)
+        {
+            var mainStone = new MainStone();
+            if (!id.HasValue)
+                return View(mainStone);
+
+            var manager = new BasicDataManager(User);
+            mainStone = await manager.GetMainStoneAsync(id.Value);
+            return View(mainStone);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> EditMainStone(MainStone mainStone)
+        {
+            if (!ModelState.IsValid)
+                return Json(false, data: ErrorToDictionary());
+
+            var manager = new BasicDataManager(User);
+            var result = await manager.SaveMainStoneAsync(mainStone);
+
+            return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> RemoveMainStone(int id)
+        {
+            if (id < 1)
+                throw new ArgumentOutOfRangeException();
+
+            var manager = new BasicDataManager(User);
+            var result = await manager.DeleteMainStoneAsync(id);
+
+            return Json(result);
+        }
     }
 }

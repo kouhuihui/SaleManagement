@@ -19,7 +19,7 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "单价名称")]
         [Required(ErrorMessage = "请填写{0}")]
-        [Range(typeof(double), "0.00", "20000.00",ErrorMessage ="{0}范围是0.00 ~ 19999.99")]
+        [Range(typeof(double), "0.00", "100000.00",ErrorMessage ="{0}范围是0.00 ~ 99999.99")]
         public double Price { get; set; }
 
         [Display(Name = "工费")]

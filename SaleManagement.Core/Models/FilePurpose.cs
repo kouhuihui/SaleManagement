@@ -8,6 +8,9 @@ namespace SaleManagement.Core.Models
         OrderAttachment = 1,
 
         [Display(Name = "SpotGoods.Attachment")]
-        SpotGoodsAttachment = 2
+        SpotGoodsAttachment = 2,
+
+        [Display(Name = "Order.MainStonAttachment")]
+        OrderMainStoneAttachment = 3,
     }
 }

@@ -270,7 +270,9 @@
     <Compile Include="Models\Order\DistributionOrderViewModel.cs" />
     <Compile Include="Models\Order\OrderEditViewModel.cs" />
     <Compile Include="Models\Order\OrderListItemViewModel.cs" />
+    <Compile Include="Models\Order\OrderMainStoneInfoViewModel.cs" />
     <Compile Include="Models\Order\OrderQueryRequestBase.cs" />
+    <Compile Include="Models\Order\OrderSetMainStoneViewModel.cs" />
     <Compile Include="Models\Order\OrderSetStoneInfoViewModel.cs" />
     <Compile Include="Models\Order\OrderSetStoneViewModel.cs" />
     <Compile Include="Models\Order\OrdersQueryRequest.cs" />
@@ -417,9 +419,11 @@
     <Content Include="static\js\BasicData\colorForms.js" />
     <Content Include="static\js\BasicData\editColorForm.js" />
     <Content Include="static\js\BasicData\editGemCategory.js" />
+    <Content Include="static\js\BasicData\editMainStone.js" />
     <Content Include="static\js\BasicData\editMatchStone.js" />
     <Content Include="static\js\BasicData\editProductCategory.js" />
     <Content Include="static\js\BasicData\gemCategories.js" />
+    <Content Include="static\js\BasicData\mainStones.js" />
     <Content Include="static\js\BasicData\matchStones.js" />
     <Content Include="static\js\BasicData\productCategories.js" />
     <Content Include="static\js\charisma.js" />
@@ -457,6 +461,7 @@
     <Content Include="static\js\notice\list.js" />
     <Content Include="static\js\Order\booking.js" />
     <Content Include="static\js\Order\list.js" />
+    <Content Include="static\js\Order\mainStone.js" />
     <Content Include="static\js\Order\myOrders.js" />
     <Content Include="static\js\Order\setStone.js" />
     <Content Include="static\js\Order\uploadDesginImage.js" />
@@ -569,6 +574,11 @@
     <Content Include="Views\SpotGoodsPattern\Add.cshtml" />
     <Content Include="Views\SpotGoods\SellList.cshtml" />
     <Content Include="Views\SpotGoods\EditOrder.cshtml" />
+    <Content Include="Views\BasicData\MainStones.cshtml" />
+    <Content Include="Views\BasicData\EditMainStone.cshtml" />
+    <Content Include="Views\Order\SetMainStone.cshtml" />
+    <Content Include="Views\Order\AddMainStone.cshtml" />
+    <Content Include="Views\Order\ViewMainStoneAttachements.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
