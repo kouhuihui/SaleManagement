@@ -1,4 +1,5 @@
-﻿using SaleManagement.Protal.Models.Order;
+﻿using SaleManagement.Core;
+using SaleManagement.Protal.Models.Order;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -26,6 +27,14 @@ namespace SaleManagement.Protal.Models.Shipment
                 Price = o.Price,
                 TotalAmount = o.Price * (double)o.Weight,
                 SetStoneWorkingCost = o.WorkingCost
+            }) : null;
+            OrderMainStoneInfos = order.OrderMainStoneInfos != null ? order.OrderMainStoneInfos.Select(o => new OrderMainStoneInfoViewModel
+            {
+                Id = o.Id,
+                MainStoneName = o.MainStone.Name,
+                RiskType = o.MainStone.RiskType,
+                Weight = o.Weight,
+                Created = o.Created.ToString(SaleManagentConstants.UI.DateStringFormat)
             }) : null;
         }
 
@@ -85,6 +94,11 @@ namespace SaleManagement.Protal.Models.Shipment
         public double TotalAmount { get; set; }
 
         public IEnumerable<OrderSetStoneInfoViewModel> OrderSetStoneInfos { get; set; }
+
+        /// <summary>
+        /// 主石列表
+        /// </summary>
+        public IEnumerable<OrderMainStoneInfoViewModel> OrderMainStoneInfos { get; set; }
 
         public string IsShipOnTime { get; set; }
     }

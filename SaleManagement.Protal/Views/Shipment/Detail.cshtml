@@ -216,6 +216,38 @@
                 <div class="mtop10">
                     <table class="table table-bordered bootstrap-datatable">
                         <tbody>
+                        <tr>
+                            <th>订单号</th>
+                            <th>主石名称</th>
+                            <th>重量(ct)</th>
+                            <th>风险</th>
+                        </tr>
+                        @foreach (var item in Model.ShipmentOrderInfos)
+                        {
+                            var count = item.OrderMainStoneInfos.Count();
+                            if (count > 0)
+                            {
+                                <tr>
+                                    <td rowspan="@(count == 0 ? 0 : count + 1)">@item.Id</td>
+                                </tr>
+                                foreach (var mainStone in item.OrderMainStoneInfos)
+                                {
+                                    <tr> 
+                                            <td>@mainStone.MainStoneName</td>
+                                            <td>@mainStone.Weight</td>
+                                            <td>@mainStone.RiskType.GetDisplayName()</td> 
+ 
+                                    </tr>
+                                }
+                            }
+                        }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mtop10">
+                    <table class="table table-bordered bootstrap-datatable">
+                        <tbody>
                             <tr>
                                 <th>订单号</th>
                                 <th>副石名称</th>
