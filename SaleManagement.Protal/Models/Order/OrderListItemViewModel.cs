@@ -22,6 +22,7 @@ namespace SaleManagement.Protal.Models.Order
             MainStoneInfos = order.OrderMainStoneInfos.Select(u =>
             {
                 var mainStoneInfo = Mapper.Map<OrderMainStoneInfo, OrderMainStoneInfoViewModel>(u);
+                mainStoneInfo.RiskType = u.MainStone.RiskType;
                 return mainStoneInfo;
             });
         }
