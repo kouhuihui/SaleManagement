@@ -120,6 +120,13 @@
                         <i class="glyphicon glyphicon-euro"></i>
                         等石
                     </a>
+                } 
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="sendwaitStonemsg" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        催石
+                    </a>
                 }
                 @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
                 {

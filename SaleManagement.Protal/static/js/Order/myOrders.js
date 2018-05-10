@@ -39,7 +39,31 @@
                     });
                 }
             });
-        }
+        },
+             self.CustomerTobeConfirmMesClick = function (item, el) {
+                 $(window).modalDialog({
+                     title: "提示",
+                     smallTitle: "",
+                     content: "发送客户确认设计稿消息",
+                     type: "confirm",
+                     okCallBack: function (e, $el) {
+                         $.ajax({
+                             url: "/order/" + item.id + "/CustomerTobeConfirmMsg",
+                             type: "POST",
+                             dataType: "json",
+                             data: {},
+                             success: function (result) {
+                                 if (result.succeeded) {
+                                     $el.data("bs.modal").hide();
+                                     location.reload();
+                                 } else {
+                                     shortTips(errorMessage(result));
+                                 }
+                             }
+                         });
+                     }
+                 });
+             }
     }
 
     var ordersView = new Orders([]);

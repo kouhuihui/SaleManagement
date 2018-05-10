@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SaleManagement.Protal.Areas.Customer.Models.Order.CustomerOrdersQueryRequest
+@{
     Title("跟单");
     Layout = "~/Views/Shared/_customerLayout.cshtml";
 }
@@ -65,7 +66,11 @@
             </div>
             <div class="box-content">
                 <div  style="height:36px; margin:5px">
-                    <div class="textfield pull-left"><div class="field-body" style="width: 200px; margin-left:5px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号"></div></div>
+                    <div class="textfield pull-left">
+                        <div class="field-body" style="width: 200px; margin-left: 5px;">
+                            @Html.TextBoxFor(m=>m.OrderId, new { @class = "form-control", placeholder = "输入单号" })
+
+                        </div></div>
                     <button id="btnSearch" class="btn btn-primary">查询</button>
                 </div>
                 <div>

@@ -25,7 +25,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
         public async Task<ActionResult> List(CustomerOrdersQueryRequest request)
         {
             if (!Request.IsAjaxRequest())
-                return View();
+                return View(request);
 
             var manager = new OrderManager(User);
             Func<IQueryable<Order>, IQueryable<Order>> filter = query =>
@@ -34,7 +34,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
 
                 if (!string.IsNullOrEmpty(request.OrderId))
                 {
-                    query = query.Where(j => j.Id.Contains( request.OrderId));
+                    query = query.Where(j => j.Id.Contains(request.OrderId));
                 }
 
                 if (request.QueryOrderStatus == CustomerQueryOrderStatus.Process)

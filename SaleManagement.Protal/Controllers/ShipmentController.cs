@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using Dickson.Core.ComponentModel;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
+using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Web;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -180,8 +183,35 @@ namespace SaleManagement.Protal.Controllers
                     Remark = $"{id}出货"
                 };
                 await new ReconciliationManager(User).CreateAsync(reconciliation);
+                await SendShipmentOrderMsg(shipmentOrder);
             }
             return Json(result);
+        }
+
+        private async Task<JsonResult> SendShipmentOrderMsg(ShipmentOrder shipmentOrder)
+        {
+            var accountBindingManager = new AccountBindingManager();
+            var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(shipmentOrder.CustomerId);
+
+            if (accountbing == null)
+                return Json(InvokedResult.Fail("404", "客户未绑定微信"));
+
+            SendMesHelp.SendNews(new NewsMes()
+            {
+                OpenId = accountbing.WxAccount,
+                Articles = new List<Article>()
+                    {
+                        new Article()
+                        {
+                            Title="订单已发货",
+                            Description=string.Format("订单{0}已于{1}发货！",string.Join(",",shipmentOrder.ShipmentOrderInfos.Select(r=>r.Id)),DateTime.Now.ToShortDateString()),
+                            Url= "http://www.18k.hk/customer/order/list?status=2",
+                            PicUrl= "http://www.18k.hk/static/images/ddzs.jpg"
+                        }
+                    }
+            });
+
+            return Json(InvokedResult.SucceededResult);
         }
 
         [HttpPost]

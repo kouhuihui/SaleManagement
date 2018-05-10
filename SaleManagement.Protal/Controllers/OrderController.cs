@@ -333,9 +333,91 @@ namespace SaleManagement.Protal.Controllers
             {
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+
+                await SendCustomerTobeConfirmMsg(order);
             }
+
             return Json(result);
         }
+
+        [HttpPost, Route("{orderId}/CustomerTobeConfirmMsg")]
+        public async Task<JsonResult> CustomerTobeConfirmMsg(string orderId)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId);
+            if (!designImages.Any())
+                return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
+
+            return await SendCustomerTobeConfirmMsg(order);
+        }
+
+        [HttpPost, Route("{orderId}/WaitStoneMsg")]
+        public async Task<JsonResult> WaitStoneMsg(string orderId)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            return await SendWaitMainStoneMsg(order);
+        }
+
+        private async Task<JsonResult> SendCustomerTobeConfirmMsg(Order order)
+        {
+            var accountBindingManager = new AccountBindingManager();
+            var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(order.CustomerId);
+
+            if (accountbing == null)
+                return Json(InvokedResult.Fail("404", "客户未绑定微信"));
+
+            SendMesHelp.SendNews(new NewsMes()
+            {
+                OpenId = accountbing.WxAccount,
+                Articles = new List<Article>()
+                    {
+                        new Article()
+                        {
+                            Title="设计稿确认",
+                            Description=string.Format("订单{0}已上传设计稿，请确认！",order.Id),
+                            Url= "http://www.18k.hk/customer/order/list?OrderId="+ order.Id,
+                            PicUrl= "http://www.18k.hk/static/images/qrsjg.png"
+                        }
+                    }
+            });
+
+            return Json(InvokedResult.SucceededResult);
+        }
+
+        private async Task<JsonResult> SendWaitMainStoneMsg(Order order)
+        {
+            var accountBindingManager = new AccountBindingManager();
+            var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(order.CustomerId);
+
+            if (accountbing == null)
+                return Json(InvokedResult.Fail("404", "客户未绑定微信"));
+
+            SendMesHelp.SendNews(new NewsMes()
+            {
+                OpenId = accountbing.WxAccount,
+                Articles = new List<Article>()
+                    {
+                        new Article()
+                        {
+                            Title="等待主石",
+                            Description=string.Format("订单{0}进入等石阶段，请及时邮件主石！",order.Id),
+                            Url= "http://www.18k.hk/customer/order/list?OrderId="+ order.Id,
+                            PicUrl= "http://www.18k.hk/static/images/ddzs.jpg"
+                        }
+                    }
+            });
+
+            return Json(InvokedResult.SucceededResult);
+        }
+
 
         [HttpPost, Route("{orderId}/SetOutputwaxCost")]
         public async Task<JsonResult> SetOutputwaxCost(string orderId, double outputWaxCost = 0)

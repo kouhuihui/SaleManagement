@@ -443,6 +443,45 @@
         });
     })
 
+    $("#sendwaitStonemsg").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        if (length > 1) {
+            shortTips("只能选择一个订单");
+            return false;
+        }
+        var id = inputCheckeds.val();
+
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "发送催客户邮寄主石消息",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/" + id + "/WaitStoneMsg",
+                    type: "POST",
+                    dataType: "json",
+                    data: { },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            shortTips("发送成功");
+                            search();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    })
+
 
     $("#receivedStone").on("click", function () {
         var inputCheckeds = $("#tbody input:checkbox:checked");

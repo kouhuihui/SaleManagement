@@ -1,11 +1,8 @@
 ﻿using Dickson.Core.ComponentModel;
 using SaleManagement.Core.Models;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SaleManagement.Managers
@@ -35,6 +32,16 @@ namespace SaleManagement.Managers
             Requires.NotNullOrEmpty(userName, "userName");
 
             return await DbContext.Set<AccountBinding>().AnyAsync(r => r.UserName == userName);
+        }
+
+        public async Task<AccountBinding> GetAccountBindingByCustomerId(string customerId)
+        {
+            Requires.NotNullOrEmpty(customerId, "customerId");
+
+            return await (from a in DbContext.Set<AccountBinding>()
+                          join b in DbContext.Set<SaleUser>() on a.UserName equals b.UserName
+                          where b.Id == customerId
+                          select a).FirstOrDefaultAsync();
         }
     }
 }

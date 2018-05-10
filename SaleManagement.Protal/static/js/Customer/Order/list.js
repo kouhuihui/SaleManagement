@@ -1,7 +1,7 @@
 ﻿$(function () {
     var status = getQueryString("status"),
        $orderlist = $("#orderlist"),
-        $orderId = $("#orderId"),
+        $orderId = $("#OrderId"),
        $orderListPage = $('#orderListPage');
 
     if (status == null) {

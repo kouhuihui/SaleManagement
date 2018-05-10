@@ -399,6 +399,7 @@
     <Content Include="static\images\ajax-loaders\ajax-loader-6.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-7.gif" />
     <Content Include="static\images\ajax-loaders\ajax-loader-8.gif" />
+    <Content Include="static\images\ddzs.jpg" />
     <Content Include="static\images\favicon.ico" />
     <Content Include="static\images\home.jpg" />
     <Content Include="static\images\iphone-style-checkboxes\off.png" />
@@ -411,6 +412,7 @@
     <Content Include="static\images\login.jpg" />
     <Content Include="static\images\logo.png" />
     <Content Include="static\images\logo20.png" />
+    <Content Include="static\images\qrsjg.png" />
     <Content Include="static\images\star-half.png" />
     <Content Include="static\images\star-off.png" />
     <Content Include="static\images\star-on.png" />
