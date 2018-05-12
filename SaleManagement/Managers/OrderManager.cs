@@ -99,7 +99,7 @@ namespace SaleManagement.Managers
             if (outPutWaxDate.HasValue)
             {
                 var outPutWaxEndDate = outPutWaxDate.Value.AddDays(1);
-                var outPutWaxOrderIds = DbContext.Set<OrderOperationLog>().Where(o => o.Status == OrderStatus.OutputWax && o.Created >= outPutWaxDate
+                var outPutWaxOrderIds = DbContext.Set<OrderOperationLog>().Where(o => o.Status == OperationLogStatus.OutputWax && o.Created >= outPutWaxDate
                 & o.Created < outPutWaxEndDate).Select(o => o.OrderId);
                 query = query.Where(o => outPutWaxOrderIds.Any(r => r == o.Id));
             }

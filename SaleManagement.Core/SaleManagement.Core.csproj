@@ -208,6 +208,7 @@
     <Compile Include="Models\MatchStone.cs" />
     <Compile Include="Models\ModuleType.cs" />
     <Compile Include="Models\Notice.cs" />
+    <Compile Include="Models\OperationLogStatus.cs" />
     <Compile Include="Models\OrderMainStoneAttachment.cs" />
     <Compile Include="Models\OrderMainStoneInfo.cs" />
     <Compile Include="Models\OrderOperationLog.cs" />

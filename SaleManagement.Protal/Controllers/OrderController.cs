@@ -352,7 +352,7 @@ namespace SaleManagement.Protal.Controllers
             if (!designImages.Any())
                 return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
 
-            return await SendCustomerTobeConfirmMsg(order);
+            return await SendCustomerTobeConfirmMsg(order, true);
         }
 
         [HttpPost, Route("{orderId}/WaitStoneMsg")]
@@ -366,7 +366,7 @@ namespace SaleManagement.Protal.Controllers
             return await SendWaitMainStoneMsg(order);
         }
 
-        private async Task<JsonResult> SendCustomerTobeConfirmMsg(Order order)
+        private async Task<JsonResult> SendCustomerTobeConfirmMsg(Order order, bool isLog = false)
         {
             var accountBindingManager = new AccountBindingManager();
             var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(order.CustomerId);
@@ -388,6 +388,12 @@ namespace SaleManagement.Protal.Controllers
                         }
                     }
             });
+
+            if (isLog)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(OperationLogStatus.CuiQueRen, order.Id);
+            }
 
             return Json(InvokedResult.SucceededResult);
         }
@@ -414,6 +420,10 @@ namespace SaleManagement.Protal.Controllers
                         }
                     }
             });
+
+
+            var operationLogManager = new OrderOperationLogManager(User);
+            await operationLogManager.AddLogAsync(OperationLogStatus.CuiShi, order.Id);
 
             return Json(InvokedResult.SucceededResult);
         }
@@ -607,6 +617,11 @@ namespace SaleManagement.Protal.Controllers
             order.MainStoneSize = request.MainStoneSize;
             order.RiskType = request.RiskType;
             var result = await manager.UpdateOrderAsync(order);
+
+
+            var operationLogManager = new OrderOperationLogManager(User);
+            await operationLogManager.AddLogAsync(OperationLogStatus.ReciveStone, order.Id);
+
             return Json(result);
         }
 
@@ -667,6 +682,7 @@ namespace SaleManagement.Protal.Controllers
                 OrderId = orderId,
                 MainStones = mainStones
             };
+
             return View(orderMainStoneInfoViewModel);
         }
 
@@ -684,6 +700,15 @@ namespace SaleManagement.Protal.Controllers
 
             var orderMainStoneInfoManager = new OrderMainStoneInfoManager(User);
             var result = await orderMainStoneInfoManager.CreateOrderMainStoneInfoAsync(orderMainStoneInfo, attachmentIds);
+
+            if (result.Succeeded)
+            {
+
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(OperationLogStatus.ReciveStone, request.OrderId);
+
+            }
+
             return Json(result);
         }
 

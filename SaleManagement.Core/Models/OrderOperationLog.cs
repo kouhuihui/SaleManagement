@@ -18,7 +18,7 @@ namespace SaleManagement.Core.Models
 
         public string Content { get; set; }
 
-        public OrderStatus Status { get; set; }
+        public OperationLogStatus Status { get; set; }
 
         public string OrderId { get; set; }
     }

@@ -1,10 +1,10 @@
-﻿using Dickson.Core.ComponentModel;
+﻿using Dickson.Core.Common.Extensions;
+using Dickson.Core.ComponentModel;
 using SaleManagement.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SaleManagement.Managers
@@ -15,10 +15,18 @@ namespace SaleManagement.Managers
         {
         }
 
-        public async Task<InvokedResult> AddLogAsync(OrderStatus status,string orderId)
+        public async Task<InvokedResult> AddLogAsync(OperationLogStatus status, string orderId)
         {
-            string content = GetContent(status);
-            var log = Create(status, orderId, content);
+            var log = Create(status, orderId, status.GetDisplayName());
+            DbContext.Set<OrderOperationLog>().Add(log);
+            await DbContext.SaveChangesAsync();
+            return InvokedResult.SucceededResult;
+        }
+
+        public async Task<InvokedResult> AddLogAsync(OrderStatus status, string orderId)
+        {
+            var operationLogStatus = (OperationLogStatus)status;
+            var log = Create(operationLogStatus, orderId, operationLogStatus.GetDisplayName());
             DbContext.Set<OrderOperationLog>().Add(log);
             await DbContext.SaveChangesAsync();
             return InvokedResult.SucceededResult;
@@ -32,7 +40,7 @@ namespace SaleManagement.Managers
             string content = GetContent(status);
             foreach (var orderId in orderIds)
             {
-                var log = Create(status, orderId, content);
+                var log = Create((OperationLogStatus)status, orderId, content);
                 DbContext.Set<OrderOperationLog>().Add(log);
             }
             await DbContext.SaveChangesAsync();
@@ -106,7 +114,7 @@ namespace SaleManagement.Managers
             return content;
         }
 
-        private OrderOperationLog Create(OrderStatus status, string orderId,string content)
+        private OrderOperationLog Create(OperationLogStatus status, string orderId, string content)
         {
             return new OrderOperationLog
             {
