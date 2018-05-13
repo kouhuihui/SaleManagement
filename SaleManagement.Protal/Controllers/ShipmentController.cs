@@ -125,6 +125,10 @@ namespace SaleManagement.Protal.Controllers
             var shipmentOrder = new ShipmentOrder();
             shipmentOrder = Mapper.Map<ShipmentOrderViewModel, ShipmentOrder>(shipmentOrderViewModel);
 
+            var usermanager = new UserManager();
+            var customer = usermanager.FindByIdByCache(shipmentOrder.CustomerId);
+            shipmentOrder.CustomerName = customer.Name;
+
             var serialNumberManager = new SerialNumberManager(User);
             shipmentOrder.Id = SaleManagentConstants.Misc.ShipmentOrderPrefix + await serialNumberManager.NextSNAsync(SaleManagentConstants.SerialNames.ShipmentOrder);
             shipmentOrder.CompanyId = User.CompanyId;
@@ -137,7 +141,7 @@ namespace SaleManagement.Protal.Controllers
                 await new OrderManager(User).UpdateOrderStatusAsync(OrderStatus.Shipmenting, orderIds);
                 await new OrderOperationLogManager(User).AddLogAsync(OrderStatus.Shipmenting, orderIds);
             }
-            return Json(result);
+            return Json(result.Succeeded, "", result.Data);
         }
 
         [HttpPost]
@@ -151,7 +155,7 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrder.ShipmentOrderInfos.Each(r => r.ShipmentOrderId = shipmentOrder.Id);
 
             var result = await shipmentManager.UpdateAsync(shipmentOrder);
-            return Json(result);
+            return Json(result.Succeeded, "", result.Data);
         }
 
         [HttpPost]
@@ -190,27 +194,33 @@ namespace SaleManagement.Protal.Controllers
 
         private async Task<JsonResult> SendShipmentOrderMsg(ShipmentOrder shipmentOrder)
         {
-            var accountBindingManager = new AccountBindingManager();
-            var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(shipmentOrder.CustomerId);
-
-            if (accountbing == null)
-                return Json(InvokedResult.Fail("404", "客户未绑定微信"));
-
-            SendMesHelp.SendNews(new NewsMes()
+            if (shipmentOrder.ShipmentOrderInfos.Any())
             {
-                OpenId = accountbing.WxAccount,
-                Articles = new List<Article>()
+
+                var accountBindingManager = new AccountBindingManager();
+                var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(shipmentOrder.CustomerId);
+
+                if (accountbing == null)
+                    return Json(InvokedResult.Fail("404", "客户未绑定微信"));
+
+                SendMesHelp.SendNews(new NewsMes()
+                {
+                    OpenId = accountbing.WxAccount,
+                    Articles = new List<Article>()
                     {
                         new Article()
                         {
-                            Title="订单已发货",
-                            Description=string.Format("订单{0}已于{1}出货！",string.Join(",",shipmentOrder.ShipmentOrderInfos.Select(r=>r.Id)),DateTime.Now.ToShortDateString()),
-                            Url= "https://www.18k.hk/customer/order/list?status=2",
-                            PicUrl= "https://www.18k.hk/static/images/ddzs.jpg"
+                            Title = "订单已发货",
+                            Description =
+                                string.Format("订单{0}已于{1}出货！",
+                                    string.Join(",", shipmentOrder.ShipmentOrderInfos.Select(r => r.Id)),
+                                    DateTime.Now.ToShortDateString()),
+                            Url = "https://www.18k.hk/customer/order/list?status=2",
+                            PicUrl = "https://www.18k.hk/static/images/ddzs.jpg"
                         }
                     }
-            });
-
+                });
+            }
             return Json(InvokedResult.SucceededResult);
         }
 
@@ -277,7 +287,16 @@ namespace SaleManagement.Protal.Controllers
             shipmentOrderViewModel.StoneSetterRate = (double)discountRate.StoneSetter / 100;
 
             shipmentOrderViewModel.ShipmentOrderInfos.Each(f => f.Hhz = Math.Round(f.GoldWeight * (1 + f.LossRate / 100), 2));
+
+            shipmentOrderViewModel.TotalArrearage =
+                await new ReconciliationManager(User).GetTotalSurplusArrearageAsync(shipmentOrder.CustomerId);
             return View(shipmentOrderViewModel);
+        }
+
+        public ActionResult CreateRepair()
+        {
+            var shipmentOrderViewModel = new ShipmentOrderViewModel();
+            return View("Create", shipmentOrderViewModel);
         }
 
 

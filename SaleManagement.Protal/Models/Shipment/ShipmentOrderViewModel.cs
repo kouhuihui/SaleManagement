@@ -10,6 +10,8 @@ namespace SaleManagement.Protal.Models.Shipment
         public ShipmentOrderViewModel()
         {
             DeliveryDate = DateTime.Now.ToString(SaleManagentConstants.UI.DateStringFormat);
+            ShipmentOrderInfos = new List<ShipmentOrderInfoViewModel>();
+            RepairOrders = new List<RepairOrderViewModel>();
         }
 
         public string Id { get; set; }
@@ -45,5 +47,10 @@ namespace SaleManagement.Protal.Models.Shipment
         public double SideStoneRate { get; set; }
 
         public double StoneSetterRate { get; set; }
+
+        /// <summary>
+        /// 总欠款
+        /// </summary>
+        public double TotalArrearage { get; set; }
     }
 }

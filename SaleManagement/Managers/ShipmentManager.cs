@@ -58,14 +58,18 @@ namespace SaleManagement.Managers
             return shipmentInfo.ShipmentOrder;
         }
 
-        public async Task<InvokedResult> UpdateAsync(ShipmentOrder shipmentOrder)
+        public async Task<InvokedResult<string>> UpdateAsync(ShipmentOrder shipmentOrder)
         {
             shipmentOrder.CreatorId = User.Id;
             shipmentOrder.CreatorName = User.Name;
             DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
             await UpdateShipmentOrderInfosAsync(shipmentOrder);
             await DbContext.SaveChangesAsync();
-            return InvokedResult.SucceededResult;
+            var result = new InvokedResult<string>();
+            result.Data = shipmentOrder.Id;
+            result.Succeeded = true;
+
+            return result;
         }
 
         public async Task<InvokedResult> UpdateTotalAmountAsync(string Id, double difference)
@@ -84,14 +88,18 @@ namespace SaleManagement.Managers
             return InvokedResult.SucceededResult;
         }
 
-        public async Task<InvokedResult> CreateAsync(ShipmentOrder shipmentOrder)
+        public async Task<InvokedResult<string>> CreateAsync(ShipmentOrder shipmentOrder)
         {
             shipmentOrder.CreatorId = User.Id;
             shipmentOrder.CreatorName = User.Name;
             shipmentOrder.Created = DateTime.Now;
             DbContext.Set<ShipmentOrder>().AddOrUpdate(shipmentOrder);
             await DbContext.SaveChangesAsync();
-            return InvokedResult.SucceededResult;
+            var result = new InvokedResult<string>();
+            result.Data = shipmentOrder.Id;
+            result.Succeeded = true;
+
+            return result;
         }
 
         public async Task<IEnumerable<OrderSetStoneStatistic>> GetOrderSetStoneStatisticsAsync(ReportQueryBaseDto reportQuery)

@@ -132,7 +132,7 @@ namespace SaleManagement.Managers
                              {
                                  CustomerId = a.CustomerId,
                                  CustomerName = c.Name,
-                                 PaymentInQuery = Math.Round(ur?.Payment ?? 0,2),
+                                 PaymentInQuery = Math.Round(ur?.Payment ?? 0, 2),
                                  SurplusArrearage = Math.Round(a.SurplusArrearage, 2)
                              }).OrderByDescending(c => c.SurplusArrearage).ToList();
             var totalPaymentInQuery = Math.Round(statistic.Sum(r => r.PaymentInQuery), 2);
@@ -144,11 +144,11 @@ namespace SaleManagement.Managers
 
         public async Task<double> GetTotalSurplusArrearageAsync(string customerId)
         {
-            var Reconciliations = DbContext.Set<Reconciliation>().Where(o => o.CompanyId == User.CompanyId && o.CustomerId == customerId);
-            if (!Reconciliations.Any())
+            var reconciliations = DbContext.Set<Reconciliation>().Where(o => o.CompanyId == User.CompanyId && o.CustomerId == customerId);
+            if (!reconciliations.Any())
                 return 0;
 
-            var total = await Reconciliations.SumAsync(o => o.Type == ReconciliationType.Payment ? -o.Amount : o.Amount);
+            var total = await reconciliations.SumAsync(o => o.Type == ReconciliationType.Payment ? -o.Amount : o.Amount);
             return Math.Round(total, 2);
         }
     }

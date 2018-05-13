@@ -79,12 +79,13 @@
             <div class="text-center">
                 <h4>产品出货明细单</h4>
             </div>
-            <div style="display:inline-block;width:100%">
+            <div style="display: inline-block; width: 100%">
                 <div class="col-md-4 col-xs-4">出货单号：@Model.Id</div>
                 <div class="col-md-4 col-xs-4">出货日期：@Model.DeliveryDate</div>
                 <div class="col-md-4 col-xs-4">客户：@Model.CustomerName</div>
             </div>
-            <table class="table table-bordered bootstrap-datatable" border="1">
+            @if (Model.ShipmentOrderInfos != null && Model.ShipmentOrderInfos.Any())
+            {   <table class="table table-bordered bootstrap-datatable" border="1">
                 <tbody>
                     <tr>
                         <th>订单号</th>
@@ -180,6 +181,8 @@
                     </tr>
                 </tbody>
             </table>
+                        }
+
             @if (Model.RepairOrders != null && Model.RepairOrders.Any())
             {
                 <div class="mtop10">
@@ -197,15 +200,15 @@
                             </tr>
                             @foreach (var item in Model.RepairOrders)
                             {
-                                <tr>
-                                    <td>@item.ProductName</td>
-                                    <td>@item.GoldWeight</td>
-                                    <td>@item.GoldAmount</td>
-                                    <td>@item.StoneNumber</td>
-                                    <td>@item.StoneWeight</td>
-                                    <td>@item.StoneAmount.ToString("f2")</td>
-                                    <td>@item.TotalAmount.ToString("f2")</td>
-                                </tr>
+                            <tr>
+                                <td>@item.ProductName</td>
+                                <td>@item.GoldWeight</td>
+                                <td>@item.GoldAmount</td>
+                                <td>@item.StoneNumber</td>
+                                <td>@item.StoneWeight</td>
+                                <td>@item.StoneAmount.ToString("f2")</td>
+                                <td>@item.TotalAmount.ToString("f2")</td>
+                            </tr>
                             }
                         </tbody>
                     </table>
@@ -287,17 +290,20 @@
                 <div class="col-md-4 col-xs-4">制单人：@Model.CreatorName</div>
                 <div class="col-md-4 col-xs-4">制单日期：@Model.Created</div>
             </div>
-
+            <div>
+                <div class="col-md-4 col-xs-4">总欠款： ￥@(Model.TotalArrearage + Model.TotalAmount)</div>
+            </div>
             <div style="display:inline-block;width:100%">
                 <div>注：1) 收到货品后，请及时检验，如有质量问题，请在一个星期内以书面形式向我司售后服务部反馈，逾期视为该产品均符合客户要求。</div>
                 <div style="padding-left:25px;margin-top:0px">2) 出货7天内没取货，按每月3%收取滞纳金。</div>
             </div>
 
-            <div style="display:inline-block;width:100%">
-                <div class="col-md-4 col-xs-4">审核：</div>
-                <div class="col-md-4 col-xs-4">收货：</div>
-                <div class="col-md-4 col-xs-4">合计：@Model.TotalAmount</div>
-            </div>
+        <div style="display: inline-block; width: 100%">
+            <div class="col-md-4 col-xs-4">审核：</div>
+            <div class="col-md-4 col-xs-4">收货：</div>
+            <div class="col-md-4 col-xs-4">合计：@Model.TotalAmount</div>
+        </div>
+
         </div>
     </div>
 </body>
