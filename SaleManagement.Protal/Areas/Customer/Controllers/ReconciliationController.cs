@@ -1,11 +1,8 @@
 ﻿using Dickson.Core.Common.Extensions;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
-using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
-using SaleManagement.Protal.Models.Reconciliation;
 using SaleManagement.Protal.Web;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -26,7 +23,7 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
         {
             var manager = new ReconciliationManager(User);
             var reconciliations = await manager.GetCustomerReconciliationsAsync();
-            var titles = new string[] { "序号", "日期", "付/欠款", "金额(元)","备注" };
+            var titles = new string[] { "序号", "日期", "付/欠款", "金额(元)", "备注" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "对账记录", ws =>
             {
                 var row = 2;

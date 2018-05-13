@@ -204,7 +204,7 @@ namespace SaleManagement.Protal.Controllers
                         new Article()
                         {
                             Title="订单已发货",
-                            Description=string.Format("订单{0}已于{1}发货！",string.Join(",",shipmentOrder.ShipmentOrderInfos.Select(r=>r.Id)),DateTime.Now.ToShortDateString()),
+                            Description=string.Format("订单{0}已于{1}出货！",string.Join(",",shipmentOrder.ShipmentOrderInfos.Select(r=>r.Id)),DateTime.Now.ToShortDateString()),
                             Url= "https://www.18k.hk/customer/order/list?status=2",
                             PicUrl= "https://www.18k.hk/static/images/ddzs.jpg"
                         }

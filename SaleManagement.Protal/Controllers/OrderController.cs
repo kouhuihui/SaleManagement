@@ -236,9 +236,13 @@ namespace SaleManagement.Protal.Controllers
                 FileName = request.File.FileName,
                 Purpose = request.FilePurpose == 0 ? FilePurpose.OrderAttachment.GetDisplayName() : request.FilePurpose.GetDisplayName(),
                 Data = GetByteImage(image),
-                ThumbnailData = MakeThumbnail(request.File.InputStream, 300, 300).ReadAllBytes(),
                 ContentLength = request.File.ContentLength
             };
+
+            string strPhysicsPath = HttpContext.Server.MapPath("~/orderImage");
+
+            file.ThumbnailData =
+                MakeThumbnail(request.File.InputStream, 300, 300, strPhysicsPath + "\\" + file.Id + ".jpg").ReadAllBytes();
 
             image.Dispose();
             var manager = new FileManager(User);
@@ -322,7 +326,7 @@ namespace SaleManagement.Protal.Controllers
             if (order == null)
                 return Json(false, SaleManagentConstants.Errors.OrderNotFound);
 
-            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId);
+            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId).OrderByDescending(r => r.Created);
             if (!designImages.Any())
                 return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
 
@@ -334,7 +338,7 @@ namespace SaleManagement.Protal.Controllers
                 var operationLogManager = new OrderOperationLogManager(User);
                 await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
 
-                await SendCustomerTobeConfirmMsg(order);
+                await SendCustomerTobeConfirmMsg(order, designImages.FirstOrDefault());
             }
 
             return Json(result);
@@ -348,11 +352,11 @@ namespace SaleManagement.Protal.Controllers
             if (order == null)
                 return Json(false, SaleManagentConstants.Errors.OrderNotFound);
 
-            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId);
+            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId).OrderByDescending(r => r.Created);
             if (!designImages.Any())
                 return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
 
-            return await SendCustomerTobeConfirmMsg(order, true);
+            return await SendCustomerTobeConfirmMsg(order, designImages.FirstOrDefault(), true);
         }
 
         [HttpPost, Route("{orderId}/WaitStoneMsg")]
@@ -366,13 +370,14 @@ namespace SaleManagement.Protal.Controllers
             return await SendWaitMainStoneMsg(order);
         }
 
-        private async Task<JsonResult> SendCustomerTobeConfirmMsg(Order order, bool isLog = false)
+        private async Task<JsonResult> SendCustomerTobeConfirmMsg(Order order, OrderAttachment designImage, bool isLog = false)
         {
             var accountBindingManager = new AccountBindingManager();
             var accountbing = await accountBindingManager.GetAccountBindingByCustomerId(order.CustomerId);
 
             if (accountbing == null)
                 return Json(InvokedResult.Fail("404", "客户未绑定微信"));
+
 
             SendMesHelp.SendNews(new NewsMes()
             {
@@ -384,7 +389,7 @@ namespace SaleManagement.Protal.Controllers
                             Title="设计稿确认",
                             Description=string.Format("订单{0}已上传设计稿，请确认！",order.Id),
                             Url= "http://www.18k.hk/customer/order/list?OrderId="+ order.Id,
-                            PicUrl= "http://www.18k.hk/static/images/qrsjg.png"
+                            PicUrl= string.Format("http://www.18k.hk/orderimage/{0}.jpg",designImage.FileInfoId)
                         }
                     }
             });
@@ -814,7 +819,7 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
-        private static MemoryStream MakeThumbnail(Stream originalImageStream, int dHeight, int dWidth)
+        private static MemoryStream MakeThumbnail(Stream originalImageStream, int dHeight, int dWidth, string path)
         {
             Image iSource = Image.FromStream(originalImageStream); ;//从指定的文件创建Image
             ImageFormat tFormat = iSource.RawFormat;//指定文件的格式并获取
@@ -870,11 +875,16 @@ namespace SaleManagement.Protal.Controllers
                 if (jpegICIinfo != null)
                 {
                     oB.Save(thumbnailStream, jpegICIinfo, ep);
+
+                    oB.Save(path, jpegICIinfo, ep);
+
                 }
                 else
                 {
-                    oB.Save(thumbnailStream, tFormat);// 已指定格式保存到指定文件
+                    oB.Save(thumbnailStream, tFormat);
+                    oB.Save(path, tFormat);// 已指定格式保存到指定文件
                 }
+
                 return thumbnailStream;
             }
             catch (Exception e)
@@ -886,6 +896,97 @@ namespace SaleManagement.Protal.Controllers
                 iSource.Dispose();//释放资源
                 oB.Dispose();
             }
+        }
+
+        /// <summary>
+        /// 图片压缩方法
+        /// </summary>
+        /// <param name="sFile">文件流FileUpload.PostedFile.InputStream</param>
+        /// <param name="dFile">要保存的位置</param>
+        /// <param name="flag">清晰度</param>
+        /// <returns></returns> 
+
+        public bool GetPicThumbnail(Stream sFile, string dFile, int dHeight, int dWidth, int flag)
+        {
+
+            //System.Drawing.Image iSource = System.Drawing.Image.FromFile(sFile);sfile这个参数就是文件原始路径，用这个方法就会有权限的设置所以最好还是用文件流读取
+
+            System.Drawing.Image iSource = System.Drawing.Image.FromStream(sFile);
+
+            ImageFormat tFormat = iSource.RawFormat;
+
+            int sW = 0, sH = 0;
+
+            //按比例缩放
+            Size tem_size = new Size(iSource.Width, iSource.Height);
+
+            if (tem_size.Width > dHeight || tem_size.Width > dWidth) //将**改成c#中的或者操作符号
+            {
+                if ((tem_size.Width * dHeight) > (tem_size.Height * dWidth))
+                {
+                    sW = dWidth;
+                    sH = (dWidth * tem_size.Height) / tem_size.Width;
+                }
+                else
+                {
+                    sH = dHeight;
+                    sW = (tem_size.Width * dHeight) / tem_size.Height;
+                }
+            }
+
+            else
+            {
+                sW = tem_size.Width;
+                sH = tem_size.Height;
+            }
+
+            Bitmap ob = new Bitmap(dWidth, dHeight);
+            Graphics g = Graphics.FromImage(ob);
+            g.Clear(Color.WhiteSmoke);
+            g.CompositingQuality = CompositingQuality.HighQuality;
+            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            g.DrawImage(iSource, new Rectangle((dWidth - sW) / 2, (dHeight - sH) / 2, sW, sH), 0, 0, iSource.Width, iSource.Height, GraphicsUnit.Pixel);
+            g.Dispose();
+
+            //以下代码为保存图片时，设置压缩质量
+            EncoderParameters ep = new EncoderParameters();
+            long[] qy = new long[1];
+            qy[0] = flag;//设置压缩的比例1-100
+            EncoderParameter eParam = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, qy);
+            ep.Param[0] = eParam;
+            try
+            {
+                ImageCodecInfo[] arrayICI = ImageCodecInfo.GetImageEncoders();
+                ImageCodecInfo jpegICIinfo = null;
+                for (int x = 0; x < arrayICI.Length; x++)
+                {
+                    if (arrayICI[x].FormatDescription.Equals("JPEG"))
+                    {
+                        jpegICIinfo = arrayICI[x];
+                        break;
+                    }
+                }
+                if (jpegICIinfo != null)
+                {
+                    ob.Save(dFile, jpegICIinfo, ep);//dFile是压缩后的新路径
+                }
+                else
+                {
+                    ob.Save(dFile, tFormat);
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            finally
+            {
+                iSource.Dispose();
+                ob.Dispose();
+            }
+
         }
 
         private static byte[] GetByteImage(Image img)
