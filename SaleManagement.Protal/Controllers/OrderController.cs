@@ -309,6 +309,12 @@ namespace SaleManagement.Protal.Controllers
                 order.ModuleType = moduleType;
                 order.OrderStatus = orderStatus;
             }
+            if (moduleType == ModuleType.Jina || moduleType == ModuleType.Customer)
+            {
+                orders = SpitOrder(orders);
+            }
+
+
             var result = await manager.UpdateOrdersAsync(orders);
             if (result.Succeeded)
             {
@@ -538,6 +544,14 @@ namespace SaleManagement.Protal.Controllers
                 order.CurrentUserId = userId;
                 order.OrderStatus = orderStatus;
             }
+
+            //出蜡是分单
+            if (orderStatus == OrderStatus.OutputWax)
+            {
+                orders = SpitOrder(orders);
+            }
+
+
             var result = await manager.UpdateOrdersAsync(orders);
             if (result.Succeeded)
             {
@@ -545,6 +559,64 @@ namespace SaleManagement.Protal.Controllers
                 await operationLogManager.AddLogAsync(orderStatus, orderIds);
             }
             return result;
+        }
+
+        /// <summary>
+        /// 拆单
+        /// </summary>
+        /// <param name="orders"></param>
+        public List<Order> SpitOrder(IEnumerable<Order> orders)
+        {
+            List<Order> orderList = new List<Order>();
+            foreach (var order in orders)
+            {
+                if (order.ColorForm.Name != "银版") //银版不拆单
+                {
+                    for (int i = 1; i < order.Number; i++)
+                    {
+                        var childOrder = new Order()
+                        {
+                            Id = order.Id + "_" + i,
+                            Number = 1,
+                            StoneDescribe = order.StoneDescribe,
+                            RabbetRequirement = order.RabbetRequirement,
+                            GoldWeightRequirement = order.GoldWeightRequirement,
+                            SideStoneRequiredment = order.SideStoneRequiredment,
+                            RadianRequirement = order.RadianRequirement,
+                            Created = order.Created,
+                            CreatorId = order.CreatorId,
+                            CreatorName = order.CreatorName,
+                            Updated = order.Updated,
+                            OrderStatus = order.OrderStatus,
+                            OrderRushStatus = order.OrderRushStatus,
+                            ColorFormId = order.ColorFormId,
+                            ProductCategoryId = order.ProductCategoryId,
+                            GemCategoryId = order.GemCategoryId,
+                            HandSize = order.HandSize,
+                            MinChainLength = order.MinChainLength,
+                            MaxChainLength = order.MaxChainLength,
+                            Certificate = order.Certificate,
+                            WordsPrinted = order.WordsPrinted,
+                            ComplayId = order.ComplayId,
+                            CustomerId = order.CustomerId,
+                            ModuleType = order.ModuleType,
+                            CurrentUserId = order.CurrentUserId,
+                            RiskType = order.RiskType,
+                            Remark = order.Remark,
+                            MainStoneSize = order.MainStoneSize,
+                            DeliveryDate = order.DeliveryDate,
+                        };
+
+                        orderList.Add(childOrder);
+                    }
+
+                    order.Number = 1;
+                }
+ 
+                orderList.Add(order);
+            }
+
+            return orderList;
         }
 
         public ActionResult NextStep(string orderIds)
@@ -593,7 +665,20 @@ namespace SaleManagement.Protal.Controllers
             var manager = new OrderManager(User);
             var order = await manager.GetOrderAsync(orderId);
             var orderListItemViewModel = new OrderListItemViewModel(order);
-            var attachements = order.Attachments;
+            List<OrderAttachment> attachements = new List<OrderAttachment>();
+
+            var orderIds = orderId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+
+            if (orderIds.Length > 1)
+            {
+                var parentOrder = await manager.GetOrderAsync(orderIds[0]);
+                attachements = parentOrder.Attachments.ToList();
+            }
+            else
+            {
+                attachements = order.Attachments.ToList();
+            }
+
             orderListItemViewModel.Attachments = attachements.OrderByDescending(a => a.Created).Take(4).Select(a => new AttachmentItem
             {
                 Id = a.FileInfoId,
@@ -782,11 +867,26 @@ namespace SaleManagement.Protal.Controllers
             var order = await manager.GetOrderAsync(orderId);
             if (order != null)
             {
-                attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+
+                var orderIds = orderId.Split(new char[] { '_' }, StringSplitOptions.RemoveEmptyEntries);
+
+                if (orderIds.Length > 1)
                 {
-                    Id = a.FileInfoId,
-                    Url = "/Attachment/" + a.FileInfoId + "/preview"
-                }).ToList();
+                    var parentOrder = await manager.GetOrderAsync(orderIds[0]);
+                    attachments = parentOrder.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+                    {
+                        Id = a.FileInfoId,
+                        Url = "/Attachment/" + a.FileInfoId + "/preview"
+                    }).ToList();
+                }
+                else
+                {
+                    attachments = order.Attachments.OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+                    {
+                        Id = a.FileInfoId,
+                        Url = "/Attachment/" + a.FileInfoId + "/preview"
+                    }).ToList();
+                }
             }
 
             return View(attachments);

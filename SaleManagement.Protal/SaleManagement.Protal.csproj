@@ -470,6 +470,7 @@
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
+    <Content Include="static\js\Report\mainStoneStatistics.js" />
     <Content Include="static\js\Report\setStoneStatistics.js" />
     <Content Include="static\js\Report\shipmentStatistics.js" />
     <Content Include="static\js\shipment\list.js" />
@@ -581,6 +582,7 @@
     <Content Include="Views\Order\SetMainStone.cshtml" />
     <Content Include="Views\Order\AddMainStone.cshtml" />
     <Content Include="Views\Order\ViewMainStoneAttachements.cshtml" />
+    <Content Include="Views\Report\OrderMainStoneStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

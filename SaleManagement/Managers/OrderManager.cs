@@ -116,6 +116,7 @@ namespace SaleManagement.Managers
             return await DbContext.SaveChangesAsync() > 0;
         }
 
+
         public async Task<OrderStatistics> GetOrderStatisticsAsync()
         {
 

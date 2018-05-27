@@ -189,5 +189,45 @@ namespace SaleManagement.Protal.Controllers
             LoggerHelper.Logger.LogInformation($"获取数据耗时{stopwatch.ElapsedMilliseconds}毫秒,统计数据耗时{stopwatch2.ElapsedMilliseconds}毫秒");
             return shipmentOrderInfoViewModels;
         }
+
+
+        [UrlAuthorize]
+        public async Task<ActionResult> OrderMainStoneStatistics(ReportQueryBaseDto reportQuery)
+        {
+            if (!Request.IsAjaxRequest())
+                return View(reportQuery);
+
+            var manager = new OrderMainStoneInfoManager(User);
+            var list = await manager.GetOrderMainStoneStatisticsAsync(reportQuery);
+            return Json(true, string.Empty, list);
+        }
+
+        public async Task<FileStreamResult> OrderMainStoneStatisticsExport(ShipmentReportQuery reportQuery)
+        {
+
+            var manager = new OrderMainStoneInfoManager(User);
+            var mainStones = await manager.GetOrderMainStoneStatisticsAsync(reportQuery);
+
+            var titles = new string[] { "序号", "客户", "单号", "主石名称", "主石大小", "风险等级", "收石日期" };
+            var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "主石收石记录", ws =>
+            {
+                var row = 2;
+                int index = 1;
+
+                foreach (var mainStone in mainStones)
+                {
+                    ws.Cells[row, 1].Value = index;
+                    ws.Cells[row, 2].Value = mainStone.CustomerName;
+                    ws.Cells[row, 3].Value = mainStone.OrderId;
+                    ws.Cells[row, 4].Value = mainStone.MainStoneName;
+                    ws.Cells[row, 5].Value = mainStone.MainStoneWeight;
+                    ws.Cells[row, 6].Value = mainStone.Risk;
+                    ws.Cells[row, 7].Value = mainStone.Created;
+                    row++;
+                    index++;
+                }
+            });
+            return result;
+        }
     }
 }

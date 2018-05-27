@@ -414,7 +414,7 @@
             }
             $("#tbody input[data-name=goldWeight]").on("blur", function () {
                 $this = $(this);
-                CalculationAmount($this).data("index");
+                CalculationAmount($this.data("index"));
             })
             $("#tbody input[data-name=weight]").on("blur", function () {
                 $this = $(this);

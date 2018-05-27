@@ -27,7 +27,7 @@ namespace SaleManagement.Protal.Models.Shipment
                 Price = o.Price,
                 TotalAmount = o.Price * (double)o.Weight,
                 SetStoneWorkingCost = o.WorkingCost
-            }) : null;
+            }) : new List<OrderSetStoneInfoViewModel>();
             OrderMainStoneInfos = order.OrderMainStoneInfos != null ? order.OrderMainStoneInfos.Select(o => new OrderMainStoneInfoViewModel
             {
                 Id = o.Id,
@@ -35,7 +35,7 @@ namespace SaleManagement.Protal.Models.Shipment
                 RiskType = o.MainStone.RiskType,
                 Weight = o.Weight,
                 Created = o.Created.ToString(SaleManagentConstants.UI.DateStringFormat)
-            }) : null;
+            }) : new List<OrderMainStoneInfoViewModel>();
         }
 
         public string ProductName { get; set; }

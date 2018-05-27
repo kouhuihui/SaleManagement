@@ -192,6 +192,10 @@
                                         {
                                             <li><a href="/Report/OrderSetStoneStatistics">配石报表</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4005))
+                                        {
+                                            <li><a href="/Report/OrderMainStoneStatistics">主石收石记录</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

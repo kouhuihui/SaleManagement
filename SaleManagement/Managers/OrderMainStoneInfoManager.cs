@@ -1,5 +1,7 @@
-﻿using Dickson.Core.ComponentModel;
+﻿using Dickson.Core.Common.Extensions;
+using Dickson.Core.ComponentModel;
 using SaleManagement.Core.Models;
+using SaleManagement.Core.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -58,6 +60,42 @@ namespace SaleManagement.Managers
         public async Task<IEnumerable<OrderMainStoneAttachment>> GetOrderMainStoneAttachments(int id)
         {
             return await DbContext.Set<OrderMainStoneAttachment>().Where(r => r.OrderMainStoneInfoId == id).ToListAsync();
+        }
+
+        public async Task<IEnumerable<OrderMainStoneStatistic>> GetOrderMainStoneStatisticsAsync(
+            ReportQueryBaseDto reportQuery)
+        {
+
+            var query = DbContext.Set<OrderMainStoneInfo>().AsQueryable();
+            if (!string.IsNullOrEmpty(reportQuery.CustomerId))
+            {
+                query = query.Where(a => a.Order.CustomerId == reportQuery.CustomerId);
+            }
+
+            if (reportQuery.StatisticStartDate.HasValue)
+            {
+                query = query.Where(t => t.Created > reportQuery.StatisticStartDate.Value);
+            }
+            if (reportQuery.StatisticEndDate.HasValue)
+            {
+                var endDate = reportQuery.StatisticEndDate.Value.AddDays(1);
+                query = query.Where(t => t.Created < endDate);
+            }
+
+            if (!string.IsNullOrEmpty(reportQuery.OrderId))
+            {
+                query = query.Where(a => a.OrderId.Contains(reportQuery.OrderId));
+            }
+
+            return (await query.OrderBy(t => t.Created).ToListAsync()).Select(t => new OrderMainStoneStatistic
+            {
+                OrderId = t.OrderId,
+                CustomerName = t.Order.Customer.Name,
+                Created = t.Created.ToShortDateString(),
+                MainStoneName = t.MainStone.Name,
+                Risk = t.MainStone.RiskType.GetDisplayName(),
+                MainStoneWeight = t.Weight
+            });
         }
     }
 }

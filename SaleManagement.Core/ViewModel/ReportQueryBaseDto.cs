@@ -16,5 +16,7 @@ namespace SaleManagement.Core.ViewModel
         public DateTime? StatisticStartDate { get; set; }
 
         public DateTime? StatisticEndDate { get; set; }
+
+        public string OrderId { get; set; }
     }
 }

@@ -43,7 +43,7 @@
             <div class="box-header well" data-original-title="">
                 <h2>待设计的订单</h2>
                 <div class="box-icon">
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Design))
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Design)|| ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                     {
                         <a id="btnAssginToMe" class="btn">
                             <i class="glyphicon glyphicon-share"></i>
