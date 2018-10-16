@@ -4,7 +4,7 @@
 @{
     Layout = null;
 }
-<style type="text/css">
+    <style type="text/css">
     .upload-btn {
         display: inline-block;
         overflow: hidden;
@@ -140,11 +140,11 @@
     </div>
     @Html.HiddenFor(model => model.IsInsure)
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"></label>
+<div class="form-group"> 
     <div class="col-md-4 col-xs-8">
         <a tabindex="0" class="btn btn-sm btn-danger" role="button" id="showInsureDetail" data-toggle="popover" data-trigger="focus" data-placement="bottom" title="保价说明">查看保价说明</a>
-    </div>
+        <input type="checkbox" id="chxInsure" /> 已阅保价说明
+      </div>
 </div>
 <div class="form-group" id="divInsurance">
     <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>保价金额：</label>

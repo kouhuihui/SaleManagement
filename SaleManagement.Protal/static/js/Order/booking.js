@@ -135,6 +135,11 @@ $(function () {
                 shortTips("请选择宝石类型");
                 return false;
             }
+
+            if (!$("#chxInsure").is(":checked")) {
+                shortTips("请选择已阅读保价说明");
+                return false;
+            }
             $form.loading();
         },
         success: function (result) {
