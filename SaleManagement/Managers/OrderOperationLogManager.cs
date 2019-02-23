@@ -110,6 +110,12 @@ namespace SaleManagement.Managers
                 case OrderStatus.WaitStone:
                     content = "进入等石阶段";
                     break;
+                case OrderStatus.DirectorTobeConfirm:
+                    content = "进入主管确认阶段";
+                    break;
+                case OrderStatus.DirectorConfirm:
+                    content = "主管确认设计";
+                    break;
             }
             return content;
         }

@@ -119,6 +119,11 @@
                                         {
                                             <li><a href="/order/myorders">待设计的订单</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2005))
+                                        {
+                                            <li><a href="/order/DirectorOrders">主管订单管理</a></li>
+                                        }
+
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 2003))
                                         {
                                             <li><a href="/order/booking">下单</a></li>
@@ -195,6 +200,11 @@
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 4005))
                                         {
                                             <li><a href="/Report/OrderMainStoneStatistics">主石收石记录</a></li>
+                                        }
+
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 4006))
+                                        {
+                                            <li><a href="/Report/DesginCostStatistics">设计费用统计</a></li>
                                         }
                                     </ul>
                                 </li>

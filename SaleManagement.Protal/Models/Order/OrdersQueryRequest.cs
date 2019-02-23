@@ -32,7 +32,7 @@ namespace SaleManagement.Protal.Models.Order
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.Design)
                 {
-                    query = query.Where(f => f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
+                    query = query.Where(f => f.OrderStatus == OrderStatus.Design || f.OrderStatus == OrderStatus.DirectorTobeConfirm || f.OrderStatus == OrderStatus.CustomerTobeConfirm || f.OrderStatus == OrderStatus.CustomerConfirm);
                 }
                 if (user.Role.Code == SaleManagentConstants.SystemRole.SendAndReceive)
                 {

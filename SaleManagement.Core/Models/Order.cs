@@ -124,7 +124,7 @@ namespace SaleManagement.Core.Models
         public virtual ICollection<OrderMainStoneInfo> OrderMainStoneInfos { get; set; }
 
         /// <summary>
-        /// 出蜡倒模费用
+        /// 出蜡倒模费用（客户支出费用）
         /// </summary>
         public double OutputWaxCost { get; set; }
 
@@ -145,5 +145,12 @@ namespace SaleManagement.Core.Models
         public int Insurance { get; set; }
 
         public RiskType RiskType { get; set; }
+
+        /// <summary>
+        /// 设计支出
+        /// </summary>
+        public double DesginCost { get; set; }
+
+        public DateTime? DesginAuditTime { get; set; }
     }
 }

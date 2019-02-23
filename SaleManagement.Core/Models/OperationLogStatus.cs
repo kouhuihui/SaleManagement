@@ -13,7 +13,7 @@ namespace SaleManagement.Core.Models
         [Display(Name = "进入设计部门")]
         Design = 2,
 
-        [Display(Name = "设计师完成设计")]
+        [Display(Name = "设计图纸主管审核通过")]
         CustomerTobeConfirm = 3,
 
         [Display(Name = "客户确认设计")]
@@ -55,13 +55,23 @@ namespace SaleManagement.Core.Models
         [Display(Name = "进入等石阶段")]
         WaitStone = 17,
 
+        [Display(Name = "进入主管审核设计图纸阶段")]
+        DirectorTobeConfirm = 18,
+
+
+        [Display(Name = "主管已确认设计")]
+        DirectorConfirm = 19,
+
         [Display(Name = "发送催石消息")]
-        CuiShi = 18,
+        CuiShi = 100,
 
         [Display(Name = "收到客户主石")]
-        ReciveStone = 19,
+        ReciveStone = 101,
 
         [Display(Name = "发送确认设计稿消息")]
-        CuiQueRen = 20,
+        CuiQueRen = 102,
+
+        [Display(Name = "主管审核退回设计稿")]
+        GobackDesgin = 103,
     }
 }

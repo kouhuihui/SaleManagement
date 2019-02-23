@@ -59,5 +59,10 @@ namespace SaleManagement.Core.Models
         public double RushCost { get; set; }
 
         public double TotalAmount { get; set; }
+
+        /// <summary>
+        /// 设计支出
+        /// </summary>
+        public double DesginCost { get; set; }
     }
 }

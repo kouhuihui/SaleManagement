@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Core.Models
 {
@@ -29,7 +24,7 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "执模")]
         Module = 6,
-      
+
         [Display(Name = "打包")]
         Pack = 8,
 
@@ -58,6 +53,12 @@ namespace SaleManagement.Core.Models
         DumpModule = 16,
 
         [Display(Name = "等石")]
-        WaitStone = 17
+        WaitStone = 17,
+
+        [Display(Name = "主管待确认")]
+        DirectorTobeConfirm = 18,
+
+        [Display(Name = "主管已确认")]
+        DirectorConfirm = 19,
     }
 }
