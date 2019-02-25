@@ -56,9 +56,6 @@ namespace SaleManagement.Core.Models
         WaitStone = 17,
 
         [Display(Name = "主管待确认")]
-        DirectorTobeConfirm = 18,
-
-        [Display(Name = "主管已确认")]
-        DirectorConfirm = 19,
+        DirectorTobeConfirm = 18
     }
 }

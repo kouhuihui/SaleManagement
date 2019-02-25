@@ -55,6 +55,7 @@ namespace SaleManagement.Protal.Models.Order
             OrderRushStatus = order.OrderRushStatus;
             IsInsure = order.IsInsure;
             Insurance = order.Insurance;
+            DesginCost = order.DesginCost;
         }
 
         public string Id { get; set; }
@@ -161,6 +162,8 @@ namespace SaleManagement.Protal.Models.Order
         public string ModuleTypeName { get; set; }
 
         public bool IsInsure { get; set; }
+
+        public double DesginCost { get; set; }
 
         [Display(Name = "保价总额")]
         [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入正确格式保价总额")]

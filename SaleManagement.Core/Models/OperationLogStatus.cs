@@ -59,9 +59,6 @@ namespace SaleManagement.Core.Models
         DirectorTobeConfirm = 18,
 
 
-        [Display(Name = "主管已确认设计")]
-        DirectorConfirm = 19,
-
         [Display(Name = "发送催石消息")]
         CuiShi = 100,
 

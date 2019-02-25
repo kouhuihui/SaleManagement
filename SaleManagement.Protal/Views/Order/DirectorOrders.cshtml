@@ -58,6 +58,7 @@
                             <th>版类</th>
                             <th>成色</th>
                             <th>指圈</th>
+                            <th>设计成本(元)</th>
                             <th>设计费用(元)</th>
                             <th>件数</th>
                             <th>客户</th>
@@ -74,6 +75,7 @@
                             <td data-bind="text:moduleTypeName"></td>
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:rangSize"></td>
+                            <td data-bind="text:desginCost"></td>
                             <td data-bind="text:outputWaxCost"></td>
                             <td data-bind="text:number"></td>
                             <td data-bind="text:customerName"></td>
@@ -87,6 +89,7 @@
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.GobackDesgin">重新设计</a>
                                 <!-- /ko -->
                                 <!-- ko if: status==3-->
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.GobackDesgin">重新设计</a>
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmMesClick">确认提醒</a>
                                 <!-- /ko -->
                                 <a target="blank" class="btn btn-primary btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>

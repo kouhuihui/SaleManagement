@@ -21,8 +21,9 @@
                 <select class="pull-left form-control" id="orderStatus" name="orderStatus">
                     <option value="">请选择单据状态</option>
                     <option value="2" selected="selected">设计师设计</option>
-                    @*<option value="18">主管待确认</option>
-                    <option value="19">主管已确认</option>*@
+                    <option value="18">主管待确认</option>
+                    <option value="3">客户待确认</option>
+                    <option value="4">客户已确认</option>
                 </select>
             </div>
         </div>
@@ -84,7 +85,7 @@
                             <td data-bind="text:moduleTypeName"></td>
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:rangSize"></td>
-                            <td data-bind="text:outputWaxCost"></td>
+                            <td data-bind="text:desginCost"></td>
                             <td data-bind="text:number"></td>
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:created"></td>
@@ -92,7 +93,7 @@
                                 <!-- ko if:status==2|status==3 -->
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>
                                 <!-- /ko -->
-                                <!-- ko if: (status==2|status==3)  & attachments.length >= 1-->
+                                <!-- ko if: (status==2)  & attachments.length >= 1-->
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.DirectorTobeConfirmClick">主管确认</a>
                                 @*<a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmMesClick">确认提醒</a>*@
                                 <!-- /ko -->

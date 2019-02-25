@@ -78,7 +78,7 @@ namespace SaleManagement.Managers
         public async Task<Paging<Order>> GetDesignOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId
-           && (o.OrderStatus == OrderStatus.Design));
+           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.CustomerTobeConfirm || o.OrderStatus == OrderStatus.CustomerConfirm || o.OrderStatus == OrderStatus.DirectorTobeConfirm));
             if (filter != null)
             {
                 query = filter(query);
@@ -92,7 +92,7 @@ namespace SaleManagement.Managers
         public async Task<Paging<Order>> GetDirectorOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId
-           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.DirectorTobeConfirm || o.OrderStatus == OrderStatus.DirectorConfirm
+           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.DirectorTobeConfirm
            || o.OrderStatus == OrderStatus.CustomerConfirm || o.OrderStatus == OrderStatus.CustomerTobeConfirm));
             if (filter != null)
             {

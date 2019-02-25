@@ -39,31 +39,8 @@
                     });
                 }
             });
-        },
-             self.CustomerTobeConfirmMesClick = function (item, el) {
-                 $(window).modalDialog({
-                     title: "提示",
-                     smallTitle: "",
-                     content: "发送客户确认设计稿消息",
-                     type: "confirm",
-                     okCallBack: function (e, $el) {
-                         $.ajax({
-                             url: "/order/" + item.id + "/CustomerTobeConfirmMsg",
-                             type: "POST",
-                             dataType: "json",
-                             data: {},
-                             success: function (result) {
-                                 if (result.succeeded) {
-                                     $el.data("bs.modal").hide();
-                                     location.reload();
-                                 } else {
-                                     shortTips(errorMessage(result));
-                                 }
-                             }
-                         });
-                     }
-                 });
-             }
+        }
+        
     }
 
     var ordersView = new Orders([]);
@@ -180,4 +157,45 @@
             }
         });
     }
+
+    $("#btnOutPutWax").on("click", function () {
+        var inputCheckeds = $("#tbody input:checkbox:checked");
+        var length = inputCheckeds.length;
+        var ids = "";
+        if (length === 0) {
+            shortTips("请选择订单");
+            return false;
+        }
+        for (var i = 0; i < length; i++) {
+            var $inputChecked = $(inputCheckeds[i]);
+            var orderId = $inputChecked.val();
+            if ($inputChecked.attr("status") != 4) {
+                shortTips(orderId + "订单不是客户确认状态，不能出蜡");
+                return false;
+            }
+            ids = ids + orderId + ",";
+        }
+        $(window).modalDialog({
+            title: "提示",
+            smallTitle: "",
+            content: "确认进入出蜡阶段？",
+            type: "confirm",
+            okCallBack: function (e, $el) {
+                $.ajax({
+                    url: "/order/GotoOutputWax",
+                    type: "POST",
+                    dataType: "json",
+                    data: { "orderIds": ids },
+                    success: function (result) {
+                        if (result.succeeded) {
+                            $el.data("bs.modal").hide();
+                            location.reload();
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
+            }
+        });
+    });
 });
