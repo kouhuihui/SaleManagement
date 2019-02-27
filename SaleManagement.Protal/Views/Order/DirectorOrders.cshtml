@@ -1,6 +1,6 @@
 ﻿@using SaleManagement.Core;
 @{
-    Title("待处理订单");
+    Title("主管订单管理");
 }
 
 <div>
@@ -9,7 +9,7 @@
             <a href="/home/index">首页</a>
         </li>
         <li>
-            <a href="/order/list">待设计的订单</a>
+            <a href="/order/list">主管订单管理主管</a>
         </li>
     </ul>
 </div>
@@ -20,8 +20,8 @@
             <div class="combobox-body" style="width: 150px;">
                 <select class="pull-left form-control" id="orderStatus" name="orderStatus">
                     <option value="">请选择单据状态</option>
-                    <option value="2" selected="selected">设计师设计</option>
-                    <option value="18">主管待确认</option>
+                    <option value="2">设计师设计</option>
+                    <option value="18" selected="selected">主管待确认</option> 
                     <option value="3">客户待确认</option>
                     <option value="4">客户已确认</option>
                 </select>
@@ -29,28 +29,17 @@
         </div>
     </div>
     @Html.Partial("_ColorForm")
-    <div class="textfield pull-left">
-        <div class="combobox pull-left">
-            <div class="combobox-body" style="width: 150px;">
-                <select class="pull-left form-control" id="currentUser" name="currentUser"></select>
-            </div>
-        </div>
-    </div>
+     
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 <div class="row">
     <div class="box col-md-12">
         <div class="box-inner">
             <div class="box-header well" data-original-title="">
-                <h2>待设计的订单</h2>
+                <h2>主管订单管理</h2>
                 <div class="box-icon">
-                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.Design)|| ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
+                    @if (ShowWithRoles(SaleManagentConstants.SystemRole.OrderDirector) || ShowWithRoles(SaleManagentConstants.SystemRole.Admin))
                     {
-                        <a id="btnAssginToMe" class="btn">
-                            <i class="glyphicon glyphicon-share"></i>
-                            我来设计
-                        </a>
-
                         <a id="btnOutPutWax" class="btn">
                             <i class="glyphicon glyphicon-edit"></i>
                             出蜡
@@ -69,6 +58,7 @@
                             <th>版类</th>
                             <th>成色</th>
                             <th>指圈</th>
+                            <th>设计成本(元)</th>
                             <th>设计费用(元)</th>
                             <th>件数</th>
                             <th>客户</th>
@@ -86,16 +76,21 @@
                             <td data-bind="text:colorFormName"></td>
                             <td data-bind="text:rangSize"></td>
                             <td data-bind="text:desginCost"></td>
+                            <td data-bind="text:outputWaxCost"></td>
                             <td data-bind="text:number"></td>
                             <td data-bind="text:customerName"></td>
                             <td data-bind="text:created"></td>
                             <td>
                                 <!-- ko if:status==2|status==3 -->
-                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>
+                                @*<a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>*@
                                 <!-- /ko -->
-                                <!-- ko if: (status==2)  & attachments.length >= 1-->
-                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.DirectorTobeConfirmClick">主管确认</a>
-                                @*<a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmMesClick">确认提醒</a>*@
+                                <!-- ko if: status==18-->
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmClick">客户确认</a>
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.GobackDesgin">重新设计</a>
+                                <!-- /ko -->
+                                <!-- ko if: status==3-->
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.GobackDesgin">重新设计</a>
+                                <a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmMesClick">确认提醒</a>
                                 <!-- /ko -->
                                 <a target="blank" class="btn btn-primary btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>
                             </td>
@@ -120,5 +115,5 @@
     @Scripts.Render("~/bundles/js/knockout")
     @Scripts.Render("~/bundles/js/pager")
     @Scripts.Render("~/bundles/js/fileupload")
-    @Scripts.Render("~/bundles/js/order/myOrders")
+    @Scripts.Render("~/bundles/js/order/directorOrders")
 }

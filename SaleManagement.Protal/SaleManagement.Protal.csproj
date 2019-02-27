@@ -462,6 +462,7 @@
     <Content Include="static\js\notice\edit.js" />
     <Content Include="static\js\notice\list.js" />
     <Content Include="static\js\Order\booking.js" />
+    <Content Include="static\js\Order\directorOrders.js" />
     <Content Include="static\js\Order\list.js" />
     <Content Include="static\js\Order\mainStone.js" />
     <Content Include="static\js\Order\myOrders.js" />
@@ -470,6 +471,7 @@
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
+    <Content Include="static\js\Report\desginCostStatistics.js" />
     <Content Include="static\js\Report\mainStoneStatistics.js" />
     <Content Include="static\js\Report\setStoneStatistics.js" />
     <Content Include="static\js\Report\shipmentStatistics.js" />
@@ -583,6 +585,8 @@
     <Content Include="Views\Order\AddMainStone.cshtml" />
     <Content Include="Views\Order\ViewMainStoneAttachements.cshtml" />
     <Content Include="Views\Report\OrderMainStoneStatistics.cshtml" />
+    <Content Include="Views\Order\DirectorOrders.cshtml" />
+    <Content Include="Views\Report\DesginCostStatistics.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

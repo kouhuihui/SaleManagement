@@ -202,6 +202,62 @@ namespace SaleManagement.Protal.Controllers
             return Json(true, string.Empty, list);
         }
 
+        [UrlAuthorize]
+        public async Task<ActionResult> DesginCostStatistics(ReportQueryBaseDto reportQuery)
+        {
+            if (!Request.IsAjaxRequest())
+                return View(reportQuery);
+
+            var list = await GetDesginCostStatistic(reportQuery);
+
+            return Json(true, string.Empty, list);
+        }
+
+        private async Task<IEnumerable<DesginCostStatistic>> GetDesginCostStatistic(ReportQueryBaseDto reportQuery)
+        {
+            var manager = new OrderManager(User);
+            var list = (await manager.DesginCostStatistics(reportQuery)).ToList();
+
+            if (list.Any())
+            {
+                var total = new DesginCostStatistic()
+                {
+                    DesginCost = list.Sum(r => r.DesginCost),
+                    OutputWaxCost = list.Sum(r => r.OutputWaxCost)
+                };
+                list.Add(total);
+            }
+
+            return list;
+        }
+
+        public async Task<ActionResult> DesginCostStatisticsExport(ReportQueryBaseDto reportQuery)
+        {
+            var list = (await GetDesginCostStatistic(reportQuery)).ToList();
+
+            var titles = new string[] { "序号", "订单", "支付设计成本（元）", "设计费（元）" };
+            var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "设计费用统计", ws =>
+            {
+                var row = 2;
+                int index = 1;
+                foreach (var desginCostStatistic in list)
+                {
+
+                    ws.Cells[row, 1].Value = index;
+                    ws.Cells[row, 2].Value = string.IsNullOrEmpty(desginCostStatistic.Id)
+                        ? "总计："
+                        : desginCostStatistic.Id;
+                    ws.Cells[row, 3].Value = desginCostStatistic.DesginCost;
+                    ws.Cells[row, 4].Value = desginCostStatistic.OutputWaxCost;
+                    row++;
+                    index++;
+                };
+            });
+            return result;
+        }
+
+
+
         public async Task<FileStreamResult> OrderMainStoneStatisticsExport(ShipmentReportQuery reportQuery)
         {
 

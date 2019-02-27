@@ -85,6 +85,36 @@ namespace SaleManagement.Protal.Controllers
             });
         }
 
+        [UrlAuthorize]
+        [PagingParameterInspector]
+        public async Task<ActionResult> DirectorOrders(OrdersQueryRequest request)
+        {
+            if (!Request.IsAjaxRequest())
+                return View();
+
+            var manager = new OrderManager(User);
+
+            var paging = await manager.GetDirectorOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
+
+            var colorForms = await new BasicDataManager(User).GetColorFormsAsync();
+
+            var orders = paging.List.Select(u =>
+            {
+                var colorForm = colorForms.FirstOrDefault(f => f.Id == u.ColorFormId);
+                return new OrderListItemViewModel(u)
+                {
+                    ColorFormName = colorForm == null ? "" : colorForm.Name
+                };
+            });
+
+            return Json(true, string.Empty, new
+            {
+                paging.Total,
+                List = orders
+            });
+        }
+
+
         [HttpPost]
         public async Task<JsonResult> AssginToMe([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds)
         {
@@ -324,6 +354,12 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
+        /// <summary>
+        /// 客户确认
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="outputWaxCost"></param>
+        /// <returns></returns>
         [HttpPost, Route("{orderId}/CustomerTobeConfirm")]
         public async Task<JsonResult> GotoCustomerTobeConfirmStep(string orderId, double outputWaxCost = 0)
         {
@@ -338,6 +374,7 @@ namespace SaleManagement.Protal.Controllers
 
             order.OrderStatus = OrderStatus.CustomerTobeConfirm;
             order.OutputWaxCost = outputWaxCost;
+            order.DesginAuditTime = DateTime.Now;
             var result = await manager.UpdateOrderAsync(order);
             if (result.Succeeded)
             {
@@ -364,6 +401,62 @@ namespace SaleManagement.Protal.Controllers
 
             return await SendCustomerTobeConfirmMsg(order, designImages.FirstOrDefault(), true);
         }
+
+        /// <summary>
+        /// 主管确认
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="desginCost"></param>
+        /// <returns></returns>
+        [HttpPost, Route("{orderId}/DirectorTobeConfirm")]
+        public async Task<JsonResult> GotoDirectorTobeConfirmStep(string orderId, double desginCost = 0)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            var designImages = order.Attachments.Where(r => r.CreatorId != order.CreatorId).OrderByDescending(r => r.Created);
+            if (!designImages.Any())
+                return Json(false, "设计师还未上传设计图，不能进入客户确认阶段。");
+
+            order.OrderStatus = OrderStatus.DirectorTobeConfirm;
+            order.DesginCost = desginCost;
+            var result = await manager.UpdateOrderAsync(order);
+            if (result.Succeeded)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(order.OrderStatus, order.Id);
+
+                await SendCustomerTobeConfirmMsg(order, designImages.FirstOrDefault());
+            }
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 退回重新设计
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost, Route("{orderId}/GobackDesgin")]
+        public async Task<JsonResult> GobackDesgin(string orderId)
+        {
+            var manager = new OrderManager(User);
+            var order = await manager.GetOrderAsync(orderId);
+            if (order == null)
+                return Json(false, SaleManagentConstants.Errors.OrderNotFound);
+
+            order.OrderStatus = OrderStatus.Design;
+            var result = await manager.UpdateOrderAsync(order);
+            if (result.Succeeded)
+            {
+                var operationLogManager = new OrderOperationLogManager(User);
+                await operationLogManager.AddLogAsync(OperationLogStatus.GobackDesgin, order.Id);
+            }
+
+            return Json(result);
+        }
+
 
         [HttpPost, Route("{orderId}/WaitStoneMsg")]
         public async Task<JsonResult> WaitStoneMsg(string orderId)
@@ -612,7 +705,7 @@ namespace SaleManagement.Protal.Controllers
 
                     order.Number = 1;
                 }
- 
+
                 orderList.Add(order);
             }
 

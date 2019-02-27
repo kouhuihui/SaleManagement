@@ -188,6 +188,14 @@
     <Compile Include="Migrations\201804290726448_--UpdateOrderMainStoneAttachment.Designer.cs">
       <DependentUpon>201804290726448_--UpdateOrderMainStoneAttachment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902191539220_AddDesginCost.cs" />
+    <Compile Include="Migrations\201902191539220_AddDesginCost.Designer.cs">
+      <DependentUpon>201902191539220_AddDesginCost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902221436423_AddDesginAuditTime.cs" />
+    <Compile Include="Migrations\201902221436423_AddDesginAuditTime.Designer.cs">
+      <DependentUpon>201902221436423_AddDesginAuditTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -198,6 +206,7 @@
     <Compile Include="Models\CustomerInfo.cs" />
     <Compile Include="Models\DailyGoldPrice.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DesginCostStatistic.cs" />
     <Compile Include="Models\FileInfo.cs" />
     <Compile Include="Models\FilePurpose.cs" />
     <Compile Include="Models\GemCategory.cs" />
@@ -352,6 +361,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201804290726448_--UpdateOrderMainStoneAttachment.resx">
       <DependentUpon>201804290726448_--UpdateOrderMainStoneAttachment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902191539220_AddDesginCost.resx">
+      <DependentUpon>201902191539220_AddDesginCost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902221436423_AddDesginAuditTime.resx">
+      <DependentUpon>201902221436423_AddDesginAuditTime.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

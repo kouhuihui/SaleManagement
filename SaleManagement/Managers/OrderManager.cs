@@ -78,7 +78,22 @@ namespace SaleManagement.Managers
         public async Task<Paging<Order>> GetDesignOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId
-           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.CustomerTobeConfirm || o.OrderStatus == OrderStatus.CustomerConfirm));
+           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.CustomerTobeConfirm || o.OrderStatus == OrderStatus.CustomerConfirm || o.OrderStatus == OrderStatus.DirectorTobeConfirm));
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+            var total = await query.CountAsync();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
+
+            return new Paging<Order>(start, take, total, list);
+        }
+
+        public async Task<Paging<Order>> GetDirectorOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
+        {
+            var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId
+           && (o.OrderStatus == OrderStatus.Design || o.OrderStatus == OrderStatus.DirectorTobeConfirm
+           || o.OrderStatus == OrderStatus.CustomerConfirm || o.OrderStatus == OrderStatus.CustomerTobeConfirm));
             if (filter != null)
             {
                 query = filter(query);
@@ -175,6 +190,28 @@ namespace SaleManagement.Managers
             var deliverDate = DateTime.Now.AddDays(day).Date;
             await DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId && orderIds.Contains(o.Id)).UpdateAsync(u => new Order { DeliveryDate = deliverDate });
             return InvokedResult.SucceededResult;
+        }
+
+        public async Task<IEnumerable<DesginCostStatistic>> DesginCostStatistics(ReportQueryBaseDto reportQuery)
+        {
+            var query = DbContext.Set<Order>().Where(t => t.DesginCost > 0 && t.OutputWaxCost > 0).AsQueryable();
+
+            if (reportQuery.StatisticStartDate.HasValue)
+            {
+                query = query.Where(t => t.DesginAuditTime > reportQuery.StatisticStartDate.Value);
+            }
+            if (reportQuery.StatisticEndDate.HasValue)
+            {
+                var endDate = reportQuery.StatisticEndDate.Value.AddDays(1);
+                query = query.Where(t => t.DesginAuditTime < endDate);
+            }
+
+            return (await query.OrderBy(t => t.DesginAuditTime).ToListAsync()).Select(t => new DesginCostStatistic
+            {
+                Id = t.Id,
+                OutputWaxCost = t.OutputWaxCost,
+                DesginCost = t.DesginCost
+            });
         }
 
         private Func<IQueryable<Order>, IQueryable<Order>> GetNoShipOrderFilter()
