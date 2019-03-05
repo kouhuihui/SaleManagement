@@ -468,6 +468,7 @@
     <Content Include="static\js\Order\myOrders.js" />
     <Content Include="static\js\Order\setStone.js" />
     <Content Include="static\js\Order\uploadDesginImage.js" />
+    <Content Include="static\js\Order\waitstoneList.js" />
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
@@ -587,6 +588,7 @@
     <Content Include="Views\Report\OrderMainStoneStatistics.cshtml" />
     <Content Include="Views\Order\DirectorOrders.cshtml" />
     <Content Include="Views\Report\DesginCostStatistics.cshtml" />
+    <Content Include="Views\Order\WaitStoneList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

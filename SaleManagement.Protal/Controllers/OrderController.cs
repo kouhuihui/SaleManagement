@@ -48,6 +48,29 @@ namespace SaleManagement.Protal.Controllers
             });
         }
 
+
+        [UrlAuthorize]
+        public async Task<ActionResult> WaitStoneList(OrdersQueryRequest request)
+        {
+            if (!Request.IsAjaxRequest())
+                return View(request);
+
+            var manager = new OrderManager(User);
+            var paging = await manager.GetWaitStoneOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
+
+            var users = await new UserManager().GetUsersAsync(paging.List.Select(o => o.CurrentUserId));
+            var orders = paging.List.Select(u => new OrderListItemViewModel(u)
+            {
+                CurrentUserName = users.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name
+            });
+
+            return Json(true, string.Empty, new
+            {
+                paging.Total,
+                List = orders,
+            });
+        }
+
         [UrlAuthorize]
         [PagingParameterInspector]
         public async Task<ActionResult> MyOrders(OrdersQueryRequest request)

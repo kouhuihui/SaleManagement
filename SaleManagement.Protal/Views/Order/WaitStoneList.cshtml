@@ -1,0 +1,155 @@
+﻿@using SaleManagement.Core;
+@model SaleManagement.Protal.Models.Order.OrdersQueryRequest
+@{
+    Title("订单管理");
+}
+
+@Styles.Render("~/Bundles/Static/Css/DateTimePicker")
+<div>
+    <ul class="breadcrumb">
+        <li>
+            <a href="/home/index">首页</a>
+        </li>
+        <li>
+            <a href="/order/list">等石管理</a>
+        </li>
+    </ul>
+</div>
+<div class="search">
+    <div style="display:inline-block;margin-bottom:5px;">
+        <div class="textfield pull-left "><div class="field-body" style="width: 200px;"><input id="orderId" class="form-control" type="text" placeholder="输入单号,按Enter键查询"></div></div>
+        @Html.Partial("_Customer")
+        @Html.Partial("_ColorForm")
+        @Html.HiddenFor(m => m.IsProcess)
+        <div class="textfield pull-left">
+            <div class="combobox pull-left">
+                <div class="combobox-body" style="width: 150px;">
+                    <select class="pull-left form-control" id="waitStoneStatus" name="waitStoneStatus">
+                        <option value="">请选择等石状态</option>
+                        <option value="1" selected="selected">等石</option>
+                        <option value="0">已到石</option> 
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button id="btnSearch" class="btn btn-primary">查询</button>
+    </div> 
+</div>
+
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well" data-original-title="">
+                <h2>生产单列表</h2>
+            </div>
+            <div class="box-icon" style="background-color:#f5f5f5; float:inherit">
+                
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="setStone" class="btn">
+                        <i class="glyphicon glyphicon-edit"></i>
+                        配石
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="waitStone" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        等石
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="sendwaitStonemsg" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        催石
+                    </a>
+                }
+                @if (ShowWithRoles(SaleManagentConstants.SystemRole.Admin, SaleManagentConstants.SystemRole.AssistantStone))
+                {
+                    <a id="receivedStone" class="btn">
+                        <i class="glyphicon glyphicon-euro"></i>
+                        收石
+                    </a>
+                }
+
+                
+            </div>
+
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable  responsive">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>订单编号</th>
+                            <th>等石状态</th> 
+                            <th>版类</th>
+                            <th>品类</th>
+                            <th>成色</th>
+                            <th>手寸/链长</th>
+                            <th>客来石重</th>
+                            <th>件数</th>
+                            <th>客户</th>
+                            <th>下单日期</th>
+                            <th>交货日期</th>
+                            <th>处理人</th> 
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" data-bind="foreach:orders">
+                        <tr>
+                            <td><input type="checkbox" data-bind="value:id,attr:{status:status,outputWaxCost:outputWaxCost},checked:false" /></td>
+                            <td>
+                                <a data-bind="click:$parent.viewProcessClick" title="查看订单流程"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                <a target="_blank" data-bind="text:id,attr:{href:'/order/detail?orderId='+id}">
+                                </a>
+                                <!-- ko if:urgent==1 -->
+                                <i class="glyphicon glyphicon-bell yellow" title="紧急"></i>
+                                <!-- /ko -->
+                                <!-- ko if:urgent==2 -->
+                                <i class="glyphicon glyphicon-bell red" title="非常紧急"></i>
+                                <!-- /ko -->
+                            </td>
+                            <td>
+                                <!-- ko if:mainStoneInfos.length>0 -->
+                                 已到石
+                                <!-- /ko -->
+                                <!-- ko if:mainStoneInfos.length==0 -->
+                                等石
+                                <!-- /ko -->
+                            </td>
+                            <td data-bind="text:moduleTypeName"></td>
+                            <td data-bind="text:productCategoryName"></td>
+                            <td data-bind="text:colorFormName"></td>
+                            <td data-bind="text:rangSize"></td>
+                            <td data-bind="text:mainStoneSize"></td>
+                            <td data-bind="text:number"></td>
+                            <td data-bind="text:customerName"></td>
+                            <td data-bind="text:created"></td>
+                            <td data-bind="text:deliveryDate"></td>
+                            <td data-bind="text:currentUserName"></td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-center"><ul id="orderListPage"></ul></div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div>
+    </div>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/js/dateTimePicker")
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/order/waitStoneList")
+    @Scripts.Render("~/bundles/js/control/customer")
+}

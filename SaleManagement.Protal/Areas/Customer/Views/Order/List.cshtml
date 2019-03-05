@@ -29,6 +29,8 @@
         .orderdetail ul {
             float: left;
             padding-left: 0px;
+            margin-bottom: 0px;
+            width: 240px;
         }
 
         .orderdetail .right {
@@ -125,11 +127,19 @@
                                     <div style="color:red">设计费用： <span data-bind="text:outputWaxCost"></span></div>
                                     <!-- /ko -->
                                     <div data-bind="text:statusName" class="status"></div>
-                                    <div data-bind="text:remark" class="status"></div>
+                                    <!-- ko if:mainStoneSize>0 & (status<8 | status>12) & status!=-1 -->
+                                    <!-- ko if:mainStoneInfos.length>0 -->
+                                    <div class="status">(已到石)</div>
+                                    <!-- /ko -->
+                                    <!-- ko if:mainStoneInfos.length==0 -->
+                                    <div class="status">(等石)</div>
+                                    <!-- /ko -->
+                                    <!-- /ko -->
+                      
                                 </div>
                             </div>
-
-                            <div style="display: inline-block">
+                            <div data-bind="text:remark" class="status" style="margin-left: 15px"></div>
+                            <div style="display:block;text-align: right">
                                 <!-- ko if:status == 3 -->
                                 <button class="btn btn-primary btn-sm btn-xs" data-bind="click:$parent.CustomerConfirmClick">确认设计</button>
                                 <!-- /ko -->
