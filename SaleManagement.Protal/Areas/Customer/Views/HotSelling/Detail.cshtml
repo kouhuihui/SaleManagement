@@ -1,0 +1,66 @@
+﻿@{
+    Title("热销款");
+    Layout = "~/Views/Shared/_customerLayout.cshtml";
+}
+<style type="text/css">
+   .pc_imgBox{
+            display: block;
+            height: 400px;
+            width: 400px;
+            background-size: cover;
+            background-position:  center;
+            background-repeat: no-repeat;
+        }
+        .m_imgBox{
+            display: block;
+            width: 100%;
+        }
+        .carousel-indicators{
+            background: #ccc;
+        }
+</style>
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">            
+            <div class="box-content">
+                <div id="carousel-example-generic" class="carousel slide col-sm-6 col-md-4" data-ride="carousel">
+                    <!-- 指示器 -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                    </ol>
+                    <!-- 轮播图片及说明文字 -->
+                    <div class="carousel-inner" role="listbox">
+                        <div class="item active">
+                            <a href="#" class="pc_imgBox hidden-xs" style="background-image: url(' http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Preview')"></a>
+                            <a href="#" class="m_imgBox hidden-lg hidden-md hidden-sm"><img src="http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Thumbnail" alt=""></a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="pc_imgBox hidden-xs" style="background-image: url(' http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Preview')"></a>
+                            <a href="#" class="m_imgBox hidden-lg hidden-md hidden-sm"><img src="http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Thumbnail" alt=""></a>
+                        </div>
+                        <div class="item">
+                            <a href="#" class="pc_imgBox hidden-xs" style="background-image: url(' http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Preview')"></a>
+                            <a href="#" class="m_imgBox hidden-lg hidden-md hidden-sm"><img src= "http://localhost:8012/Attachment/78a248b3-9728-40e5-9370-a35bc7026479/Thumbnail" alt=""></a>
+                        </div>
+                    </div>
+                    <!-- 控制按钮：左右切换 -->
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+     
+</div><!--/row-->
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/customer/hotselling/list")
+}

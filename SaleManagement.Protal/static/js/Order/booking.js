@@ -10,7 +10,8 @@
     $minChainLength = $("#MinChainLength"),
     $maxChainLength = $("#MaxChainLength"),
     $handSize = $("#HandSize"),
-    $created = $("input[name=Created]");
+    $created = $("input[name=Created]"),
+    $versionNo = $("#VersionNo");
 
 $(function () {
     var customer = new Customer();
@@ -166,15 +167,17 @@ $(function () {
     });
 
     $("#saveOrder").click(function () {
-        if (filesData.length < 1) {
-            shortTips("请上传款式图片");
-            return false;
+        if ($versionNo === "") {
+            if (filesData.length < 1) {
+                shortTips("请上传款式图片");
+                return false;
+            }
+            var attachmentIds = "";
+            for (var i = 0; i < filesData.length; i++) {
+                attachmentIds += filesData[i].id + ",";
+            }
+            $("#attachmentIds").val(attachmentIds);
         }
-        var attachmentIds = "";
-        for (var i = 0; i < filesData.length; i++) {
-            attachmentIds += filesData[i].id + ",";
-        }
-        $("#attachmentIds").val(attachmentIds);
         if (!isAdd) {
             $form.attr("target", "_self").attr("action", "/order/edit");
         }
@@ -213,6 +216,21 @@ $(function () {
     if (!isAdd) {
         var spanText = $("#divProductCategory .btn-primary").html()
         ShowRangSize(spanText);
+    }
+
+    if ($versionNo.val() !== "") {
+        $("#divUpload").hide();
+        $("#divCategory").hide();
+        $("#divGemCategory").hide();
+        $("#divNumber").hide();
+        $("#divMainStone").hide();
+        $("#divCertificate").hide();
+        $("#divWordsPrinted").hide();
+        $("#divHasOldMaterial").hide();
+
+        ShowRangSize($("#divProductCategory .btn-primary").html());
+    } else {
+        $("#divVersion").hide();
     }
 })
 

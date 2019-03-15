@@ -1,0 +1,71 @@
+﻿@{
+    Title("热销款");
+    Layout = "~/Views/Shared/_customerLayout.cshtml";
+}
+ 
+<div class="row">
+    <div class="box col-md-12">
+        <div class="box-inner">
+            <div class="box-header well">
+                <div class="box-icon pull-left back">
+                    <a class="btn">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </a>
+                </div>
+                <span class="title">热销款列表</span>
+            </div>
+            <div class="box-content">
+                @*<div style="height:36px; margin:5px">
+                   
+                    <button id="btnSearch" class="btn btn-primary">查询</button>
+                </div>*@
+                <div class="row" data-bind="foreach:{data:hotSellings,as:'hotselling'}">
+                    <!-- ko if: hotselling.attachments.length >= 1-->
+                    <div class="col-sm-4 col-md-3">
+                        <div class="thumbnail">
+
+                            <img style="height: 200px; width: 200%; display: block;" data-bind="attr:{src:hotselling.attachments[0].url}">
+                            <div class="caption">
+                                <p><span>品&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</span><span data-bind="text:name"></span></p>
+                                <p><span>版&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span><span data-bind="text:versionNo"></span></p>
+                                <p><span>参考数据：</span><span data-bind="text:referenceData"></span></p>
+                                <p><span>参考价格：</span><span data-bind="text:referencePrice" style="color: red"></span></p>
+
+
+                                <p>
+                                    <a class="btn btn-primary btn-sm btn-xs" data-bind="attr:{href:'/customer/order/booking?versionNo='+versionNo}">下单</a>
+                                </p>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    @*<div class="col-sm-4 col-md-3" data-bind="foreach:{data:hotSellings,as:'hotselling'}" >
+                        <div class="thumbnail">
+                            <img data-src="holder.js/100%x200" alt="100%x200" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTY5NzIzNDEzNGYgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNjk3MjM0MTM0ZiI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44NTkzNzUiIHk9IjEwNS4yNzgxMjUiPjI0MngyMDA8L3RleHQ+PC9nPjwvZz48L3N2Zz4=" data-holder-rendered="true" style="height: 200px; width: 100%; display: block;">
+
+                            <div class="caption">
+                                <h3 data-bind="text:versionNo"></h3>
+                                <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                                <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>*@
+
+
+                </div>
+                <div class="text-center"><ul id="hotSellingListPage"></ul></div>
+            </div>
+        </div>
+    </div>
+    <!--/span-->
+</div><!--/row-->
+@section scripts{
+    @Scripts.Render("~/bundles/js/knockout")
+    @Scripts.Render("~/bundles/js/pager")
+    @Scripts.Render("~/bundles/js/customer/hotselling/list")
+}

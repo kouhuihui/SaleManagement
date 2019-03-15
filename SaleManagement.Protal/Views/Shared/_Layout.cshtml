@@ -176,6 +176,10 @@
                                         {
                                             <li><a href="/BasicData/MainStones">主石信息</a></li>
                                         }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3009))
+                                        {
+                                            <li><a href="/HotSelling/Setting">热销款设置</a></li>
+                                        }
                                     </ul>
                                 </li>
                             }

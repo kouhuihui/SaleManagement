@@ -56,6 +56,8 @@ namespace SaleManagement.Protal.Models.Order
             IsInsure = order.IsInsure;
             Insurance = order.Insurance;
             DesginCost = order.DesginCost;
+            VersionNo = order.VersionNo;
+            Budget = order.Budget;
         }
 
         public string Id { get; set; }
@@ -169,6 +171,13 @@ namespace SaleManagement.Protal.Models.Order
         [RegularExpression("^[0-9]+(.[0-9]{1,2})?$", ErrorMessage = "请输入正确格式保价总额")]
         [Required(ErrorMessage = "请输入{0}")]
         public int Insurance { get; set; }
+
+        [Display(Name = "预算")]
+        [RegularExpression("^[0-9]*$", ErrorMessage = "请输入整数")]
+        [Range(0, 1000000, ErrorMessage = "{0}范围是0-1000")]
+        public int? Budget { get; set; }
+
+        public string VersionNo { get; set; }
 
         string GetRang(SaleManagement.Core.Models.Order order)
         {

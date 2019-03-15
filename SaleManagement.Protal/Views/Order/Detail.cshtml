@@ -51,7 +51,7 @@
         <div class="pull-right"><button id="btnPrint" class="btn btn-primary" onclick="printClick()">打印</button></div>
         <div id="divPrint">
             <div class="text-center">
-                <h4>镜像生产单</h4>
+                <h2><span style="color: red; font-weight: bold">@(string.IsNullOrEmpty(Model.VersionNo) ? "" : "热销款")</span><span>定制流程单</span> </h2> 
             </div>
             <table class="table table-bordered bootstrap-datatable" border="1">
                 <tbody>
@@ -68,41 +68,44 @@
                     <tr>
                         <td class="hightTd text-right">宝石</td>
                         <td class="hightTd text-center"> @Model.GemCategoryName</td>
-                        <td class="hightTd text-right">主石镶口要求</td>
-                        <td class="hightTd text-center"> @Model.RabbetRequirement.GetDisplayName()</td>
-                        <td colspan="2" class="hightTd">字印要求：@Model.WordsPrinted</td>
+                        <td class="text-right hightTd">设计类别</td>
+                        <td class="text-center hightTd">@Model.ModuleTypeName</td>
+                        <td colspan="2" rowspan="6">字印要求(备注)：
+                            <div>@Model.WordsPrinted</div>
+                            <div>@Model.Remark</div>
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-right">品类</td>
                         <td class="text-center">@Model.ProductCategoryName</td>
-                        <td class="text-right">金重控制要求</td>
-                        <td class="text-center">@Model.GoldWeightRequirement.GetDisplayName()</td>
-                        <td rowspan="5" width="35%">备注：@Model.Remark</td>
+                        <td class="text-right" style="width: 100px">件数</td>
+                        <td class="text-center">
+                           @Model.Number
+                        </td> 
                     </tr>
                     <tr>
                         <td class="hightTd text-right">指圈</td>
                         <td class="hightTd text-center">@Model.RangSize</td>
-                        <td class="hightTd text-right">副石控制要求</td>
-                        <td class="hightTd text-center">@Model.SideStoneRequiredment.GetDisplayName()</td>
+                        <td class="hightTd text-right">预算</td>
+                        <td class="hightTd text-center">@Model.Budget</td>
                     </tr>
-                    <tr>
+                    @*<tr>
                         <td class="text-right">件数</td>
                         <td class="text-center">@Model.Number</td>
-                        <td class="text-right">戒臂内弧要求</td>
-                        <td class="text-center">@Model.RadianRequirement.GetDisplayName()</td>
+                        <td class="text-right">设计类别</td>
+                        <td class="text-center">@Model.ModuleTypeName</td>
+                    </tr>*@
+                    <tr>
+                        <td class="text-right">主石重</td>
+                        <td class="text-center">@Model.MainStoneSize</td>
+                        <td class="text-right">版号</td>
+                        <td class="text-center">@Model.VersionNo</td>
                     </tr>
                     <tr>
-                        <td class="hightTd text-right">主石重</td>
-                        <td class="hightTd text-center">@Model.MainStoneSize</td>
-                        <td class="hightTd text-right">客来石描述</td>
-                        <td class="hightTd text-center">@Model.StoneDescribe.GetDisplayName()</td>
-                    </tr>
-                    <tr>
-                        <td class="text-right">证书号</td>
-                        <td class="text-center">@Model.Certificate</td>
-                        <td class="text-right">保价金额</td>
-                        @*<td class="text-center">@(Model.HasOldMaterial ? "有" : "无")</td>*@
-                        <td class="text-center">@(Model.Insurance)</td>
+                        <td class="hightTd text-right">证书号</td>
+                        <td class="hightTd text-center">@Model.Certificate</td>
+                        <td class="hightTd text-right">保价金额</td> 
+                        <td class="hightTd text-center">@(Model.Insurance)</td>
                     </tr>
                 </tbody>
             </table>

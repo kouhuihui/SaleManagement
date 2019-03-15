@@ -118,14 +118,30 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             });
         }
 
-        public async Task<ActionResult> Booking()
+        public async Task<ActionResult> Booking(string versionNo = "")
         {
             var model = new OrderViewModel();
             var manager = new BasicDataManager(User);
             model.ProductCategories = await manager.GetProductCategoriesAsync();
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
+            if (!string.IsNullOrEmpty(versionNo))
+            {
+                var hotSellingManager = new HotSellingManager();
+                var hotSelling = await hotSellingManager.GetHotSellingByNoAsync(versionNo);
 
+                model.GemCategoryId = hotSelling.GemCategory.Id;
+                model.ProductCategoryId = hotSelling.ProductCategory.Id;
+                model.VersionNo = hotSelling.VersionNo;
+                model.Budget = (int)hotSelling.ReferencePrice;
+                model.Attachments = hotSelling.Attachments.Where(t => t.FileType == 0).OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+                {
+                    Id = a.FileInfoId,
+                    Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
+                }).ToList();
+
+
+            }
             return View(model);
         }
 

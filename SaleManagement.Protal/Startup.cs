@@ -9,6 +9,7 @@ using Owin;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
 using SaleManagement.Protal.Models;
+using SaleManagement.Protal.Models.HotSelling;
 using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.RepairOrder;
 using SaleManagement.Protal.Models.Shipment;
@@ -106,6 +107,8 @@ namespace SaleManagement.Protal
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.SpotGoods.Status))
                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.SpotGoods.Status.GetDisplayName()));
             Mapper.CreateMap<OrderMainStoneInfoViewModel, OrderMainStoneInfo>().ReverseMap();
+
+            Mapper.CreateMap<HotSellingCreateViewModel, HotSelling>();
         }
     }
 }
