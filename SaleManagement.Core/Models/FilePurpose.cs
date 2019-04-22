@@ -12,5 +12,11 @@ namespace SaleManagement.Core.Models
 
         [Display(Name = "Order.MainStonAttachment")]
         OrderMainStoneAttachment = 3,
+
+        [Display(Name = "HotSelling.Attachment")]
+        HotSellingAttachment = 4,
+
+        [Display(Name = "HotSelling.ParamAttachment")]
+        HotSellingParamAttachment = 5,
     }
 }

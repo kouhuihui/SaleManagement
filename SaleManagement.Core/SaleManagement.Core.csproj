@@ -83,6 +83,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
@@ -95,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CachingHelper.cs" />
+    <Compile Include="ImageHelp.cs" />
     <Compile Include="LoggerHelper.cs" />
     <Compile Include="Migrations\201609040157462_Init_Create.cs" />
     <Compile Include="Migrations\201609040157462_Init_Create.Designer.cs">
@@ -196,6 +198,14 @@
     <Compile Include="Migrations\201902221436423_AddDesginAuditTime.Designer.cs">
       <DependentUpon>201902221436423_AddDesginAuditTime.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903100535560_hotselling.cs" />
+    <Compile Include="Migrations\201903100535560_hotselling.Designer.cs">
+      <DependentUpon>201903100535560_hotselling.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201903131402362_hotsellAddRefer.cs" />
+    <Compile Include="Migrations\201903131402362_hotsellAddRefer.Designer.cs">
+      <DependentUpon>201903131402362_hotsellAddRefer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
     <Compile Include="Models\ColorForm.cs" />
@@ -212,6 +222,8 @@
     <Compile Include="Models\GemCategory.cs" />
     <Compile Include="Models\Gender.cs" />
     <Compile Include="Models\GoldWeightRequirement.cs" />
+    <Compile Include="Models\HotSelling.cs" />
+    <Compile Include="Models\HotSellingAttachment.cs" />
     <Compile Include="Models\IdentityType.cs" />
     <Compile Include="Models\MainStone.cs" />
     <Compile Include="Models\MatchStone.cs" />
@@ -367,6 +379,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902221436423_AddDesginAuditTime.resx">
       <DependentUpon>201902221436423_AddDesginAuditTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903100535560_hotselling.resx">
+      <DependentUpon>201903100535560_hotselling.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903131402362_hotsellAddRefer.resx">
+      <DependentUpon>201903131402362_hotsellAddRefer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

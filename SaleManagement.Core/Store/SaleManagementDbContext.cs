@@ -80,6 +80,11 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<OrderMainStoneAttachment> OrderMainStoneAttachments { get; set; }
 
+        public IDbSet<HotSelling> HotSellings { get; set; }
+
+
+        public IDbSet<HotSellingAttachment> HotSellingAttachments { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

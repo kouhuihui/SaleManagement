@@ -50,6 +50,7 @@ namespace SaleManagement.Core
             public static readonly string ShipmentOrderPrefix = "CKD";
             public static readonly string SpotGoodsPrefix = "XH";
             public static readonly string SaleMangementWeb = ConfigurationManager.AppSettings["SaleMangementWeb"];
+            public static readonly string HotSellingPrefix = "MW";
         }
 
         public class SerialNames
@@ -57,6 +58,7 @@ namespace SaleManagement.Core
             public static readonly string Order = "order";
             public static readonly string ShipmentOrder = "shipmentOrder";
             public static readonly string SpotGoods = "SpotGoods";
+            public static readonly string HotSelling = "HotSelling";
         }
 
         public class SystemRole

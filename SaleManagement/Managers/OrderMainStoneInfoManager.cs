@@ -62,6 +62,17 @@ namespace SaleManagement.Managers
             return await DbContext.Set<OrderMainStoneAttachment>().Where(r => r.OrderMainStoneInfoId == id).ToListAsync();
         }
 
+        public async Task<IEnumerable<OrderMainStoneAttachment>> GetOrderMainStoneAttachmentsByOrderId(string orderId)
+        {
+            var result = await (from a in DbContext.Set<OrderMainStoneInfo>()
+                                join b in DbContext.Set<OrderMainStoneAttachment>() on a.Id equals b.OrderMainStoneInfoId
+                                where a.OrderId == orderId
+                                select b).ToListAsync();
+
+
+            return result;
+        }
+
         public async Task<IEnumerable<OrderMainStoneStatistic>> GetOrderMainStoneStatisticsAsync(
             ReportQueryBaseDto reportQuery)
         {

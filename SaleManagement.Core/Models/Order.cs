@@ -152,5 +152,13 @@ namespace SaleManagement.Core.Models
         public double DesginCost { get; set; }
 
         public DateTime? DesginAuditTime { get; set; }
+
+        /// <summary>
+        /// 预算
+        /// </summary>
+        public int? Budget { get; set; }
+
+        [StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
+        public string VersionNo { get; set; }
     }
 }

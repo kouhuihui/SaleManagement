@@ -120,13 +120,15 @@ namespace SaleManagement.Protal.Controllers
             var paging = await manager.GetDirectorOrdersAsync(request.Start, request.Take, request.GetOrderListQueryFilter(User));
 
             var colorForms = await new BasicDataManager(User).GetColorFormsAsync();
+            var designs = await new UserManager().GetUserByRoleAsync(SaleManagentConstants.SystemRole.Design);
 
             var orders = paging.List.Select(u =>
             {
                 var colorForm = colorForms.FirstOrDefault(f => f.Id == u.ColorFormId);
                 return new OrderListItemViewModel(u)
                 {
-                    ColorFormName = colorForm == null ? "" : colorForm.Name
+                    ColorFormName = colorForm == null ? "" : colorForm.Name,
+                    CurrentUserName = designs.FirstOrDefault(s => s.Id == u.CurrentUserId)?.Name
                 };
             });
 
@@ -289,6 +291,9 @@ namespace SaleManagement.Protal.Controllers
             order.OrderRushStatus = request.OrderRushStatus;
             order.IsInsure = request.IsInsure;
             order.Insurance = request.Insurance;
+            order.Budget = request.Budget;
+            order.VersionNo = request.VersionNo;
+
             var result = await orderManager.UpdateOrderAsync(order);
 
             return Json(result);
@@ -416,7 +421,11 @@ namespace SaleManagement.Protal.Controllers
 
             order.OrderStatus = OrderStatus.CustomerTobeConfirm;
             order.OutputWaxCost = outputWaxCost;
-            order.DesginAuditTime = DateTime.Now;
+            if (!order.DesginAuditTime.HasValue)
+            {
+                order.DesginAuditTime = DateTime.Now;
+            }
+
             var result = await manager.UpdateOrderAsync(order);
             if (result.Succeeded)
             {
