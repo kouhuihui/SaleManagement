@@ -1,13 +1,9 @@
 ﻿using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SaleManagement.Protal.Models.Order
 {
-    public  class OrderQueryRequestBase : PagingRequest
+    public class OrderQueryRequestBase : PagingRequest
     {
         public string CustomerId { get; set; }
 
@@ -16,5 +12,7 @@ namespace SaleManagement.Protal.Models.Order
         public OrderStatus? Status { get; set; }
 
         public int? ColorFormId { get; set; }
+
+        public string Keyword { get; set; }
     }
 }

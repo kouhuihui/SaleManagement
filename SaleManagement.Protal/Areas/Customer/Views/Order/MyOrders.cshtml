@@ -11,10 +11,17 @@
     @Html.Partial("_ColorForm")
     <div class="textfield combobox pull-left">
         @{
-            var orderStatusItem = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.OrderStatus));
+            var orderStatusItem = EnumHelper.GetSelectList(typeof (SaleManagement.Core.Models.OrderStatus));
         }
         <div class="combobox-body" style="width: 120px;">
-            @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new { Class = "pull-left form-control" })
+            @Html.DropDownListFor(m => m.Status, orderStatusItem, "请选择单据状态", new {Class = "pull-left form-control"})
+        </div>
+    </div>
+    <div class="textfield  pull-left">
+        <div class="textfield pull-left">
+            <div class="field-body" style="width: 200px;">
+                @Html.TextBoxFor(m => m.Remark, new { Class = "form-control", placeholder = "备注" })
+            </div>
         </div>
     </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>

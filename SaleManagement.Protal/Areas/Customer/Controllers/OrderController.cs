@@ -104,7 +104,10 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
                 {
                     query = query.Where(f => f.OrderStatus == request.Status);
                 }
-
+                if (!string.IsNullOrEmpty(request.Keyword))
+                {
+                    query = query.Where(f => f.Remark.Contains(request.Keyword));
+                }
                 return query;
             };
 

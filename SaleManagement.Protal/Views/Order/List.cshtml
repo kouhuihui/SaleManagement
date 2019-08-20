@@ -63,7 +63,14 @@
         <div class="textfield date-conditions pull-left">
             <div class="textfield pull-left">
                 <div class="field-body" style="width: 200px;">
-                    @Html.TextBoxFor(m => m.DeliveryEndDate, new { Class = "form-control", placeholder = "预计出货结束日期" })
+                    @Html.TextBoxFor(m => m.DeliveryEndDate, new {Class = "form-control", placeholder = "预计出货结束日期"})
+                </div>
+            </div>
+        </div>
+        <div class="textfield  pull-left">
+            <div class="textfield pull-left">
+                <div class="field-body" style="width: 200px;">
+                    @Html.TextBoxFor(m => m.Remark, new { Class = "form-control", placeholder = "备注" })
                 </div>
             </div>
         </div>

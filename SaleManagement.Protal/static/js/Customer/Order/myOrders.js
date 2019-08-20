@@ -90,7 +90,8 @@
         return {
             orderId: $orderId.val(),
             status: $orderStatus.val(),
-            colorFormId: $colorFormId.val()
+            colorFormId: $colorFormId.val(),
+            keyword: $("#Remark").val()
         }
     }
 
