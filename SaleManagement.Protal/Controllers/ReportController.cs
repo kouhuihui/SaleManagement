@@ -111,7 +111,7 @@ namespace SaleManagement.Protal.Controllers
         {
             var shipmentOrderInfoViewModels = await GetShipmentOrderInfoViewModels(reportQuery);
 
-            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额", "正常/逾期" };
+            var titles = new string[] { "序号", "客户", "订单号", "品类", "出货日期", "件数", "总重(g)", "主石重", "净金重(g)", "含耗重(g)", "金料额", "副石数", "副石重", "镶石工费", "副石额", "基本工费", "出蜡倒模", "石值/风险", "其他工艺", "总额", "正常/逾期" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "出货单明细", ws =>
             {
                 var row = 2;
@@ -125,19 +125,21 @@ namespace SaleManagement.Protal.Controllers
                     ws.Cells[row, 4].Value = shipmentOrderInfo.ProductCategoryName;
                     ws.Cells[row, 5].Value = shipmentOrderInfo.DeliveryDate;
                     ws.Cells[row, 6].Value = shipmentOrderInfo.Number;
-                    ws.Cells[row, 7].Value = shipmentOrderInfo.GoldWeight;
-                    ws.Cells[row, 8].Value = shipmentOrderInfo.Hhz;
-                    ws.Cells[row, 9].Value = shipmentOrderInfo.GoldAmount;
-                    ws.Cells[row, 10].Value = shipmentOrderInfo.SideStoneNumber;
-                    ws.Cells[row, 11].Value = shipmentOrderInfo.SideStoneWeight;
-                    ws.Cells[row, 12].Value = shipmentOrderInfo.TotalSetStoneWorkingCost;
-                    ws.Cells[row, 13].Value = shipmentOrderInfo.SideStoneTotalAmount;
-                    ws.Cells[row, 14].Value = shipmentOrderInfo.BasicCost;
-                    ws.Cells[row, 15].Value = shipmentOrderInfo.OutputWaxCost;
-                    ws.Cells[row, 16].Value = shipmentOrderInfo.RiskFee;
-                    ws.Cells[row, 17].Value = shipmentOrderInfo.OtherCost;
-                    ws.Cells[row, 18].Value = shipmentOrderInfo.TotalAmount;
-                    ws.Cells[row, 19].Value = shipmentOrderInfo.IsShipOnTime;
+                    ws.Cells[row, 7].Value = shipmentOrderInfo.Weight;
+                    ws.Cells[row, 8].Value = shipmentOrderInfo.MainStoneSize;
+                    ws.Cells[row, 9].Value = shipmentOrderInfo.GoldWeight;
+                    ws.Cells[row, 10].Value = shipmentOrderInfo.Hhz;
+                    ws.Cells[row, 11].Value = shipmentOrderInfo.GoldAmount;
+                    ws.Cells[row, 12].Value = shipmentOrderInfo.SideStoneNumber;
+                    ws.Cells[row, 13].Value = shipmentOrderInfo.SideStoneWeight;
+                    ws.Cells[row, 14].Value = shipmentOrderInfo.TotalSetStoneWorkingCost;
+                    ws.Cells[row, 15].Value = shipmentOrderInfo.SideStoneTotalAmount;
+                    ws.Cells[row, 16].Value = shipmentOrderInfo.BasicCost;
+                    ws.Cells[row, 17].Value = shipmentOrderInfo.OutputWaxCost;
+                    ws.Cells[row, 18].Value = shipmentOrderInfo.RiskFee;
+                    ws.Cells[row, 19].Value = shipmentOrderInfo.OtherCost;
+                    ws.Cells[row, 20].Value = shipmentOrderInfo.TotalAmount;
+                    ws.Cells[row, 21].Value = shipmentOrderInfo.IsShipOnTime;
                     row++;
                     index++;
                 }
@@ -182,6 +184,7 @@ namespace SaleManagement.Protal.Controllers
                     TotalAmount = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.TotalAmount), 2),
                     Weight = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.Weight), 2),
                     IsShipOnTime = $"正常{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "正常")},逾期{shipmentOrderInfoViewModels.Count(r => r.IsShipOnTime == "逾期")}",
+                    MainStoneSize = Math.Round(shipmentOrderInfoViewModels.Sum(r => r.MainStoneSize), 2)
                 };
                 shipmentOrderInfoViewModels.Add(total);
             }
