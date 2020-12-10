@@ -22,6 +22,10 @@ namespace SaleManagement.Protal.Models.Order
 
         public bool IsProcess { get; set; }
 
+        public int? WaitStone { get; set; }
+
+        public string Remark { get; set; }
+
         public Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> GetOrderListQueryFilter(SaleUser user)
         {
             Func<IQueryable<Core.Models.Order>, IQueryable<Core.Models.Order>> filter = query =>
@@ -107,6 +111,23 @@ namespace SaleManagement.Protal.Models.Order
                 if (!string.IsNullOrEmpty(CurrentUserId))
                 {
                     query = query.Where(f => f.CurrentUserId == CurrentUserId);
+                }
+
+                if (WaitStone.HasValue)
+                {
+                    if (WaitStone.Value == 1)
+                    {
+                        query = query.Where(f => f.MainStoneSize > 0 && !f.OrderMainStoneInfos.Any());
+                    }
+                    else
+                    {
+                        query = query.Where(f => f.MainStoneSize > 0 && f.OrderMainStoneInfos.Any());
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(Remark))
+                {
+                    query = query.Where(t => t.Remark.Contains(Remark));
                 }
 
                 return query.AsNoTracking();

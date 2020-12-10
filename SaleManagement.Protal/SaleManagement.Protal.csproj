@@ -229,6 +229,7 @@
       <DependentUpon>SaleManagementResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Areas\Customer\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Customer\Controllers\HotSellingController.cs" />
     <Compile Include="Areas\Customer\Controllers\MeController.cs" />
     <Compile Include="Areas\Customer\Controllers\OrderController.cs" />
     <Compile Include="Areas\Customer\Controllers\ReconciliationController.cs" />
@@ -243,6 +244,7 @@
     <Compile Include="Controllers\DailyGoldPriceController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotSellingController.cs" />
     <Compile Include="Controllers\MeController.cs" />
     <Compile Include="Controllers\NoticeController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -262,6 +264,11 @@
     <Compile Include="Models\Customer\CustomerViewModel.cs" />
     <Compile Include="Models\DailyGoldPrice\DailyGoldPriceViewModel.cs" />
     <Compile Include="Models\Home\HomeViewModel.cs" />
+    <Compile Include="Models\HotSelling\HotSellingBase.cs" />
+    <Compile Include="Models\HotSelling\HotSellingCreateViewModel.cs" />
+    <Compile Include="Models\HotSelling\HotSellingQueryRequest.cs" />
+    <Compile Include="Models\HotSelling\HotSellingViewModel.cs" />
+    <Compile Include="Models\HotSelling\UploadHotSellingAttachmentRequest.cs" />
     <Compile Include="Models\Me\ChangePasswordViewModel.cs" />
     <Compile Include="Models\Me\IndexViewModel.cs" />
     <Compile Include="Models\Me\ProfileViewModel.cs" />
@@ -329,6 +336,8 @@
     <Content Include="Areas\Customer\Views\Me\Index.cshtml" />
     <Content Include="Areas\Customer\Views\Order\ShipmentStatistics.cshtml" />
     <Content Include="Areas\Customer\Views\Order\MyOrders.cshtml" />
+    <Content Include="Areas\Customer\Views\HotSelling\List.cshtml" />
+    <Content Include="Areas\Customer\Views\HotSelling\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\publish.pubxml" />
     <Content Include="static\bootstrap-datepicker\css\bootstrap-datetimepicker.css" />
     <Content Include="static\bootstrap-datepicker\css\datepicker-custom.css" />
@@ -434,6 +443,7 @@
     <Content Include="static\js\Control\customer.js" />
     <Content Include="static\js\Crm\edit.js" />
     <Content Include="static\js\Crm\list.js" />
+    <Content Include="static\js\Customer\Hotselling\list.js" />
     <Content Include="static\js\Customer\Order\list.js" />
     <Content Include="static\js\Customer\Order\myOrders.js" />
     <Content Include="static\js\Customer\Order\shipmentStatistics.js" />
@@ -441,6 +451,8 @@
     <Content Include="static\js\DailyGoldPrice\edit.js" />
     <Content Include="static\js\DailyGoldPrice\list.js" />
     <Content Include="static\js\detectmobilebrowser.js" />
+    <Content Include="static\js\HotSelling\edit.js" />
+    <Content Include="static\js\HotSelling\setting.js" />
     <Content Include="static\js\init-chart.js" />
     <Content Include="static\js\jquery-1.10.2.js" />
     <Content Include="static\js\jquery.autogrow-textarea.js" />
@@ -468,6 +480,7 @@
     <Content Include="static\js\Order\myOrders.js" />
     <Content Include="static\js\Order\setStone.js" />
     <Content Include="static\js\Order\uploadDesginImage.js" />
+    <Content Include="static\js\Order\waitstoneList.js" />
     <Content Include="static\js\pager.js" />
     <Content Include="static\js\reconciliation\list.js" />
     <Content Include="static\js\Report\accountStatistics.js" />
@@ -587,6 +600,9 @@
     <Content Include="Views\Report\OrderMainStoneStatistics.cshtml" />
     <Content Include="Views\Order\DirectorOrders.cshtml" />
     <Content Include="Views\Report\DesginCostStatistics.cshtml" />
+    <Content Include="Views\Order\WaitStoneList.cshtml" />
+    <Content Include="Views\HotSelling\Setting.cshtml" />
+    <Content Include="Views\HotSelling\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

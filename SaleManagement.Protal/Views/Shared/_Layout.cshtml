@@ -123,7 +123,10 @@
                                         {
                                             <li><a href="/order/DirectorOrders">主管订单管理</a></li>
                                         }
-
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 2006))
+                                        {
+                                            <li><a href="/order/WaitStoneList">等石管理</a></li>
+                                        }
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 2003))
                                         {
                                             <li><a href="/order/booking">下单</a></li>
@@ -172,6 +175,10 @@
                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 3008))
                                         {
                                             <li><a href="/BasicData/MainStones">主石信息</a></li>
+                                        }
+                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 3009))
+                                        {
+                                            <li><a href="/HotSelling/Setting">热销款设置</a></li>
                                         }
                                     </ul>
                                 </li>

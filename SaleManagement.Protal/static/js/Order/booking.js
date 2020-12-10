@@ -10,7 +10,8 @@
     $minChainLength = $("#MinChainLength"),
     $maxChainLength = $("#MaxChainLength"),
     $handSize = $("#HandSize"),
-    $created = $("input[name=Created]");
+    $created = $("input[name=Created]"),
+    $versionNo = $("#VersionNo");
 
 $(function () {
     var customer = new Customer();
@@ -19,7 +20,7 @@ $(function () {
                    "<div>◆高风险◆易裂、易伤祖母绿、p级钻、磷灰石、萤石、等多裂或低硬度彩宝及薄如纸的翡翠。3%保价。</div>" +
                    "<div>中风险◆崩边、点坑红蓝宝、碧玺、坦桑、等边棱角易磨损型其它彩宝。1%保价。</div>" +
                    "<div>低风险◆崩角、划痕钻石类及高价值翡翠。0.5%保价。50分以上强制保险，详情询客服。</div>" +
-                   "<div>【赔付标准】保价赔付100%，不保价视风险程度至多赔付10倍工费。低于3000元的低价值类彩宝免费保赔偿。</div>";
+                   "<div>【赔付标准】保价赔付100%，不保价视风险程度至多赔付10倍工费。低于1000元的低价值类彩宝免费保赔偿。</div>";
     $("#showInsureDetail").popover({ 
         html: true,
         placement: 'bottom',
@@ -166,15 +167,17 @@ $(function () {
     });
 
     $("#saveOrder").click(function () {
-        if (filesData.length < 1) {
-            shortTips("请上传款式图片");
-            return false;
+        if ($versionNo.val() === "") {
+            if (filesData.length < 1) {
+                shortTips("请上传款式图片");
+                return false;
+            }
+            var attachmentIds = "";
+            for (var i = 0; i < filesData.length; i++) {
+                attachmentIds += filesData[i].id + ",";
+            }
+            $("#attachmentIds").val(attachmentIds);
         }
-        var attachmentIds = "";
-        for (var i = 0; i < filesData.length; i++) {
-            attachmentIds += filesData[i].id + ",";
-        }
-        $("#attachmentIds").val(attachmentIds);
         if (!isAdd) {
             $form.attr("target", "_self").attr("action", "/order/edit");
         }
@@ -213,6 +216,21 @@ $(function () {
     if (!isAdd) {
         var spanText = $("#divProductCategory .btn-primary").html()
         ShowRangSize(spanText);
+    }
+
+    if ($versionNo.val() !== "") {
+        $("#divUpload").hide();
+        $("#divCategory").hide();
+        $("#divGemCategory").hide();
+        $("#divNumber").hide();
+        $("#divMainStone").hide();
+        $("#divCertificate").hide();
+        $("#divWordsPrinted").hide();
+        $("#divHasOldMaterial").hide();
+
+        ShowRangSize($("#divProductCategory .btn-primary").html());
+    } else {
+        $("#divVersion").hide();
     }
 })
 

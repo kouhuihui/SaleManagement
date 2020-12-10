@@ -1,5 +1,4 @@
-﻿using SaleManagement.Core;
-using SaleManagement.Core.Models;
+﻿using SaleManagement.Core.Models;
 using SaleManagement.Core.ViewModel;
 using System.Collections.Generic;
 
@@ -12,7 +11,7 @@ namespace SaleManagement.Protal.Models.Order
             Attachments = new List<AttachmentItem>();
         }
 
-        public OrderViewModel(SaleManagement.Core.Models.Order order):base(order)
+        public OrderViewModel(SaleManagement.Core.Models.Order order) : base(order)
         {
         }
 

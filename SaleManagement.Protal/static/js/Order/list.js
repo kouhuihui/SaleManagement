@@ -60,7 +60,8 @@
             outPutWaxDate: $outPutWaxDate.val(),
             deliveryStartDate: $("#DeliveryStartDate").val(),
             deliveryEndDate: $("#DeliveryEndDate").val(),
-            isProcess: $process.val()
+            isProcess: $process.val(),
+            remark: $("#Remark").val()
         }
     }
 

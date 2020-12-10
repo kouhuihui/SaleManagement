@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Core.Models
@@ -25,5 +26,7 @@ namespace SaleManagement.Core.Models
         public DateTime Created { get; set; }
 
         public string CreatorId { get; set; }
+
+        public virtual ICollection<OrderMainStoneAttachment> Attachments { get; set; }
     }
 }

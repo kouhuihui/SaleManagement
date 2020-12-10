@@ -104,6 +104,20 @@ namespace SaleManagement.Managers
             return new Paging<Order>(start, take, total, list);
         }
 
+
+        public async Task<Paging<Order>> GetWaitStoneOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null)
+        {
+            var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId);
+            if (filter != null)
+            {
+                query = filter(query);
+            }
+            var total = await query.CountAsync();
+            var list = await query.OrderByDescending(u => u.Created).Skip(start).Take(take).ToListAsync();
+
+            return new Paging<Order>(start, take, total, list);
+        }
+
         public async Task<Paging<Order>> GetOrdersAsync(int start, int take, Func<IQueryable<Order>, IQueryable<Order>> filter = null, DateTime? outPutWaxDate = null)
         {
             var query = DbContext.Set<Order>().Where(o => o.ComplayId == User.CompanyId);

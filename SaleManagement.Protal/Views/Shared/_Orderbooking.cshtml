@@ -36,31 +36,65 @@
 <input type="hidden" name="attachmentIds" id="attachmentIds" />
 <input type="hidden" value="@User.IdentityType" name="identityType" id="identityType" />
 @Html.HiddenFor(model => model.Id)
+@Html.HiddenFor(model => model.VersionNo) 
 @Html.AntiForgeryToken()
+
+ 
+    @*<div class="form-group"> 
+        <div class="col-md-12">
+            <div>
+                <ul class="thumbnails gallery">
+                    @foreach (var item in Model.HotSellingViewModel.Attachments)
+                    {
+                        <li class="thumbnail">
+                            <a class="cboxElement" href="javascript:void(0)"><img src="@item.Url" style="display: block;"></a>
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>*@
+
+    <div class="form-group" id="divVersion">
+        <label class="control-label col-md-1 col-xs-3">版号：</label>
+        <div class="col-md-2 col-xs-8">
+            <label class="control-label col-md-1 col-xs-3">@Model.VersionNo</label>
+        </div>
+    </div> 
+
 <div class="form-group">
     <div class="col-md-12">
         <div class="attachment">
             <ul data-bind="foreach:files" class="thumbnails gallery">
                 <li class="thumbnail">
                     <a class="cboxElement" href="javascript:void(0)"><img data-bind="text:name,attr:{src:url}" style="display: block;"></a>
-                    <div class="well gallery-controls">
-                        <a data-bind="click:$parent.deleteFile" href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
-                    </div>
+                    @if (string.IsNullOrEmpty(Model.VersionNo))
+                    {
+                        <div class="well gallery-controls">
+                            <a data-bind="click:$parent.deleteFile" href="javascript:void(0)" class="gallery-delete btn"><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                    }
+
                 </li>
             </ul>
         </div>
     </div>
-    <div class="col-md-2"></div>
-    <div class="col-md-10">
-        <a class="upload-btn btn btn-danger" href="javascript:void(0);" role="button" data-toggle="popover" data-container="body" data-placement="bottom" data-original-title="" title="">
-            提交款式图片
-            <input type="file" name="file" multiple>
-        </a>
-        <span style="color:red">最多可上传2个，每个不超过4M</span>
+    <div id="divUpload">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+            <a class="upload-btn btn btn-danger" href="javascript:void(0);" role="button" data-toggle="popover" data-container="body" data-placement="bottom" data-original-title="" title="">
+                提交款式图片
+                <input type="file" name="file" multiple>
+            </a>
+            <span style="color: red">最多可上传2个，每个不超过4M</span>
+        </div>
     </div>
+    
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>品类：</label>
+
+<div class="form-group" id="divCategory">
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>品类：</label>
     <div class="col-md-10 col-xs-8" id="divProductCategory">
         @foreach (var category in Model.ProductCategories)
         {
@@ -72,7 +106,7 @@
     </div>
 </div>
 <div class="form-group" id="divHandSize" style="display:none">
-    <label class="control-label col-md-2 col-xs-4">手寸：</label>
+    <label class="control-label col-md-1 col-xs-3">手寸：</label>
     <div class="col-md-2 col-xs-8">
         @Html.TextBoxFor(model => model.HandSize, new { Class = "form-control" })
         @Html.ValidationMessageFor(model => model.HandSize, "", new { @class = "text-danger" })
@@ -81,7 +115,7 @@
     </div>
 </div>
 <div class="form-group" id="divChain" style="display:none">
-    <label class="control-label col-md-2 col-xs-4">链长：</label>
+    <label class="control-label col-md-1 col-xs-3">链长：</label>
     <div class="col-md-1 col-xs-3">
         @Html.TextBoxFor(model => model.MinChainLength, new { Class = "form-control" })
         @Html.ValidationMessageFor(model => model.MinChainLength, "", new { @class = "text-danger" })
@@ -95,7 +129,7 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>成色：</label>
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>成色：</label>
     <div class="col-md-10 col-xs-8">
         @foreach (var colorForm in Model.ColorForms)
         {
@@ -106,8 +140,8 @@
         @Html.ValidationMessageFor(model => model.ColorFormId, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>宝石品类：</label>
+<div class="form-group" id="divGemCategory">
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>宝石品类：</label>
     <div class="col-md-10 col-xs-8">
         @foreach (var gemCategory in Model.GemCategories)
         {
@@ -118,22 +152,22 @@
         @Html.ValidationMessageFor(model => model.GemCategoryId, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>件数：</label>
+<div class="form-group" id="divNumber">
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>件数：</label>
     <div class="col-md-2 col-xs-8">
         @Html.TextBoxFor(model => model.Number, new { @class = "form-control", placeholder = "请输入件数" })
         @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>主石大小（ct）：</label>
+<div class="form-group" id="divMainStone">
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>主石大小（ct）：</label>
     <div class="col-md-2 col-xs-8">
         @Html.TextBoxFor(model => model.MainStoneSize, new { @class = "form-control number", placeholder = "请输入主石大小" })
         @Html.ValidationMessageFor(model => model.MainStoneSize, "", new { @class = "text-danger" })
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>是否保价：</label>
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>是否保价：</label>
     <div class="col-md-2 col-xs-8" id="divIsInsure">
         <span class="btn btn-sm btn-default btn-primary" name="btnSpan" data-value="1">保价</span>
         <span class="btn btn-sm btn-default" name="btnSpan" data-value="0">不保价</span>
@@ -147,41 +181,53 @@
       </div>
 </div>
 <div class="form-group" id="divInsurance">
-    <label class="control-label col-md-2 col-xs-4"><span class="text-danger">*</span>保价金额：</label>
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>保价金额：</label>
     <div class="col-md-2 col-xs-8">
-        @Html.TextBoxFor(model => model.Insurance, new { @class = "form-control number", placeholder = "请输入保价金额" })
-        @Html.ValidationMessageFor(model => model.Insurance, "", new { @class = "text-danger" })
+        @Html.TextBoxFor(model => model.Insurance, new {@class = "form-control number", placeholder = "请输入保价金额"})
+        @Html.ValidationMessageFor(model => model.Insurance, "", new {@class = "text-danger"})
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">证书号：</label>
+
+<div class="form-group"  >
+    <label class="control-label col-md-1 col-xs-3"><span class="text-danger">*</span>预算金额：</label>
+    <div class="col-md-2 col-xs-8">
+        @Html.TextBoxFor(model => model.Budget, new { @class = "form-control number", placeholder = "请输入预算金额" })
+        @Html.ValidationMessageFor(model => model.Budget, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group" id="divCertificate">
+    <label class="control-label col-md-1 col-xs-3">证书号：</label>
     <div class="col-md-2 col-xs-8">
         @Html.TextBoxFor(model => model.Certificate, new { @class = "form-control", placeholder = "请输入证书号" })
         @Html.ValidationMessageFor(model => model.Certificate, "", new { @class = "text-danger" })
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">字印要求(成色+主副石重)：</label>
+<div class="form-group"  id="divWordsPrinted">
+    <label class="control-label col-md-1 col-xs-3">字印要求(成色+主副石重)：</label>
     <div class="col-md-2 col-xs-8">
-        @Html.TextBoxFor(model => model.WordsPrinted, new { @class = "form-control", placeholder = "请输入字印要求" })
+        @Html.TextBoxFor(model => model.WordsPrinted, new {@class = "form-control", placeholder = "请输入字印要求"})
     </div>
 </div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">主石镶口要求：</label>
-    <div class="col-md-6 col-xs-8">
-        @{
-            var RabbetRequirementsList = EnumExtensions.EnumToList(typeof(RabbetRequirement));
-        }
-        @foreach (var item in RabbetRequirementsList)
-        {
-            var currentClass = item.Key == (int)Model.RabbetRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
-        }
-        @Html.HiddenFor(model => model.RabbetRequirement)
+
+<div class="hidden">
+    <div class="form-group">
+        <label class="control-label col-md-1 col-xs-3">主石镶口要求：</label>
+        <div class="col-md-6 col-xs-8">
+            @{
+                var RabbetRequirementsList = EnumExtensions.EnumToList(typeof(RabbetRequirement));
+            }
+            @foreach (var item in RabbetRequirementsList)
+            {
+                var currentClass = item.Key == (int)Model.RabbetRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
+                <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+            }
+            @Html.HiddenFor(model => model.RabbetRequirement)
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">客来石描述：</label>
+
+    <div class="form-group">
+    <label class="control-label col-md-1 col-xs-3">客来石描述：</label>
     <div class="col-md-6 col-xs-8">
         @{
             var stoneDescribeList = EnumExtensions.EnumToList(typeof(StoneDescribe));
@@ -195,7 +241,7 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">金重控制要求：</label>
+    <label class="control-label col-md-1 col-xs-3">金重控制要求：</label>
     <div class="col-md-6 col-xs-8">
         @{
             var goldWeightRequirementList = EnumExtensions.EnumToList(typeof(GoldWeightRequirement));
@@ -203,13 +249,13 @@
         @foreach (var item in goldWeightRequirementList)
         {
             var currentClass = item.Key == (int)Model.GoldWeightRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-        <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         @Html.HiddenFor(model => model.GoldWeightRequirement)
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">副石控制要求：</label>
+    <label class="control-label col-md-1 col-xs-3">副石控制要求：</label>
     <div class="col-md-6 col-xs-8">
         @{
             var sideStoneRequiredmentList = EnumExtensions.EnumToList(typeof(SideStoneRequiredment));
@@ -223,21 +269,24 @@
     </div>
 </div>
 <div class="form-group">
-    <label class="control-label col-md-2 col-xs-4">戒臂内弧要求：</label>
+    <label class="control-label col-md-1 col-xs-3">戒臂内弧要求：</label>
     <div class="col-md-6 col-xs-8">
         @{
-            var radianRequirementList = EnumExtensions.EnumToList(typeof (RadianRequirement));
+            var radianRequirementList = EnumExtensions.EnumToList(typeof(RadianRequirement));
         }
         @foreach (var item in radianRequirementList)
         {
-            var currentClass = item.Key == (int) Model.RadianRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
-        <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
+            var currentClass = item.Key == (int)Model.RadianRequirement ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
+            <span class="@currentClass" name="btnSpan" data-value="@item.Key">@item.Value</span>
         }
         @Html.HiddenFor(model => model.RadianRequirement)
     </div>
 </div>
+ 
+</div>
+
 <div class="form-group hidden">
-    <label class="control-label col-md-2 col-xs-4">戒臂内弧要求：</label>
+    <label class="control-label col-md-1 col-xs-3">戒臂内弧要求：</label>
     <div class="col-md-6 col-xs-8">
         @{
             var orderRushStatusList = EnumExtensions.EnumToList(typeof(OrderRushStatus));
@@ -255,22 +304,25 @@
         @Html.HiddenFor(model => model.OrderRushStatus)
     </div>
 </div>
-<div class="form-group">
-    <label for="Gender" class="control-label col-md-2 col-xs-4">有无旧料：</label>
+<div class="form-group" id="divHasOldMaterial">
+    <label for="Gender" class="control-label col-md-1 col-xs-3">有无旧料：</label>
     <div class="col-md-4 col-xs-8">
         <label class="m-r-10">@Html.RadioButton("HasOldMaterial", false, !Model.HasOldMaterial) 无</label>
         <label>@Html.RadioButton("HasOldMaterial", true, Model.HasOldMaterial)有</label>
     </div>
 </div>
 <div class="form-group">
-    <label for="Gender" class="control-label col-md-2 col-xs-4">备注：</label>
+    <label for="Gender" class="control-label col-md-1 col-xs-3">备注：</label>
     <div class="col-md-4 col-xs-8">
         @Html.TextAreaFor(m => m.Remark, new { @class = "form-control", rows = "3", placeholder = "客户留言" })
     </div>
 </div>
+
+
 <div class="form-group text-center">
     <button type="submit" id="saveOrder" class="btn btn-primary text-center">@(string.IsNullOrEmpty(Model.Id) ? "下单" : "保存")</button>
 </div>
+
 @{
     var jsonItems = Model.Attachments.Select(item => string.Format("{{name:\"{0}\",length:\"{1}\",id:\"{2}\",url:\"{3}\"}}",
         item.Name, item.Length, item.Id, item.Url)).ToList();
