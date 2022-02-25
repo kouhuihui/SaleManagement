@@ -21,6 +21,13 @@
         <span class="pull-left">-</span>
         <div class="textfield pull-left"><div class="field-body" style="width: 100px;"><input class="form-control" id="createdEndDate" type="text" placeholder="结束日期" value="@(Model.StatisticEndDate.HasValue?Model.StatisticEndDate.Value.ToShortDateString():"")"></div></div>
     </div>
+    <div class="textfield pull-left">
+        <div class="combobox pull-left">
+            <div class="combobox-body" style="width: 150px;">
+                <select class="pull-left form-control" id="currentUser" name="currentUser"></select>
+            </div>
+        </div>
+    </div>
     <button id="btnSearch" class="btn btn-primary">查询</button>
 </div>
 <div class="row">

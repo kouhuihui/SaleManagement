@@ -367,7 +367,8 @@ namespace SaleManagement.Protal.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> DistributionOrder([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, ModuleType moduleType)
+        public async Task<JsonResult> DistributionOrder([NamedModelBinder(typeof(CommaSeparatedModelBinder), "orderIds")] string[] orderIds, ModuleType moduleType,
+            string currentUser)
         {
             OrderStatus orderStatus;
             if (moduleType == ModuleType.Jina || moduleType == ModuleType.Customer)
@@ -385,6 +386,7 @@ namespace SaleManagement.Protal.Controllers
             {
                 order.ModuleType = moduleType;
                 order.OrderStatus = orderStatus;
+                order.CurrentUserId = currentUser;
             }
             if (moduleType == ModuleType.Jina || moduleType == ModuleType.Customer)
             {

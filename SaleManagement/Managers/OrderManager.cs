@@ -220,6 +220,11 @@ namespace SaleManagement.Managers
                 query = query.Where(t => t.DesginAuditTime < endDate);
             }
 
+            if (!string.IsNullOrEmpty(reportQuery.currentUser))
+            {
+                query = query.Where(t => t.CurrentUserId == reportQuery.currentUser);
+            }
+
             return (await query.OrderBy(t => t.DesginAuditTime).ToListAsync()).Select(t => new DesginCostStatistic
             {
                 Id = t.Id,

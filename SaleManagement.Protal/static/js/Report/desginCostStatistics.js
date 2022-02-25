@@ -15,16 +15,39 @@
 
     var desginCostStatisticsView = new DesginCostStatistics([]);
     ko.applyBindings(desginCostStatisticsView);
+    InitDesgin();
 
     Search();
 
     function searchArgs() {
         return { 
             StatisticStartDate: $("#createdStartDate").val(),
-            StatisticEndDate: $("#createdEndDate").val()
+            StatisticEndDate: $("#createdEndDate").val(),
+            currentUser: $("#currentUser").val()
         }
     }
 
+    function InitDesgin() {
+        $.ajax({
+            url: "/user/GetUsersByRole",
+            data: { "roleCode": "design" },
+            success: function (rtn) {
+                if (rtn.succeeded) {
+                    var data = rtn.data;
+                    var html = '<option value="">请选择设计师</option>';
+                    for (var i = 0, len = data.length; i < len; i++) {
+                        html += '<option value="' + data[i].id
+                                     + '">' + data[i].name
+                                     + '</option>';
+                    }
+                    $("#currentUser").html(html);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    }
     function Search() {
         $.ajax({
             url: "/Report/DesginCostStatistics",
