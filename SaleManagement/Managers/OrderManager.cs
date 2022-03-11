@@ -228,6 +228,7 @@ namespace SaleManagement.Managers
             return (await query.OrderBy(t => t.DesginAuditTime).ToListAsync()).Select(t => new DesginCostStatistic
             {
                 Id = t.Id,
+                currentUserId = t.CurrentUserId,
                 OutputWaxCost = t.OutputWaxCost,
                 DesginCost = t.DesginCost
             });

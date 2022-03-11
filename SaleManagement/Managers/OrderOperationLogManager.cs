@@ -15,6 +15,10 @@ namespace SaleManagement.Managers
         {
         }
 
+        public OrderOperationLogManager()
+        {
+        }
+
         public async Task<InvokedResult> AddLogAsync(OperationLogStatus status, string orderId)
         {
             var log = Create(status, orderId, status.GetDisplayName());
@@ -52,6 +56,12 @@ namespace SaleManagement.Managers
             Requires.NotNullOrEmpty(orderId, "orderId");
 
             return await DbContext.Set<OrderOperationLog>().Where(o => o.OrderId == orderId).OrderByDescending(r => r.Created).ToListAsync();
+        }
+
+        public async Task<IEnumerable<OrderOperationLog>> GetOrderOperationLogs(List<String> orderIds, OperationLogStatus status)
+        { 
+
+            return await DbContext.Set<OrderOperationLog>().Where(o => orderIds.Contains(o.OrderId)&& o.Status == status).ToListAsync();
         }
 
         private string GetContent(OrderStatus status)

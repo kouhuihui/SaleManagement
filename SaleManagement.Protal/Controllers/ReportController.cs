@@ -238,7 +238,11 @@ namespace SaleManagement.Protal.Controllers
         {
             var list = (await GetDesginCostStatistic(reportQuery)).ToList();
 
-            var titles = new string[] { "序号", "订单", "支付设计成本（元）", "设计费（元）" };
+
+            var orderOperationLogsusers = (await new OrderOperationLogManager().GetOrderOperationLogs(list.Select(o => o.Id).ToList(), OperationLogStatus.DirectorTobeConfirm)).ToList();
+
+
+            var titles = new string[] { "序号", "订单", "支付设计成本（元）", "设计费（元）", "设计师" };
             var result = Dickson.Web.Helper.ExcelHelp.Export(titles, "设计费用统计", ws =>
             {
                 var row = 2;
@@ -252,6 +256,7 @@ namespace SaleManagement.Protal.Controllers
                         : desginCostStatistic.Id;
                     ws.Cells[row, 3].Value = desginCostStatistic.DesginCost;
                     ws.Cells[row, 4].Value = desginCostStatistic.OutputWaxCost;
+                    ws.Cells[row, 5].Value = orderOperationLogsusers.FirstOrDefault(s => s.OrderId == desginCostStatistic.Id)?.CreatorName;
                     row++;
                     index++;
                 };

@@ -7,5 +7,7 @@
         public double DesginCost { get; set; }
 
         public double OutputWaxCost { get; set; }
+
+        public string currentUserId { get; set; }
     }
 }
