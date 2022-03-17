@@ -93,8 +93,9 @@
                                 <!-- ko if:status==2|status==3 -->
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.uploadDesginImageClick">上传设计图</a>
                                 <!-- /ko -->
-                                <!-- ko if: (status==2)  & attachments.length >= 1-->
+                                <!-- ko if: (status==2)  & attachments.length >= 1 & currentUserName == '@(User.Name)' -->
                                 <a class="btn btn-primary btn-sm" data-bind="click:$parent.DirectorTobeConfirmClick">主管确认</a>
+                           
                                 @*<a class="btn btn-primary btn-sm" data-bind="click:$parent.CustomerTobeConfirmMesClick">确认提醒</a>*@
                                 <!-- /ko -->
                                 <a target="blank" class="btn btn-primary btn-sm" data-bind="attr:{href:'/order/detail?orderId='+id}">预览</a>
