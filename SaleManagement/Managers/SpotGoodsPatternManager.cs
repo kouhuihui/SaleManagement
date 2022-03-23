@@ -36,9 +36,9 @@ namespace SaleManagement.Managers
             return new Paging<SpotGoodsPattern>(start, take, futureCount.Value, list);
         }
 
-        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodsType type)
+        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(string typeId)
         {
-            var query = DbContext.Set<SpotGoodsPattern>().Where(r => r.Type == type).AsNoTracking();
+            var query = DbContext.Set<SpotGoodsPattern>().Where(r => r.SpotGoodTypeId == typeId).AsNoTracking();
             return await query.ToListAsync();
         }
 

@@ -255,6 +255,7 @@
     <Compile Include="Controllers\ShipmentController.cs" />
     <Compile Include="Controllers\SpotGoodsController.cs" />
     <Compile Include="Controllers\SpotGoodsPatternController.cs" />
+    <Compile Include="Controllers\SpotGoodTypeController.cs" />
     <Compile Include="Controllers\SystemMenuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -298,7 +299,10 @@
     <Compile Include="Models\Shipment\ShipmentOrderInfoViewModel.cs" />
     <Compile Include="Models\Shipment\ShipmentOrdersQueryRequest.cs" />
     <Compile Include="Models\Shipment\ShipmentOrderViewModel.cs" />
+    <Compile Include="Models\SpotGoodsPattern\SpotGoodPatternPageRequest.cs" />
+    <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternEditViewModel.cs" />
     <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternListItemViewModel.cs" />
+    <Compile Include="Models\SpotGoodsPattern\SpotGoodsPatternViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsOrderEdit.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsOrderViewModel.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfoViewModel.cs" />
@@ -493,6 +497,7 @@
     <Content Include="static\js\SpotGoods\create.js" />
     <Content Include="static\js\SpotGoods\list.js" />
     <Content Include="static\js\SpotGoods\sellList.js" />
+    <Content Include="static\js\SpotGoodType\list.js" />
     <Content Include="static\js\SystemMenu\authorized.js" />
     <Content Include="static\js\User\edit.js" />
     <Content Include="static\js\User\users.js" />
@@ -603,6 +608,8 @@
     <Content Include="Views\Order\WaitStoneList.cshtml" />
     <Content Include="Views\HotSelling\Setting.cshtml" />
     <Content Include="Views\HotSelling\Edit.cshtml" />
+    <Content Include="Views\SpotGoodType\List.cshtml" />
+    <Content Include="Views\SpotGoodType\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -121,28 +121,30 @@ namespace SaleManagement.Protal.Areas.Customer.Controllers
             });
         }
 
-        public async Task<ActionResult> Booking(string versionNo = "")
+        public async Task<ActionResult> Booking(string spotGoodsPatternId = "")
         {
             var model = new OrderViewModel();
             var manager = new BasicDataManager(User);
             model.ProductCategories = await manager.GetProductCategoriesAsync();
             model.ColorForms = await manager.GetColorFormsAsync();
             model.GemCategories = await manager.GetGemCategoriesAsync();
-            if (!string.IsNullOrEmpty(versionNo))
+            if (!string.IsNullOrEmpty(spotGoodsPatternId))
             {
-                var hotSellingManager = new HotSellingManager();
-                var hotSelling = await hotSellingManager.GetHotSellingByNoAsync(versionNo);
+                var spotGoodsPatternManager = new SpotGoodsPatternManager();
+                var spotGoodsPattern = await spotGoodsPatternManager.GetSpotGoodsPattern(spotGoodsPatternId);
 
-                model.GemCategoryId = hotSelling.GemCategory.Id;
-                model.ProductCategoryId = hotSelling.ProductCategory.Id;
-                model.VersionNo = hotSelling.VersionNo;
-                model.Budget = (int)hotSelling.ReferencePrice;
-                model.Attachments = hotSelling.Attachments.Where(t => t.FileType == 0).OrderByDescending(a => a.Created).Select(a => new AttachmentItem
+                model.GemCategoryId = spotGoodsPattern.GemCategory.Id;
+                model.ProductCategoryId = spotGoodsPattern.ProductCategory.Id;
+                model.Budget = Convert.ToInt32(spotGoodsPattern.Price);
+                model.Remark = spotGoodsPattern.ReferenceData;
+                model.Attachments = new List<AttachmentItem>()
                 {
-                    Id = a.FileInfoId,
-                    Url = "/Attachment/" + a.FileInfoId + "/Thumbnail"
-                }).ToList();
-
+                    new AttachmentItem()
+                    {
+                          Id = spotGoodsPattern.FileInfoId,
+                          Url = "/Attachment/" + spotGoodsPattern.FileInfoId + "/Thumbnail"
+                    }
+                };
 
             }
             return View(model);

@@ -221,7 +221,11 @@
                                 <li class="accordion">
                                     <a href="#"><i class="glyphicon glyphicon-credit-card"></i><span>现货管理</span></a>
                                     <ul class="nav nav-pills nav-stacked">
-                                        @if (User.RoleMenus.Any(r => r.SystemMenuId == 5001))
+                                       @if (User.RoleMenus.Any(r => r.SystemMenuId == 5004))
+                                       {
+                                        <li><a href="/spotGoodType/List">热销款分类</a></li>
+                                       }
+                                         @if (User.RoleMenus.Any(r => r.SystemMenuId == 5001))
                                         {
                                             <li><a href="/spotGoodspattern/List">现货款式</a></li>
                                         }

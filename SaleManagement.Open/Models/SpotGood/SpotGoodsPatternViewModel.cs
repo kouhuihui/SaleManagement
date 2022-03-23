@@ -9,8 +9,7 @@ namespace SaleManagement.Open.Models
         public SpotGoodsPatternViewModel(SpotGoodsPattern model)
         {
             Id = model.Id;
-            Name = model.Name;
-            Type = model.Type;
+            Name = model.Name; 
             ImageUrl = SaleManagentConstants.Misc.SaleMangementWeb + "/Attachment/" + model.FileInfoId + "/preview";
         }
 

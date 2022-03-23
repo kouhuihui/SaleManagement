@@ -1,12 +1,14 @@
-﻿using Dickson.Core.Common.Extensions;
+﻿using AutoMapper;
+using Dickson.Core.Common.Extensions;
 using Dickson.Web.Mvc.ModelBinding;
 using SaleManagement.Core;
 using SaleManagement.Core.Models;
-using SaleManagement.Core.ViewModel;
 using SaleManagement.Managers;
 using SaleManagement.Protal.Models;
+using SaleManagement.Protal.Models.SpotGoodsPattern;
 using SaleManagement.Protal.Web;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -16,13 +18,13 @@ namespace SaleManagement.Protal.Controllers
     public class SpotGoodsPatternController : PortalController
     {
         [PagingParameterInspector]
-        public async Task<ActionResult> List(PagingRequest request)
+        public async Task<ActionResult> List(SpotGoodPatternPageRequest request)
         {
             if (!Request.IsAjaxRequest())
                 return View(request);
 
             var manager = new SpotGoodsPatternManager(User);
-            var paging = await manager.GetSpotGoodsPatternListAsync(request.Start, request.Take, null);
+            var paging = await manager.GetSpotGoodsPatternListAsync(request.Start, request.Take, request.GetSpotGoodsPatternListQueryFilter(User));
 
             return Json(true, string.Empty, new
             {
@@ -32,21 +34,37 @@ namespace SaleManagement.Protal.Controllers
                     Id = r.Id,
                     FileInfoId = r.FileInfoId,
                     Name = r.Name,
-                    TypeName = r.Type.GetDisplayName()
+                    TypeName = r.SpotGoodType.Name,
+                    Price = r.Price,
+                    Url = "/Attachment/" + r.FileInfoId + "/Thumbnail"
                 })
             });
         }
 
-        public ActionResult Add()
+        public async Task<ActionResult> Add()
         {
-            var model = new SpotGoodsPattern();
+            var model = new SpotGoodsPatternEditViewModel();
+            var manager = new SpotGoodTypeManager(User);
+            model.SpotGoodTypes = await manager.GetSpotGoodTypeListAsync();
+
+            var basicDataManager = new BasicDataManager(User);
+            model.ProductCategories = await basicDataManager.GetProductCategoriesAsync();
+            model.GemCategories = await basicDataManager.GetGemCategoriesAsync();
             return View(model);
         }
 
         public async Task<ActionResult> Edit(string Id)
         {
             var manager = new SpotGoodsPatternManager(User);
-            var model = await manager.GetSpotGoodsPattern(Id);
+            var spotGoodsPattern = await manager.GetSpotGoodsPattern(Id);
+            var model = Mapper.Map<SpotGoodsPattern, SpotGoodsPatternEditViewModel>(spotGoodsPattern);
+
+            var spotGoodTypeManager = new SpotGoodTypeManager(User);
+            model.SpotGoodTypes = await spotGoodTypeManager.GetSpotGoodTypeListAsync();
+
+            var basicDataManager = new BasicDataManager(User);
+            model.ProductCategories = await basicDataManager.GetProductCategoriesAsync();
+            model.GemCategories = await basicDataManager.GetGemCategoriesAsync();
             return View("Add", model);
         }
 
@@ -68,6 +86,8 @@ namespace SaleManagement.Protal.Controllers
             if (!ModelState.IsValid)
                 return Json(false, data: ErrorToDictionary(), contentType: SaleManagentConstants.Misc.JsonResponseContentType);
 
+            Image image = Image.FromStream(request.File.InputStream);
+
             var file = new Core.Models.FileInfo
             {
                 ContentType = request.File.ContentType,
@@ -77,10 +97,17 @@ namespace SaleManagement.Protal.Controllers
                 ContentLength = request.File.ContentLength
             };
 
+            string strPhysicsPath = HttpContext.Server.MapPath("~/orderImage");
+
+            file.ThumbnailData =
+                ImageHelp.MakeThumbnail(request.File.InputStream, 300, 300, strPhysicsPath + "\\" + file.Id + ".jpg").ReadAllBytes();
+
+            image.Dispose();
+
             var manager = new FileManager(User);
             await manager.CreateAsync(file);
 
-            return Json(true, data: new { id = file.Id, url = "data:image/jpg;base64," + Convert.ToBase64String(file.Data), name = file.FileName, length = file.Data.Length },
+            return Json(true, data: new { id = file.Id, url = "data:image/jpg;base64," + Convert.ToBase64String(file.ThumbnailData), name = file.FileName, length = file.Data.Length },
                    contentType: SaleManagentConstants.Misc.JsonResponseContentType);
         }
 
@@ -92,10 +119,10 @@ namespace SaleManagement.Protal.Controllers
             return Json(result);
         }
 
-        public async Task<JsonResult> GetSpotGoodsPatterns(SpotGoodsType type)
+        public async Task<JsonResult> GetSpotGoodsPatterns(string typeId)
         {
             var manager = new SpotGoodsPatternManager(User);
-            var result = await manager.GetSpotGoodsPatternListAsync(type);
+            var result = await manager.GetSpotGoodsPatternListAsync(typeId);
             return Json(true, string.Empty, result);
         }
     }

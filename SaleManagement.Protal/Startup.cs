@@ -14,6 +14,7 @@ using SaleManagement.Protal.Models.Order;
 using SaleManagement.Protal.Models.RepairOrder;
 using SaleManagement.Protal.Models.Shipment;
 using SaleManagement.Protal.Models.SpotGoods;
+using SaleManagement.Protal.Models.SpotGoodsPattern;
 using System;
 using System.Web.Helpers;
 using System.Web.Mvc;
@@ -97,11 +98,12 @@ namespace SaleManagement.Protal
             Mapper.CreateMap<SpotGoodsSetStoneInfo, SpotGoodsSetStoneInfoViewModel>();
             Mapper.CreateMap<SpotGoodsSetStoneInfoViewModel, SpotGoodsSetStoneInfo>();
             Mapper.CreateMap<SpotGoods, SpotGoodsListItemViewModel>()
-                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
-                 .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
-                 .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.GetDisplayName()))
-                 .ForMember(dest => dest.SpotGoodsPatternName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Name))
-                 .ForMember(dest => dest.SpotGoodTypeName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Type.GetDisplayName()));
+                .ForMember(dest => dest.Created,
+                    opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
+                .ForMember(dest => dest.ColorFormName, opt => opt.MapFrom(src => src.ColorForm.Name))
+                .ForMember(dest => dest.StatusName, opt => opt.MapFrom(src => src.Status.GetDisplayName()))
+                .ForMember(dest => dest.SpotGoodsPatternName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Name));
+            //.ForMember(dest => dest.SpotGoodTypeName, opt => opt.MapFrom(src => src.SpotGoodsPattern.Type.GetDisplayName()));
             Mapper.CreateMap<SpotGoodsOrder, SpotGoodsOrderViewModel>()
                 .ForMember(dest => dest.Created, opt => opt.MapFrom(src => src.Created.ToString(SaleManagentConstants.UI.DateStringFormat)))
                 .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.SpotGoods.Status))
@@ -109,6 +111,8 @@ namespace SaleManagement.Protal
             Mapper.CreateMap<OrderMainStoneInfoViewModel, OrderMainStoneInfo>().ReverseMap();
 
             Mapper.CreateMap<HotSellingCreateViewModel, HotSelling>();
+
+            Mapper.CreateMap<SpotGoodsPattern, SpotGoodsPatternEditViewModel>();
         }
     }
 }

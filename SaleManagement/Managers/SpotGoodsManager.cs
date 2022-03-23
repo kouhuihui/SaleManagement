@@ -22,9 +22,9 @@ namespace SaleManagement.Managers
 
         }
 
-        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodsType type)
+        public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodType type)
         {
-            return await DbContext.Set<SpotGoodsPattern>().Where(r => r.Type == type).AsNoTracking().ToListAsync();
+            return await DbContext.Set<SpotGoodsPattern>().Where(r => r.SpotGoodType.Id == type.Id).AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string patternId, int colorFromId)

@@ -1,4 +1,4 @@
-﻿@model SaleManagement.Core.Models.SpotGoodsPattern
+﻿@model SaleManagement.Protal.Models.SpotGoodsPattern.SpotGoodsPatternEditViewModel
 @{
     Layout = null;
 }
@@ -13,9 +13,53 @@
             <h4 class="modal-title">@(string.IsNullOrEmpty(Model.Id)?"新增款式":"编辑款式")</h4>
         </div>
         <div class="modal-body">
+     
             <div class="form-group">
                 <label class="control-label col-md-2" for="Weight">
-                    <span class="text-danger">*</span>款式名称
+                    <span class="text-danger">*</span>标签
+                </label>
+                <div class="col-md-6">  
+                    <div class="combobox-body">
+                        @{
+                            var spotGoodTypes = Model.SpotGoodTypes.Select(c => new SelectListItem
+                            {
+                                Value = c.Id.ToString(),
+                                Text = c.Name
+                            });
+                        }
+                        @Html.DropDownListFor(m => m.SpotGoodTypeId, spotGoodTypes, "请选择", new {Class = "pull-left form-control"})
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group" id="divCategory">
+                <label class="control-label col-md-2"><span class="text-danger">*</span>品类：</label>
+                <div class="col-md-10 col-xs-8" id="divProductCategory">
+                    @foreach (var category in Model.ProductCategories)
+                    {
+                        var currentClass = category.Id == Model.ProductCategoryId ? "btn btn-default btn-sm btn-primary" : "btn btn-sm btn-default";
+                        <span class="@currentClass" data-value="@category.Id">@category.Name</span>
+                    }
+                    @Html.HiddenFor(model => model.ProductCategoryId)
+                    @Html.ValidationMessageFor(model => model.ProductCategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group" id="divGemCategory">
+                <label class="control-label col-md-2"><span class="text-danger">*</span>宝石品类：</label>
+                <div class="col-md-10 col-xs-8">
+                    @foreach (var gemCategory in Model.GemCategories)
+                    {
+                        var currentClass = gemCategory.Id == Model.GemCategoryId ? "btn btn-sm btn-default btn-primary" : "btn btn-sm btn-default";
+                        <span class="@currentClass" name="btnSpan" data-value="@gemCategory.Id">@gemCategory.Name</span>
+                    }
+                    @Html.HiddenFor(model => model.GemCategoryId)
+                    @Html.ValidationMessageFor(model => model.GemCategoryId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Weight">
+                    <span class="text-danger">*</span>简介
                 </label>
                 <div class="col-md-6">
                     @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
@@ -24,15 +68,29 @@
             </div>
             <div class="form-group">
                 <label class="control-label col-md-2" for="Weight">
-                    <span class="text-danger">*</span>现货类别
+                    <span class="text-danger">*</span>参考价格
                 </label>
                 <div class="col-md-6">
-                    @{
-                        var spotGoodsTypeItems = EnumHelper.GetSelectList(typeof(SaleManagement.Core.Models.SpotGoodsType));
-                    }
-                    <div class="combobox-body">
-                        @Html.DropDownListFor(m => m.Type, spotGoodsTypeItems, "加急状态", new { Class = "pull-left form-control" })
-                    </div>
+                    @Html.TextBoxFor(model => model.Price, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Weight">
+                    <span class="text-danger">*</span>参考数据
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.ReferenceData, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.ReferenceData, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2" for="Weight">
+                    <span class="text-danger">*</span>排序号
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.RowNo, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RowNo, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
@@ -75,32 +133,32 @@
             addAttachmentUrl = "/SpotGoodsPattern/AddAttachment",
             removeAttachmentUrl = "/SpotGoodsPattern/RemoveAttachment",
             $fileInfoId = $("#FileInfoId");
-            $wrap = $(".attachment");
+        $wrap = $(".attachment");
         var myViewModel = {
             imageUrl: ko.observable(""),
             showImage: ko.observable(false),
             deleteImage: function () {
-                  $wrap.loading();
-                  $.ajax({
-                            url: removeAttachmentUrl,
-                            type: "POST",
-                            dataType: "json",
-                            data: {
-                                fileId: $fileInfoId.val()
-                            },
-                            success: function (result) {
-                                $wrap.data("loading").hide();
-                                if (result.succeeded) {
-                                    myViewModel.imageUrl("");
-                                    myViewModel.showImage(false);
-                                } else {
-                                    shortTips(errorMessage(result));
-                                }
-                            }
-                        });
+                $wrap.loading();
+                $.ajax({
+                    url: removeAttachmentUrl,
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        fileId: $fileInfoId.val()
+                    },
+                    success: function (result) {
+                        $wrap.data("loading").hide();
+                        if (result.succeeded) {
+                            myViewModel.imageUrl("");
+                            myViewModel.showImage(false);
+                        } else {
+                            shortTips(errorMessage(result));
+                        }
+                    }
+                });
             }
-        };
-        ko.applyBindings(myViewModel,document.getElementById('SpotGoodsPatternForm'));
+        }; 
+        ko.applyBindings(myViewModel, document.getElementById('SpotGoodsPatternForm'));
         if ($fileInfoId.val() !== "") {
             myViewModel.imageUrl("/Attachment/" + $fileInfoId.val() + "/preview");
             myViewModel.showImage(true);
@@ -148,12 +206,20 @@
             }
         });
 
-        $("#saveSpotGoodPattern").click(function () {
+        $("#saveSpotGoodPattern").click(function() {
             if ($fileInfoId.val() === "") {
                 shortTips("请上传款式图片");
                 return false;
             }
-        })
+        });
+
+        $("#SpotGoodsPatternForm span").click(function () {
+            var $spanBtn = $(this);
+            var spanText = $spanBtn.html(); 
+            $spanBtn.siblings().removeClass("btn-primary");
+            $spanBtn.addClass("btn-primary");
+            $spanBtn.siblings("input").val($spanBtn.attr("data-value")); 
+        });
     })
 
 </script>

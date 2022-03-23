@@ -11,7 +11,7 @@ namespace SaleManagement.Open.Models.SpotGood
         {
             Id = spotGood.Id;
             Name = spotGood.SpotGoodsPattern.Name;
-            SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
+            //SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
             HandSize = spotGood.HandSize;
             MainStone = spotGood.MainStone;
             Weight = spotGood.Weight;
@@ -32,7 +32,7 @@ namespace SaleManagement.Open.Models.SpotGood
             var spotGood = SpotGoodsOrder.SpotGoods;
             Id = spotGood.Id;
             Name = spotGood.SpotGoodsPattern.Name;
-            SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
+            //SpotGoodsType = spotGood.SpotGoodsPattern.Type.GetDisplayName();
             HandSize = spotGood.HandSize;
             MainStone = spotGood.MainStone;
             Weight = spotGood.Weight;

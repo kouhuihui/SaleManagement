@@ -1,0 +1,49 @@
+﻿@model SaleManagement.Core.Models.SpotGoodType
+@{
+    Layout = null;
+}
+
+
+@using (Html.BeginForm("Save", "SpotGoodType", FormMethod.Post, new { id = "SpotGoodTypeForm" }))
+{
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-horizontal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">@(string.IsNullOrEmpty(Model.Id) ? "新增现货类别" : "编辑现货类别")</h4>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label class="control-label col-md-3" for="Weight">
+                    <span class="text-danger">*</span>现货类别名称
+                </label>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div> 
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+            <input class="btn btn-primary" type="submit" id="saveSpotGoodPattern" value="保存" />
+        </div>
+    </div>
+                        }
+
+@Scripts.Render("~/bundles/js/jqueryval")
+@Scripts.Render("~/bundles/js/ajaxForm")
+<script type="text/javascript">
+    $(function () {
+        var $from = $("#SpotGoodTypeForm");
+        $from.ajaxForm({
+            success: function (result) {
+                if (result.succeeded) {
+                    shortTips("保存成功");
+                    $("#modal").modal('hide');
+                } else {
+                    shortTips(errorMessage(result));
+                }
+            }
+        });
+    })
+</script>

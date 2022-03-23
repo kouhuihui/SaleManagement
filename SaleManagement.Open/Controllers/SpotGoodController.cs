@@ -37,7 +37,7 @@ namespace SaleManagement.Open.Controllers
 
 
         [Route("Patterns/{type}")]
-        public async Task<IHttpActionResult> Patterns(SpotGoodsType type)
+        public async Task<IHttpActionResult> Patterns(SpotGoodType type)
         {
             var manager = new SpotGoodsManager();
             var spotGoodsPatterns = await manager.GetSpotGoodsPatternListAsync(type);

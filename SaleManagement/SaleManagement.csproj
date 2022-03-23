@@ -135,6 +135,7 @@
     <Compile Include="Managers\SignInResult.cs" />
     <Compile Include="Managers\SpotGoodsManager.cs" />
     <Compile Include="Managers\SpotGoodsPatternManager.cs" />
+    <Compile Include="Managers\SpotGoodTypeManager.cs" />
     <Compile Include="Managers\SystemMenuManager.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

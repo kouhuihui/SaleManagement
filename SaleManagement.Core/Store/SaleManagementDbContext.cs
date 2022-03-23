@@ -76,6 +76,8 @@ namespace SaleManagement.Core.Store
 
         public IDbSet<SpotGoodsOrder> SpotGoodsOrders { get; set; }
 
+        public IDbSet<SpotGoodType> SpotGoodTypes { get; set; }
+
         public IDbSet<MainStone> MainStones { get; set; }
 
         public IDbSet<OrderMainStoneAttachment> OrderMainStoneAttachments { get; set; }

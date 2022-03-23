@@ -11,8 +11,25 @@ namespace SaleManagement.Core.Models
         [StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
         public string Name { get; set; }
 
-        [Display(Name = "现货类别")]
-        public SpotGoodsType Type { get; set; }
+        [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
+        public string SpotGoodTypeId { get; set; }
+
+        public virtual SpotGoodType SpotGoodType { get; set; }
+
+        public int ProductCategoryId { get; set; }
+
+        public virtual ProductCategory ProductCategory { get; set; }
+
+
+        public int GemCategoryId { get; set; }
+
+        public virtual GemCategory GemCategory { get; set; }
+
+        public double Price { get; set; }
+
+        public string ReferenceData { get; set; }
+
+        public int RowNo { get; set; }
 
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
         public string FileInfoId { get; set; }
