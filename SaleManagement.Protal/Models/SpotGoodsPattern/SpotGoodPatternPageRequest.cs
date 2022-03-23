@@ -17,7 +17,7 @@ namespace SaleManagement.Protal.Models.SpotGoodsPattern
 
                 if (!string.IsNullOrEmpty(SpotGoodTypeId))
                 {
-                    query = query.Where(f => f.SpotGoodTypeId == SpotGoodTypeId);
+                    query = query.Where(f => f.SpotGoodsPatternTypes.Any(t => t.SpotGoodsTypeId == SpotGoodTypeId));
                 }
 
 

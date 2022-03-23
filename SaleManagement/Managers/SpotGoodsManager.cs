@@ -24,7 +24,7 @@ namespace SaleManagement.Managers
 
         public async Task<IEnumerable<SpotGoodsPattern>> GetSpotGoodsPatternListAsync(SpotGoodType type)
         {
-            return await DbContext.Set<SpotGoodsPattern>().Where(r => r.SpotGoodType.Id == type.Id).AsNoTracking().ToListAsync();
+            return await DbContext.Set<SpotGoodsPattern>().AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<string>> GetSpotGoodsMainStoneListAsync(string patternId, int colorFromId)

@@ -18,16 +18,16 @@
                 <label class="control-label col-md-2" for="Weight">
                     <span class="text-danger">*</span>标签
                 </label>
-                <div class="col-md-6">  
-                    <div class="combobox-body">
-                        @{
-                            var spotGoodTypes = Model.SpotGoodTypes.Select(c => new SelectListItem
-                            {
-                                Value = c.Id.ToString(),
-                                Text = c.Name
-                            });
+                <div class="col-md-10">  
+                  
+                    <div class="col-md-10 col-xs-8" id="divSpotGoodType">
+                        @foreach (var spotGoodType in Model.SpotGoodTypes)
+                        {
+                            var currentClass = Model.SpotGoodsPatternTypeIds!=null && Model.SpotGoodsPatternTypeIds.Any(t=> t== spotGoodType.Id) ? "btn btn-default btn-sm btn-primary" : "btn btn-sm btn-default";
+                            <span class="@currentClass" data-value="@spotGoodType.Id">@spotGoodType.Name</span>
                         }
-                        @Html.DropDownListFor(m => m.SpotGoodTypeId, spotGoodTypes, "请选择", new {Class = "pull-left form-control"})
+                        @Html.HiddenFor(model => model.SpotGoodsPatternTypeIdStr)
+                        @Html.ValidationMessageFor(model => model.SpotGoodsPatternTypeIds, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -160,7 +160,7 @@
         }; 
         ko.applyBindings(myViewModel, document.getElementById('SpotGoodsPatternForm'));
         if ($fileInfoId.val() !== "") {
-            myViewModel.imageUrl("/Attachment/" + $fileInfoId.val() + "/preview");
+            myViewModel.imageUrl("/Attachment/" + $fileInfoId.val() + "/Thumbnail");
             myViewModel.showImage(true);
         }
 
@@ -213,12 +213,35 @@
             }
         });
 
-        $("#SpotGoodsPatternForm span").click(function () {
-            var $spanBtn = $(this);
-            var spanText = $spanBtn.html(); 
+        $("#divGemCategory span").click(function () {
+            var $spanBtn = $(this); 
             $spanBtn.siblings().removeClass("btn-primary");
             $spanBtn.addClass("btn-primary");
             $spanBtn.siblings("input").val($spanBtn.attr("data-value")); 
+        });
+
+        $("#divCategory span").click(function () {
+            var $spanBtn = $(this); 
+            $spanBtn.siblings().removeClass("btn-primary");
+            $spanBtn.addClass("btn-primary");
+            $spanBtn.siblings("input").val($spanBtn.attr("data-value"));
+        });
+
+        $("#divSpotGoodType span").click(function () {
+            var $spanBtn = $(this);
+            debugger;
+            var spotGoodTypeIds = $spanBtn.siblings("input").val().split(",").filter(item => item != '');
+            var indexof = spotGoodTypeIds.indexOf($spanBtn.attr("data-value"));
+            if (indexof >= 0) {
+                $spanBtn.removeClass("btn-primary");
+                spotGoodTypeIds.splice(indexof, 1);
+            } else {
+                $spanBtn.addClass("btn-primary");
+                spotGoodTypeIds.push($spanBtn.attr("data-value"));
+            }
+
+
+            $spanBtn.siblings("input").val(spotGoodTypeIds.join(','));
         });
     })
 

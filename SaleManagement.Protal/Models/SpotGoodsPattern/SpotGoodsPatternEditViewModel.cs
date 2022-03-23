@@ -5,13 +5,21 @@ namespace SaleManagement.Protal.Models.SpotGoodsPattern
 {
     public class SpotGoodsPatternEditViewModel
     {
+        public SpotGoodsPatternEditViewModel()
+        {
+            SpotGoodsPatternTypeIds = new List<string>();
+        }
+
         public string Id { get; set; }
 
         public string Name { get; set; }
 
-        public string SpotGoodTypeId { get; set; }
+        public IEnumerable<string> SpotGoodsPatternTypeIds { get; set; }
 
-        public virtual SpotGoodType SpotGoodType { get; set; }
+        public string SpotGoodsPatternTypeIdStr
+        {
+            get { return string.Join(",", SpotGoodsPatternTypeIds); }
+        }
 
         public string FileInfoId { get; set; }
 

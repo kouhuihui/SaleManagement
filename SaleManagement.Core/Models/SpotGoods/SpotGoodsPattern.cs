@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SaleManagement.Core.Models
 {
@@ -11,15 +13,9 @@ namespace SaleManagement.Core.Models
         [StringLength(SaleManagentConstants.Validations.DefaultNameStringLength)]
         public string Name { get; set; }
 
-        [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
-        public string SpotGoodTypeId { get; set; }
-
-        public virtual SpotGoodType SpotGoodType { get; set; }
-
         public int ProductCategoryId { get; set; }
 
         public virtual ProductCategory ProductCategory { get; set; }
-
 
         public int GemCategoryId { get; set; }
 
@@ -33,5 +29,7 @@ namespace SaleManagement.Core.Models
 
         [Required, StringLength(SaleManagentConstants.Validations.DefaultIdStringLength)]
         public string FileInfoId { get; set; }
+
+        public virtual ICollection<SpotGoodsPatternType> SpotGoodsPatternTypes { get; set; }
     }
 }

@@ -206,9 +206,9 @@
     <Compile Include="Migrations\201903131402362_hotsellAddRefer.Designer.cs">
       <DependentUpon>201903131402362_hotsellAddRefer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203220917366_spotgoodpattern.cs" />
-    <Compile Include="Migrations\202203220917366_spotgoodpattern.Designer.cs">
-      <DependentUpon>202203220917366_spotgoodpattern.cs</DependentUpon>
+    <Compile Include="Migrations\202203230620286_spotgoodpattentype.cs" />
+    <Compile Include="Migrations\202203230620286_spotgoodpattentype.Designer.cs">
+      <DependentUpon>202203230620286_spotgoodpattentype.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountBinding.cs" />
@@ -262,6 +262,7 @@
     <Compile Include="Models\SpotGoods\CustomerAddress.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsOrder.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsPattern.cs" />
+    <Compile Include="Models\SpotGoods\SpotGoodsPatternType.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsStatus.cs" />
     <Compile Include="Models\SpotGoods\SpotGoods.cs" />
     <Compile Include="Models\SpotGoods\SpotGoodsSetStoneInfo.cs" />
@@ -391,8 +392,8 @@
     <EmbeddedResource Include="Migrations\201903131402362_hotsellAddRefer.resx">
       <DependentUpon>201903131402362_hotsellAddRefer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203220917366_spotgoodpattern.resx">
-      <DependentUpon>202203220917366_spotgoodpattern.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203230620286_spotgoodpattentype.resx">
+      <DependentUpon>202203230620286_spotgoodpattentype.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

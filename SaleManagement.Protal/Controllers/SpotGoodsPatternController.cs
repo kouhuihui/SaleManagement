@@ -34,7 +34,7 @@ namespace SaleManagement.Protal.Controllers
                     Id = r.Id,
                     FileInfoId = r.FileInfoId,
                     Name = r.Name,
-                    TypeName = r.SpotGoodType.Name,
+                    //TypeName = r.SpotGoodType.Name,
                     Price = r.Price,
                     Url = "/Attachment/" + r.FileInfoId + "/Thumbnail"
                 })
@@ -65,18 +65,20 @@ namespace SaleManagement.Protal.Controllers
             var basicDataManager = new BasicDataManager(User);
             model.ProductCategories = await basicDataManager.GetProductCategoriesAsync();
             model.GemCategories = await basicDataManager.GetGemCategoriesAsync();
+            model.SpotGoodsPatternTypeIds =
+                spotGoodsPattern.SpotGoodsPatternTypes.Select(t => t.SpotGoodsTypeId).ToList();
             return View("Add", model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Save(SpotGoodsPattern SpotGoodsPattern)
+        public async Task<ActionResult> Save(SpotGoodsPattern spotGoodsPattern, [NamedModelBinder(typeof(CommaSeparatedModelBinder), "SpotGoodsPatternTypeIdStr")] string[] spotGoodsPatternTypeIdStr)
         {
-            if (string.IsNullOrEmpty(SpotGoodsPattern.Id))
+            if (string.IsNullOrEmpty(spotGoodsPattern.Id))
             {
-                SpotGoodsPattern.Id = Guid.NewGuid().ToString();
+                spotGoodsPattern.Id = Guid.NewGuid().ToString();
             }
             var manager = new SpotGoodsPatternManager(User);
-            var result = await manager.SaveSpotGoodsPattern(SpotGoodsPattern);
+            var result = await manager.EditSpotGoodsPattern(spotGoodsPattern, spotGoodsPatternTypeIdStr);
             return Json(result);
         }
 

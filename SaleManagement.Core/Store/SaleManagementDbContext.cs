@@ -1,5 +1,6 @@
 ﻿using SaleManagement.Core.Models;
 using System.Data.Entity;
+using RepairOrder = SaleManagement.Core.Models.RepairOrder;
 
 namespace SaleManagement.Core.Store
 {
@@ -86,6 +87,7 @@ namespace SaleManagement.Core.Store
 
 
         public IDbSet<HotSellingAttachment> HotSellingAttachments { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
